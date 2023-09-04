@@ -1,4 +1,5 @@
-import ValidatorRules from "../../../@seedwork/domain/validators/validator-rules";
+// import ValidatorRules from "../../../@seedwork/domain/validators/validator-rules";
+import { EntityValidationError } from "../../../@seedwork/domain/errors/validation-error";
 import Entity from "../../../@seedwork/domain/entity/entity";
 import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entity-id.vo";
 import PersonalityValidatorFactory from "../validators/personality.validator";
@@ -30,7 +31,7 @@ export class Personality extends Entity<PersonalityProps> {
 
     static validate(props: PersonalityProps){
         const validator = PersonalityValidatorFactory.create();
-        validator.validate(props);
+        if (!validator.validate(props)) throw new EntityValidationError(validator.errors);
     }
 
     update(name: string): void {
