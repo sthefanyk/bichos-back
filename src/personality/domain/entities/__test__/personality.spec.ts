@@ -1,8 +1,12 @@
 import { omit } from "lodash";
-import { Personality, PersonalityProps } from "./personality";
-import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entity-id.vo";
+import { Personality, PersonalityProps } from "../personality";
+import UniqueEntityId from "../../../../@seedwork/domain/value-objects/unique-entity-id.vo";
 
 describe("Personality Unit Tests", () => {
+
+    beforeEach(() => {
+        Personality.validate = jest.fn();
+    });
     test("Constructor of personality", () => {
 
         let personality;
@@ -12,9 +16,11 @@ describe("Personality Unit Tests", () => {
         personality = new Personality({ name: "Agitado" });
         let props = omit(personality.props, "created_at");
 
+        expect(Personality.validate).toHaveBeenCalled();
+
         expect(props).toStrictEqual({
             name: "Agitado",
-            is_active: true,
+            is_active: true
         });
         expect(personality.props.created_at).toBeInstanceOf(Date);
 
@@ -61,7 +67,9 @@ describe("Personality Unit Tests", () => {
     test("update name personality", () => {
 
         const personality = new Personality({name: "Carinhoso"});
-        personality["name"] = "other personality";
+        personality.update("other personality");
+
+        expect(Personality.validate).toHaveBeenCalledTimes(2);
 
         expect(personality.name).toBe("other personality");
     });

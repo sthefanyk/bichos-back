@@ -1,5 +1,7 @@
+import ValidatorRules from "../../../@seedwork/domain/validators/validator-rules";
 import Entity from "../../../@seedwork/domain/entity/entity";
 import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entity-id.vo";
+import PersonalityValidatorFactory from "../validators/personality.validator";
 
 export type PersonalityProps = {
     name: string;
@@ -15,12 +17,24 @@ export type PersonalityProps = {
 
 export class Personality extends Entity<PersonalityProps> {
     constructor(public readonly props: PersonalityProps, id?: UniqueEntityId) {
+        Personality.validate(props);
         super(props, id);
         this.props.is_active = this.props.is_active ?? true;
         this.props.created_at = this.props.created_at ?? new Date();
     }
 
+    // static validate(props: Omit<PersonalityProps, 'id' | 'created_at'>) {
+    //     ValidatorRules.values(props.name, "name").required().string().maxLength(255).minLength(3);
+    //     ValidatorRules.values(props.is_active, "is_active").boolean();
+    // }
+
+    static validate(props: PersonalityProps){
+        const validator = PersonalityValidatorFactory.create();
+        validator.validate(props);
+    }
+
     update(name: string): void {
+        Personality.validate({ name, is_active: this.is_active });
         this.name = name;
     }
 
