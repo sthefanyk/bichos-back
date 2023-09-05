@@ -3,7 +3,7 @@ import { FieldsErrors } from "@seedwork/domain/validators/validator-fields-inter
 declare global {
     declare namespace jest{
         interface Matchers<R> {
-            containsErrorMessages: (receved: FieldsErrors) => R;
+            containsErrorMessages: (received: FieldsErrors) => R;
         }
     }
 }
