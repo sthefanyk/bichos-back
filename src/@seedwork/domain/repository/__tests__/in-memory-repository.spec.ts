@@ -1,7 +1,7 @@
-import Entity from "../entity/entity";
-import NotFoundError from "../errors/not-found.error";
-import UniqueEntityId from "../value-objects/unique-entity-id.vo";
-import InMemoryRepository from "./in-memory.repository";
+import Entity from "../../entity/entity";
+import NotFoundError from "../../errors/not-found.error";
+import UniqueEntityId from "../../value-objects/unique-entity-id.vo";
+import { InMemoryRepository } from "../in-memory.repository";
 
 type StubEntityProps = {
     name: string;
@@ -93,7 +93,7 @@ describe("InMemoryRepository Unit Tests", () => {
         await repository.insert(entity);
         await repository.delete(entity.id);
         expect(repository.items).toHaveLength(0);
-        
+
         await repository.insert(entity);
         await repository.delete(entity.uniqueEntityId);
         expect(repository.items).toHaveLength(0);
