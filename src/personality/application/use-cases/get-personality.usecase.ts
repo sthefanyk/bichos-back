@@ -9,13 +9,7 @@ export default class GetPersonalityUseCase implements UseCase<Input, Output>{
 
     async execute(input: Input): Promise<Output> {
         const entity = await this.personalityRepository.findById(input.id);
-
-        return {
-            id: entity.id,
-            name: entity.name,
-            is_active: entity.is_active,
-            created_at: entity.created_at,
-        };
+        return entity.toJSON();
     }
 }
 

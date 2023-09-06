@@ -12,12 +12,7 @@ export default class CreatePersonalityUseCase implements UseCase<Input, Output>{
         const entity = new Personality(input);
         await this.personalityRepository.insert(entity);
 
-        return {
-            id: entity.id,
-            name: entity.name,
-            is_active: entity.is_active,
-            created_at: entity.created_at,
-        };
+        return entity.toJSON();
     }
 }
 
