@@ -10,12 +10,6 @@ export type PersonalityProps = {
     created_at?: Date;
 };
 
-// export type PersonalityPropsJson = Required<{ id: string } & PersonalityProps>;
-
-// export class PersonalityId extends UniqueEntityId{
-
-// }
-
 export class Personality extends Entity<PersonalityProps> {
     constructor(public readonly props: PersonalityProps, id?: UniqueEntityId) {
         Personality.validate(props);
