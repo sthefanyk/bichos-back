@@ -1,33 +1,21 @@
 import { UseCase } from "../../../@seedwork/application/usecase";
 import PersonalityRepository from "../../domain/repository/personality.repository";
+import { Personality } from "../../domain/entities/personality";
 import { PersonalityOutput } from "../dto/personality-output.dto";
 
-export default class UpdatePersonalityUseCase implements UseCase<Input, Output>{
+export default class DeletePersonalityUseCase implements UseCase<Input, Output>{
     constructor(
         private personalityRepository: PersonalityRepository.Repository
     ) {}
 
     async execute(input: Input): Promise<Output> {
         const entity = await this.personalityRepository.findById(input.id);
-        entity.update(input.name);
-
-        if (input.is_active === true) {
-            entity.activate();
-        } 
-        
-        if (input.is_active === false) {
-            entity.deactivate();
-        }
-
-        await this.personalityRepository.update(entity);
-        return entity.toJSON();
+        await this.personalityRepository.delete(entity.id);
     }
 }
 
 export type Input = {
     id: string;
-    name: string;
-    is_active?: boolean;
 };
 
-export type Output = PersonalityOutput;
+export type Output = void;
