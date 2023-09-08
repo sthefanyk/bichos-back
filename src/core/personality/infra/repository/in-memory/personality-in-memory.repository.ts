@@ -1,7 +1,7 @@
-import { SortDirection } from '../../../@seedwork/domain/repository/repository-contracts';
-import { InMemorySearchableRepository } from '../../../@seedwork/domain/repository/in-memory.repository';
-import { Personality } from '../../domain/entities/personality';
-import PersonalityRepository from '../../domain/repository/personality.repository';
+import { SortDirection } from '../../../../@seedwork/domain/repository/repository-contracts';
+import { InMemorySearchableRepository } from '../../../../@seedwork/domain/repository/in-memory.repository';
+import { Personality } from '../../../domain/entities/personality';
+import PersonalityRepository from '../../../domain/repository/personality.repository';
 
 export default class PersonalityInMemoryRepository
   extends InMemorySearchableRepository<Personality>

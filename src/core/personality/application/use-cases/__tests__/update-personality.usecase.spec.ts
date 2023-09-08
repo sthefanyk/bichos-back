@@ -1,6 +1,6 @@
 import { Personality } from '../../../../personality/domain/entities/personality';
 import NotFoundError from '../../../../@seedwork/domain/errors/not-found.error';
-import PersonalityInMemoryRepository from '../../../infra/repository/personality-in-memory.repository';
+import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
 import UpdatePersonalityUseCase from '../update-personality.usecase';
 
 describe('UpdatePersonalityUseCase Unit Tests', () => {
@@ -66,7 +66,7 @@ describe('UpdatePersonalityUseCase Unit Tests', () => {
     ];
 
     for (const { entity, expected, spy } of arrange) {
-      let output = await useCase.execute(entity);
+      const output = await useCase.execute(entity);
       expect(spyUpdate).toHaveBeenCalledTimes(spy);
 
       expect(output).toStrictEqual(expected);

@@ -12,7 +12,7 @@ describe('Personality Unit Tests', () => {
     // -----------------------------------------
 
     personality = new Personality({ name: 'Agitado' });
-    let props = omit(personality.props, 'created_at');
+    const props = omit(personality.props, 'created_at');
 
     expect(Personality.validate).toHaveBeenCalled();
 

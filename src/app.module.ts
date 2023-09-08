@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
+import { PersonalityModule } from './api/personality/personality.module';
 @Module({
-  imports: [],
+  imports: [PersonalityModule],
   controllers: [AppController],
   providers: [AppService],
 })

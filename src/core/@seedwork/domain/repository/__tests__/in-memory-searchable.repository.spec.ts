@@ -258,7 +258,7 @@ describe('InMemorySearchableRepository Unit Test', () => {
       ];
 
       for (const i of arrange) {
-        let result = await repository.search(i.search_params);
+        const result = await repository.search(i.search_params);
         expect(result).toStrictEqual(i.search_result);
       }
     });
@@ -311,7 +311,7 @@ describe('InMemorySearchableRepository Unit Test', () => {
       ];
 
       for (const i of arrange) {
-        let result = await repository.search(i.params);
+        const result = await repository.search(i.params);
         expect(result).toStrictEqual(i.result);
       }
     });

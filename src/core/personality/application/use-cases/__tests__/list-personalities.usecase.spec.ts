@@ -1,4 +1,4 @@
-import PersonalityInMemoryRepository from '../../../infra/repository/personality-in-memory.repository';
+import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
 import ListPersonalitiesUseCase from '../list-personalities.usecase';
 import PersonalityRepository from '../../../../personality/domain/repository/personality.repository';
 import { Personality } from '../../../../personality/domain/entities/personality';
@@ -84,7 +84,6 @@ describe('ListPersonalitiesUseCase Unit Tests', () => {
   });
 
   it('should returns output using pagination, sort and filter', async () => {
-    const created_at = new Date();
     const items = [
       new Personality({ name: 'aaa' }),
       new Personality({ name: 'AAA' }),

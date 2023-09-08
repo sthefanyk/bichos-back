@@ -1,6 +1,6 @@
 import { Personality } from '../../../domain/entities/personality';
 import NotFoundError from '../../../../@seedwork/domain/errors/not-found.error';
-import PersonalityInMemoryRepository from '../../../infra/repository/personality-in-memory.repository';
+import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
 import DeletePersonalityUseCase from '../delete-personality.usecase';
 
 describe('DeletePersonalityUseCase Unit Tests', () => {
@@ -27,5 +27,6 @@ describe('DeletePersonalityUseCase Unit Tests', () => {
       id: entity.id,
     });
     expect(repository.items).toHaveLength(0);
+    expect(spyDelete).toHaveBeenCalledTimes(1);
   });
 });

@@ -16,6 +16,17 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "#seedwork/*": [
+        "./src/core/@seedwork/*"
+      ],
+      "#personality/*": [
+        "./src/core/personality/*"
+      ]
+    }
+  },
+  "include": [
+    "./src", "./test", "./src/core"
+  ],
 }

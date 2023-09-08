@@ -1,6 +1,6 @@
 import { Personality } from '../../../../personality/domain/entities/personality';
 import NotFoundError from '../../../../@seedwork/domain/errors/not-found.error';
-import PersonalityInMemoryRepository from '../../../infra/repository/personality-in-memory.repository';
+import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
 import GetPersonalityUseCase from '../get-personality.usecase';
 
 describe('GetPersonalityUseCase Unit Tests', () => {

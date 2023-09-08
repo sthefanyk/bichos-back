@@ -49,10 +49,7 @@ export abstract class InMemoryRepository<E extends Entity>
   }
 }
 
-export abstract class InMemorySearchableRepository<
-    E extends Entity,
-    Filter = string,
-  >
+export abstract class InMemorySearchableRepository<E extends Entity>
   extends InMemoryRepository<E>
   implements SearchableRepositoryInterface<E>
 {

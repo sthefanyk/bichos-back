@@ -104,7 +104,7 @@ describe('InMemoryRepository Unit Tests', () => {
   });
 
   it('should deletes an entity', async () => {
-    let entity = new StubEntity({ name: 'name value', price: 5 });
+    const entity = new StubEntity({ name: 'name value', price: 5 });
     await repository.insert(entity);
     await repository.delete(entity.id);
     expect(repository.items).toHaveLength(0);

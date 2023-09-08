@@ -1,4 +1,4 @@
-import { Personality } from '../../../personality/domain/entities/personality';
+import { Personality } from '../../../../personality/domain/entities/personality';
 import PersonalityInMemoryRepository from './personality-in-memory.repository';
 
 describe('PersonalityInMemoryRepository Tests', () => {
@@ -24,7 +24,7 @@ describe('PersonalityInMemoryRepository Tests', () => {
     ];
     const filterSpy = jest.spyOn(items, 'filter' as any);
 
-    let itemsFiltered = await repository['applyFilter'](items, 'AGITADO');
+    const itemsFiltered = await repository['applyFilter'](items, 'AGITADO');
     expect(filterSpy).toHaveBeenCalledTimes(1);
     expect(itemsFiltered).toStrictEqual([items[0], items[1]]);
   });
@@ -43,7 +43,7 @@ describe('PersonalityInMemoryRepository Tests', () => {
       }),
     ];
 
-    let itemsSorted = await repository['applySort'](items, null, null);
+    const itemsSorted = await repository['applySort'](items, null, null);
     expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]]);
   });
 

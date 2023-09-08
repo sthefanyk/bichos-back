@@ -1,6 +1,5 @@
 import Entity from '../entity/entity';
 import UniqueEntityId from '../value-objects/unique-entity-id.vo';
-import ValueObject from '../value-objects/value-objects';
 
 export interface RepositoryInterface<
   E extends Entity,

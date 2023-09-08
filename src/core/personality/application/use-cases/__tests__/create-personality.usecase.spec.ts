@@ -1,4 +1,4 @@
-import PersonalityInMemoryRepository from '../../../infra/repository/personality-in-memory.repository';
+import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
 import CreatePersonalityUseCase from '../create-personality.usecase';
 
 describe('CreatePersonalityUseCase Unit Tests', () => {
