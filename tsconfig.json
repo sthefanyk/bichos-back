@@ -27,6 +27,6 @@
     }
   },
   "include": [
-    "./src", "./test", "./src/core"
+    "./src", "./test"
   ],
 }

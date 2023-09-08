@@ -1,10 +1,12 @@
 import PersonalityInMemoryRepository from '#personality/infra/repository/in-memory/personality-in-memory.repository';
 import PersonalityRepository from '#personality/domain/repository/personality.repository';
-import { CreatePersonalityUseCase } from '#personality/application/use-cases/create-personality.usecase';
-import { UpdatePersonalityUseCase } from '#personality/application/use-cases/update-personality.usecase';
-import { ListPersonalitiesUseCase } from '#personality/application/use-cases/list-personalities.usecase';
-import { DeletePersonalityUseCase } from '#personality/application/use-cases/delete-personality.usecase';
-import { GetPersonalityUseCase } from '#personality/application/use-cases/get-personality.usecase';
+import {
+  CreatePersonalityUseCase,
+  UpdatePersonalityUseCase,
+  ListPersonalitiesUseCase,
+  DeletePersonalityUseCase,
+  GetPersonalityUseCase,
+} from '#personality/application/use-cases';
 
 export namespace PERSONALITY_PROVIDERS {
   export namespace REPOSITORIES {

@@ -11,7 +11,6 @@ import {
   Query,
   ParseUUIDPipe,
 } from '@nestjs/common';
-// import { PersonalityService } from './personality.service';
 import { CreatePersonalityDto } from './dto/create-personality.dto';
 import { UpdatePersonalityDto } from './dto/update-personality.dto';
 import { CreatePersonalityUseCase } from '#personality/application/use-cases/create-personality.usecase';

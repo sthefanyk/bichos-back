@@ -1,15 +1,15 @@
 import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
-import ListPersonalitiesUseCase from '../list-personalities.usecase';
+import { ListPersonalitiesUseCase } from '../list-personalities.usecase';
 import PersonalityRepository from '../../../../personality/domain/repository/personality.repository';
 import { Personality } from '../../../../personality/domain/entities/personality';
 
 describe('ListPersonalitiesUseCase Unit Tests', () => {
-  let useCase: ListPersonalitiesUseCase;
+  let useCase: ListPersonalitiesUseCase.UseCase;
   let repository: PersonalityInMemoryRepository;
 
   beforeEach(() => {
     repository = new PersonalityInMemoryRepository();
-    useCase = new ListPersonalitiesUseCase(repository);
+    useCase = new ListPersonalitiesUseCase.UseCase(repository);
   });
 
   test('toOutput', async () => {

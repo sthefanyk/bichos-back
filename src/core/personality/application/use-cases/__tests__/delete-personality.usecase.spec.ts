@@ -1,15 +1,15 @@
 import { Personality } from '../../../domain/entities/personality';
 import NotFoundError from '../../../../@seedwork/domain/errors/not-found.error';
 import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
-import DeletePersonalityUseCase from '../delete-personality.usecase';
+import { DeletePersonalityUseCase } from '../delete-personality.usecase';
 
 describe('DeletePersonalityUseCase Unit Tests', () => {
-  let useCase: DeletePersonalityUseCase;
+  let useCase: DeletePersonalityUseCase.UseCase;
   let repository: PersonalityInMemoryRepository;
 
   beforeEach(() => {
     repository = new PersonalityInMemoryRepository();
-    useCase = new DeletePersonalityUseCase(repository);
+    useCase = new DeletePersonalityUseCase.UseCase(repository);
   });
 
   it('should throws error when entity not found', async () => {

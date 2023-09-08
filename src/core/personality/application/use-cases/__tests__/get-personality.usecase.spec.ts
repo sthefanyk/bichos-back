@@ -1,15 +1,15 @@
 import { Personality } from '../../../../personality/domain/entities/personality';
 import NotFoundError from '../../../../@seedwork/domain/errors/not-found.error';
 import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
-import GetPersonalityUseCase from '../get-personality.usecase';
+import { GetPersonalityUseCase } from '../get-personality.usecase';
 
 describe('GetPersonalityUseCase Unit Tests', () => {
-  let useCase: GetPersonalityUseCase;
+  let useCase: GetPersonalityUseCase.UseCase;
   let repository: PersonalityInMemoryRepository;
 
   beforeEach(() => {
     repository = new PersonalityInMemoryRepository();
-    useCase = new GetPersonalityUseCase(repository);
+    useCase = new GetPersonalityUseCase.UseCase(repository);
   });
 
   it('should throws error when entity not found', async () => {

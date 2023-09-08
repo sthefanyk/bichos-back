@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreatePersonalityDto } from './dto/create-personality.dto';
-// import { UpdatePersonalityDto } from './dto/update-personality.dto';
-import { CreatePersonalityUseCase } from '#personality/application/use-cases/create-personality.usecase';
-import { ListPersonalitiesUseCase } from '#personality/application/use-cases/list-personalities.usecase';
-import { UpdatePersonalityUseCase } from '#personality/application/use-cases/update-personality.usecase';
+import {
+  CreatePersonalityUseCase,
+  UpdatePersonalityUseCase,
+  ListPersonalitiesUseCase,
+} from '#personality/application/use-cases';
 
 @Injectable()
 export class PersonalityService {

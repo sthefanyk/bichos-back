@@ -1,13 +1,13 @@
 import PersonalityInMemoryRepository from '../../../infra/repository/in-memory/personality-in-memory.repository';
-import CreatePersonalityUseCase from '../create-personality.usecase';
+import { CreatePersonalityUseCase } from '../create-personality.usecase';
 
 describe('CreatePersonalityUseCase Unit Tests', () => {
-  let useCase: CreatePersonalityUseCase;
+  let useCase: CreatePersonalityUseCase.UseCase;
   let repository: PersonalityInMemoryRepository;
 
   beforeEach(() => {
     repository = new PersonalityInMemoryRepository();
-    useCase = new CreatePersonalityUseCase(repository);
+    useCase = new CreatePersonalityUseCase.UseCase(repository);
   });
 
   it('Should be able to create a new personality', async () => {
