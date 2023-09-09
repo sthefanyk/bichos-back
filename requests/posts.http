@@ -1,0 +1,21 @@
+GET http://localhost:3000/posts
+
+###
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+    "name_animal": "para excluir"
+}
+
+###
+PATCH   http://localhost:3000/posts/2
+Content-Type: application/json
+
+{
+    "name_animal": "theo"
+}
+
+###
+DELETE  http://localhost:3000/posts/4
+Content-Type: application/json

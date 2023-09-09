@@ -1,0 +1,25 @@
+GET http://localhost:3000/personality
+
+###
+POST http://localhost:3000/personality
+Content-Type: application/json
+
+{
+    "name": "name",
+    "email": "email",
+    "password": "password"
+}
+
+###
+PUT  http://localhost:3000/personality/2310493a-3676-4e7a-8286-385cf2b0c878
+Content-Type: application/json
+
+{
+    "name": "name update",
+    "email": "email",
+    "password": "password"
+}
+
+###
+DELETE  http://localhost:3000/personality/c70c8140-dedd-45ef-84ad-126c7214aeb7
+Content-Type: application/json
