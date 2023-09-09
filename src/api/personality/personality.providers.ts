@@ -17,8 +17,8 @@ export namespace PERSONALITY_PROVIDERS {
 
     // export const PERSONALITY_SEQUELIZE_REPOSITORY = {
     //   provide: 'PersonalitySequelizeRepository',
-    //   useFactory: (categoryModel: typeof PersonalitySequelize.PersonalityModel) => {
-    //     return new PersonalitySequelize.PersonalityRepository(categoryModel);
+    //   useFactory: (personalityModel: typeof PersonalitySequelize.PersonalityModel) => {
+    //     return new PersonalitySequelize.PersonalityRepository(personalityModel);
     //   },
     //   inject: [getModelToken(PersonalitySequelize.PersonalityModel)],
     // };
@@ -37,40 +37,40 @@ export namespace PERSONALITY_PROVIDERS {
   export namespace USE_CASES {
     export const CREATE_PERSONALITY_USE_CASE = {
       provide: CreatePersonalityUseCase.UseCase,
-      useFactory: (categoryRepo: PersonalityRepository.Repository) => {
-        return new CreatePersonalityUseCase.UseCase(categoryRepo);
+      useFactory: (personalityRepo: PersonalityRepository.Repository) => {
+        return new CreatePersonalityUseCase.UseCase(personalityRepo);
       },
       inject: [REPOSITORIES.PERSONALITY_REPOSITORY.provide],
     };
 
     export const UPDATE_PERSONALITY_USE_CASE = {
       provide: UpdatePersonalityUseCase.UseCase,
-      useFactory: (categoryRepo: PersonalityRepository.Repository) => {
-        return new UpdatePersonalityUseCase.UseCase(categoryRepo);
+      useFactory: (personalityRepo: PersonalityRepository.Repository) => {
+        return new UpdatePersonalityUseCase.UseCase(personalityRepo);
       },
       inject: [REPOSITORIES.PERSONALITY_REPOSITORY.provide],
     };
 
     export const LIST_CATEGORIES_USE_CASE = {
       provide: ListPersonalitiesUseCase.UseCase,
-      useFactory: (categoryRepo: PersonalityRepository.Repository) => {
-        return new ListPersonalitiesUseCase.UseCase(categoryRepo);
+      useFactory: (personalityRepo: PersonalityRepository.Repository) => {
+        return new ListPersonalitiesUseCase.UseCase(personalityRepo);
       },
       inject: [REPOSITORIES.PERSONALITY_REPOSITORY.provide],
     };
 
     export const GET_PERSONALITY_USE_CASE = {
       provide: GetPersonalityUseCase.UseCase,
-      useFactory: (categoryRepo: PersonalityRepository.Repository) => {
-        return new GetPersonalityUseCase.UseCase(categoryRepo);
+      useFactory: (personalityRepo: PersonalityRepository.Repository) => {
+        return new GetPersonalityUseCase.UseCase(personalityRepo);
       },
       inject: [REPOSITORIES.PERSONALITY_REPOSITORY.provide],
     };
 
     export const DELETE_PERSONALITY_USE_CASE = {
       provide: DeletePersonalityUseCase.UseCase,
-      useFactory: (categoryRepo: PersonalityRepository.Repository) => {
-        return new DeletePersonalityUseCase.UseCase(categoryRepo);
+      useFactory: (personalityRepo: PersonalityRepository.Repository) => {
+        return new DeletePersonalityUseCase.UseCase(personalityRepo);
       },
       inject: [REPOSITORIES.PERSONALITY_REPOSITORY.provide],
     };

@@ -1,6 +1,9 @@
 GET http://localhost:3000/personality
 
 ###
+GET http://localhost:3000/personality?filter=up
+
+###
 POST http://localhost:3000/personality
 Content-Type: application/json
 
@@ -11,7 +14,7 @@ Content-Type: application/json
 }
 
 ###
-PUT  http://localhost:3000/personality/2310493a-3676-4e7a-8286-385cf2b0c878
+PUT  http://localhost:3000/personality/4b430630-b528-4953-8e32-bbe606fc02c1
 Content-Type: application/json
 
 {

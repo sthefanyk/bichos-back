@@ -1,17 +1,32 @@
 GET http://localhost:3000/users
 
 ###
+GET http://localhost:3000/users?filter=update
+
+###
+GET http://localhost:3000/users?sort=name&sort_dir=asc
+
+###
+GET http://localhost:3000/users?sort=name&sort_dir=asc&filter=ja
+
+###
+GET http://localhost:3000/users?page=3&per_page=2
+
+###
+GET http://localhost:3000/users/cf9baed4-21a7-462b-8738-ede0a1239be4
+
+###
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "name",
-    "email": "email",
-    "password": "password"
+    "name": "marcos",
+    "email": "email@example.com",
+    "password": "Password2"
 }
 
 ###
-PATCH   http://localhost:3000/users/3
+PUT   http://localhost:3000/users/4cbf21b5-93c9-41be-961a-450cd5e87c37
 Content-Type: application/json
 
 {
@@ -21,5 +36,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/users/5
+DELETE  http://localhost:3000/users/4cbf21b5-93c9-41be-961a-450cd5e87c37
 Content-Type: application/json
