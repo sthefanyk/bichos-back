@@ -7,7 +7,7 @@ import { UsersProvider } from './users.providers';
   controllers: [UsersController],
   providers: [
     UsersService,
-    UsersProvider.Repositories.USER_IN_MEMORY_REPO,
+    UsersProvider.Repositories.USER_TYPEORM_REPO,
     ...Object.values(UsersProvider.UseCases),
   ],
 })

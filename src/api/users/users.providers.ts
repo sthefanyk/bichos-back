@@ -7,6 +7,7 @@ import {
 } from 'src/core/user/application/use-case';
 import UserRepository from 'src/core/user/domain/repository/user.repository';
 import UserInMemoryRepository from 'src/core/user/infra/repository/in-memory/user-in-memory.repository';
+import UserTypeormRepository from 'src/core/user/infra/repository/typeorm/user-typeorm.repository';
 
 export namespace UsersProvider {
   export namespace Repositories {
@@ -15,9 +16,14 @@ export namespace UsersProvider {
       useClass: UserInMemoryRepository,
     };
 
+    export const USER_TYPEORM_REPO = {
+      provide: 'UserTypeormRepository',
+      useClass: UserTypeormRepository,
+    };
+
     export const REPO = {
-      provide: 'UserInMemoryRepository',
-      useExisting: 'UserInMemoryRepository',
+      provide: 'UserTypeormRepository',
+      useExisting: 'UserTypeormRepository',
     };
   }
 
