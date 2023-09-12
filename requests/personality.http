@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ###
-PUT  http://localhost:3000/personality/4b430630-b528-4953-8e32-bbe606fc02c1
+PUT  http://localhost:3000/personality/903ac5ec-c360-4f38-b12d-ac565a26d99c
 Content-Type: application/json
 
 {
@@ -24,5 +24,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/personality/c70c8140-dedd-45ef-84ad-126c7214aeb7
+DELETE  http://localhost:3000/personality/903ac5ec-c360-4f38-b12d-ac565a26d99c
 Content-Type: application/json

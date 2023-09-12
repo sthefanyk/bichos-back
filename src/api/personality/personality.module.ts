@@ -7,7 +7,7 @@ import { PERSONALITY_PROVIDERS } from './personality.providers';
   controllers: [PersonalityController],
   providers: [
     PersonalityService,
-    PERSONALITY_PROVIDERS.REPOSITORIES.PERSONALITY_IN_MEMORY_REPOSITORY,
+    PERSONALITY_PROVIDERS.REPOSITORIES.PERSONALITY_TYPEORM_REPO,
     ...Object.values(PERSONALITY_PROVIDERS.USE_CASES),
   ],
 })

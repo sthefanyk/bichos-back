@@ -9,26 +9,15 @@ import {
   SearchableRepositoryInterface,
   SortDirection,
 } from './repository-contracts';
-import { User as Model } from '../../../user/infra/repository/typeorm/User';
-import { TypeORM } from '../../../../database/data-source';
-import { UserDto } from '../../../user/application/dto/user.dto';
+import Model from '../entity/model';
 
-export abstract class TypeormRepository<E extends Entity>
+export abstract class TypeormRepository<E extends Entity, M extends Model>
   implements RepositoryInterface<E>
-{  
-  private repo: Repository<Model>;
-
-  constructor(){
-    this.initializeRepo();
-  }
-
-  private async initializeRepo() {
-    this.repo = await TypeORM.DataSource<Model>(Model);
-  }
+{
+  constructor(private repo: Repository<M>){}
 
   async insert(entity: E): Promise<void> {
-    const userModel = UserDto.getModel(entity as any);
-    await this.repo.save(userModel);
+    await this.repo.save(entity.toJSON() as any);
   }
 
   async findById(id: string | UniqueEntityId): Promise<E> {
@@ -42,7 +31,7 @@ export abstract class TypeormRepository<E extends Entity>
     const usersEntity: E[] = [];
     
     usersModel.forEach((user) => {
-      usersEntity.push(UserDto.getEntity(user) as any);
+      usersEntity.push(user.toEntity(user));
     });
     
     return usersEntity;
@@ -50,7 +39,7 @@ export abstract class TypeormRepository<E extends Entity>
 
   async update(entity: E): Promise<void> {
     await this._get(entity.id);
-    await this.repo.update(entity.id, UserDto.getModel(entity as any));
+    await this.repo.update(entity.id, entity.toJSON());
   }
 
   async delete(id: string | UniqueEntityId): Promise<void> {
@@ -64,18 +53,18 @@ export abstract class TypeormRepository<E extends Entity>
   }
 
   protected async _get(id: string): Promise<E> {
-    const user = await this.repo.findOne({ where: { id }});
+    const user = await this.repo.findOne({ where: { id } as any});
 
     if (!user) {
       throw new NotFoundError('Entity Not Found using ID ' + id);
     }
 
-    return UserDto.getEntity(user) as any;
+    return user.toEntity(user);
   }
 }
 
-export abstract class TypeormSearchableRepository<E extends Entity>
-  extends TypeormRepository<E>
+export abstract class TypeormSearchableRepository<E extends Entity, M extends Model>
+  extends TypeormRepository<E, M>
   implements SearchableRepositoryInterface<E>
 {
   sortableFields: string[];

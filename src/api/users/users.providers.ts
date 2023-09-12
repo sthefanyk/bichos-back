@@ -1,3 +1,4 @@
+import { getDataSourceToken } from '@nestjs/typeorm';
 import {
   CreateUserUseCase,
   DeleteUserUseCase,
@@ -7,7 +8,9 @@ import {
 } from 'src/core/user/application/use-case';
 import UserRepository from 'src/core/user/domain/repository/user.repository';
 import UserInMemoryRepository from 'src/core/user/infra/repository/in-memory/user-in-memory.repository';
+import { User } from 'src/core/user/infra/repository/typeorm/user.model';
 import UserTypeormRepository from 'src/core/user/infra/repository/typeorm/user-typeorm.repository';
+import { DataSource } from 'typeorm';
 
 export namespace UsersProvider {
   export namespace Repositories {
@@ -16,9 +19,17 @@ export namespace UsersProvider {
       useClass: UserInMemoryRepository,
     };
 
+    // export const USER_TYPEORM_REPO = {
+    //   provide: 'UserTypeormRepository',
+    //   useClass: UserTypeormRepository,
+    // };
+
     export const USER_TYPEORM_REPO = {
       provide: 'UserTypeormRepository',
-      useClass: UserTypeormRepository,
+      useFactory: (dataSource: DataSource) =>{
+        return new UserTypeormRepository(dataSource.getRepository(User));
+      },
+      inject: [getDataSourceToken()]
     };
 
     export const REPO = {

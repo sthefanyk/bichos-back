@@ -7,6 +7,10 @@ import {
   DeletePersonalityUseCase,
   GetPersonalityUseCase,
 } from '#personality/application/use-cases';
+import { DataSource } from 'typeorm';
+import { getDataSourceToken } from '@nestjs/typeorm';
+import PersonalityTypeormRepository from '#personality/infra/repository/typeorm/personality-typeorm.repository';
+import { Personality } from '#personality/infra/repository/typeorm/personality.model';
 
 export namespace PERSONALITY_PROVIDERS {
   export namespace REPOSITORIES {
@@ -23,14 +27,17 @@ export namespace PERSONALITY_PROVIDERS {
     //   inject: [getModelToken(PersonalitySequelize.PersonalityModel)],
     // };
 
-    // export const PERSONALITY_REPOSITORY = {
-    //   provide: 'PersonalityRepository',
-    //   useExisting: 'PersonalitySequelizeRepository',
-    // };
+    export const PERSONALITY_TYPEORM_REPO = {
+      provide: 'PersonalityTypeormRepository',
+      useFactory: (dataSource: DataSource) =>{
+        return new PersonalityTypeormRepository(dataSource.getRepository(Personality));
+      },
+      inject: [getDataSourceToken()]
+    };
 
     export const PERSONALITY_REPOSITORY = {
-      provide: 'PersonalityInMemoryRepository',
-      useExisting: 'PersonalityInMemoryRepository',
+      provide: 'PersonalityTypeormRepository',
+      useExisting: 'PersonalityTypeormRepository',
     };
   }
 
