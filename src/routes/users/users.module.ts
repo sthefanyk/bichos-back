@@ -13,5 +13,6 @@ import { User } from 'src/core/user/infra/repository/typeorm/user.model';
     UsersProvider.Repositories.USER_TYPEORM_REPO,
     ...Object.values(UsersProvider.UseCases),
   ],
+  exports: [UsersService]
 })
 export class UsersModule {}

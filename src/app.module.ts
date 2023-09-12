@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PersonalityModule } from './api/personality/personality.module';
-import { UsersModule } from './api/users/users.module';
-import { PostsModule } from './api/posts/posts.module';
+import { PersonalityModule } from './routes/personality/personality.module';
+import { UsersModule } from './routes/users/users.module';
+import { PostsModule } from './routes/posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './core/user/infra/repository/typeorm/user.model';
 import { Personality } from '#personality/infra/repository/typeorm/personality.model';

@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { Personality } from '#personality/infra/repository/typeorm/personality.model';
 import { User } from 'src/core/user/infra/repository/typeorm/user.model';
 import { DataSource } from 'typeorm';
 
@@ -19,12 +20,12 @@ export class TypeORM {
   }
 }
 
-export const InfosDataSource = {
+export const AppDataSource = new DataSource({
   type: 'sqlite',
   database: 'src/database/db.sqlite',
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [User, Personality],
   migrations: ['src/database/migration/*.ts'],
   subscribers: [],
-}
+});

@@ -26,15 +26,15 @@ export abstract class TypeormRepository<E extends Entity, M extends Model>
   }
 
   async findAll(): Promise<E[]> {
-    const usersModel = await this.repo.find();
+    const models = await this.repo.find();
 
-    const usersEntity: E[] = [];
+    const entities: E[] = [];
     
-    usersModel.forEach((user) => {
-      usersEntity.push(user.toEntity(user));
+    models.forEach((user) => {
+      entities.push(user.toEntity(user));
     });
     
-    return usersEntity;
+    return entities;
   }
 
   async update(entity: E): Promise<void> {
@@ -53,13 +53,13 @@ export abstract class TypeormRepository<E extends Entity, M extends Model>
   }
 
   protected async _get(id: string): Promise<E> {
-    const user = await this.repo.findOne({ where: { id } as any});
+    const model = await this.repo.findOne({ where: { id } as any});
 
-    if (!user) {
+    if (!model) {
       throw new NotFoundError('Entity Not Found using ID ' + id);
     }
 
-    return user.toEntity(user);
+    return model.toEntity(model);
   }
 }
 
