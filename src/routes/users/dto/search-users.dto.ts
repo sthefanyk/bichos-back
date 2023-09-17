@@ -1,7 +1,7 @@
-import { SortDirection } from '#seedwork/domain/repository/repository-contracts';
-import { ListUsersUseCase } from 'src/core/user/application/use-case';
+import { SortDirection } from 'src/@core/application/services/search';
+import { UserSearch } from 'src/@core/application/use-cases/user';
 
-export class SearchUsersDto implements ListUsersUseCase.Input {
+export class SearchUsersDto implements UserSearch.Input {
   page?: number;
   per_page?: number;
   sort?: string;

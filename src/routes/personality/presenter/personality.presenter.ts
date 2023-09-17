@@ -1,7 +1,6 @@
 import { Transform } from 'class-transformer';
 import { CollectionPresenter } from '../../@share/presenters/collection.presenter';
-import { PersonalityOutput } from '#personality/application/dto/personality-output.dto';
-import { ListPersonalitiesUseCase } from '#personality/application/use-cases/list-personalities.usecase';
+import { PersonalitySearch } from 'src/@core/application/use-cases/personality';
 
 export class PersonalityPresenter {
   id: string;
@@ -11,23 +10,36 @@ export class PersonalityPresenter {
     return value.toISOString();
   })
   created_at: Date;
+  @Transform(({ value }: { value: Date }) => {
+    return value.toISOString();
+  })
+  updated_at: Date;
+  @Transform(({ value }: { value: Date }) => {
+    return value.toISOString();
+  })
+  deleted_at: Date;
 
-  constructor(output: PersonalityOutput) {
+  constructor(output: Output) {
     this.id = output.id;
     this.name = output.name;
-    this.is_active = output.is_active;
     this.created_at = output.created_at;
+    this.updated_at = output.updated_at;
+    this.deleted_at = output.deleted_at;
   }
 }
 
+export type Output = {
+  id: string;
+  name: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+};
+
 export class PersonalityCollectionPresenter extends CollectionPresenter {
   data: PersonalityPresenter[];
-  //sugestão de reuso
-  // constructor(output: PersonalityOutput[], paginationProps){
 
-  // }
-
-  constructor(output: ListPersonalitiesUseCase.Output) {
+  constructor(output: PersonalitySearch.Output) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
     this.data = items.map((item) => new PersonalityPresenter(item));

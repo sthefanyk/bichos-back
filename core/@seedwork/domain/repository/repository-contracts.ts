@@ -12,6 +12,11 @@ export interface RepositoryInterface<
   delete(id: string | UniqueEntityId): Promise<void>;
 }
 
+export interface IAuthRepository<E extends Entity> {
+  login(email: string, password: string): Promise<E>;
+  forget(email: string): Promise<E>;
+}
+
 export type SortDirection = 'asc' | 'desc';
 
 export type SearchProps<Filter = string> = {

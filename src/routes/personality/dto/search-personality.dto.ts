@@ -1,7 +1,7 @@
-import { ListPersonalitiesUseCase } from '#personality/application/use-cases/list-personalities.usecase';
-import { SortDirection } from '#seedwork/domain/repository/repository-contracts';
+import { SortDirection } from 'src/@core/application/services/search';
+import { PersonalitySearch } from 'src/@core/application/use-cases/personality';
 
-export class SearchPersonalityDto implements ListPersonalitiesUseCase.Input {
+export class SearchPersonalityDto implements PersonalitySearch.Input {
   page?: number;
   per_page?: number;
   sort?: string;

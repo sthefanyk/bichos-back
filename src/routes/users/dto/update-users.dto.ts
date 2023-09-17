@@ -1,6 +1,6 @@
-import { UpdateUserUseCase } from 'src/core/user/application/use-case';
 import { CreateUsersDto } from './create-users.dto';
+import { UserUpdate } from 'src/@core/application/use-cases/user';
 
 export class UpdateUsersDto
   extends CreateUsersDto
-  implements Omit<UpdateUserUseCase.Input, 'id'> {}
+  implements Omit<UserUpdate.Input, 'id'> {}

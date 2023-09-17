@@ -1,0 +1,42 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "register@example.com",
+    "password": "Password1"
+}
+
+###
+POST http://localhost:3000/auth/reset
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVnaXN0ZXIiLCJlbWFpbCI6InJlZ2lzdGVyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk0OTAyOTg2LCJleHAiOjE2OTU1MDc3ODYsImF1ZCI6InVzZXJzIiwiaXNzIjoiQVBJIEJpY2hvcyIsInN1YiI6ImJlMjNmMjI1LTRkZTMtNGRkMS04NTIxLTNlMWYzNWJhOTBjNCJ9.T8hIN4bba-zmWyde9tIk28CMxgfubvWQ3GKHrFgPtN8",
+    "password": "PasswordReset123"
+}
+
+###
+POST http://localhost:3000/auth/forget
+Content-Type: application/json
+
+{
+    "email": "email@example.com"
+}
+
+###
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "name": "register",
+    "email": "register@example.com",
+    "password": "Password1"
+}
+
+###
+POST http://localhost:3000/auth/me
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVnaXN0ZXIiLCJlbWFpbCI6InJlZ2lzdGVyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk0OTAyNjQ1LCJleHAiOjE2OTU1MDc0NDUsImF1ZCI6InVzZXJzIiwiaXNzIjoiQVBJIEJpY2hvcyIsInN1YiI6ImJlMjNmMjI1LTRkZTMtNGRkMS04NTIxLTNlMWYzNWJhOTBjNCJ9.yki_I0zHf2IHGNynPMIIjKNCC6PVJJBPEe1ZN9TZwwE"
+}

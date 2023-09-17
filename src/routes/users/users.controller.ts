@@ -26,6 +26,16 @@ export class UsersController {
     return this.usersService.findAll(searchParams);
   }
 
+  @Get('active')
+  getActivateRecords(@Query() searchParams: SearchUsersDto) {
+    return this.usersService.getActiveRecords(searchParams);
+  }
+
+  @Get('inactive')
+  getDeactivateRecords(@Query() searchParams: SearchUsersDto) {
+    return this.usersService.getInactiveRecords(searchParams);
+  }
+
   @Get(':id')
   findOne(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,

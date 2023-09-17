@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsBoolean, IsOptional, MaxLength, IsEmail, IsStrongPassword, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, MaxLength, IsEmail, IsStrongPassword, IsDate } from 'class-validator';
 
 export class CreateUsersDto {
     @MaxLength(255)
@@ -20,11 +20,19 @@ export class CreateUsersDto {
     @IsNotEmpty()
     password: string;
   
-    @IsBoolean()
-    @IsOptional()
-    is_active: boolean;
+    // @IsBoolean()
+    // @IsOptional()
+    // is_active: boolean;
   
     @IsDate()
     @IsOptional()
     created_at: Date;
+
+    @IsDate()
+    @IsOptional()
+    updated_at: Date;
+
+    @IsDate()
+    @IsOptional()
+    deleted_at: Date;
 }

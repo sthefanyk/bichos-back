@@ -1,28 +1,36 @@
-GET http://localhost:3000/personality
+GET http://localhost:3000/personalities
 
 ###
-GET http://localhost:3000/personality?filter=up
+GET http://localhost:3000/personalities/active
 
 ###
-POST http://localhost:3000/personality
+GET http://localhost:3000/personalities?filter=ca
+
+###
+GET http://localhost:3000/personalities?sort=name&sort_dir=asc
+
+###
+GET http://localhost:3000/personalities?sort=name&sort_dir=desc&filter=am
+
+###
+GET http://localhost:3000/personalities?page=2&per_page=2
+
+###
+POST http://localhost:3000/personalities
 Content-Type: application/json
 
 {
-    "name": "name",
-    "email": "email",
-    "password": "password"
+    "name": "amoroso"
 }
 
 ###
-PUT  http://localhost:3000/personality/903ac5ec-c360-4f38-b12d-ac565a26d99c
+PUT  http://localhost:3000/personalities/042e6638-27aa-4dc5-9905-61da216ca5d4
 Content-Type: application/json
 
 {
-    "name": "name update",
-    "email": "email",
-    "password": "password"
+    "name": "per update"
 }
 
 ###
-DELETE  http://localhost:3000/personality/903ac5ec-c360-4f38-b12d-ac565a26d99c
+DELETE  http://localhost:3000/personalities/5684a12e-46f0-4b8d-869e-595fc3558384
 Content-Type: application/json

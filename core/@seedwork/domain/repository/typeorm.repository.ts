@@ -3,6 +3,7 @@ import Entity from '../entity/entity';
 import NotFoundError from '../errors/not-found.error';
 import UniqueEntityId from '../value-objects/unique-entity-id.vo';
 import {
+  IAuthRepository,
   RepositoryInterface,
   SearchParams,
   SearchResult,
@@ -14,7 +15,7 @@ import Model from '../entity/model';
 export abstract class TypeormRepository<E extends Entity, M extends Model>
   implements RepositoryInterface<E>
 {
-  constructor(private repo: Repository<M>){}
+  constructor(private repo: Repository<M>) {}
 
   async insert(entity: E): Promise<void> {
     await this.repo.save(entity.toJSON() as any);
@@ -29,11 +30,11 @@ export abstract class TypeormRepository<E extends Entity, M extends Model>
     const models = await this.repo.find();
 
     const entities: E[] = [];
-    
+
     models.forEach((user) => {
       entities.push(user.toEntity(user));
     });
-    
+
     return entities;
   }
 
@@ -53,7 +54,7 @@ export abstract class TypeormRepository<E extends Entity, M extends Model>
   }
 
   protected async _get(id: string): Promise<E> {
-    const model = await this.repo.findOne({ where: { id } as any});
+    const model = await this.repo.findOne({ where: { id } as any });
 
     if (!model) {
       throw new NotFoundError('Entity Not Found using ID ' + id);
@@ -63,14 +64,20 @@ export abstract class TypeormRepository<E extends Entity, M extends Model>
   }
 }
 
-export abstract class TypeormSearchableRepository<E extends Entity, M extends Model>
+export abstract class TypeormSearchableRepository<
+    E extends Entity,
+    M extends Model,
+  >
   extends TypeormRepository<E, M>
   implements SearchableRepositoryInterface<E>
 {
   sortableFields: string[];
 
   async search(props: SearchParams): Promise<SearchResult<E>> {
-    const itemsFiltered = await this.applyFilter(await this.findAll(), props.filter);
+    const itemsFiltered = await this.applyFilter(
+      await this.findAll(),
+      props.filter,
+    );
     const itemsSorted = await this.applySort(
       itemsFiltered,
       props.sort,
@@ -131,5 +138,35 @@ export abstract class TypeormSearchableRepository<E extends Entity, M extends Mo
     const start = (page - 1) * per_page;
     const limit = start + per_page;
     return items.slice(start, limit);
+  }
+}
+
+export abstract class AuthTypeormService<E extends Entity, M extends Model>
+  implements IAuthRepository<E>
+{
+  constructor(private repo: Repository<M>) {}
+
+  async login(email: string, password: string): Promise<E> {
+    const model = await this.repo.findOne({
+      where: { email, password } as any,
+    });
+
+    if (!model) {
+      throw new Error('Could not find');
+    }
+
+    return model.toEntity(model);
+  }
+
+  async forget(email: string): Promise<E> {
+    const model = await this.repo.findOne({
+      where: { email } as any,
+    });
+
+    if (!model) {
+      throw new Error('Could not find');
+    }
+
+    return model.toEntity(model);
   }
 }

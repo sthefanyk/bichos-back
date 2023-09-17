@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import { Personality } from '#personality/infra/repository/typeorm/personality.model';
-import { User } from 'src/core/user/infra/repository/typeorm/user.model';
+import UserModel from '../@core/domain/models/user.model';
 import { DataSource } from 'typeorm';
+import PersonalityModel from '../@core/domain/models/personality.model';
 
 export class TypeORM {
   static async DataSource<M>(model: new () => M){
@@ -10,7 +10,7 @@ export class TypeORM {
       database: 'src/database/db.sqlite',
       synchronize: true,
       logging: true,
-      entities: [User],
+      entities: [UserModel],
       migrations: ['src/database/migration/*.ts'],
       subscribers: [],
     });
@@ -22,10 +22,9 @@ export class TypeORM {
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',
-  database: 'src/database/db.sqlite',
+  database: 'src/database/my.sqlite',
   synchronize: true,
   logging: true,
-  entities: [User, Personality],
-  migrations: ['src/database/migration/*.ts'],
-  subscribers: [],
+  entities: [UserModel, PersonalityModel],
+  migrations: ['src/database/migrations/*.{ts,js}'],
 });

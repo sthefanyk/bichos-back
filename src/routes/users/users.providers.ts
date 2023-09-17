@@ -1,35 +1,29 @@
-import { getDataSourceToken } from '@nestjs/typeorm';
-import {
-  CreateUserUseCase,
-  DeleteUserUseCase,
-  GetUserUseCase,
-  ListUsersUseCase,
-  UpdateUserUseCase,
-} from 'src/core/user/application/use-case';
-import UserRepository from 'src/core/user/domain/repository/user.repository';
-import UserInMemoryRepository from 'src/core/user/infra/repository/in-memory/user-in-memory.repository';
-import { User } from 'src/core/user/infra/repository/typeorm/user.model';
-import UserTypeormRepository from 'src/core/user/infra/repository/typeorm/user-typeorm.repository';
 import { DataSource } from 'typeorm';
+import { getDataSourceToken } from '@nestjs/typeorm';
+
+import {
+  UserCreate,
+  UserDelete,
+  UserFindAll,
+  UserFindById,
+  UserSearch,
+  UserUpdate,
+  UserGetActiveRecords,
+  UserGetInactiveRecords
+} from 'src/@core/application/use-cases/user';
+
+import UserModel from 'src/@core/domain/models/user.model';
+
+import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace UsersProvider {
   export namespace Repositories {
-    export const USER_IN_MEMORY_REPO = {
-      provide: 'UserInMemoryRepository',
-      useClass: UserInMemoryRepository,
-    };
-
-    // export const USER_TYPEORM_REPO = {
-    //   provide: 'UserTypeormRepository',
-    //   useClass: UserTypeormRepository,
-    // };
-
     export const USER_TYPEORM_REPO = {
       provide: 'UserTypeormRepository',
-      useFactory: (dataSource: DataSource) =>{
-        return new UserTypeormRepository(dataSource.getRepository(User));
+      useFactory: (dataSource: DataSource) => {
+        return new UserTypeormRepository(dataSource.getRepository(UserModel));
       },
-      inject: [getDataSourceToken()]
+      inject: [getDataSourceToken()],
     };
 
     export const REPO = {
@@ -37,44 +31,67 @@ export namespace UsersProvider {
       useExisting: 'UserTypeormRepository',
     };
   }
-
   export namespace UseCases {
     export const CREATE = {
-      provide: CreateUserUseCase.UseCase,
-      useFactory: (userRepo: UserRepository.Repository) => {
-        return new CreateUserUseCase.UseCase(userRepo);
+      provide: UserCreate.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserCreate.Usecase(userRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const GET = {
-      provide: GetUserUseCase.UseCase,
-      useFactory: (userRepo: UserRepository.Repository) => {
-        return new GetUserUseCase.UseCase(userRepo);
+      provide: UserFindById.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserFindById.Usecase(userRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const LIST = {
-      provide: ListUsersUseCase.UseCase,
-      useFactory: (userRepo: UserRepository.Repository) => {
-        return new ListUsersUseCase.UseCase(userRepo);
+      provide: UserFindAll.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserFindAll.Usecase(userRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const SEARCH = {
+      provide: UserSearch.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserSearch.Usecase(userRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const GET_ACTIVATE = {
+      provide: UserGetActiveRecords.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserGetActiveRecords.Usecase(userRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const GET_INACTIVATE = {
+      provide: UserGetInactiveRecords.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserGetInactiveRecords.Usecase(userRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const UPDATE = {
-      provide: UpdateUserUseCase.UseCase,
-      useFactory: (userRepo: UserRepository.Repository) => {
-        return new UpdateUserUseCase.UseCase(userRepo);
+      provide: UserUpdate.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserUpdate.Usecase(userRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const DELETE = {
-      provide: DeleteUserUseCase.UseCase,
-      useFactory: (userRepo: UserRepository.Repository) => {
-        return new DeleteUserUseCase.UseCase(userRepo);
+      provide: UserDelete.Usecase,
+      useFactory: (userRepo: UserTypeormRepository) => {
+        return new UserDelete.Usecase(userRepo);
       },
       inject: [Repositories.REPO.provide],
     };

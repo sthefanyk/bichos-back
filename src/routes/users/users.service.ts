@@ -1,39 +1,70 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserUseCase, DeleteUserUseCase, GetUserUseCase, ListUsersUseCase, UpdateUserUseCase } from 'src/core/user/application/use-case';
 import { UsersCollectionPresenter, UsersPresenter } from './users.presenter';
-import { UserOutput } from 'src/core/user/application/dto/user-output.dto';
 import { CreateUsersDto, UpdateUsersDto, SearchUsersDto } from './dto';
+import {
+  UserCreate,
+  UserDelete,
+  UserFindAll,
+  UserFindById,
+  UserSearch,
+  UserUpdate,
+  UserGetActiveRecords,
+  UserGetInactiveRecords
+} from 'src/@core/application/use-cases/user';
+
+import UserProps from 'src/@core/domain/entities/user-props';
 
 @Injectable()
 export class UsersService {
 
-  @Inject(CreateUserUseCase.UseCase)
-  private createUseCase: CreateUserUseCase.UseCase;
+  @Inject(UserCreate.Usecase)
+  private createUseCase: UserCreate.Usecase;
 
-  @Inject(ListUsersUseCase.UseCase)
-  private listUseCase: ListUsersUseCase.UseCase;
+  @Inject(UserFindAll.Usecase)
+  private listUseCase: UserFindAll.Usecase;
 
-  @Inject(GetUserUseCase.UseCase)
-  private getUseCase: GetUserUseCase.UseCase;
+  @Inject(UserGetActiveRecords.Usecase)
+  private getActiveRecordsUseCase: UserGetActiveRecords.Usecase;
 
-  @Inject(UpdateUserUseCase.UseCase)
-  private updateUseCase: UpdateUserUseCase.UseCase;
+  @Inject(UserGetInactiveRecords.Usecase)
+  private getInactiveRecordsUseCase: UserGetInactiveRecords.Usecase;
 
-  @Inject(DeleteUserUseCase.UseCase)
-  private deleteUseCase: DeleteUserUseCase.UseCase;
+  @Inject(UserSearch.Usecase)
+  private searchUseCase: UserSearch.Usecase;
+
+  @Inject(UserFindById.Usecase)
+  private getUseCase: UserFindById.Usecase;
+
+  @Inject(UserUpdate.Usecase)
+  private updateUseCase: UserUpdate.Usecase;
+
+  @Inject(UserDelete.Usecase)
+  private deleteUseCase: UserDelete.Usecase;
 
   async create(data: CreateUsersDto) {
-    return this.createUseCase.execute(data);
+    const props = new UserProps(data.name, data.email, data.password);
+    return this.createUseCase.execute(props);
   }
 
   async findAll(searchParams: SearchUsersDto) {
-    const output = await this.listUseCase.execute(searchParams);
+    const output = await this.searchUseCase.execute(searchParams);
+    return new UsersCollectionPresenter(output);
+  }
+
+  async getActiveRecords(searchParams: SearchUsersDto) {
+    const output = await this.getActiveRecordsUseCase.execute(searchParams);
+    return new UsersCollectionPresenter(output);
+  }
+
+  async getInactiveRecords(searchParams: SearchUsersDto) {
+    const output = await this.getInactiveRecordsUseCase.execute(searchParams);
     return new UsersCollectionPresenter(output);
   }
 
   async findOne(id: string) {
     const output = await this.getUseCase.execute({ id });
-    return UsersService.usersToResponse(output);
+    return output;
+    // return UsersService.usersToResponse(output);
   }
 
   async update(id: string, updateUsersDto: UpdateUsersDto) {
@@ -41,14 +72,25 @@ export class UsersService {
       id,
       ...updateUsersDto,
     });
-    return UsersService.usersToResponse(output);
+    return output;
+    // return UsersService.usersToResponse(output);
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     return this.deleteUseCase.execute({ id });
   }
 
-  static usersToResponse(output: UserOutput) {
+  static usersToResponse(output: Output) {
     return new UsersPresenter(output);
   }
 }
+
+export type Output = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+};
