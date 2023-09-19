@@ -80,4 +80,9 @@ export abstract class TypeormRepository<P extends EntityProps, E extends Entity<
 
     return model.getEntity(model);
   }
+
+  protected async _find(id: string): Promise<E> {
+    const model = await this.repo.findOne({ where: { id } as any });
+    return model.getEntity(model);
+  }
 }

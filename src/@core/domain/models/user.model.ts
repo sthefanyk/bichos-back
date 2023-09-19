@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import Model from './model';
-import User from '../entities/user';
-import UserProps from '../entities/user-props';
+import User from '../entities/users/user';
+import UserProps from '../entities/users/user-props';
+import { Role } from '../../shared/domain/enums/role.enum';
 
 @Entity('users')
 export default class UserModel implements Model<UserProps, User> {
@@ -16,6 +17,9 @@ export default class UserModel implements Model<UserProps, User> {
 
   @Column({ type: 'varchar' })
   password: string;
+
+  @Column({ type: 'simple-enum', default: Role.PERSON })
+  role: Role;
 
   @Column({ type: 'datetime' })
   created_at: Date;
@@ -32,6 +36,7 @@ export default class UserModel implements Model<UserProps, User> {
         model.name,
         model.email,
         model.password,
+        +model.role,
         model.id,
         model.created_at,
         model.updated_at,

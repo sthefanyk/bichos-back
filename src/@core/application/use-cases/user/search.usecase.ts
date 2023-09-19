@@ -1,6 +1,6 @@
 import IUserRepository from '../../../domain/contracts/user-repository.interface';
-import UserProps from '../../../domain/entities/user-props';
-import User from '../../../domain/entities/user';
+import UserProps from '../../../domain/entities/users/user-props';
+import User from '../../../domain/entities/users/user';
 import UseCase from '../usecase';
 import {
   SearchParams as SP,
@@ -13,6 +13,7 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
+import { Role } from '../../../shared/domain/enums/role.enum';
 
 export namespace UserSearch {
   export class Usecase implements UseCase<Input, Output> {
@@ -44,6 +45,7 @@ export namespace UserSearch {
     name: string;
     email: string;
     password: string;
+    role: Role;
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;

@@ -7,32 +7,51 @@ export class AuthService implements IAuth {
     constructor(private repo: IUserRepository){}
 
     createToken(user: UserModel, time: string) {
-        return jwt.sign({
+        const token = jwt.sign({
             name: user.name,
             email: user.email
         },
-        "[+J5l5gSuXKDtl6c7}FgfN=qY2%tk£r@",
+        process.env.JWT_SECRET,
         {
             expiresIn: time,
             subject: user.id,
             issuer: 'API Bichos',
             audience: 'users'   
         });
+
+        return { accessToken: token }
     }
 
-    checkTokenUser(token: string) { 
-        const data = jwt.verify(token, "[+J5l5gSuXKDtl6c7}FgfN=qY2%tk£r@", {
-            audience: 'users',
-            issuer: 'API Bichos'
-        });
-
-        console.log(data);
-
-        return data
+    checkTokenUser(token: string) {
+        try {
+            const data = jwt.verify(token, process.env.JWT_SECRET, {
+                audience: 'users',
+                issuer: 'API Bichos'
+            });
+    
+            return data
+        } catch (error) {
+            throw new Error(error);
+        }
+        
     }
 
-    async singIn(email: string, password: string): Promise<string> {
-        const user = await this.repo.findByEmailAndPassword(email, password);
+    isValidToken(token: string) {
+        try {
+            this.checkTokenUser(token);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async singIn(email: string, password: string): Promise<{ accessToken: string }> {
+        const user = await this.repo.findByEmail(email);
+
+        if (! await user.getEntity(user).verifyPassword(password)) {
+            throw new Error('Email and/or password are incorrect');
+        }
+
         return await this.createToken(user, "7d");
     }
 
@@ -42,7 +61,7 @@ export class AuthService implements IAuth {
         return user;
     }
 
-    async reset(token: string, password: string): Promise<string> {
+    async reset(token: string, password: string): Promise<{ accessToken: string }> {
         const { sub } = this.checkTokenUser(token);
 
         const user = await this.repo.resetPassword(sub.toString(), password);
@@ -54,7 +73,7 @@ export class AuthService implements IAuth {
         return this.checkTokenUser(token);
     }
 
-    async register(id: string): Promise<string> {
+    async register(id: string): Promise<{ accessToken: string }> {
         const entity = await this.repo.findById(id);
         const model = await this.repo.findByEmail(entity.get('email'));
         return this.createToken(model, "7days");

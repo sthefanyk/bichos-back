@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, IsOptional, MaxLength, IsEmail, IsStrongPassword, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, MaxLength, IsEmail, IsStrongPassword, IsDate, IsEnum } from 'class-validator';
+import { Role } from './../../../@core/shared/domain/enums/role.enum';
 
 export class CreateUsersDto {
     @MaxLength(255)
@@ -20,9 +21,9 @@ export class CreateUsersDto {
     @IsNotEmpty()
     password: string;
   
-    // @IsBoolean()
-    // @IsOptional()
-    // is_active: boolean;
+    @IsNotEmpty()
+    @IsEnum(Role)
+    role: number;
   
     @IsDate()
     @IsOptional()

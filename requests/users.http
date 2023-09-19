@@ -1,7 +1,12 @@
 GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NTAwMjg1NSwiZXhwIjoxNjk1NjA3NjU1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIxMTRlNDY3Yi01YmJkLTRmOWUtODgxYS0xNjA1MjFlNDdhNjEifQ.J0QnfX7HrsHk3Lyu_327AJVzm5tbCXX_TgrfZA7cnv8
 
 ###
-GET http://localhost:3000/users/inactive
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicGVyc29uIiwiZW1haWwiOiJwZXJzb25AcGVyc29uLmNvbSIsImlhdCI6MTY5NTAwMjkxNywiZXhwIjoxNjk1NjA3NzE3LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIyZWZmZDBkNy1kYjIyLTRjNWYtYTk4Yi01NWM1MTA4YmUzYmUifQ.cf-JG8k5nAPpWVfHB_gpk-RZ5vTWZ6YpSn2WMVl2mvQ
+
+###
+GET http://localhost:3000/users/active
 
 ###
 GET http://localhost:3000/users?filter=fe
@@ -16,28 +21,34 @@ GET http://localhost:3000/users?sort=name&sort_dir=desc&filter=a
 GET http://localhost:3000/users?page=1&per_page=5
 
 ###
-GET http://localhost:3000/users/60ee032c-06a1-4972-8e04-23075b8a9413
+GET http://localhost:3000/users/76f67c5e-5444-4e03-8216-61d7407ce626
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NTAwMjg1NSwiZXhwIjoxNjk1NjA3NjU1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIxMTRlNDY3Yi01YmJkLTRmOWUtODgxYS0xNjA1MjFlNDdhNjEifQ.J0QnfX7HrsHk3Lyu_327AJVzm5tbCXX_TgrfZA7cnv8
 
 ###
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "ID",
-    "email": "login@example.com",
-    "password": "Password2"
+    "name": "admin",
+    "email": "admin2@admin.com",
+    "password": "Admin123",
+    "role": 0
 }
 
 ###
-PUT   http://localhost:3000/users/bb05d4e2-63e6-408e-a95c-1df057c674cc
+PUT   http://localhost:3000/users/3667909d-cf6c-412f-a6f6-bbae1814a38c
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NTAwMjg1NSwiZXhwIjoxNjk1NjA3NjU1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIxMTRlNDY3Yi01YmJkLTRmOWUtODgxYS0xNjA1MjFlNDdhNjEifQ.J0QnfX7HrsHk3Lyu_327AJVzm5tbCXX_TgrfZA7cnv8
 
 {
-    "name": "deletado",
-    "email": "henrique@gmail.com",
-    "password": "Henrique1"
+    "name": "admin",
+    "email": "admin2@admin.com",
+    "password": "Admin123",
+    "role": 0
 }
 
 ###
-DELETE  http://localhost:3000/users/41c82c67-08ce-4a9e-b66e-afb490f0f16e
+DELETE  http://localhost:3000/users/3667909d-cf6c-412f-a6f6-bbae1814a38c
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NTAwMjg1NSwiZXhwIjoxNjk1NjA3NjU1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIxMTRlNDY3Yi01YmJkLTRmOWUtODgxYS0xNjA1MjFlNDdhNjEifQ.J0QnfX7HrsHk3Lyu_327AJVzm5tbCXX_TgrfZA7cnv8
+

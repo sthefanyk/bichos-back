@@ -2,8 +2,8 @@ import { UserTypeormRepository } from "../../../infra/repositories/type-orm/user
 import { AuthService } from "./auth.service";
 import { DataSource } from "typeorm";
 import UserModel from "../../../domain/models/user.model";
-import User from "../../../domain/entities/user";
-import UserProps from "../../../domain/entities/user-props";
+import User from "../../../domain/entities/users/user";
+import UserProps from "../../../domain/entities/users/user-props";
 
 describe("AuthService Test", () => {
     test("createToken", async () => {

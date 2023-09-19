@@ -1,5 +1,5 @@
 import IUserRepository from "../../../domain/contracts/user-repository.interface";
-import User from "../../../domain/entities/user";
+import User from "../../../domain/entities/users/user";
 import UseCase from "../usecase";
 
 export namespace UserFindAll {

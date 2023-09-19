@@ -12,7 +12,7 @@ import {
   UserGetInactiveRecords
 } from 'src/@core/application/use-cases/user';
 
-import UserProps from 'src/@core/domain/entities/user-props';
+import UserProps from 'src/@core/domain/entities/users/user-props';
 
 @Injectable()
 export class UsersService {
@@ -42,7 +42,7 @@ export class UsersService {
   private deleteUseCase: UserDelete.Usecase;
 
   async create(data: CreateUsersDto) {
-    const props = new UserProps(data.name, data.email, data.password);
+    const props = new UserProps(data.name, data.email, data.password, data.role);
     return this.createUseCase.execute(props);
   }
 
@@ -63,17 +63,15 @@ export class UsersService {
 
   async findOne(id: string) {
     const output = await this.getUseCase.execute({ id });
-    return output;
-    // return UsersService.usersToResponse(output);
+    return UsersService.usersToResponse(output.toJson());
   }
 
   async update(id: string, updateUsersDto: UpdateUsersDto) {
-    const output = await this.updateUseCase.execute({
+    await this.updateUseCase.execute({
       id,
       ...updateUsersDto,
     });
-    return output;
-    // return UsersService.usersToResponse(output);
+    return id;
   }
 
   async remove(id: string) {
@@ -90,6 +88,7 @@ export type Output = {
   name: string;
   email: string;
   password: string;
+  role: number;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

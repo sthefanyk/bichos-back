@@ -1,6 +1,6 @@
 import IUserRepository from "../../../domain/contracts/user-repository.interface";
-import UserProps from "../../../domain/entities/user-props";
-import User from "../../../domain/entities/user";
+import UserProps from "../../../domain/entities/users/user-props";
+import User from "../../../domain/entities/users/user";
 import UseCase from "../usecase";
 
 export namespace UserCreate {
@@ -8,8 +8,16 @@ export namespace UserCreate {
         constructor(private repo: IUserRepository){}
 
         async execute(input: Input): Output {
-            const user = new User(input);
-            return await this.repo.insert(user);
+            try {
+                await this.repo.findByEmail(input.email)
+            } catch (_) {
+                const user = new User(input);
+                await user.generatePasswordHash();
+                
+                return await this.repo.insert(user);
+            }
+
+            throw new Error(`User using email ${input.email} already exists`);
         }
     }
 

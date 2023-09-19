@@ -8,24 +8,31 @@ import {
   ParseUUIDPipe,
   Query,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUsersDto, UpdateUsersDto, SearchUsersDto } from './dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/@core/shared/domain/enums/role.enum';
+import { RoleGuard } from 'src/guards/role.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+// @Roles(Role.ADMIN)
+// @UseGuards(AuthGuard, RoleGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
+  
   @Post()
   create(@Body() createUserDto: CreateUsersDto) {
     return this.usersService.create(createUserDto);
   }
-
+  
   @Get()
   findAll(@Query() searchParams: SearchUsersDto) {
     return this.usersService.findAll(searchParams);
   }
-
+  
   @Get('active')
   getActivateRecords(@Query() searchParams: SearchUsersDto) {
     return this.usersService.getActiveRecords(searchParams);

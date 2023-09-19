@@ -12,9 +12,17 @@ export namespace UserUpdate {
             if (!user) {
                 throw new NotFoundError("User not found");
             }
-            
-            user.update(input.name, input.email, input.password);
-            return await this.repo.update(user);
+
+            try {
+                await this.repo.findByEmail(input.email)
+            } catch (_) {
+                user.update(input.name, input.email, input.password);
+                await user.generatePasswordHash();
+                
+                return await this.repo.update(user);
+            }
+
+            throw new Error(`User using email ${input.email} already exists`);
         }
     }
 
