@@ -9,5 +9,5 @@ export class CityModel implements ModelMarker {
 
     @ManyToOne(() => StateModel, (state) => state.name)
     @JoinColumn({name: 'state_name'})
-    state: string;
+    state: StateModel;
 }

@@ -28,7 +28,7 @@ Content-Type: application/json
 {
     "cpf": "12312111111",
     "date_birth": "2002-02-11",
-    "fullName": "sthefany",
+    "fullName": "lele",
     "username": "username",
     "email": "sthe@admin.com",
     "password": "AdminUp123",

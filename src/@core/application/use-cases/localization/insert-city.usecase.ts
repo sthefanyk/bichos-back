@@ -8,7 +8,7 @@ export namespace CityInsert {
     constructor(private repo: ILocalization) {}
 
     async execute(input: Input): Output {
-      const stateModel = await this.repo.getStateByName(input.name);
+      const stateModel = await this.repo.getStateByName(input.state);
       const state = new State({
         name: stateModel.name,
         abbreviation: stateModel.abbreviation

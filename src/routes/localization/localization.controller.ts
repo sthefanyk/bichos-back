@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { LocalizationService } from './localization.service';
-import { StateInsert } from 'src/@core/application/use-cases/localization/insert-state.usecase';
-import { CityInsert } from 'src/@core/application/use-cases/localization/insert-city.usecase';
+import { CityInsert, StateInsert } from 'src/@core/application/use-cases/localization';
 
 @Controller('localization')
 export class LocalizationController {
@@ -11,6 +10,7 @@ export class LocalizationController {
   insertState(@Body() data: StateInsert.Input) {
     return this.localizationService.insertState(data);
   }
+
   @Get('state/:name')
   getStateByName(@Param('name') name: string) {
     return this.localizationService.getStateByName(name);
@@ -21,25 +21,35 @@ export class LocalizationController {
     return this.localizationService.insertCity(data);
   }
 
-  @Get()
-  findAll() {
-    return this.localizationService.findAll();
+  @Get('city/:state')
+  getCitiesByState(@Param('state') state: string) {
+    return this.localizationService.getCitiesByState(state);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.localizationService.findOne(+id);
+  @Get('states')
+  listStates() {
+    return this.localizationService.listStates();
   }
 
-  
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() data) {
-    return this.localizationService.update(+id, data);
+  @Get('cities')
+  listCities() {
+    return this.localizationService.listCities();
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.localizationService.remove(+id);
+  @Delete('city/:name')
+  deleteCity(@Param('name') name: string) {
+    //return encodeURIComponent(name);
+    const nameDecode =  String(decodeURIComponent(name));
+    return this.localizationService.deleteCity(nameDecode);
+  }
+
+  @Delete('state/:name')
+  deleteState(@Param('name') name: string) {
+    return this.localizationService.deleteState(name);
+  }
+
+  @Get('encode/:name')
+  encode(@Param('name') name: string) {
+    return encodeURIComponent(name);
   }
 }

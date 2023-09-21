@@ -6,9 +6,7 @@ import { StateModel } from "../../../domain/models/state.model";
 import { CityModel } from "../../../domain/models/city.model";
 import { StateMapper } from "../../../domain/mappers/state.mapper";
 import { CityMapper } from "../../../domain/mappers/city.mapper";
-import { StateInsert } from "src/@core/application/use-cases/localization/insert-state.usecase";
-import { StateGetByName } from "src/@core/application/use-cases/localization/get-state-by-name.usecase";
-import { CityInsert } from "src/@core/application/use-cases/localization/insert-city.usecase";
+import { CityDelete, CityInsert, GetCitiesByState, ListCities, ListStates, StateDelete, StateGetByName, StateInsert } from "src/@core/application/use-cases/localization";
 
 export class LocalizationTypeormRepository implements ILocalization {
 
@@ -20,14 +18,39 @@ export class LocalizationTypeormRepository implements ILocalization {
         this.cityRepo = dataSource.getRepository(CityModel);
     }
 
-    listCities(): Promise<City[]> {
-        throw new Error("Method not implemented.");
+    async listCities(): Promise<ListCities.Output> {
+        const cities = await this.cityRepo.find();
+
+        const ret = [];
+        cities.map((city) => {
+            ret.push(city.name);
+        });
+
+        return { cities: ret }
     }
-    listStates(): Promise<State[]> {
-        throw new Error("Method not implemented.");
+
+    async listStates(): Promise<ListStates.Output> {
+        const states = await this.stateRepo.find();
+        return { states: states }
     }
-    getCitiesByState(state: State): Promise<City> {
-        throw new Error("Method not implemented.");
+
+    async getCitiesByState(state: string): Promise<GetCitiesByState.Output> {
+        const stateModel = await this.stateRepo.findOne({ where: { name: state }}); 
+        const cities = await this.cityRepo.find({ where: { state: stateModel } });
+        
+        const ret = [];
+
+        cities.map((city) => {
+            ret.push(city.name);
+        });
+        
+        return {
+            state: {
+                name: stateModel.name,
+                abbreviaton: stateModel.abbreviation
+            },
+            cities: ret
+        };
     }
 
     async getStateByName(name: string): Promise<StateGetByName.Output> {
@@ -48,22 +71,56 @@ export class LocalizationTypeormRepository implements ILocalization {
     }
 
     async insertCity(city: City): Promise<CityInsert.Output> {
-        const result = await this.stateRepo.save(CityMapper.getModel(city));
-        console.log(result);
+        const result = await this.cityRepo.save(CityMapper.getModel(city));
         return {
             name: result.name,
             state: {
-                name: "state name",
-                abbreviation: "state abbreviation"
+                name: result.state.name,
+                abbreviation: result.state.abbreviation
             }
         };
     }
 
-    deleteState(name: string): Promise<State> {
-        throw new Error("Method not implemented.");
+    async deleteState(name: string): Promise<StateDelete.Output> {
+        const state = await this.stateRepo.findOne({  where: { name }});
+
+        if (!state) {
+            throw new Error('State not found');
+        }
+
+        const cities = await this.cityRepo.find({ where: { state: state } });
+        
+        const ret = [];
+
+        cities.map((city) => {
+            ret.push(city.name);
+        });
+        
+        await this.cityRepo.remove(cities);
+        const result = await this.stateRepo.delete(state);
+
+        return {
+            name: state.name,
+            cities: ret,
+            deleted: result.affected == 1
+        }
+
+
     }
-    deleteCity(name: string): Promise<City> {
-        throw new Error("Method not implemented.");
+
+    async deleteCity(name: string): Promise<CityDelete.Output> {
+        const city = await this.cityRepo.findOne({  where: { name }});
+
+        if (!city) {
+            throw new Error('City not found');
+        }
+
+        const result = await this.cityRepo.delete(city);
+
+        return {
+            name: city.name,
+            deleted: result.affected == 1
+        }
     }
 
 }
