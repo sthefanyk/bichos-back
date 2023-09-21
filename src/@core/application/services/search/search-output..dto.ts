@@ -1,5 +1,4 @@
-import Entity from '../../../shared/domain/entities/entity';
-import EntityProps from '../../../shared/domain/entities/entity-props';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { SearchResult } from './search-result';
 
 export type SearchOutputDto<Items = any> = {
@@ -11,8 +10,8 @@ export type SearchOutputDto<Items = any> = {
 };
 
 export class SearchOutputMapper {
-  static toOutput<P extends EntityProps, E extends Entity<P>>(
-    result: SearchResult<P, E>,
+  static toOutput<E extends EntityMarker>(
+    result: SearchResult<E>,
   ): Omit<SearchOutputDto, 'items'> {
     return {
       total: result.total,

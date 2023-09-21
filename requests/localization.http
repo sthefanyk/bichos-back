@@ -1,0 +1,46 @@
+GET http://localhost:3000/localization/state/Paraná
+
+###
+GET http://localhost:3000/localization/active
+
+###
+GET http://localhost:3000/localization?filter=ca
+
+###
+GET http://localhost:3000/localization?sort=name&sort_dir=asc
+
+###
+GET http://localhost:3000/localization?sort=name&sort_dir=desc&filter=am
+
+###
+GET http://localhost:3000/localization?page=2&per_page=2
+
+###
+POST http://localhost:3000/localization/state
+Content-Type: application/json
+
+{
+    "name": "aaaaa",
+    "abbreviation": "AA"
+}
+
+###
+POST http://localhost:3000/localization/city
+Content-Type: application/json
+
+{
+    "name": "aaaaa",
+    "state": "Paraná"
+}
+
+###
+PUT  http://localhost:3000/localization/042e6638-27aa-4dc5-9905-61da216ca5d4
+Content-Type: application/json
+
+{
+    "name": "per update"
+}
+
+###
+DELETE  http://localhost:3000/localization/5684a12e-46f0-4b8d-869e-595fc3558384
+Content-Type: application/json

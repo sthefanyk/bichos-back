@@ -1,16 +1,24 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import Model from './model';
-import User from '../entities/users/user';
-import UserProps from '../entities/users/user-props';
+import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { Role } from '../../shared/domain/enums/role.enum';
+import { City } from '../entities/localization/city';
 
-@Entity('users')
-export default class UserModel implements Model<UserProps, User> {
+@Entity('user')
+export default class UserModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 
   @Column({ type: 'varchar' })
-  name: string;
+  fullName: string;
+
+  @Column({ type: 'varchar', length: 16 })
+  username: string;
+
+  @Column({ type: 'varchar', length: 45 })
+  city: City;
+
+  @Column({ type: 'text', default: '' })
+  description: string;
 
   @Column({ type: 'varchar' })
   email: string;
@@ -29,19 +37,4 @@ export default class UserModel implements Model<UserProps, User> {
 
   @Column({ type: 'datetime', default: null })
   deleted_at: Date;
-
-  getEntity(model: this): User {
-    return new User(
-      new UserProps(
-        model.name,
-        model.email,
-        model.password,
-        +model.role,
-        model.id,
-        model.created_at,
-        model.updated_at,
-        model.deleted_at,
-      ),
-    );
-  }
 }

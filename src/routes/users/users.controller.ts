@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUsersDto, UpdateUsersDto, SearchUsersDto } from './dto';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/@core/shared/domain/enums/role.enum';
-import { RoleGuard } from 'src/guards/role.guard';
-import { AuthGuard } from 'src/guards/auth.guard';
+// import { Roles } from 'src/decorators/roles.decorator';
+// import { Role } from 'src/@core/shared/domain/enums/role.enum';
+// import { RoleGuard } from 'src/guards/role.guard';
+// import { AuthGuard } from 'src/guards/auth.guard';
 
 // @Roles(Role.ADMIN)
 // @UseGuards(AuthGuard, RoleGuard)
@@ -24,7 +24,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   
   @Post()
-  create(@Body() createUserDto: CreateUsersDto) {
+  create(@Body() createUserDto) {
     return this.usersService.create(createUserDto);
   }
   

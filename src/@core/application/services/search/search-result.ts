@@ -1,7 +1,6 @@
-import Entity from "../../../shared/domain/entities/entity";
-import EntityProps from "../../../shared/domain/entities/entity-props";
+import { EntityMarker } from "../../../shared/domain/markers/entity.marker";
 
-type SearchResultProps<P extends EntityProps, E extends Entity<P>, Filter> = {
+type SearchResultProps<E extends EntityMarker, Filter> = {
     items: E[];
     total: number;
     current_page: number;
@@ -11,7 +10,7 @@ type SearchResultProps<P extends EntityProps, E extends Entity<P>, Filter> = {
     filter: Filter | null;
   };
   
-  export class SearchResult< P extends EntityProps, E extends Entity<P> = Entity<P>, Filter = string> {
+  export class SearchResult<E extends EntityMarker = EntityMarker, Filter = string> {
     readonly items: E[];
     readonly total: number;
     readonly current_page: number;
@@ -21,7 +20,7 @@ type SearchResultProps<P extends EntityProps, E extends Entity<P>, Filter> = {
     readonly sort_dir: string | null;
     readonly filter: Filter;
   
-    constructor(props: SearchResultProps<P, E, Filter>) {
+    constructor(props: SearchResultProps<E, Filter>) {
       this.items = props.items;
       this.total = props.total;
       this.current_page = props.current_page;

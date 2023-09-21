@@ -1,7 +1,6 @@
-import EntityProps from "../../shared/domain/entities/entity-props";
-import Entity from "../../shared/domain/entities/entity";
+import { EntityMarker } from "../../shared/domain/markers/entity.marker";
 
-export default interface IRepository<P extends EntityProps, E extends Entity<P>> {
+export default interface IRepository<E extends EntityMarker> {
     insert(entity: E): Promise<string>;
     findById(id: string): Promise<E>;
     findAll(): Promise<E[]>;

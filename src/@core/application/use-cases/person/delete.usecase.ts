@@ -1,10 +1,10 @@
 import NotFoundError from "../../../shared/domain/errors/not-found.error";
-import IUserRepository from "../../../domain/contracts/user-repository.interface";
 import UseCase from "../usecase";
+import IPersonRepository from "../../../domain/contracts/person-repository.interface";
 
-export namespace UserDelete {
+export namespace PersonDelete {
     export class Usecase implements UseCase<Input, Output>{
-        constructor(private repo: IUserRepository){}
+        constructor(private repo: IPersonRepository){}
 
         async execute(input: Input): Output {
             const user = await this.repo.findById(input.id);

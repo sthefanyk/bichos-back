@@ -1,97 +1,84 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-
-import {
-  UserCreate,
-  UserDelete,
-  UserFindAll,
-  UserFindById,
-  UserSearch,
-  UserUpdate,
-  UserGetActiveRecords,
-  UserGetInactiveRecords
-} from 'src/@core/application/use-cases/user';
-
-import UserModel from 'src/@core/domain/models/user.model';
-
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+import { PersonTypeormRepository } from 'src/@core/infra/repositories/type-orm/person-typeorm.repository';
+import { PersonCreate, PersonDelete, PersonFindAll, PersonFindById, PersonGetActiveRecords, PersonGetInactiveRecords, PersonSearch, PersonUpdate } from 'src/@core/application/use-cases/person';
 
 export namespace UsersProvider {
   export namespace Repositories {
-    export const USER_TYPEORM_REPO = {
-      provide: 'UserTypeormRepository',
+    export const PERSON_TYPEORM_REPO = {
+      provide: 'PersonTypeormRepository',
       useFactory: (dataSource: DataSource) => {
-        return new UserTypeormRepository(dataSource.getRepository(UserModel));
+        return new PersonTypeormRepository(dataSource);
       },
       inject: [getDataSourceToken()],
     };
 
     export const REPO = {
-      provide: 'UserTypeormRepository',
-      useExisting: 'UserTypeormRepository',
+      provide: 'PersonTypeormRepository',
+      useExisting: 'PersonTypeormRepository',
     };
   }
   export namespace UseCases {
     export const CREATE = {
-      provide: UserCreate.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserCreate.Usecase(userRepo);
+      provide: PersonCreate.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonCreate.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const GET = {
-      provide: UserFindById.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserFindById.Usecase(userRepo);
+      provide: PersonFindById.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonFindById.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const LIST = {
-      provide: UserFindAll.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserFindAll.Usecase(userRepo);
+      provide: PersonFindAll.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonFindAll.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const SEARCH = {
-      provide: UserSearch.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserSearch.Usecase(userRepo);
+      provide: PersonSearch.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonSearch.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const GET_ACTIVATE = {
-      provide: UserGetActiveRecords.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserGetActiveRecords.Usecase(userRepo);
+      provide: PersonGetActiveRecords.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonGetActiveRecords.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const GET_INACTIVATE = {
-      provide: UserGetInactiveRecords.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserGetInactiveRecords.Usecase(userRepo);
+      provide: PersonGetInactiveRecords.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonGetInactiveRecords.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const UPDATE = {
-      provide: UserUpdate.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserUpdate.Usecase(userRepo);
+      provide: PersonUpdate.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonUpdate.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const DELETE = {
-      provide: UserDelete.Usecase,
-      useFactory: (userRepo: UserTypeormRepository) => {
-        return new UserDelete.Usecase(userRepo);
+      provide: PersonDelete.Usecase,
+      useFactory: (personRepo: PersonTypeormRepository) => {
+        return new PersonDelete.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };

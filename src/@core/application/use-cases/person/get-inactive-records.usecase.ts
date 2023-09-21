@@ -1,6 +1,3 @@
-import IUserRepository from '../../../domain/contracts/user-repository.interface';
-import UserProps from '../../../domain/entities/users/user-props';
-import User from '../../../domain/entities/users/user';
 import UseCase from '../usecase';
 import {
   SearchParams as SP,
@@ -14,14 +11,18 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { Role } from '../../../shared/domain/enums/role.enum';
+import IPersonRepository from '../../../domain/contracts/person-repository.interface';
+import Person from '../../../domain/entities/users/person';
+import { PersonMapper } from '../../../domain/mappers/person.mapper';
+import { City } from '../../../domain/entities/localization/city';
 
-export namespace UserGetActiveRecords {
+export namespace PersonGetInactiveRecords {
   export class Usecase implements UseCase<Input, Output> {
-    constructor(private repo: IUserRepository) {}
+    constructor(private repo: IPersonRepository) {}
 
-    async execute(input: Input): Promise<Output> {
-      const users = await this.repo.getActiveRecords();
-      const service = new ServiceConfig(users, ['name', 'created_at']);
+    async execute(input: Input) : Promise<Output> {
+      const persons = await this.repo.getInactiveRecords();
+      const service = new ServiceConfig(persons, ['fullName', 'created_at']);
 
       const params = new SearchParams(input);
 
@@ -30,10 +31,10 @@ export namespace UserGetActiveRecords {
       return this.toOutput(searchResult);
     }
 
-    private toOutput(searchResult: SearchResult): Output {
+    private toOutput(searchResult: SearchResult) : Output | any {
       return {
-        items: searchResult.items.map((i) => i.toJson()),
-        ...SearchOutputMapper.toOutput<UserProps, User>(searchResult),
+        items: searchResult.items.map((i) => PersonMapper.getModel(i)),
+        ...SearchOutputMapper.toOutput<Person>(searchResult),
       };
     }
   }
@@ -42,7 +43,12 @@ export namespace UserGetActiveRecords {
 
   export type Output = SearchOutputDto<{
     id: string;
-    name: string;
+    cpf: string;
+    fullName: string;
+    username: string;
+    city: City;
+    description: string;
+    date_birth: Date;
     email: string;
     password: string;
     role: Role;
@@ -53,26 +59,26 @@ export namespace UserGetActiveRecords {
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}
-  export class SearchResult extends SR<UserProps, User, Filter> {}
-  class ServiceConfig extends SearchService<UserProps, User> {
+  export class SearchResult extends SR<Person, Filter> {}
+  class ServiceConfig extends SearchService<Person> {
     protected async applyFilter(
-      items: User[],
+      items: Person[],
       filter: string | null,
-    ): Promise<User[]> {
+    ): Promise<Person[]> {
       if (!filter) {
         return items;
       }
 
       return items.filter((i) => {
-        return i.getProps().name.toLowerCase().includes(filter.toLowerCase());
+        return i.getProps().fullName.toLowerCase().includes(filter.toLowerCase());
       });
     }
 
     protected async applySort(
-      items: User[],
+      items: Person[],
       sort: string | null,
       sort_dir: SortDirection | null,
-    ): Promise<User[]> {
+    ): Promise<Person[]> {
       return !sort
         ? super.applySort(items, 'created_at', 'desc')
         : super.applySort(items, sort, sort_dir);

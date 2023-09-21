@@ -10,7 +10,9 @@ export default abstract class Entity<T extends EntityProps> {
   async validateProps() {
     const errors = await this.props.validate(this.props);
 
+    
     if (errors.length > 0) {
+      console.log(errors);
       throw new EntityValidationError(this.formatErrors(errors));
     }
   }
@@ -35,7 +37,7 @@ export default abstract class Entity<T extends EntityProps> {
     return this.props[key];
   }
 
-  getProps(): T {
+  getProps() {
     return this.props;
   }
 

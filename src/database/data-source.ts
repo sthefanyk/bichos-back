@@ -1,7 +1,8 @@
 import 'reflect-metadata';
-import UserModel from '../@core/domain/models/user.model';
+import UserModel from '../@core/domain/models/person.model';
 import { DataSource } from 'typeorm';
 import PersonalityModel from '../@core/domain/models/personality.model';
+import { StateModel } from 'src/@core/domain/models/state.model';
 
 export class TypeORM {
   static async DataSource<M>(model: new () => M){
@@ -25,6 +26,6 @@ export const AppDataSource = new DataSource({
   database: 'src/database/my.sqlite',
   synchronize: true,
   logging: true,
-  entities: [UserModel, PersonalityModel],
+  entities: [UserModel, PersonalityModel, StateModel],
   migrations: ['src/database/migrations/*.{ts,js}'],
 });

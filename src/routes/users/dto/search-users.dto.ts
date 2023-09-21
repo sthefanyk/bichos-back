@@ -1,7 +1,7 @@
 import { SortDirection } from 'src/@core/application/services/search';
-import { UserSearch } from 'src/@core/application/use-cases/user';
+import { PersonSearch } from 'src/@core/application/use-cases/person';
 
-export class SearchUsersDto implements UserSearch.Input {
+export class SearchUsersDto implements PersonSearch.Input {
   page?: number;
   per_page?: number;
   sort?: string;

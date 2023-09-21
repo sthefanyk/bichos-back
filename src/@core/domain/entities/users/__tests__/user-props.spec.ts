@@ -1,21 +1,19 @@
 import UserProps from '../user-props';
 import UUID from '../../../../shared/domain/value-objects/uuid.vo';
-import City from '../../../../shared/domain/value-objects/city.vo';
-import State from '../../../../shared/domain/value-objects/state.vo';
+import { City } from '../../localization/city';
+import { State } from '../../localization/state';
 
 describe('Test UserProps', () => {
-  test('Create userProps without params', () => {
+  test('Create userProps without params', () => {  
+    const city = new City({ name: 'city', state: new State({ name: 'state', abbreviation: 'ST'})});
 
-    const state = new State({ name: 'state', abbr:'ST' });
-    
     const props = new UserProps({
       fullName: 'name user',
       username: 'username',
       email: 'email@example.com',
       password: 'Password1',
       role: 0,
-      city: new City({ name: 'city', state}),
-      state,
+      city,
     });
 
     expect(props.fullName).toBe('name user');
@@ -35,17 +33,22 @@ describe('Test UserProps', () => {
     const created_at = new Date();
     const updated_at = new Date('2023-09-14');
     const deleted_at = new Date('2023-09-16');
+    const city = new City({ name: 'city', state: new State({ name: 'state', abbreviation: 'ST'})});
 
-    const props = new UserProps(
-      'name user',
-      'email@example.com',
-      'Password1',
-      0,
-      'bd2c0d5e-2f3d-4645-b0cd-01638b466e92',
+
+    const props = new UserProps({
+      fullName: 'name user',
+      email: 'email@example.com',
+      password: 'Password1',
+      role: 0,
+      id: 'bd2c0d5e-2f3d-4645-b0cd-01638b466e92',
       created_at,
       updated_at,
       deleted_at,
-    );
+      city,
+      username: 'username',
+      description: 'description', 
+    });
 
     expect(props.name).toBe('name user');
     expect(props.email).toBe('email@example.com');

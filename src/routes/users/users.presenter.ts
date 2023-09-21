@@ -1,11 +1,14 @@
 import { Transform } from 'class-transformer';
 import { CollectionPresenter } from '../@share/presenters/collection.presenter';
-import { UserSearch } from 'src/@core/application/use-cases/user';
 import { Role } from 'src/@core/shared/domain/enums/role.enum';
+import { PersonSearch } from 'src/@core/application/use-cases/person';
+import { City } from 'src/@core/domain/entities/localization/city';
 
 export class UsersPresenter {
   id: string;
-  name: string;
+  cpf: string;
+  fullName: string;
+  username: string;
   email: string;
   password: string;
   role: Role;
@@ -24,7 +27,9 @@ export class UsersPresenter {
 
   constructor(output: Output) {
     this.id = output.id;
-    this.name = output.name;
+    this.cpf = output.cpf;
+    this.fullName = output.fullName;
+    this.username = output.username;
     this.email = output.email;
     this.password = output.password;
     this.role = output.role;
@@ -36,7 +41,12 @@ export class UsersPresenter {
 
 export type Output = {
   id: string;
-  name: string;
+  cpf: string;
+  fullName: string;
+  username: string;
+  city: City;
+  description: string;
+  date_birth: Date;
   email: string;
   password: string;
   role: Role;
@@ -48,7 +58,7 @@ export type Output = {
 export class UsersCollectionPresenter extends CollectionPresenter {
   data: UsersPresenter[];
 
-  constructor(output: UserSearch.Output) {
+  constructor(output: PersonSearch.Output) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
     this.data = items.map((item) => new UsersPresenter(item));

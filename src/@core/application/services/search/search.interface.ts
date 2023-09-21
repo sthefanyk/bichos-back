@@ -8,7 +8,7 @@ export interface ISearch<
   E extends Entity<P>,
   Filter = string,
   SearchInput = SearchParams<Filter>,
-  SearchOutput = SearchResult<P, E, Filter>,
+  SearchOutput = SearchResult<E, Filter>,
 > {
   // items: E[];
   // sortableFields: string[];

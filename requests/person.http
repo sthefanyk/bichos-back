@@ -1,0 +1,57 @@
+GET http://localhost:3000/person
+
+###
+GET http://localhost:3000/person/active
+
+###
+GET http://localhost:3000/person/inactive
+
+###
+GET http://localhost:3000/person?filter=e
+
+###
+GET http://localhost:3000/person?sort=name&sort_dir=asc
+
+###
+GET http://localhost:3000/person?sort=name&sort_dir=desc&filter=st
+
+###
+GET http://localhost:3000/person?page=1&per_page=3
+
+###
+GET http://localhost:3000/person/13242018-3080-4d4e-8f5d-508ae700efb6
+
+###
+POST http://localhost:3000/person
+Content-Type: application/json
+
+{
+    "cpf": "12312111111",
+    "date_birth": "2002-02-11",
+    "fullName": "sthefany",
+    "username": "username",
+    "email": "sthe@admin.com",
+    "password": "AdminUp123",
+    "city": "city",
+    "description": ""
+}
+
+
+###
+PUT   http://localhost:3000/person/51f5bd12-c573-4391-9009-593f9f5d999d
+Content-Type: application/json
+
+{
+    "cpf": "12312312312",
+    "date_birth": "2002-02-27",
+    "fullName": "sthefany kim",
+    "username": "username",
+    "email": "admin2@admin.com",
+    "password": "Admin123",
+    "city": "city",
+    "description": "sadgdfhjdshgkjf"
+}
+
+###
+DELETE  http://localhost:3000/person/51f5bd12-c573-4391-9009-593f9f5d999d
+Content-Type: application/json

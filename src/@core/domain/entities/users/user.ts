@@ -1,17 +1,15 @@
-import City from 'src/@core/shared/domain/value-objects/city.vo';
 import Entity from '../../../shared/domain/entities/entity';
 import UserProps from './user-props';
 import * as bcrypt from 'bcrypt';
-import State from '../../../shared/domain/value-objects/state.vo';
 import { Role } from '../../../shared/domain/enums/role.enum';
+import { City } from '../localization/city';
 
 export type UserAttr = {
   fullName: string,
   username: string,
   email: string,
   password: string,
-  // city: City,
-  // state: State,
+  city: City,
   role: Role,
   description?: string,
   id?: string,
@@ -20,19 +18,10 @@ export type UserAttr = {
   deleted_at?: Date,
 }
 
-export default class User extends Entity<UserProps> {
+export default abstract class User extends Entity<UserProps> {
 
-  constructor(attributes: UserAttr){
-    super(new UserProps(attributes));
-  }
-
-  public update(fullName: string, email: string, password: string) {
-    this.props.fullName = fullName;
-    this.props.email = email;
-    this.props.password = password;
-    this.props.updated_at = new Date();
-    
-    this.validateProps();
+  constructor(props: UserProps){
+    super(props);
   }
 
   public resetPassword(password: string) {
@@ -41,6 +30,8 @@ export default class User extends Entity<UserProps> {
     
     this.validateProps();
   }
+
+  abstract update(data: any): void;
 
   public activate() {
     this.props.deleted_at = null;

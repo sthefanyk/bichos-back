@@ -1,17 +1,17 @@
-import IUserRepository from "../../../domain/contracts/user-repository.interface";
-import User from "../../../domain/entities/users/user";
 import UseCase from "../usecase";
 import NotFoundError from "../../../shared/domain/errors/not-found.error";
+import IPersonRepository from "../../../domain/contracts/person-repository.interface";
+import Person from "../../../domain/entities/users/person";
 
-export namespace UserFindById {
+export namespace PersonFindById {
     export class Usecase implements UseCase<Input, Output> {
-        constructor(private repo: IUserRepository){}
+        constructor(private repo: IPersonRepository){}
     
         async execute(input: Input): Output {
             const user = await this.repo.findById(input.id);
 
             if (!user) {
-                throw new NotFoundError("User not found");
+                throw new NotFoundError("Person not found");
             }
 
             return user;
@@ -19,10 +19,10 @@ export namespace UserFindById {
     }
     
     export type Input = {
-        id
+        id: string
     }
     
-    export type Output = Promise<User>
+    export type Output = Promise<Person>
 }
 
 

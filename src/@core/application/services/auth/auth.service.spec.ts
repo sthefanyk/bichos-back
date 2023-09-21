@@ -1,7 +1,7 @@
 import { UserTypeormRepository } from "../../../infra/repositories/type-orm/user-typeorm.repository";
 import { AuthService } from "./auth.service";
 import { DataSource } from "typeorm";
-import UserModel from "../../../domain/models/user.model";
+import UserModel from "../../../domain/models/person.model";
 import User from "../../../domain/entities/users/user";
 import UserProps from "../../../domain/entities/users/user-props";
 

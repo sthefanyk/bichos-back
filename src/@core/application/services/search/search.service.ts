@@ -1,15 +1,14 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
 import { SearchParams, SortDirection } from './search-params';
 import { SearchResult } from './search-result';
-import Entity from 'src/@core/shared/domain/entities/entity';
+import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 
-export abstract class SearchService<P extends EntityProps, E extends Entity<P>> {
+export abstract class SearchService<E extends EntityMarker> {
   constructor(
     private items: E[],
     private sortableFields: string[]
   ) {}
 
-  async search(props: SearchParams): Promise<SearchResult<P, E>> {
+  async search(props: SearchParams): Promise<SearchResult<E>> {
     const itemsFiltered = await this.applyFilter(this.items, props.filter);
     const itemsSorted = await this.applySort(
       itemsFiltered,

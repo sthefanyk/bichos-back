@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import Model from './model';
 import PersonalityProps from '../entities/personality-props';
 import Personality from '../entities/personality';
+import { ModelMarker } from '../../shared/domain/markers/model.marker';
 
 @Entity('personalities')
-export default class PersonalityModel implements Model<PersonalityProps, Personality> {
+export default class PersonalityModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 

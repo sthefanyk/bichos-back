@@ -3,6 +3,7 @@ import Entity from '../../../shared/domain/entities/entity';
 import { SearchService } from './search.service';
 import { SearchParams } from './search-params';
 import { SearchResult } from './search-result';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 
 class StubEntityProps extends EntityProps {
   constructor(
@@ -16,9 +17,9 @@ class StubEntityProps extends EntityProps {
     super(id, a, b, c);
   }
 }
-class StubEntity extends Entity<StubEntityProps> {}
+class StubEntity extends Entity<StubEntityProps> implements EntityMarker {}
 
-class StubSearchable extends SearchService<StubEntityProps, StubEntity> {
+class StubSearchable extends SearchService<StubEntity> {
   protected async applyFilter(
     items: StubEntity[],
     filter: string | null,

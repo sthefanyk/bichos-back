@@ -1,5 +1,4 @@
 import IPersonalityRepository from '../../../domain/contracts/personality-repository.interface';
-import PersonalityProps from '../../../domain/entities/personality-props';
 import Personality from '../../../domain/entities/personality';
 import UseCase from '../usecase';
 import {
@@ -32,7 +31,7 @@ export namespace PersonalityGetInactiveRecords {
     private toOutput(searchResult: SearchResult): Output {
       return {
         items: searchResult.items.map((i) => i.toJson()),
-        ...SearchOutputMapper.toOutput<PersonalityProps, Personality>(searchResult),
+        ...SearchOutputMapper.toOutput<Personality>(searchResult),
       };
     }
   }
@@ -49,8 +48,8 @@ export namespace PersonalityGetInactiveRecords {
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}
-  export class SearchResult extends SR<PersonalityProps, Personality, Filter> {}
-  class ServiceConfig extends SearchService<PersonalityProps, Personality> {
+  export class SearchResult extends SR<Personality, Filter> {}
+  class ServiceConfig extends SearchService<Personality> {
     protected async applyFilter(
       items: Personality[],
       filter: string | null,

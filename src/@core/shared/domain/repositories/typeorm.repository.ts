@@ -1,88 +1,88 @@
-import EntityProps from "../entities/entity-props";
-import Entity from "../entities/entity";
-import Model from "../../../domain/models/model";
-import IRepository from "../../../domain/contracts/repository.interface";
-import { IsNull, Not, Repository } from "typeorm";
-import NotFoundError from "../errors/not-found.error";
+// import IRepository from "../../../domain/contracts/repository.interface";
+// import { IsNull, Not, Repository } from "typeorm";
+// import NotFoundError from "../errors/not-found.error";
+// import { EntityMarker } from "../markers/entity.marker";
+// import { ModelMarker } from "../markers/model.marker";
+// import { MapperMarker } from "../markers/mapper.marker";
 
-export abstract class TypeormRepository<P extends EntityProps, E extends Entity<P>, M extends Model<P, E>>
-  implements IRepository<P, E>
-{
-  constructor(protected repo: Repository<M>) {}
+// export abstract class TypeormRepository<E extends EntityMarker, M extends ModelMarker, MP extends MapperMarker>
+//   implements IRepository<E>
+// {
+//   constructor(protected repo: Repository<M>) {}
 
-  async insert(entity: E): Promise<string> {
-    await this.repo.save(entity.toJson() as any);
-    return entity.get('id').toString();
-  }
+  // async insert(entity: E): Promise<string> {
+  //   await this.repo.save(MP.getModel(entity));
+  //   return entity.get('id').toString();
+  // }
 
-  async findById(id: string): Promise<E> {
-    const _id = `${id}`;
-    return this._get(_id);
-  }
+  // async findById(id: string): Promise<E> {
+  //   const _id = `${id}`;
+  //   return this._get(_id);
+  // }
 
-  async findAll(): Promise<E[]> {
-    const models = await this.repo.find();
+  // async findAll(): Promise<E[]> {
+  //   const models = await this.repo.find();
 
-    const entities: E[] = [];
+  //   const entities: E[] = [];
 
-    models.forEach((model) => {
-      entities.push(model.getEntity(model));
-    });
+  //   models.forEach((model) => {
+  //     entities.push(model.getEntity(model));
+  //   });
 
-    return entities;
-  }
+  //   return entities;
+  // }
 
-  async getActiveRecords(): Promise<E[]> {
-    const models = await this.repo.find({ where: { deleted_at: IsNull() } as any });
+  // async getActiveRecords(): Promise<E[]> {
+  //   const models = await this.repo.find({ where: { deleted_at: IsNull() } as any });
 
-    const entities: E[] = [];
+  //   const entities: E[] = [];
 
-    models.forEach((model) => {
-      entities.push(model.getEntity(model));
-    });
+  //   models.forEach((model) => {
+  //     entities.push(model.getEntity(model));
+  //   });
 
-    return entities;
-  }
+  //   return entities;
+  // }
 
-  async getInactiveRecords(): Promise<E[]> {
-    const models = await this.repo.find({ where: { deleted_at: Not(IsNull()) } as any });
+  // async getInactiveRecords(): Promise<E[]> {
+  //   const models = await this.repo.find({ where: { deleted_at: Not(IsNull()) } as any });
 
-    const entities: E[] = [];
+  //   const entities: E[] = [];
 
-    models.forEach((model) => {
-      entities.push(model.getEntity(model));
-    });
+  //   models.forEach((model) => {
+  //     entities.push(model.getEntity(model));
+  //   });
 
-    return entities;
-  }
+  //   return entities;
+  // }
 
-  async update(entity: E): Promise<void> {
-    await this._get(entity.getProps().id.toString());
-    await this.repo.update(entity.getProps().id.toString(), entity.toJson() as any);
-  }
+  // async update(entity: E): Promise<void> {
+  //   await this._get(entity.getProps().id.toString());
+  //   await this.repo.update(entity.getProps().id.toString(), entity.toJson() as any);
+  // }
 
-  async delete(id: string): Promise<void> {
-    const _id = `${id}`;
+  // async delete(id: string): Promise<void> {
+  //   const _id = `${id}`;
 
-    await this._get(_id);
+  //   await this._get(_id);
 
-    await this.repo.delete(_id).catch((error) => {
-      throw new NotFoundError(error);
-    });
-  }
+  //   await this.repo.delete(_id).catch((error) => {
+  //     throw new NotFoundError(error);
+  //   });
+  // }
 
-  protected async _get(id: string): Promise<E> {
-    const model = await this.repo.findOne({ where: { id } as any });
+  // protected async _get(id: string): Promise<E> {
+  //   const model = await this.repo.findOne({ where: { id } as any });
 
-    if (!model) {
-      throw new NotFoundError('Entity Not Found using ID ' + id);
-    }
+  //   if (!model) {
+  //     throw new NotFoundError('Entity Not Found using ID ' + id);
+  //   }
 
-    return model.getEntity(model);
-  }
+  //   return model.getEntity(model);
+  // }
 
-  protected async _find(id: string): Promise<E> {
-    const model = await this.repo.findOne({ where: { id } as any });
-    return model.getEntity(model);
-  }
-}
+  // protected async _find(id: string): Promise<E> {
+  //   const model = await this.repo.findOne({ where: { id } as any });
+  //   return model.getEntity(model);
+  // }
+// }

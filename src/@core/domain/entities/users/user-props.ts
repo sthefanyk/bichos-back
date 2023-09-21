@@ -11,8 +11,10 @@ import {
   MaxLength,
 } from 'class-validator';
 import { UserAttr } from './user';
+import { City } from '../localization/city';
 
 export default class UserProps extends EntityProps {
+  [x: string]: any;
   @IsNotEmpty()
   @Length(2, 255)
   @IsString()
@@ -39,11 +41,7 @@ export default class UserProps extends EntityProps {
   })
   password: string;
 
-  // @IsObject()
-  // city: City;
-
-  // @IsObject()
-  // state: State;
+  city: City;
 
   @IsNotEmpty()
   @IsEnum(Role)
@@ -58,8 +56,7 @@ export default class UserProps extends EntityProps {
     super(props.id, props.created_at, props.updated_at, props.deleted_at);
     this.fullName = props.fullName;
     this.username = props.username;
-    // this.city = props.city;
-    // this.state = props.state;
+    this.city = props.city;
     this.email = props.email;
     this.password = props.password;
     this.role = props.role;
