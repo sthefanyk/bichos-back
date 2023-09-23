@@ -10,6 +10,7 @@ import { UsersProvider } from './users.providers';
   providers: [
     UsersService,
     UsersProvider.Repositories.PERSON_TYPEORM_REPO,
+    UsersProvider.Repositories.LOCAL_TYPEORM_REPO,
     ...Object.values(UsersProvider.UseCases)
   ],
   exports: [UsersService]

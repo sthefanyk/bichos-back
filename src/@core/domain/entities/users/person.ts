@@ -1,53 +1,60 @@
-import User, { UserAttr } from "./user";
-import PersonProps from "./person-props";
-import { EntityMarker } from "../../../shared/domain/markers/entity.marker";
-import { City } from "../localization/city";
-import { Role } from "../../../shared/domain/enums/role.enum";
+import User, { UserAttr } from './user';
+import PersonProps from './person-props';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
+import { City } from '../localization/city';
+import { Role } from '../../../shared/domain/enums/role.enum';
+import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 
 export type PersonAttr = {
-    cpf: string,
-    date_birth: Date,
-}
+  cpf: CPF | string;
+  date_birth: Date;
+};
 
-export default class Person extends User implements EntityMarker {    
-    constructor(
-        props: PersonAttr,
-        userProps: UserAttr
-    ){
-        userProps.role = Role.PERSON;
-        super(new PersonProps(props, userProps));
-    }
+export default class Person extends User implements EntityMarker {
+  constructor(
+    private personProps: PersonAttr,
+    userProps: UserAttr,
+  ) {
+    userProps.role = Role.PERSON;
+    personProps.cpf =
+      personProps.cpf instanceof CPF
+        ? personProps.cpf
+        : new CPF(personProps.cpf);
+    const props = new PersonProps(personProps, userProps);
+    props.validate(props);
+    super(props);
+  }
 
-    public update(
-        data: {
-            cpf: string,
-            date_birth: Date,
-            fullName: string,
-            username: string,
-            email: string,
-            password: string,
-            city: City,
-            description?: string
-        }
-    ) {
-        this.props.cpf = data.cpf;
-        this.props.date_birth = data.date_birth;
-        this.props.fullName = data.fullName;
-        this.props.username = data.username;
-        this.props.city = data.city;
-        this.props.email = data.email;
-        this.props.password = data.password;
-        this.props.description = data.description ?? this.props.description;
-        this.props.updated_at = new Date();
-        
-        this.validateProps();
-    }
+  public update(data: {
+    cpf: CPF | string;
+    date_birth: Date;
+    fullName: string;
+    username: string;
+    email: string;
+    password: string;
+    city: City;
+    description?: string;
+  }) {
+    this.personProps.cpf =
+      data.cpf instanceof CPF ? data.cpf : new CPF(data.cpf);
+    this.personProps.date_birth = data.date_birth;
+    this.props.fullName = data.fullName.toLowerCase();
+    this.props.username = data.username.toLowerCase();
+    this.props.city = data.city;
+    this.props.email = data.email.toLowerCase();
+    this.props.password = data.password;
+    this.props.description = data.description ?? this.props.description;
+    this.props.updated_at = new Date();
 
-    get cpf(): string {
-        return this.props.cpf;
-    }
+    
+    this.props.validate(this.props);
+  }
 
-    get date_birth(): Date {
-        return this.props.date_birth;
-    }
+  get cpf(): CPF | string {
+    return this.personProps.cpf
+  }
+
+  get date_birth(): Date {
+    return this.personProps.date_birth;
+  }
 }

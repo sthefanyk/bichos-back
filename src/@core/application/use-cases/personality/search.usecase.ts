@@ -17,15 +17,15 @@ export namespace PersonalitySearch {
   export class Usecase implements UseCase<Input, Output> {
     constructor(private repo: IPersonalityRepository) {}
 
-    async execute(input: Input): Promise<Output> {
-      const personalities = await this.repo.findAll();
-      const service = new ServiceConfig(personalities, ['name', 'created_at']);
+    async execute(input: Input): Promise<void> {
+      // const personalities = await this.repo.findAll();
+      // const service = new ServiceConfig(personalities, ['name', 'created_at']);
 
-      const params = new SearchParams(input);
+      // const params = new SearchParams(input);
 
-      const searchResult = await service.search(params);
+      // const searchResult = await service.search(params);
 
-      return this.toOutput(searchResult);
+      // return this.toOutput(searchResult);
     }
 
     private toOutput(searchResult: SearchResult): Output {

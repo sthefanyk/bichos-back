@@ -1,5 +1,14 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CityDelete, CityInsert, GetCitiesByState, ListCities, ListStates, StateDelete, StateGetByName, StateInsert } from 'src/@core/application/use-cases/localization';
+import {
+  CityDelete,
+  CityInsert,
+  GetCitiesByState,
+  ListCities,
+  ListStates,
+  StateDelete,
+  StateGetByName,
+  StateInsert,
+} from 'src/@core/application/use-cases/localization';
 
 @Injectable()
 export class LocalizationService {

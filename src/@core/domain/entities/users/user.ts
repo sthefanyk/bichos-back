@@ -10,7 +10,7 @@ export type UserAttr = {
   email: string,
   password: string,
   city: City,
-  role: Role,
+  role?: Role,
   description?: string,
   id?: string,
   created_at?: Date,
@@ -28,7 +28,7 @@ export default abstract class User extends Entity<UserProps> {
     this.props.password = password;
     this.props.updated_at = new Date();
     
-    this.validateProps();
+    this.props.validate(this.props);
   }
 
   abstract update(data: any): void;

@@ -1,6 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { LocalizationService } from './localization.service';
-import { CityInsert, StateInsert } from 'src/@core/application/use-cases/localization';
+import {
+  CityInsert,
+  StateInsert,
+} from 'src/@core/application/use-cases/localization';
 
 @Controller('localization')
 export class LocalizationController {
@@ -38,8 +41,7 @@ export class LocalizationController {
 
   @Delete('city/:name')
   deleteCity(@Param('name') name: string) {
-    //return encodeURIComponent(name);
-    const nameDecode =  String(decodeURIComponent(name));
+    const nameDecode = String(decodeURIComponent(name));
     return this.localizationService.deleteCity(nameDecode);
   }
 

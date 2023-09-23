@@ -1,4 +1,4 @@
-import NotFoundError from "../../../shared/domain/errors/not-found.error";
+import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
 import IPersonalityRepository from "../../../domain/contracts/personality-repository.interface";
 import UseCase from "../usecase";
 
@@ -7,14 +7,14 @@ export namespace PersonalityUpdate {
         constructor(private repo: IPersonalityRepository){}
 
         async execute(input: Input): Output {
-            const personality = await this.repo.findById(input.id);
+            // const personality = await this.repo.findById(input.id);
 
-            if (!personality) {
-                throw new NotFoundError("Personality not found");
-            }
+            // if (!personality) {
+            //     throw new NotFoundError("Personality not found");
+            // }
             
-            personality.update(input.name);
-            return await this.repo.update(personality);
+            // personality.update(input.name);
+            // return await this.repo.update(personality);
         }
     }
 

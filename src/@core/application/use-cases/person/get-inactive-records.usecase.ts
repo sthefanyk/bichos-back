@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { Role } from '../../../shared/domain/enums/role.enum';
-import IPersonRepository from '../../../domain/contracts/person-repository.interface';
+import {IPersonRepository} from '../../../domain/contracts/person-repository.interface';
 import Person from '../../../domain/entities/users/person';
 import { PersonMapper } from '../../../domain/mappers/person.mapper';
 import { City } from '../../../domain/entities/localization/city';

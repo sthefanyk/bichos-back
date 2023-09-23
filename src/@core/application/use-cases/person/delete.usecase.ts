@@ -1,6 +1,6 @@
-import NotFoundError from "../../../shared/domain/errors/not-found.error";
+import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
 import UseCase from "../usecase";
-import IPersonRepository from "../../../domain/contracts/person-repository.interface";
+import { IPersonRepository } from "../../../domain/contracts/person-repository.interface";
 
 export namespace PersonDelete {
     export class Usecase implements UseCase<Input, Output>{

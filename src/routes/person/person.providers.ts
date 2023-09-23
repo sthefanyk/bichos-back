@@ -11,6 +11,7 @@ import {
   PersonSearch,
   PersonUpdate,
 } from 'src/@core/application/use-cases/person';
+import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
 
 export namespace PersonProvider {
   export namespace Repositories {
@@ -18,6 +19,14 @@ export namespace PersonProvider {
       provide: 'PersonTypeormRepository',
       useFactory: (dataSource: DataSource) => {
         return new PersonTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
+    export const LOCAL_TYPEORM_REPO = {
+      provide: 'LocalizationTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new LocalizationTypeormRepository(dataSource);
       },
       inject: [getDataSourceToken()],
     };
@@ -30,10 +39,13 @@ export namespace PersonProvider {
   export namespace UseCases {
     export const CREATE = {
       provide: PersonCreate.Usecase,
-      useFactory: (personRepo: PersonTypeormRepository) => {
-        return new PersonCreate.Usecase(personRepo);
+      useFactory: (
+        personRepo: PersonTypeormRepository,
+        localRepo: LocalizationTypeormRepository,
+      ) => {
+        return new PersonCreate.Usecase(personRepo, localRepo);
       },
-      inject: [Repositories.REPO.provide],
+      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
     };
 
     export const GET = {

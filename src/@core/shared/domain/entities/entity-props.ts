@@ -1,6 +1,6 @@
-import { ValidationError, validate } from 'class-validator';
+import { ValidationError, validateSync } from 'class-validator';
 import UUID from '../value-objects/uuid.vo';
-import ClassValidatorFields from '../validators/class-validator-fields';
+import { EntityValidationError } from '../errors/validation.error';
 
 export default abstract class EntityProps {
   id: UUID;
@@ -23,23 +23,27 @@ export default abstract class EntityProps {
     this.deleted_at = deleted_at ?? null;
   }
 
-  async validate(props: EntityProps): Promise<ValidationError[]> {
-    return await validate(props);
+  validate(props: EntityProps) {
+    const errors = validateSync(props);
+
+    if (errors.length > 0) {
+      throw new EntityValidationError(this.formatErrors(errors));
+    }
   }
 
-  static create() {
-    return new Validator();
-  }
-}
+  formatErrors(errors: ValidationError[]){
+    const errorObject = {};
 
-export class Validator extends ClassValidatorFields<EntityProps> {
-  validate(data: EntityProps): boolean {
-    return super.validate(data);
-  }
-}
+    errors.forEach(error => {
+      const propertyName = error.property;
+      const errorMessages = Object.values(error.constraints);
+    
+      if (!errorObject[propertyName]) {
+        errorObject[propertyName] = [];
+      }
+      errorObject[propertyName].push(...errorMessages);
+    });
 
-export class ValidatorFactory {
-  static create() {
-    return new Validator();
+    return errorObject;
   }
 }

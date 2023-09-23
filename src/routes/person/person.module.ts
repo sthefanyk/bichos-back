@@ -7,6 +7,7 @@ import { PersonProvider } from './person.providers';
   controllers: [PersonController],
   providers: [PersonService,
     PersonProvider.Repositories.PERSON_TYPEORM_REPO,
+    PersonProvider.Repositories.LOCAL_TYPEORM_REPO,
     ...Object.values(PersonProvider.UseCases)
   ],
 })

@@ -9,7 +9,7 @@ export namespace PersonalityCreate {
 
         async execute(input: Input): Output {
             const personality = new Personality(input);
-            await this.repo.insert(personality);
+            // await this.repo.insert(personality);
         }
     }
 

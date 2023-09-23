@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { Role } from '../../shared/domain/enums/role.enum';
 import { City } from '../entities/localization/city';
+import { CityModel } from './city.model';
 
 @Entity('user')
 export default class UserModel implements ModelMarker {
@@ -11,16 +12,17 @@ export default class UserModel implements ModelMarker {
   @Column({ type: 'varchar' })
   fullName: string;
 
-  @Column({ type: 'varchar', length: 16 })
+  @Column({ type: 'varchar', length: 16, unique: true })
   username: string;
 
-  @Column({ type: 'varchar', length: 45 })
-  city: City;
+  @ManyToOne(() => CityModel, (city) => city.name)
+  @JoinColumn({name: 'city_name'})
+  city: CityModel;
 
   @Column({ type: 'text', default: '' })
   description: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
   @Column({ type: 'varchar' })

@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { CustomErrorFilter } from './errors/error-filter';
+import { CustomError } from './@core/shared/domain/errors/error.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +11,7 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   });
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new CustomErrorFilter<CustomError>());
   await app.listen(3000);
 }
 bootstrap();

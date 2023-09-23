@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "name": "Paraná",
-    "abbreviation": "PR"
+    "abbreviation": "pr"
 }
 
 ###
@@ -28,12 +28,11 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/localization/city/Maringa
+DELETE  http://localhost:3000/localization/city/Curitiba
 Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/localization/state/Paraná
-Content-Type: application/json
 
 ###
-GET http://localhost:3000/localization/encode/Paraná
+GET http://localhost:3000/localization/encode/Santa%20Catarina

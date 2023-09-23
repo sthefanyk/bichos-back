@@ -1,9 +1,14 @@
+import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import Person from '../../../domain/entities/users/person';
-import IPersonRepository from '../../../domain/contracts/person-repository.interface';
 import { DataSource, Repository } from 'typeorm';
 import PersonModel from '../../../domain/models/person.model';
 import UserModel from '../../../domain/models/user.model';
 import { PersonMapper } from '../../../domain/mappers/person.mapper';
+import { PersonCreate } from 'src/@core/application/use-cases/person';
+import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
+import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
+import { PersonFindByCpf } from 'src/@core/application/use-cases/person/find-by-cpf.usecase';
+import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
 
 export class PersonTypeormRepository implements IPersonRepository {
   private personRepo: Repository<PersonModel>;
@@ -13,47 +18,88 @@ export class PersonTypeormRepository implements IPersonRepository {
     this.personRepo = this.dataSource.getRepository(PersonModel);
     this.userRepo = this.dataSource.getRepository(UserModel);
   }
+  
+  async findByEmail(email: string): UserFindByEmail.Output {
+    const model = await this.userRepo.findOne({
+      where: { email }
+    });
 
-  async insert(entity: Person): Promise<string> {
-    await this.userRepo.save(PersonMapper.getModel(entity));
-    await this.personRepo.save(PersonMapper.getModel(entity));
+    if (model) 
+      return { id: model.id }
 
-    return entity.get('id').toString();
+    return { id: '' };
+  }
+
+  async findByUsername(username: string): UserFindByUsername.Output {
+    const model = await this.userRepo.findOne({
+      where: { username }
+    });
+
+    if (model) 
+      return { id: model.id }
+
+    return { id: '' };
+  }
+
+  async insert(entity: Person): PersonCreate.Output {
+    const model = PersonMapper.getModel(entity);
+
+    const user = await this.userRepo.save(model.user);
+    const person = await this.personRepo.save(model);
+
+    if (!user || !person) {
+      throw new Error(`Could not save user`);
+    }
+
+    return {
+      id: user.id,
+      name: person.user.fullName,
+    };
   }
 
   async findById(id: string): Promise<Person> {
     const model = await this._get(id);
-    return PersonMapper.getEntity(model, model);
+    return PersonMapper.getEntity(model);
+  }
+
+  async findByCpf(cpf: CPF): PersonFindByCpf.Output {
+    const model = await this.personRepo.findOne({
+      where: { cpf: cpf.value }
+    });
+
+    if (model) 
+      return { id: model.id }
+
+    return { id: '' };
   }
 
   async findAll(): Promise<Person[]> {
-    const models = await this.dataSource.query(`
-        SELECT * FROM person
-        INNER JOIN user ON person.id = user.id
-    `);
+    const models = await this.personRepo.find({ relations: ['user'] });
 
     const entities: Person[] = [];
 
     models.forEach(async (model) => {
-      entities.push(PersonMapper.getEntity(model, model));
+      entities.push(PersonMapper.getEntity(model));
     });
 
     return entities;
   }
 
   async update(entity: Person): Promise<void> {
+    const model = PersonMapper.getModel(entity);
+
     const personUpdateResult = await this.personRepo.update(
-      entity.getProps().id.toString(),
-      PersonMapper.getPerson(entity)
+      model.user.id, model
     );
 
     const userUpdateResult = await this.userRepo.update(
-      entity.getProps().id.toString(),
-      PersonMapper.getUser(entity)
+      model.user.id, model.user
     );
 
     if (personUpdateResult.affected === 0 || userUpdateResult.affected === 0) {
-      throw new Error(`Could not update person with ID ${entity.getProps().id.toString()}`);
+      throw new Error(
+        `Could not update person with ID ${model.user.id}`,
+      );
     }
   }
 
@@ -61,11 +107,11 @@ export class PersonTypeormRepository implements IPersonRepository {
     const model = await this._get(id);
 
     const userDeleteResult = await this.userRepo.delete({ id: model.id });
-    const personDeleteResult = await this.personRepo.delete({ id: model.id });
+    // const personDeleteResult = await this.personRepo.delete({ user_id: model.id });
 
-    if (personDeleteResult.affected === 0 || userDeleteResult.affected === 0) {
-      throw new Error(`Could not delete person with ID ${id}`);
-    }
+    // if (personDeleteResult.affected === 0 || userDeleteResult.affected === 0) {
+    //   throw new Error(`Could not delete person with ID ${id}`);
+    // }
   }
 
   async getActiveRecords(): Promise<Person[]> {
@@ -78,7 +124,7 @@ export class PersonTypeormRepository implements IPersonRepository {
     const entities: Person[] = [];
 
     models.forEach(async (model) => {
-      entities.push(PersonMapper.getEntity(model, model));
+      entities.push(PersonMapper.getEntity(model));
     });
 
     return entities;
@@ -94,21 +140,18 @@ export class PersonTypeormRepository implements IPersonRepository {
     const entities: Person[] = [];
 
     models.forEach(async (model) => {
-      entities.push(PersonMapper.getEntity(model, model));
+      entities.push(PersonMapper.getEntity(model));
     });
 
     return entities;
   }
 
-  findByEmail(email: string) {
-    throw new Error('Method not implemented.');
-  }
 
   resetPassword(id: string, newPassword: string) {
     throw new Error('Method not implemented.');
   }
 
-  async _get(id: string){
+  async _get(id: string) {
     const queryBuilder = this.dataSource.createQueryBuilder();
     const result = await queryBuilder
       .select()

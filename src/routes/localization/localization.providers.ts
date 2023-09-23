@@ -1,7 +1,17 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
-import { CityDelete, CityInsert, GetCitiesByState, ListCities, ListStates, StateDelete, StateGetByName, StateInsert } from 'src/@core/application/use-cases/localization';
+import {
+  CityDelete,
+  CityGetByName,
+  CityInsert,
+  GetCitiesByState,
+  ListCities,
+  ListStates,
+  StateDelete,
+  StateGetByName,
+  StateInsert,
+} from 'src/@core/application/use-cases/localization';
 
 export namespace LocalizationProvider {
   export namespace Repositories {
@@ -18,7 +28,7 @@ export namespace LocalizationProvider {
       useExisting: 'LocalizationTypeormRepository',
     };
   }
-  
+
   export namespace UseCases {
     export const INSERT_STATE = {
       provide: StateInsert.Usecase,
@@ -48,6 +58,14 @@ export namespace LocalizationProvider {
       provide: GetCitiesByState.Usecase,
       useFactory: (repo: LocalizationTypeormRepository) => {
         return new GetCitiesByState.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const GET_CITY_BY_NAME = {
+      provide: CityGetByName.Usecase,
+      useFactory: (repo: LocalizationTypeormRepository) => {
+        return new CityGetByName.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };
@@ -83,6 +101,5 @@ export namespace LocalizationProvider {
       },
       inject: [Repositories.REPO.provide],
     };
-
   }
 }

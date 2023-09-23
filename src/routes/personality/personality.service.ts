@@ -43,45 +43,45 @@ export class PersonalityService {
 
   async create(data: CreatePersonalityDto) {
     const props = new PersonalityProps(data.name);
-    return this.createUseCase.execute(props);
+    // return this.createUseCase.execute(props);
   }
 
   async findAll(searchParams: SearchPersonalityDto) {
     const output = await this.searchUseCase.execute(searchParams);
-    return new PersonalityCollectionPresenter(output);
+    // return new PersonalityCollectionPresenter(output);
   }
 
   async getActiveRecords(searchParams: SearchPersonalityDto) {
     const output = await this.getActiveRecordsUseCase.execute(searchParams);
-    return new PersonalityCollectionPresenter(output);
+    // return new PersonalityCollectionPresenter(output);
   }
 
   async getInactiveRecords(searchParams: SearchPersonalityDto) {
     const output = await this.getInactiveRecordsUseCase.execute(searchParams);
-    return new PersonalityCollectionPresenter(output);
+    // return new PersonalityCollectionPresenter(output);
   }
 
   async findOne(id: string) {
-    const output = await this.getUseCase.execute({ id });
-    return output;
+    // const output = await this.getUseCase.execute({ id });
+    // return output;
     // return PersonalitiesService.usersToResponse(output);
   }
 
   async update(id: string, updatePersonalitiesDto: UpdatePersonalityDto) {
-    const output = await this.updateUseCase.execute({
-      id,
-      ...updatePersonalitiesDto,
-    });
-    return output;
+    // const output = await this.updateUseCase.execute({
+    //   id,
+    //   ...updatePersonalitiesDto,
+    // });
+    // return output;
     // return PersonalitiesService.usersToResponse(output);
   }
 
   remove(id: string) {
-    return this.deleteUseCase.execute({ id });
+    // return this.deleteUseCase.execute({ id });
   }
 
   static usersToResponse(output: Output) {
-    return new PersonalityPresenter(output);
+    // return new PersonalityPresenter(output);
   }
 }
 

@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { PersonTypeormRepository } from 'src/@core/infra/repositories/type-orm/person-typeorm.repository';
 import { PersonCreate, PersonDelete, PersonFindAll, PersonFindById, PersonGetActiveRecords, PersonGetInactiveRecords, PersonSearch, PersonUpdate } from 'src/@core/application/use-cases/person';
+import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
 
 export namespace UsersProvider {
   export namespace Repositories {
@@ -9,6 +10,14 @@ export namespace UsersProvider {
       provide: 'PersonTypeormRepository',
       useFactory: (dataSource: DataSource) => {
         return new PersonTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
+    export const LOCAL_TYPEORM_REPO = {
+      provide: 'LocalizationTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new LocalizationTypeormRepository(dataSource);
       },
       inject: [getDataSourceToken()],
     };
@@ -21,10 +30,10 @@ export namespace UsersProvider {
   export namespace UseCases {
     export const CREATE = {
       provide: PersonCreate.Usecase,
-      useFactory: (personRepo: PersonTypeormRepository) => {
-        return new PersonCreate.Usecase(personRepo);
+      useFactory: (personRepo: PersonTypeormRepository, localRepo: LocalizationTypeormRepository) => {
+        return new PersonCreate.Usecase(personRepo, localRepo);
       },
-      inject: [Repositories.REPO.provide],
+      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
     };
 
     export const GET = {

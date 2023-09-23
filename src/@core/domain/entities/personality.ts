@@ -6,7 +6,7 @@ export default class Personality extends Entity<PersonalityProps> {
     this.props.name = name;
     this.props.updated_at = new Date();
 
-    this.validateProps();
+    this.props.validate(this.props);
   }
 
   public activate() {

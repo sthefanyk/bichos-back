@@ -1,7 +1,6 @@
 import { IsString, Length } from "class-validator";
 import EntityProps from "../../../shared/domain/entities/entity-props";
 import { StateAttr } from "./state";
-import { City } from "./city";
 
 export class StateProps extends EntityProps {
 
@@ -15,7 +14,7 @@ export class StateProps extends EntityProps {
 
     constructor(props: StateAttr){
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
-        this.name = props.name;
-        this.abbreviation = props.abbreviation;
+        this.name = props.name.toUpperCase();
+        this.abbreviation = props.abbreviation.toUpperCase();
     }
 }

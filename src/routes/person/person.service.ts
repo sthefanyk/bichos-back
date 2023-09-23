@@ -4,8 +4,6 @@ import { PersonOutputDto } from 'src/@core/application/DTOs/person.dto';
 import { PersonCollectionPresenter, PersonPresenter } from './person.presenter';
 import { State } from 'src/@core/domain/entities/localization/state';
 import { City } from 'src/@core/domain/entities/localization/city';
-import { Role } from 'src/@core/shared/domain/enums/role.enum';
-import { PersonMapper } from 'src/@core/domain/mappers/person.mapper';
 
 @Injectable()
 export class PersonService {
@@ -34,9 +32,6 @@ export class PersonService {
   private deleteUseCase: PersonDelete.Usecase;
 
   async create(data: PersonCreate.Input) {
-    data.date_birth = new Date(data.date_birth);
-    data.city = new City({ name: "city", state: new State({ name: "state", abbreviation: "ST" })  });
-    data.role = Role.PERSON;
     return this.createUseCase.execute(data);
   }
 

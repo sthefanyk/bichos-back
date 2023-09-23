@@ -1,6 +1,6 @@
 import UseCase from "../usecase";
-import NotFoundError from "../../../shared/domain/errors/not-found.error";
-import IPersonRepository from "../../../domain/contracts/person-repository.interface";
+import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
+import {IPersonRepository} from "../../../domain/contracts/person-repository.interface";
 import Person from "../../../domain/entities/users/person";
 
 export namespace PersonFindById {

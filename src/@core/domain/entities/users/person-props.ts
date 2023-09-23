@@ -1,11 +1,11 @@
+import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { PersonAttr } from './person';
 import { UserAttr } from './user';
 import UserProps from './user-props';
-import { IsDate, IsNotEmpty, MinLength } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 export default class PersonProps extends UserProps {
 
-  @MinLength(11)
   @IsNotEmpty()
   cpf: string;
 
@@ -18,7 +18,9 @@ export default class PersonProps extends UserProps {
     userProps: UserAttr
   ) {
     super(userProps);
-    this.cpf = props.cpf;
+    this.cpf = props.cpf instanceof CPF ? props.cpf.value : props.cpf;
     this.date_birth = props.date_birth;
+
+    this.validate(this);
   }
 }

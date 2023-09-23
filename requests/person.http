@@ -26,13 +26,13 @@ POST http://localhost:3000/person
 Content-Type: application/json
 
 {
-    "cpf": "12312111111",
+    "cpf": "29928672920",
     "date_birth": "2002-02-11",
-    "fullName": "lele",
-    "username": "username",
-    "email": "sthe@admin.com",
+    "fullName": "sthe",
+    "username": "sthefany",
+    "email": "sthef@admin.com",
     "password": "AdminUp123",
-    "city": "city",
+    "city": "Paranaguá",
     "description": ""
 }
 

@@ -20,7 +20,7 @@ POST http://localhost:3000/personalities
 Content-Type: application/json
 
 {
-    "name": "amoroso"
+    "name": "a"
 }
 
 ###
