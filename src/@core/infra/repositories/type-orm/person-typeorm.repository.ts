@@ -92,7 +92,6 @@ export class PersonTypeormRepository implements IPersonRepository {
       entities.push(PersonMapper.getEntityWithJsonData(res));
     });
 
-
     return entities;
   }
 
@@ -121,7 +120,7 @@ export class PersonTypeormRepository implements IPersonRepository {
   }
 
   async delete(id: string): Promise<void> {
-    const model = await this._get(id);
+    // const model = await this._get(id);
 
     // const userDeleteResult = await this.userRepo.delete({ id: model.id });
     // const personDeleteResult = await this.personRepo.delete({ user_id: model.id });

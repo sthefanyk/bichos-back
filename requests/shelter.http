@@ -1,0 +1,65 @@
+GET http://localhost:3000/shelter
+
+###
+GET http://localhost:3000/shelter/active
+
+###
+GET http://localhost:3000/shelter/inactive
+
+###
+GET http://localhost:3000/shelter?filter=s
+
+###
+GET http://localhost:3000/shelter?sort=full_name&sort_dir=asc
+
+###
+GET http://localhost:3000/shelter?sort=full_name&sort_dir=asc&filter=5
+
+###
+GET http://localhost:3000/shelter?page=1&per_page=3
+
+###
+GET http://localhost:3000/shelter/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+
+###
+POST http://localhost:3000/shelter
+Content-Type: application/json
+
+{
+    "responsible_cpf": "00000000006",
+    "responsible_date_birth": "2002-02-11",
+    "name_shelter": "sthe",
+    "star_date_shelter": "2002-02-11",
+    "full_name": "sthe",
+    "username": "sthe",
+    "email": "sthe6@admin.com",
+    "password": "AdminUp123",
+    "city": "Paranaguá",
+    "description": ""
+}
+
+
+###
+PUT   http://localhost:3000/shelter/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+Content-Type: application/json
+
+{
+    "responsible_cpf": "00000000054",
+    "responsible_date_birth": "2002-02-11",
+    "name_shelter": "nome abrigo",
+    "star_date_shelter": "2002-02-11",
+    "full_name": "abrigo",
+    "username": "updated",
+    "email": "updated@admin.com",
+    "password": "AdminUp123",
+    "city": "Paranaguá",
+    "description": ""
+}
+
+###
+PATCH http://localhost:3000/shelter/inactivate/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+Content-Type: application/json
+
+###
+PATCH http://localhost:3000/shelter/activate/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+Content-Type: application/json

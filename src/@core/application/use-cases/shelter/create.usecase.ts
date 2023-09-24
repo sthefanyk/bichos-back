@@ -1,27 +1,28 @@
-import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
+import { IShelterRepository } from '../../../domain/contracts/shelter-repository.interface';
 import UseCase from '../usecase';
-import Person from '../../../domain/entities/users/person';
+import Shelter from '../../../domain/entities/users/shelter';
 import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
 import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error copy';
 
-export namespace PersonCreate {
+export namespace ShelterCreate {
   export class Usecase implements UseCase<Input, Output> {
     constructor(
-      private repo: IPersonRepository,
+      private repo: IShelterRepository,
       private repoLocalization: ILocalization,
     ) {}
 
     async execute(input: Input): Output {
       await this.validate(input);
-           
-      const city = await this.repoLocalization.getCityByName(input.city.toUpperCase());
-      const user = new Person(
+      const city = await this.repoLocalization.getCityByName(input.city.toUpperCase());      
+      const user = new Shelter(
         {
-          cpf: new CPF(input.cpf),
-          date_birth: new Date(input.date_birth),
+          responsible_cpf: new CPF(input.responsible_cpf),
+          responsible_date_birth: new Date(input.responsible_date_birth),
+          name_shelter: input.name_shelter,
+          star_date_shelter: new Date(input.star_date_shelter),
         },
         {
           full_name: input.full_name,
@@ -34,12 +35,15 @@ export namespace PersonCreate {
       );
 
       await user.generatePasswordHash();
+
       return await this.repo.insert(user);
     }
 
     async validate(input: Input) {
-      if(!input.cpf) throw new RequiredError('cpf');
-      if(!input.date_birth) throw new RequiredError('date_birth');
+      if(!input.responsible_date_birth) throw new RequiredError('responsible_date_birth');
+      if(!input.responsible_cpf) throw new RequiredError('responsible_cpf');
+      if(!input.name_shelter) throw new RequiredError('name_shelter');
+      if(!input.star_date_shelter) throw new RequiredError('star_date_shelter');
       if(!input.full_name) throw new RequiredError('full_name');
       if(!input.username) throw new RequiredError('username');
       if(!input.email) throw new RequiredError('email');
@@ -50,19 +54,23 @@ export namespace PersonCreate {
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       
-      const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
+      const cpfExists = await this.repo.findByCpf(new CPF(input.responsible_cpf));
+      const nameShelterExists = await this.repo.findByNameShelter(input.name_shelter.toLowerCase());
       const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
       const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
       
       if (emailExists.id) throw new AlreadyExistsError('Email already exists');
       if (usernameExists.id) throw new AlreadyExistsError('Username already exists');
       if (cpfExists.id) throw new AlreadyExistsError('CPF already exists');
+      if (nameShelterExists.id) throw new AlreadyExistsError('Name shelter already exists');
     }
   }
 
   export type Input = {
-    cpf: string;
-    date_birth: string;
+    responsible_cpf: string;
+    responsible_date_birth: string;
+    name_shelter: string;
+    star_date_shelter: string;
     full_name: string;
     username: string;
     email: string;
@@ -75,5 +83,6 @@ export namespace PersonCreate {
     id: string;
     name: string;
     email: string;
+    name_shelter: string;
   }>;
 }

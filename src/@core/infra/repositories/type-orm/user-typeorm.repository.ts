@@ -1,36 +1,41 @@
-// import User from '../../../domain/entities/users/user';
-// import UserProps from '../../../domain/entities/users/user-props';
-// import IUserRepository from '../../../domain/contracts/user-repository.interface';
-// import { TypeormRepository } from '../../../shared/domain/repositories/typeorm.repository';
-// import UserModel from '../../../domain/models/person.model';
-// import NotFoundError from '../../../shared/domain/errors/not-found.error';
+import { Mapper } from "src/@core/domain/mappers/mapper";
+import UserModel from "src/@core/domain/models/user.model";
+import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
+import { ModelMarker } from "src/@core/shared/domain/markers/model.marker";
+import { DataSource, Repository } from "typeorm";
 
-export class UserTypeormRepository
-  // extends TypeormRepository<User, UserModel>
-  // implements IUserRepository<User>
-{
-  async findByEmail(email: string) {
-    // const model = await this.repo.findOne({ where: { email } });
+export class UserTypeormRepository<
+  Model extends ModelMarker,
+  Entity extends EntityMarker,
+  Mappers extends Mapper<Entity, Model>,
 
-    // if (!model) {
-    //   throw new NotFoundError("User not found");
-    // }
+> {
+  private repo: Repository<Model>;
+  private userRepo: Repository<UserModel>;
 
-    // return model;
+  constructor(
+    private dataSource: DataSource,
+    private modelClass: new () => Model,
+    private mapper: Mappers,
+  ) {
+    this.repo = this.dataSource.getRepository(modelClass);
+    this.userRepo = this.dataSource.getRepository(UserModel);
   }
 
-  async resetPassword(id: string, newPassword: string) {
-    // const user = await this._get(id);
+  // async insert(entity: Entity): PersonCreate.Output {
+  //   const model = this.mapper.getModel(entity);
 
-    // user.resetPassword(newPassword);
-    // await user.generatePasswordHash();
-    
-    // const model = await this.repo.update(id, user.toJson());
+  //   const user = await this.userRepo.save((model as any).user);
+  //   const modelResult = await this.repo.save(model);
 
-    // if (!model.affected) {
-    //   throw new NotFoundError("Error when changing password");
-    // }
+  //   if (!user || !modelResult) {
+  //     throw new Error(`Could not save user`);
+  //   }
 
-    // return this.repo.findOne({ where: { id: user.get('id').getUuid() }});
-  }
+  //   return {
+  //     id: user.id,
+  //     name: person.user.full_name,
+  //     email: person.user.email
+  //   };
+  // }
 }

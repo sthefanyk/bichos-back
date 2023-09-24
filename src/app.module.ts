@@ -7,6 +7,7 @@ import { PostsModule } from './routes/posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonModule } from './routes/person/person.module';
 import { LocalizationModule } from './routes/localization/localization.module';
+import { ShelterModule } from './routes/shelter/shelter.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { LocalizationModule } from './routes/localization/localization.module';
     }),
     PersonModule,
     LocalizationModule,
+    ShelterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -2,8 +2,6 @@ import { Injectable, Inject } from '@nestjs/common';
 import { PersonCreate, PersonInactivate, PersonFindAll, PersonFindById, PersonGetActiveRecords, PersonGetInactiveRecords, PersonSearch, PersonUpdate } from 'src/@core/application/use-cases/person';
 import { PersonOutputDto } from 'src/@core/application/DTOs/person.dto';
 import { PersonCollectionPresenter, PersonPresenter } from './person.presenter';
-import { State } from 'src/@core/domain/entities/localization/state';
-import { City } from 'src/@core/domain/entities/localization/city';
 import { PersonMapper } from 'src/@core/domain/mappers/person.mapper';
 import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
 
