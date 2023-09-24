@@ -7,30 +7,30 @@ GET http://localhost:3000/person/active
 GET http://localhost:3000/person/inactive
 
 ###
-GET http://localhost:3000/person?filter=e
+GET http://localhost:3000/person?filter=2
 
 ###
-GET http://localhost:3000/person?sort=name&sort_dir=asc
+GET http://localhost:3000/person?sort=full_name&sort_dir=asc
 
 ###
-GET http://localhost:3000/person?sort=name&sort_dir=desc&filter=st
+GET http://localhost:3000/person?sort=full_name&sort_dir=asc&filter=5
 
 ###
-GET http://localhost:3000/person?page=1&per_page=3
+GET http://localhost:3000/person?page=3&per_page=3
 
 ###
-GET http://localhost:3000/person/13242018-3080-4d4e-8f5d-508ae700efb6
+GET http://localhost:3000/person/7b63310b-2905-41b7-a0d7-8216fb95d68d
 
 ###
 POST http://localhost:3000/person
 Content-Type: application/json
 
 {
-    "cpf": "29928672920",
+    "cpf": "00000000055",
     "date_birth": "2002-02-11",
-    "fullName": "sthe",
-    "username": "sthefany",
-    "email": "sthef@admin.com",
+    "full_name": "sthe55",
+    "username": "sthe55",
+    "email": "sthe55@admin.com",
     "password": "AdminUp123",
     "city": "Paranaguá",
     "description": ""
@@ -38,20 +38,24 @@ Content-Type: application/json
 
 
 ###
-PUT   http://localhost:3000/person/51f5bd12-c573-4391-9009-593f9f5d999d
+PUT   http://localhost:3000/person/7b63310b-2905-41b7-a0d7-8216fb95d68d
 Content-Type: application/json
 
 {
-    "cpf": "12312312312",
-    "date_birth": "2002-02-27",
-    "fullName": "sthefany kim",
-    "username": "username",
-    "email": "admin2@admin.com",
-    "password": "Admin123",
-    "city": "city",
-    "description": "sadgdfhjdshgkjf"
+    "cpf": "00000000003",
+    "date_birth": "2002-02-11",
+    "full_name": "sthe3",
+    "username": "sthe3",
+    "email": "udated3@admin.com",
+    "password": "AdminUp123",
+    "city": "Paranaguá",
+    "description": ""
 }
 
 ###
-DELETE  http://localhost:3000/person/51f5bd12-c573-4391-9009-593f9f5d999d
+PATCH http://localhost:3000/person/inactivate/7b63310b-2905-41b7-a0d7-8216fb95d68d
+Content-Type: application/json
+
+###
+PATCH http://localhost:3000/person/activate/7b63310b-2905-41b7-a0d7-8216fb95d68d
 Content-Type: application/json

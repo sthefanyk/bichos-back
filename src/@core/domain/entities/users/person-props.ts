@@ -18,7 +18,7 @@ export default class PersonProps extends UserProps {
     userProps: UserAttr
   ) {
     super(userProps);
-    this.cpf = props.cpf instanceof CPF ? props.cpf.value : props.cpf;
+    this.cpf = props.cpf instanceof CPF ? props.cpf.cpf : props.cpf;
     this.date_birth = props.date_birth;
 
     this.validate(this);

@@ -1,22 +1,24 @@
 import { v4 as uuid, validate as uuidValidate } from 'uuid';
 import { InvalidUuidError } from '../errors/invalid-uuid.error';
-import ValueObject from './value-objects';
 
-export default class UUID extends ValueObject<string>{
-  constructor(readonly id?: string) {
-    super(id || uuid());
+export default class UUID{
+  constructor(private value: string = uuid()) {
     this.validate();
   }
 
+  public get id() : string {
+    return this.value.toString();
+  }
+
+  getIdString(): string {
+    return this.value.toString();
+  }
+
   private validate() {
-    const isValid = uuidValidate(this.value);
+    const isValid = uuidValidate(this.id);
 
     if (!isValid) {
       throw new InvalidUuidError();
     }
-  }
-
-  getUuid(): string {
-    return this.id.toString();
   }
 }

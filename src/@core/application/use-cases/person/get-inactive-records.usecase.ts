@@ -22,7 +22,7 @@ export namespace PersonGetInactiveRecords {
 
     async execute(input: Input) : Promise<Output> {
       const persons = await this.repo.getInactiveRecords();
-      const service = new ServiceConfig(persons, ['fullName', 'created_at']);
+      const service = new ServiceConfig(persons, ['full_name', 'created_at']);
 
       const params = new SearchParams(input);
 
@@ -33,7 +33,7 @@ export namespace PersonGetInactiveRecords {
 
     private toOutput(searchResult: SearchResult) : Output | any {
       return {
-        items: searchResult.items.map((i) => PersonMapper.getModel(i)),
+        items: searchResult.items.map((i) => PersonMapper.getJsonWithEntity(i)),
         ...SearchOutputMapper.toOutput<Person>(searchResult),
       };
     }
@@ -44,7 +44,7 @@ export namespace PersonGetInactiveRecords {
   export type Output = SearchOutputDto<{
     id: string;
     cpf: string;
-    fullName: string;
+    full_name: string;
     username: string;
     city: City;
     description: string;
@@ -70,7 +70,7 @@ export namespace PersonGetInactiveRecords {
       }
 
       return items.filter((i) => {
-        return i.getProps().fullName.toLowerCase().includes(filter.toLowerCase());
+        return i.getProps().full_name.toLowerCase().includes(filter.toLowerCase());
       });
     }
 

@@ -1,4 +1,4 @@
-import { PersonCreate } from "src/@core/application/use-cases/person";
+import { PersonCreate, PersonFindById, PersonUpdate } from "src/@core/application/use-cases/person";
 import Person from "../entities/users/person";
 import IUserRepository from "./user-repository.interface";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
@@ -6,9 +6,9 @@ import { PersonFindByCpf } from "src/@core/application/use-cases/person/find-by-
 
 export interface IPersonRepository extends IUserRepository{
     insert(entity: Person): PersonCreate.Output;
-    findById(id: string): Promise<Person>;
+    findById(id: string): PersonFindById.Output;
     findAll(): Promise<Person[]>;
-    update(entity: Person): Promise<void>;
+    update(entity: Person): PersonUpdate.Output;
     delete(id: string): Promise<void>;
     getActiveRecords(): Promise<Person[]>;
     getInactiveRecords(): Promise<Person[]>;

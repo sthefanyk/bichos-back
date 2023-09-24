@@ -19,7 +19,7 @@ export class PersonPresenter {
 
   description: string;
 
-  fullName: string;
+  full_name: string;
 
   username: string;
 
@@ -47,7 +47,7 @@ export class PersonPresenter {
   constructor(output: PersonOutputDto) {
     this.cpf = output.cpf;
     this.date_birth = output.date_birth;
-    this.fullName = output.fullName;
+    this.full_name = output.full_name;
     this.username = output.username;
     this.email = output.email;
     this.password = output.password;

@@ -28,7 +28,7 @@ export default class Person extends User implements EntityMarker {
   public update(data: {
     cpf: CPF | string;
     date_birth: Date;
-    fullName: string;
+    full_name: string;
     username: string;
     email: string;
     password: string;
@@ -38,20 +38,19 @@ export default class Person extends User implements EntityMarker {
     this.personProps.cpf =
       data.cpf instanceof CPF ? data.cpf : new CPF(data.cpf);
     this.personProps.date_birth = data.date_birth;
-    this.props.fullName = data.fullName.toLowerCase();
+    this.props.full_name = data.full_name.toLowerCase();
     this.props.username = data.username.toLowerCase();
     this.props.city = data.city;
     this.props.email = data.email.toLowerCase();
     this.props.password = data.password;
     this.props.description = data.description ?? this.props.description;
     this.props.updated_at = new Date();
-
     
     this.props.validate(this.props);
   }
 
-  get cpf(): CPF | string {
-    return this.personProps.cpf
+  get cpf(): string {
+    return (this.personProps.cpf as any).cpf
   }
 
   get date_birth(): Date {

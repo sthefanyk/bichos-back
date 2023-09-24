@@ -3,7 +3,7 @@ import { getDataSourceToken } from '@nestjs/typeorm';
 import { PersonTypeormRepository } from 'src/@core/infra/repositories/type-orm/person-typeorm.repository';
 import {
   PersonCreate,
-  PersonDelete,
+  PersonInactivate,
   PersonFindAll,
   PersonFindById,
   PersonGetActiveRecords,
@@ -12,6 +12,7 @@ import {
   PersonUpdate,
 } from 'src/@core/application/use-cases/person';
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
 
 export namespace PersonProvider {
   export namespace Repositories {
@@ -90,16 +91,27 @@ export namespace PersonProvider {
 
     export const UPDATE = {
       provide: PersonUpdate.Usecase,
+      useFactory: (
+        personRepo: PersonTypeormRepository,
+        localRepo: LocalizationTypeormRepository,
+      ) => {
+        return new PersonUpdate.Usecase(personRepo, localRepo);
+      },
+      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+    };
+
+    export const INACTIVATE = {
+      provide: PersonInactivate.Usecase,
       useFactory: (personRepo: PersonTypeormRepository) => {
-        return new PersonUpdate.Usecase(personRepo);
+        return new PersonInactivate.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };
 
-    export const DELETE = {
-      provide: PersonDelete.Usecase,
+    export const ACTIVATE = {
+      provide: PersonActivate.Usecase,
       useFactory: (personRepo: PersonTypeormRepository) => {
-        return new PersonDelete.Usecase(personRepo);
+        return new PersonActivate.Usecase(personRepo);
       },
       inject: [Repositories.REPO.provide],
     };

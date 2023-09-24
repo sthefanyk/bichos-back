@@ -1,8 +1,9 @@
 import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
 import UseCase from "../usecase";
 import { IPersonRepository } from "../../../domain/contracts/person-repository.interface";
+import { PersonUpdate } from "./update.usecase";
 
-export namespace PersonDelete {
+export namespace PersonInactivate {
     export class Usecase implements UseCase<Input, Output>{
         constructor(private repo: IPersonRepository){}
 
@@ -23,5 +24,5 @@ export namespace PersonDelete {
         id: string;
     }
 
-    export type Output = Promise<void>
+    export type Output = PersonUpdate.Output
 }

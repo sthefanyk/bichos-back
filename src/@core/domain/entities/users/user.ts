@@ -5,7 +5,7 @@ import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
 
 export type UserAttr = {
-  fullName: string,
+  full_name: string,
   username: string,
   email: string,
   password: string,

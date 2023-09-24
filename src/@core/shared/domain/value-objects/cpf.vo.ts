@@ -1,15 +1,13 @@
 import { InvalidCpfError } from "../errors/invalid-cpf";
 
 export default class CPF {
-  constructor(private cpf: string) {
-    if (!this.validate(this.cpf)) throw new InvalidCpfError();
-  }
-
-  
-  public get value() : string {
-    return this.cpf;
+  constructor(private value: string) {
+    // if (!this.validate(this.cpf)) throw new InvalidCpfError();
   }
   
+  public get cpf() : string {
+    return this.value;
+  }
 
   private validate(cpf: string): boolean {
     cpf = cpf.replace(/\D/g, '');
@@ -40,7 +38,7 @@ export default class CPF {
         return false;
     }
 
-    this.cpf = cpf;
+    this.value = cpf;
     return true;
   }
 }

@@ -19,4 +19,11 @@ export class StateMapper implements MapperMarker {
             abbreviation: props.abbreviation
         }
     }
+
+    static getEntityWithJsonData(data: { name: string, abbreviation: string}): State {
+        return new State({
+            name: data.name,
+            abbreviation: data.abbreviation
+        });
+    }
 }

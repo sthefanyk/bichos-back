@@ -17,7 +17,7 @@ export default class UserProps extends EntityProps {
   @IsNotEmpty()
   @Length(2, 255)
   @IsString()
-  fullName: string;
+  full_name: string;
 
   @IsNotEmpty()
   @Length(2, 16)
@@ -53,7 +53,7 @@ export default class UserProps extends EntityProps {
 
   constructor(props: UserAttr) {
     super(props.id, props.created_at, props.updated_at, props.deleted_at);
-    this.fullName = props.fullName.toLowerCase();
+    this.full_name = props.full_name.toLowerCase();
     this.username = props.username.toLowerCase();
     this.city = props.city;
     this.email = props.email.toLowerCase();

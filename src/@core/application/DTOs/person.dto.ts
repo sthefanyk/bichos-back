@@ -5,7 +5,7 @@ export type PersonUpdateInputDto = {
     id: string;
     cpf: string;
     date_birth: Date;
-    fullName: string;
+    full_name: string;
     username: string;
     email: string;
     password: string;
@@ -16,7 +16,7 @@ export type PersonUpdateInputDto = {
 export type PersonOutputDto = {
     cpf: string;
     date_birth: Date;
-    fullName: string;
+    full_name: string;
     username: string;
     email: string;
     password: string;

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Patch, Query } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { PersonCreate, PersonSearch, PersonUpdate } from 'src/@core/application/use-cases/person';
 
@@ -36,8 +36,13 @@ export class PersonController {
     return this.personService.update(id, data);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.personService.remove(id);
+  @Patch('inactivate/:id')
+  inactivate(@Param('id') id: string) {
+    return this.personService.inactivate(id);
+  }
+
+  @Patch('activate/:id')
+  activate(@Param('id') id: string) {
+    return this.personService.activate(id);
   }
 }

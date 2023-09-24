@@ -7,8 +7,8 @@ export class UserMapper implements MapperMarker {
     static getModel(entity: User): UserModel {
         const props = entity.getProps();
         return {
-            id: props.id.toString(),
-            fullName: props.fullName,
+            id: props.id.getIdString(),
+            full_name: props.full_name,
             username: props.username,
             city: CityMapper.getModel(props.city),
             description: props.description,

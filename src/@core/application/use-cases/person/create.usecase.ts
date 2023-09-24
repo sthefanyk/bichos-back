@@ -33,16 +33,12 @@ export namespace PersonCreate {
           date_birth: new Date(input.date_birth),
         },
         {
-          fullName: input.fullName,
+          full_name: input.full_name,
           username: input.username,
           email: input.email,
           password: input.password,
           city: city,
           description: input.description,
-          id: input.id,
-          created_at: new Date(input.created_at),
-          updated_at: new Date(input.updated_at),
-          deleted_at: new Date(input.deleted_at),
         },
       );
 
@@ -54,20 +50,17 @@ export namespace PersonCreate {
   export type Input = {
     cpf: string;
     date_birth: string;
-    fullName: string;
+    full_name: string;
     username: string;
     email: string;
     password: string;
     city: string;
     description?: string;
-    id?: string;
-    created_at?: string;
-    updated_at?: string;
-    deleted_at?: string;
   };
 
   export type Output = Promise<{
     id: string;
     name: string;
+    email: string;
   }>;
 }

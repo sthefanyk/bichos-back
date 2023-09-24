@@ -4,11 +4,13 @@ import { DataSource, Repository } from 'typeorm';
 import PersonModel from '../../../domain/models/person.model';
 import UserModel from '../../../domain/models/user.model';
 import { PersonMapper } from '../../../domain/mappers/person.mapper';
-import { PersonCreate } from 'src/@core/application/use-cases/person';
+import { PersonCreate, PersonFindById, PersonUpdate } from 'src/@core/application/use-cases/person';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
 import { PersonFindByCpf } from 'src/@core/application/use-cases/person/find-by-cpf.usecase';
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
+import { CityModel } from 'src/@core/domain/models/city.model';
+import { StateModel } from 'src/@core/domain/models/state.model';
 
 export class PersonTypeormRepository implements IPersonRepository {
   private personRepo: Repository<PersonModel>;
@@ -53,18 +55,19 @@ export class PersonTypeormRepository implements IPersonRepository {
 
     return {
       id: user.id,
-      name: person.user.fullName,
+      name: person.user.full_name,
+      email: person.user.email
     };
   }
 
-  async findById(id: string): Promise<Person> {
-    const model = await this._get(id);
-    return PersonMapper.getEntity(model);
+  async findById(id: string): PersonFindById.Output {
+    const entity = await this._get(id);
+    return entity;
   }
 
   async findByCpf(cpf: CPF): PersonFindByCpf.Output {
     const model = await this.personRepo.findOne({
-      where: { cpf: cpf.value }
+      where: { cpf: cpf.cpf }
     });
 
     if (model) 
@@ -74,18 +77,26 @@ export class PersonTypeormRepository implements IPersonRepository {
   }
 
   async findAll(): Promise<Person[]> {
-    const models = await this.personRepo.find({ relations: ['user'] });
+    const queryBuilder = this.dataSource.createQueryBuilder();
+    const result = await queryBuilder
+      .select()
+      .from(PersonModel, 'person')
+      .innerJoin(UserModel, 'user', 'person.id = user.id')
+      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
+      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+      .getRawMany();
 
     const entities: Person[] = [];
 
-    models.forEach(async (model) => {
-      entities.push(PersonMapper.getEntity(model));
+    result.forEach(async (res) => {
+      entities.push(PersonMapper.getEntityWithJsonData(res));
     });
+
 
     return entities;
   }
 
-  async update(entity: Person): Promise<void> {
+  async update(entity: Person): PersonUpdate.Output {
     const model = PersonMapper.getModel(entity);
 
     const personUpdateResult = await this.personRepo.update(
@@ -101,12 +112,18 @@ export class PersonTypeormRepository implements IPersonRepository {
         `Could not update person with ID ${model.user.id}`,
       );
     }
+
+    return {
+      id: model.id,
+      name: model.user.full_name,
+      email: model.user.email
+    }
   }
 
   async delete(id: string): Promise<void> {
     const model = await this._get(id);
 
-    const userDeleteResult = await this.userRepo.delete({ id: model.id });
+    // const userDeleteResult = await this.userRepo.delete({ id: model.id });
     // const personDeleteResult = await this.personRepo.delete({ user_id: model.id });
 
     // if (personDeleteResult.affected === 0 || userDeleteResult.affected === 0) {
@@ -115,32 +132,40 @@ export class PersonTypeormRepository implements IPersonRepository {
   }
 
   async getActiveRecords(): Promise<Person[]> {
-    const models = await this.dataSource.query(`
-        SELECT * FROM person
-        INNER JOIN user ON person.id = user.id
-        WHERE user.deleted_at IS NULL
-    `);
+    const queryBuilder = this.dataSource.createQueryBuilder();
+    const result = await queryBuilder
+      .select()
+      .from(PersonModel, 'person')
+      .innerJoin(UserModel, 'user', 'person.id = user.id')
+      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
+      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+      .where('user.deleted_at IS NULL')
+      .getRawMany();
 
     const entities: Person[] = [];
 
-    models.forEach(async (model) => {
-      entities.push(PersonMapper.getEntity(model));
+    result.forEach(async (res) => {
+      entities.push(PersonMapper.getEntityWithJsonData(res));
     });
 
     return entities;
   }
 
   async getInactiveRecords(): Promise<Person[]> {
-    const models = await this.dataSource.query(`
-        SELECT * FROM person
-        INNER JOIN user ON person.id = user.id
-        WHERE user.deleted_at NOT NULL
-    `);
+    const queryBuilder = this.dataSource.createQueryBuilder();
+    const result = await queryBuilder
+      .select()
+      .from(PersonModel, 'person')
+      .innerJoin(UserModel, 'user', 'person.id = user.id')
+      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
+      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+      .where('user.deleted_at NOT NULL')
+      .getRawMany();
 
     const entities: Person[] = [];
 
-    models.forEach(async (model) => {
-      entities.push(PersonMapper.getEntity(model));
+    result.forEach(async (res) => {
+      entities.push(PersonMapper.getEntityWithJsonData(res));
     });
 
     return entities;
@@ -157,13 +182,17 @@ export class PersonTypeormRepository implements IPersonRepository {
       .select()
       .from(PersonModel, 'person')
       .innerJoin(UserModel, 'user', 'person.id = user.id')
+      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
+      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
       .where('person.id = :id', { id })
       .getRawOne();
 
+    // const result = await this.userRepo.findOne({ where: { id }, relations: ['city']})
+
     if (!result) {
-      throw new Error(`Could not find person`);
+      return null;
     }
 
-    return result;
+    return PersonMapper.getEntityWithJsonData(result);
   }
 }

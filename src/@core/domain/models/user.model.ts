@@ -1,16 +1,15 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { Role } from '../../shared/domain/enums/role.enum';
-import { City } from '../entities/localization/city';
 import { CityModel } from './city.model';
 
 @Entity('user')
 export default class UserModel implements ModelMarker {
-  @PrimaryColumn()
+  @PrimaryColumn({ unique: true })
   id: string;
 
   @Column({ type: 'varchar' })
-  fullName: string;
+  full_name: string;
 
   @Column({ type: 'varchar', length: 16, unique: true })
   username: string;
