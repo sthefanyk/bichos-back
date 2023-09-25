@@ -6,7 +6,9 @@ import { RegisterAuthDto } from './dto/register-auth.dto';
 import { ResetAuthDto } from './dto/reset-auth.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { User } from 'src/decorators/user.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(

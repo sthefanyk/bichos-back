@@ -4,7 +4,9 @@ import {
   CityInsert,
   StateInsert,
 } from 'src/@core/application/use-cases/localization';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('localization')
 @Controller('localization')
 export class LocalizationController {
   constructor(private readonly localizationService: LocalizationService) {}

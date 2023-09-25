@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body, Put, Param, Patch, Query } from '@nestjs/common';
 import { ShelterService } from './shelter.service';
 import { ShelterCreate, ShelterSearch, ShelterUpdate } from 'src/@core/application/use-cases/shelter';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('shelter')
 @Controller('shelter')
 export class ShelterController {
   constructor(private readonly shelterService: ShelterService) {}

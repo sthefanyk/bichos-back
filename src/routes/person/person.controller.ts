@@ -5,7 +5,9 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/@core/shared/domain/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('person')
 @UseGuards(AuthGuard, RoleGuard)
 @Roles(Role.ADMIN)
 @Controller('person')
