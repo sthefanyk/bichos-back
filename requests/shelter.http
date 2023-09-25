@@ -19,7 +19,7 @@ GET http://localhost:3000/shelter?sort=full_name&sort_dir=asc&filter=5
 GET http://localhost:3000/shelter?page=1&per_page=3
 
 ###
-GET http://localhost:3000/shelter/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+GET http://localhost:3000/shelter/9c0be5d4-a47c-427c-8234-54c45e482448
 
 ###
 POST http://localhost:3000/shelter
@@ -40,17 +40,17 @@ Content-Type: application/json
 
 
 ###
-PUT   http://localhost:3000/shelter/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+PUT   http://localhost:3000/shelter/c178ce1f-9fc2-48e2-a293-b818d4e68a23
 Content-Type: application/json
 
 {
-    "responsible_cpf": "00000000054",
+    "responsible_cpf": "00000000009",
     "responsible_date_birth": "2002-02-11",
-    "name_shelter": "nome abrigo",
+    "name_shelter": "ssssss",
     "star_date_shelter": "2002-02-11",
     "full_name": "abrigo",
-    "username": "updated",
-    "email": "updated@admin.com",
+    "username": "ssssssss",
+    "email": "sssss@admin.com",
     "password": "AdminUp123",
     "city": "Paranaguá",
     "description": ""

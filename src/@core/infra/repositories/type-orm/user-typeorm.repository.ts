@@ -1,41 +1,44 @@
-import { Mapper } from "src/@core/domain/mappers/mapper";
+import { UserFindByEmail } from "src/@core/application/use-cases/user/find-by-email.usecase";
+import { UserFindByUsername } from "src/@core/application/use-cases/user/find-by-username.usecase";
+import IUserRepository from "src/@core/domain/contracts/user-repository.interface";
 import UserModel from "src/@core/domain/models/user.model";
-import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
-import { ModelMarker } from "src/@core/shared/domain/markers/model.marker";
 import { DataSource, Repository } from "typeorm";
 
-export class UserTypeormRepository<
-  Model extends ModelMarker,
-  Entity extends EntityMarker,
-  Mappers extends Mapper<Entity, Model>,
+export class UserTypeormRepository implements IUserRepository {
+  private repo: Repository<UserModel>;
 
-> {
-  private repo: Repository<Model>;
-  private userRepo: Repository<UserModel>;
-
-  constructor(
-    private dataSource: DataSource,
-    private modelClass: new () => Model,
-    private mapper: Mappers,
-  ) {
-    this.repo = this.dataSource.getRepository(modelClass);
-    this.userRepo = this.dataSource.getRepository(UserModel);
+  constructor(dataSource: DataSource) {
+    this.repo = dataSource.getRepository(UserModel);
   }
 
-  // async insert(entity: Entity): PersonCreate.Output {
-  //   const model = this.mapper.getModel(entity);
+  async findUserByEmail(email: string): Promise<UserModel> {
+    return this.repo.findOne({ where: { email } });
+  }
 
-  //   const user = await this.userRepo.save((model as any).user);
-  //   const modelResult = await this.repo.save(model);
+  findUserById(id: string): Promise<UserModel> {
+    return this.repo.findOne({ where: { id } });
+  }
+  
+  findByEmail(email: string): UserFindByEmail.Output {
+    return this.repo.findOne({ where: { email } });
+  }
 
-  //   if (!user || !modelResult) {
-  //     throw new Error(`Could not save user`);
-  //   }
+  findByUsername(username: string): UserFindByUsername.Output {
+    return this.repo.findOne({ where: { username } });
+  }
 
-  //   return {
-  //     id: user.id,
-  //     name: person.user.full_name,
-  //     email: person.user.email
-  //   };
-  // }
+  async resetPassword(id: string, newPassword: string): Promise<UserModel> {
+    const user = await this.findUserById(id);
+    user.password = newPassword;
+
+    const result = await this.repo.update(user.id, user);
+
+    if (result.affected === 0) {
+      throw new Error(
+        `Could not update person with ID ${user.id}`,
+      );
+    }
+
+    return user;
+  }
 }

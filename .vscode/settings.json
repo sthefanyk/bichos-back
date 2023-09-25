@@ -5,6 +5,7 @@
         "DTOs",
         "nestjs",
         "seedwork",
+        "smtps",
         "typeorm",
         "usecase"
     ]

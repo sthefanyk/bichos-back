@@ -2,9 +2,13 @@ GET http://localhost:3000/person
 
 ###
 GET http://localhost:3000/person/active
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE2OTU2MDIwNzUsImV4cCI6MTY5NjIwNjg3NSwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiYWZmNjZhYjMtMDdkNC00YjYzLTkzNDYtMzgyNThjN2RhOTAzIn0.MaJqr5zNxJtwJDXJyrX-2LUdz75Zh8_H7WwsFAfcYaE
 
 ###
 GET http://localhost:3000/person/inactive
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE2OTU2MDIwNzUsImV4cCI6MTY5NjIwNjg3NSwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiYWZmNjZhYjMtMDdkNC00YjYzLTkzNDYtMzgyNThjN2RhOTAzIn0.MaJqr5zNxJtwJDXJyrX-2LUdz75Zh8_H7WwsFAfcYaE
 
 ###
 GET http://localhost:3000/person?filter=2
@@ -19,35 +23,35 @@ GET http://localhost:3000/person?sort=full_name&sort_dir=asc&filter=5
 GET http://localhost:3000/person?page=3&per_page=3
 
 ###
-GET http://localhost:3000/person/7b63310b-2905-41b7-a0d7-8216fb95d68d
+GET http://localhost:3000/person/9c0be5d4-a47c-427c-8234-54c45e482448
 
 ###
 POST http://localhost:3000/person
 Content-Type: application/json
 
 {
-    "cpf": "00000000055",
+    "cpf": "00000000004",
     "date_birth": "2002-02-11",
-    "full_name": "sthe55",
-    "username": "sthe55",
-    "email": "sthe55@admin.com",
-    "password": "AdminUp123",
+    "full_name": "sthe",
+    "username": "sthe",
+    "email": "sthe@sthe.com",
+    "password": "Sthe1234",
     "city": "Paranaguá",
     "description": ""
 }
 
 
 ###
-PUT   http://localhost:3000/person/9a58fb82-2a2b-4ebf-b5fe-4d65ef042675
+PUT   http://localhost:3000/person/9c0be5d4-a47c-427c-8234-54c45e482448
 Content-Type: application/json
 
 {
-    "cpf": "00000000003",
+    "cpf": "00000000001",
     "date_birth": "2002-02-11",
-    "full_name": "sthe3",
-    "username": "sthe3",
-    "email": "udated3@admin.com",
-    "password": "AdminUp123",
+    "full_name": "hash",
+    "username": "hash",
+    "email": "hash@hash.com",
+    "password": "Hash1234",
     "city": "Paranaguá",
     "description": ""
 }

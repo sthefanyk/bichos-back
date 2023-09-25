@@ -1,81 +1,104 @@
-// import { IAuth } from "./auth.interface";
-// import IUserRepository from "src/@core/domain/contracts/user-repository.interface";
-// import * as jwt from 'jsonwebtoken';
-// import UserModel from "src/@core/domain/models/person.model";
+import { IAuth } from './auth.interface';
+import IUserRepository from 'src/@core/domain/contracts/user-repository.interface';
+import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
+import UserModel from 'src/@core/domain/models/user.model';
+import PasswordValidate from './password-validate';
+import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 
-// export class AuthService implements IAuth {
-//     constructor(private repo: IUserRepository){}
+export class AuthService implements IAuth {
+  constructor(private repo: IUserRepository) {}
 
-//     createToken(user: UserModel, time: string) {
-//         const token = jwt.sign({
-//             name: user.name,
-//             email: user.email
-//         },
-//         process.env.JWT_SECRET,
-//         {
-//             expiresIn: time,
-//             subject: user.id,
-//             issuer: 'API Bichos',
-//             audience: 'users'   
-//         });
+  createToken(user: UserModel, time: string) {
+    const token = jwt.sign(
+      {
+        username: user.username,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: time,
+        subject: user.id,
+        issuer: 'API Bichos',
+        audience: 'users',
+      },
+    );
 
-//         return { accessToken: token }
-//     }
+    return { accessToken: token };
+  }
 
-//     checkTokenUser(token: string) {
-//         try {
-//             const data = jwt.verify(token, process.env.JWT_SECRET, {
-//                 audience: 'users',
-//                 issuer: 'API Bichos'
-//             });
-    
-//             return data
-//         } catch (error) {
-//             throw new Error(error);
-//         }
-        
-//     }
+  checkTokenUser(token: string) {
+    try {
+      const data = jwt.verify(token, process.env.JWT_SECRET, {
+        audience: 'users',
+        issuer: 'API Bichos',
+      });
 
-//     isValidToken(token: string) {
-//         try {
-//             this.checkTokenUser(token);
-//             return true;
-//         } catch (error) {
-//             return false;
-//         }
-//     }
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
-//     async singIn(email: string, password: string): Promise<{ accessToken: string }> {
-//         const user = await this.repo.findByEmail(email);
+  async verifyPassword(password: string, passwordCrypt: string) {
+    return await bcrypt.compare(password, passwordCrypt);
+  }
 
-//         if (! await user.getEntity(user).verifyPassword(password)) {
-//             throw new Error('Email and/or password are incorrect');
-//         }
+  async generatePasswordHash(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt();
+    return await bcrypt.hash(password, salt);
+  }
 
-//         return await this.createToken(user, "7d");
-//     }
+  isValidToken(token: string) {
+    try {
+      this.checkTokenUser(token);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 
-//     async forget(email: string): Promise<object> {
-//         const user = await this.repo.findByEmail(email);
+  async singIn( email: string, password: string ): Promise<{ accessToken: string }> {
+    const user = await this.repo.findUserByEmail(email);
 
-//         return user;
-//     }
+    if (!user || !(await this.verifyPassword(password, user.password))) {
+      throw new Error('Email and/or password are incorrect');
+    }
 
-//     async reset(token: string, password: string): Promise<{ accessToken: string }> {
-//         const { sub } = this.checkTokenUser(token);
+    return this.createToken(user, '7d');
+  }
 
-//         const user = await this.repo.resetPassword(sub.toString(), password);
+  async forget(email: string): Promise<UserModel> {
+    const user = await this.repo.findByEmail(email);
 
-//         return this.createToken(user, "30min");
-//     }
+    return user as any;
+  }
 
-//     async me(token: string) {
-//         return this.checkTokenUser(token);
-//     }
+  async reset( token: string, password: string ): Promise<{ accessToken: string }> {
+    const { sub } = this.checkTokenUser(token);
 
-//     async register(id: string): Promise<{ accessToken: string }> {
-//         const entity = await this.repo.findById(id);
-//         const model = await this.repo.findByEmail(entity.get('email'));
-//         return this.createToken(model, "7days");
-//     }
-// }
+    const passwordValidated = new PasswordValidate(password);
+    const passwordValidatedAndCrypt = await this.generatePasswordHash(passwordValidated.password);
+    const user = await this.repo.resetPassword(sub.toString(), passwordValidatedAndCrypt);
+
+    return this.createToken(user, '30min');
+  }
+
+  async me(token: string) {
+    return this.checkTokenUser(token);
+  }
+
+  async register(model: UserModel): Promise<{ accessToken: string }> {
+    return this.createToken(model, '7days');
+  }
+
+  async findUserById(id: string): Promise<UserModel> {
+    const user = await this.repo.findUserById(id);
+
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    return user;
+  }
+}

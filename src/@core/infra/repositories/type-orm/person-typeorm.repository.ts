@@ -11,12 +11,14 @@ import { PersonFindByCpf } from 'src/@core/application/use-cases/person/find-by-
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
 import { CityModel } from 'src/@core/domain/models/city.model';
 import { StateModel } from 'src/@core/domain/models/state.model';
+import { UserTypeormRepository } from './user-typeorm.repository';
 
-export class PersonTypeormRepository implements IPersonRepository {
+export class PersonTypeormRepository extends UserTypeormRepository implements IPersonRepository {
   private personRepo: Repository<PersonModel>;
   private userRepo: Repository<UserModel>;
 
   constructor(private dataSource: DataSource) {
+    super(dataSource);
     this.personRepo = this.dataSource.getRepository(PersonModel);
     this.userRepo = this.dataSource.getRepository(UserModel);
   }
@@ -168,11 +170,6 @@ export class PersonTypeormRepository implements IPersonRepository {
     });
 
     return entities;
-  }
-
-
-  resetPassword(id: string, newPassword: string) {
-    throw new Error('Method not implemented.');
   }
 
   async _get(id: string) {

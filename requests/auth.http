@@ -2,8 +2,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "email": "hash@hash.com",
-    "password": "Hash1234"
+    "email": "sthe@sthe.com",
+    "password": "Sthe1234"
 }
 
 ###
@@ -11,8 +11,8 @@ POST http://localhost:3000/auth/reset
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicGVyc29uIiwiZW1haWwiOiJwZXJzb25AcGVyc29uLmNvbSIsImlhdCI6MTY5NTAxOTEwMywiZXhwIjoxNjk1NjIzOTAzLCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIyZWZmZDBkNy1kYjIyLTRjNWYtYTk4Yi01NWM1MTA4YmUzYmUifQ.MSxxKgLLlTxNZa47JLXJzIs1EbsaI3YU6jH7EvXuKIw",
-    "password": "PasswordReset12345"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaGFzaCIsImVtYWlsIjoiaGFzaEBoYXNoLmNvbSIsImlhdCI6MTY5NTYwMDQyNSwiZXhwIjoxNjk2MjA1MjI1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiI5YzBiZTVkNC1hNDdjLTQyN2MtODIzNC01NGM0NWU0ODI0NDgifQ.ROwDZGXgOv5M96i-61_STEBhFUPXjaGAnONiYZ3yqHQ",
+    "password": "Hash12345"
 }
 
 ###
@@ -20,7 +20,7 @@ POST http://localhost:3000/auth/forget
 Content-Type: application/json
 
 {
-    "email": "email@example.com"
+    "email": "sthe@sthe.com"
 }
 
 ###
@@ -36,4 +36,4 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCBoYXNoIiwiZW1haWwiOiJoYXNoQGhhc2guY29tIiwiaWF0IjoxNjk1MDIxNDgwLCJleHAiOjE2OTU2MjYyODAsImF1ZCI6InVzZXJzIiwiaXNzIjoiQVBJIEJpY2hvcyIsInN1YiI6Ijc2ZjY3YzVlLTU0NDQtNGUwMy04MjE2LTYxZDc0MDdjZTYyNiJ9.Fu_AjzuC7cPIny4q8lYp5hIjy908RDgN1a36kluR1Ko
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE2OTU2MDIwNzUsImV4cCI6MTY5NjIwNjg3NSwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiYWZmNjZhYjMtMDdkNC00YjYzLTkzNDYtMzgyNThjN2RhOTAzIn0.MaJqr5zNxJtwJDXJyrX-2LUdz75Zh8_H7WwsFAfcYaE

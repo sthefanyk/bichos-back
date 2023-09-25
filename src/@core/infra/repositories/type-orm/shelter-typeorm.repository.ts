@@ -16,12 +16,14 @@ import { StateModel } from 'src/@core/domain/models/state.model';
 import UserModel from 'src/@core/domain/models/user.model';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { DataSource, Repository } from 'typeorm';
+import { UserTypeormRepository } from './user-typeorm.repository';
 
-export class ShelterTypeormRepository implements IShelterRepository {
+export class ShelterTypeormRepository extends UserTypeormRepository implements IShelterRepository  {
   private shelterRepo: Repository<ShelterModel>;
   private userRepo: Repository<UserModel>;
 
   constructor(private dataSource: DataSource) {
+    super(dataSource);
     this.shelterRepo = this.dataSource.getRepository(ShelterModel);
     this.userRepo = this.dataSource.getRepository(UserModel);
   }
@@ -178,10 +180,6 @@ export class ShelterTypeormRepository implements IShelterRepository {
       return { id: model.id }
 
     return { id: '' };
-  }
-
-  resetPassword(id: string, newPassword: string) {
-    throw new Error('Method not implemented.');
   }
 
   async _get(id: string) {
