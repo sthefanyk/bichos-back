@@ -1,7 +1,7 @@
-GET http://localhost:3000/localization/state/Paraná
+GET http://localhost:3000/localization/state/S%C3%A3o%20Paulo
 
 ###
-GET http://localhost:3000/localization/city/Paraná
+GET http://localhost:3000/localization/city/S%C3%A3o%20Paulo
 
 ###
 GET http://localhost:3000/localization/states
@@ -28,11 +28,11 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/localization/city/Curitiba
+DELETE  http://localhost:3000/localization/city/Paranaguá
 Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/localization/state/Paraná
 
 ###
-GET http://localhost:3000/localization/encode/Santa%20Catarina
+GET http://localhost:3000/localization/encode/São%20Paulo

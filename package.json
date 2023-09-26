@@ -18,8 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/database/data-source.ts migration:generate ./src/database/migrations/default",
-    "migration:run": "typeorm-ts-node-commonjs -d ./src/database/data-source.ts migration:run"
+    "typeorm": "npm run build && npx typeorm -d dist/database/data-source.js",
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d dist/database/data-source.js",
+    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create",
+    "db:init": "npm run migration:run && npm run seed:run"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.9.1",
@@ -42,6 +47,7 @@
     "rxjs": "^7.8.1",
     "sqlite3": "^5.1.6",
     "typeorm": "^0.3.17",
+    "typeorm-extension": "^3.0.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -10,22 +10,17 @@ import { LocalizationModule } from './routes/localization/localization.module';
 import { ShelterModule } from './routes/shelter/shelter.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { dataSourceOptions } from './database/data-source';
 
 @Module({
   imports: [
     PersonalityModule,
     PostsModule,
     AuthModule,
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'src/database/aaa.sqlite',
-      synchronize: true,
-      logging: false,
-      entities: [`${__dirname}/**/models/*.{ts,js}`]
-    }),
     PersonModule,
     LocalizationModule,
     ShelterModule,
+    TypeOrmModule.forRoot(dataSourceOptions),
     MailerModule.forRoot({
       transport: {
         host: "sandbox.smtp.mailtrap.io",
@@ -51,3 +46,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
   providers: [AppService],
 })
 export class AppModule {}
+
+
+

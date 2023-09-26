@@ -17,8 +17,6 @@ import {
   StateGetByName,
   StateInsert,
 } from 'src/@core/application/use-cases/localization';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
 
 export class LocalizationTypeormRepository implements ILocalization {
   private stateRepo: Repository<StateModel>;
