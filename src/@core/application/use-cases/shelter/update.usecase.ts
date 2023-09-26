@@ -20,9 +20,9 @@ export namespace ShelterUpdate {
             const city = await this.repoLocalization.getCityByName(input.city.toUpperCase());
             shelter.update({
                 responsible_cpf: input.responsible_cpf,
-                responsible_date_birth: input.responsible_date_birth,
+                responsible_date_birth: new Date(input.responsible_date_birth),
                 name_shelter: input.name_shelter,
-                star_date_shelter: input.star_date_shelter,
+                star_date_shelter: new Date(input.star_date_shelter),
                 full_name: input.full_name,
                 username: input.username,
                 city: city,
@@ -71,9 +71,9 @@ export namespace ShelterUpdate {
     export type Input = {
         id: string;
         responsible_cpf: string;
-        responsible_date_birth: Date;
+        responsible_date_birth: string;
         name_shelter: string;
-        star_date_shelter: Date;
+        star_date_shelter: string;
         full_name: string;
         username: string;
         email: string;

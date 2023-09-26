@@ -11,6 +11,7 @@ import { ShelterModule } from './routes/shelter/shelter.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { dataSourceOptions } from './database/data-source';
+import { NGOModule } from './routes/ngo/ngo.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { dataSourceOptions } from './database/data-source';
     PersonModule,
     LocalizationModule,
     ShelterModule,
+    NGOModule,
     TypeOrmModule.forRoot(dataSourceOptions),
     MailerModule.forRoot({
       transport: {

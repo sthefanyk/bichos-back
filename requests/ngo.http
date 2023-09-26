@@ -1,0 +1,71 @@
+GET http://localhost:3000/ngo
+
+###
+GET http://localhost:3000/ngo/active
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE2OTU2MDIwNzUsImV4cCI6MTY5NjIwNjg3NSwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiYWZmNjZhYjMtMDdkNC00YjYzLTkzNDYtMzgyNThjN2RhOTAzIn0.MaJqr5zNxJtwJDXJyrX-2LUdz75Zh8_H7WwsFAfcYaE
+
+###
+GET http://localhost:3000/ngo/inactive
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE2OTU2MDIwNzUsImV4cCI6MTY5NjIwNjg3NSwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiYWZmNjZhYjMtMDdkNC00YjYzLTkzNDYtMzgyNThjN2RhOTAzIn0.MaJqr5zNxJtwJDXJyrX-2LUdz75Zh8_H7WwsFAfcYaE
+
+###
+GET http://localhost:3000/ngo?filter=o
+
+###
+GET http://localhost:3000/ngo?sort=full_name&sort_dir=asc
+
+###
+GET http://localhost:3000/ngo?sort=full_name&sort_dir=asc&filter=5
+
+###
+GET http://localhost:3000/ngo?page=3&per_page=3
+
+###
+GET http://localhost:3000/ngo/9c0be5d4-a47c-427c-8234-54c45e482448
+
+###
+POST http://localhost:3000/ngo
+Content-Type: application/json
+
+{
+    "cnpj": "00000000002",
+    "name_ngo": "ong2",
+    "date_register": "2002",
+    "full_name": "ong2",
+    "username": "ong2",
+    "email": "ong2@ong.com",
+    "password": "Ong12345",
+    "city": "Paranaguá",
+    "description": "ong description",
+    "profile_picture": "ong profile_picture",
+    "header_picture": "ong header_picture"
+}
+
+
+###
+PUT   http://localhost:3000/ngo/b917f8be-8ecd-4a2b-9ef6-303efc11dd38
+Content-Type: application/json
+
+{
+    "cnpj": "00000000002",
+    "name_ngo": "name ong up2",
+    "date_register": "20",
+    "full_name": "ong up2",
+    "username": "ong up2",
+    "email": "ong2@ong.com",
+    "password": "Ong12345",
+    "city": "Paranaguá",
+    "description": "ong description",
+    "profile_picture": "ong profile_picture",
+    "header_picture": "ong header_picture"
+}
+
+###
+PATCH http://localhost:3000/ngo/inactivate/da2263c2-db0f-48c3-93a5-7d3e3f913ac5
+Content-Type: application/json
+
+###
+PATCH http://localhost:3000/ngo/activate/da2263c2-db0f-48c3-93a5-7d3e3f913ac5
+Content-Type: application/json

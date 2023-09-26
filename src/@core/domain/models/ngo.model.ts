@@ -2,18 +2,21 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import UserModel from './user.model';
 
-@Entity('person')
-export default class PersonModel implements ModelMarker {
+@Entity('ngo')
+export default class NGOModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => UserModel, (user) => user.id)
   @JoinColumn({name: 'user_id'})
   id: string;
 
-  @Column({ type: 'varchar', length: 11, unique: true })
-  cpf: string;
+  @Column({ type: 'varchar', length: 14, unique: true })
+  cnpj: string;
+
+  @Column({ type: 'varchar', length: 45, unique: true })
+  name_ngo: string;
 
   @Column({ type: 'varchar' })
-  date_birth: Date;
+  date_register: Date;
 
   @OneToOne(() => UserModel, (user) => user.id)
   @JoinColumn({name: 'user'})
