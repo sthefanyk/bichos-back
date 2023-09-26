@@ -1,7 +1,7 @@
-GET http://localhost:3000/localization/state/S%C3%A3o%20Paulo
+GET http://localhost:3000/localization/state/Paran%C3%A1
 
 ###
-GET http://localhost:3000/localization/city/S%C3%A3o%20Paulo
+GET http://localhost:3000/localization/city/Paran%C3%A1
 
 ###
 GET http://localhost:3000/localization/states
@@ -35,4 +35,4 @@ Content-Type: application/json
 DELETE  http://localhost:3000/localization/state/Paraná
 
 ###
-GET http://localhost:3000/localization/encode/São%20Paulo
+GET http://localhost:3000/localization/encode/Paraná

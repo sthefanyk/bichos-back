@@ -13,12 +13,12 @@ export default class UserSeeder implements Seeder {
     const city = await cityRepo.findOneBy({ name: 'PARANAGUÁ' });
 
     const dataUser = {
-      id: '0',
+      id: '9c0be5d4-a47c-427c-8234-54c45e482448',
       full_name: 'admin',
-      username: process.env.ADMIN_USERNAME,
+      username: 'admin',
       city: city,
-      email: process.env.ADMIN_EMAIL,
-      password: await bcrypt.hash(process.env.ADMIN_PASSWORD, 10),
+      email: 'admin@admin.com',
+      password: await bcrypt.hash('Admin12345', 10),
       role: Role.ADMIN,
       created_at: new Date()
     };

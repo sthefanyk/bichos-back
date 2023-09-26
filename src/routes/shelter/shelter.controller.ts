@@ -1,9 +1,15 @@
-import { Controller, Get, Post, Body, Put, Param, Patch, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { ShelterService } from './shelter.service';
 import { ShelterCreate, ShelterSearch, ShelterUpdate } from 'src/@core/application/use-cases/shelter';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/@core/shared/domain/enums/role.enum';
+import { Roles } from 'src/decorators/roles.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
 @ApiTags('shelter')
+@UseGuards(AuthGuard, RoleGuard)
+@Roles(Role.ADMIN)
 @Controller('shelter')
 export class ShelterController {
   constructor(private readonly shelterService: ShelterService) {}
