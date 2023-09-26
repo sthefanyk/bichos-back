@@ -21,6 +21,12 @@ export default class UserModel implements ModelMarker {
   @Column({ type: 'text', default: '' })
   description: string;
 
+  @Column({ type: 'varchar', default: '' })
+  profile_picture: string;
+
+  @Column({ type: 'varchar', default: '' })
+  header_picture: string;
+
   @Column({ type: 'varchar', unique: true })
   email: string;
 

@@ -26,21 +26,23 @@ POST http://localhost:3000/shelter
 Content-Type: application/json
 
 {
-    "responsible_cpf": "00000000006",
+    "responsible_cpf": "00000000010",
     "responsible_date_birth": "2002-02-11",
-    "name_shelter": "sthe",
+    "name_shelter": "sthe9",
     "star_date_shelter": "2002-02-11",
     "full_name": "sthe",
-    "username": "sthe",
-    "email": "sthe6@admin.com",
+    "username": "sthe9",
+    "email": "sthe9@admin.com",
     "password": "AdminUp123",
     "city": "Paranaguá",
-    "description": ""
+    "description": "ccccc",
+    "profile_picture": "ccccc",
+    "header_picture": "ccccc"
 }
 
 
 ###
-PUT   http://localhost:3000/shelter/c178ce1f-9fc2-48e2-a293-b818d4e68a23
+PUT   http://localhost:3000/shelter/63bba682-8200-4990-88d3-744f967282bf
 Content-Type: application/json
 
 {
@@ -53,7 +55,9 @@ Content-Type: application/json
     "email": "sssss@admin.com",
     "password": "AdminUp123",
     "city": "Paranaguá",
-    "description": ""
+    "description": "bbbb",
+    "profile_picture": "bbbb",
+    "header_picture": "bbbb"
 }
 
 ###

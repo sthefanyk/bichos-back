@@ -38,6 +38,8 @@ export default class Shelter extends User implements EntityMarker {
     password: string;
     city: City;
     description?: string;
+    profile_picture?: string;
+    header_picture?: string;
   }) {
     this.shelterProps.responsible_cpf =
       data.responsible_cpf instanceof CPF
@@ -52,6 +54,8 @@ export default class Shelter extends User implements EntityMarker {
     this.props.email = data.email.toLowerCase();
     this.props.password = data.password;
     this.props.description = data.description ?? this.props.description;
+    this.props.profile_picture = data.profile_picture ?? this.props.profile_picture;
+    this.props.header_picture = data.header_picture ?? this.props.header_picture;
     this.props.updated_at = new Date();
 
     this.props.validate(this.props);

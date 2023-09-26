@@ -21,6 +21,8 @@ export class ShelterMapper implements MapperMarker {
             city: CityMapper.getEntity(shelterModel.user.city),
             role: +shelterModel.user.role,
             description: shelterModel.user.description,
+            profile_picture: shelterModel.user.profile_picture,
+            header_picture: shelterModel.user.header_picture,
             created_at: shelterModel.user.created_at,
             updated_at: shelterModel.user.updated_at,
             deleted_at: shelterModel.user.deleted_at,
@@ -52,6 +54,8 @@ export class ShelterMapper implements MapperMarker {
             email: model.user.email,
             password: model.user.password,
             description: model.user.description,
+            profile_picture: model.user.profile_picture,
+            header_picture: model.user.header_picture,
             city_name: model.user.city.name,
             state_name: model.user.city.state.name,
             state_abbreviation: model.user.city.state.abbreviation,
@@ -79,6 +83,8 @@ export class ShelterMapper implements MapperMarker {
         email: string;
         password: string;
         description: string;
+        profile_picture: string;
+        header_picture: string;
         city_name: string;
         state_name: string;
         abbreviation: string;
@@ -105,6 +111,8 @@ export class ShelterMapper implements MapperMarker {
             }),
             role: +data.role,
             description: data.description,
+            profile_picture: data.profile_picture,
+            header_picture: data.header_picture,
             created_at: data.created_at ? new Date(data.created_at) : null,
             updated_at: data.updated_at ? new Date(data.updated_at) : null,
             deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,

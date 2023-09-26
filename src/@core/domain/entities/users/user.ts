@@ -12,6 +12,8 @@ export type UserAttr = {
   city: City,
   role?: Role,
   description?: string,
+  profile_picture?: string,
+  header_picture?: string,
   id?: string,
   created_at?: Date,
   updated_at?: Date,

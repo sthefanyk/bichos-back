@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcrypt';
 import { CityModel } from 'src/@core/domain/models/city.model';
-import { StateModel } from 'src/@core/domain/models/state.model';
 import UserModel from 'src/@core/domain/models/user.model';
 import { Role } from 'src/@core/shared/domain/enums/role.enum';
 import { DataSource } from 'typeorm';

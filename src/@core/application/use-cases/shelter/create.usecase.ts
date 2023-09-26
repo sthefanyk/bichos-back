@@ -31,6 +31,8 @@ export namespace ShelterCreate {
           password: input.password,
           city: city,
           description: input.description,
+          profile_picture: input.profile_picture,
+          header_picture: input.header_picture,
         },
       );
 
@@ -77,6 +79,8 @@ export namespace ShelterCreate {
     password: string;
     city: string;
     description?: string;
+    profile_picture?: string;
+    header_picture?: string;
   };
 
   export type Output = Promise<{

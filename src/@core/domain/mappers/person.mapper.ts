@@ -19,6 +19,8 @@ export class PersonMapper implements MapperMarker {
             city: CityMapper.getEntity(personModel.user.city),
             role: +personModel.user.role,
             description: personModel.user.description,
+            profile_picture: personModel.user.profile_picture,
+            header_picture: personModel.user.header_picture,
             created_at: personModel.user.created_at,
             updated_at: personModel.user.updated_at,
             deleted_at: personModel.user.deleted_at,
@@ -46,6 +48,8 @@ export class PersonMapper implements MapperMarker {
             email: model.user.email,
             password: model.user.password,
             description: model.user.description,
+            profile_picture: model.user.profile_picture,
+            header_picture: model.user.header_picture,
             city_name: model.user.city.name,
             state_name: model.user.city.state.name,
             state_abbreviation: model.user.city.state.abbreviation,
@@ -71,6 +75,8 @@ export class PersonMapper implements MapperMarker {
         email: string;
         password: string;
         description: string;
+        profile_picture: string;
+        header_picture: string;
         city_name: string;
         state_name: string;
         abbreviation: string;
@@ -95,37 +101,11 @@ export class PersonMapper implements MapperMarker {
             }),
             role: +data.role,
             description: data.description,
+            profile_picture: data.profile_picture,
+            header_picture: data.header_picture,
             created_at: data.created_at ? new Date(data.created_at) : null,
             updated_at: data.updated_at ? new Date(data.updated_at) : null,
             deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
         });
-    }
-
-    // static getUser(entity: Person) : UserModel {
-    //     const props = entity.getProps();
-    //     return {
-    //         id: props.id.toString(),
-    //         fullName: props.fullName,
-    //         username: props.username,
-    //         city: props.city,
-    //         description: props.description,
-    //         email: props.email,
-    //         password: props.password,
-    //         role: props.role,
-    //         created_at: props.created_at,
-    //         updated_at: props.updated_at,
-    //         deleted_at: props.deleted_at, 
-    //     } as any;
-    // }
-
-    // static getPerson(entity: Person) : PersonModel {
-    //     const props = entity.getProps();
-    //     return {
-    //         id: props.id.toString(),
-    //         cpf: entity.cpf,
-    //         date_birth: entity.date_birth,
-    //     } as any;
-    // }
-
-    
+    }    
 }

@@ -26,6 +26,10 @@ export class ShelterPresenter {
 
   description: string;
 
+  profile_picture: string;
+
+  header_picture: string;
+
   full_name: string;
 
   username: string;
@@ -62,6 +66,8 @@ export class ShelterPresenter {
     this.password = output.password;
     this.city = output.city;
     this.description = output.description;
+    this.profile_picture = output.profile_picture;
+    this.header_picture = output.header_picture;
     this.role = output.role;
     this.id = output.id;
     this.created_at = output.created_at;

@@ -28,7 +28,9 @@ export namespace ShelterUpdate {
                 city: city,
                 email: input.email,
                 password: input.password,
-                description: input.description
+                description: input.description,
+                profile_picture: input.profile_picture,
+                header_picture: input.header_picture,
             });
             await shelter.generatePasswordHash();
             
@@ -78,6 +80,8 @@ export namespace ShelterUpdate {
         password: string;
         city: string;
         description?: string;
+        profile_picture?: string;
+        header_picture?: string;
     }
     
     export type Output = Promise<{

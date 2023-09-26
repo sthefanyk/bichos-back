@@ -48,6 +48,8 @@ export namespace PersonSearch {
     username: string;
     city: City;
     description: string;
+    profile_picture: string;
+    header_picture: string;
     date_birth: Date;
     email: string;
     password: string;

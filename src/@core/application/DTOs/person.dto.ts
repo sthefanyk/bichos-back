@@ -11,6 +11,8 @@ export type PersonUpdateInputDto = {
     password: string;
     city: City;
     description?: string;
+    profile_picture?: string;
+    header_picture?: string;
 }
 
 export type PersonOutputDto = {
@@ -23,6 +25,8 @@ export type PersonOutputDto = {
     city: City;
     role: Role;
     description: string;
+    profile_picture: string;
+    header_picture: string;
     id: string;
     created_at: Date;
     updated_at: Date;

@@ -13,6 +13,8 @@ export type ShelterUpdateInputDto = {
     password: string;
     city: City;
     description?: string;
+    profile_picture?: string;
+    header_picture?: string;
 }
 
 export type ShelterOutputDto = {
@@ -27,6 +29,8 @@ export type ShelterOutputDto = {
     city: City;
     role: Role;
     description: string;
+    profile_picture: string;
+    header_picture: string;
     id: string;
     created_at: Date;
     updated_at: Date;

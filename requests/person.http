@@ -30,30 +30,34 @@ POST http://localhost:3000/person
 Content-Type: application/json
 
 {
-    "cpf": "00000000004",
+    "cpf": "00000000009",
     "date_birth": "2002-02-11",
     "full_name": "sthe",
-    "username": "sthe",
-    "email": "sthe@sthe.com",
+    "username": "sthefany9",
+    "email": "sthe9@sthe.com",
     "password": "Sthe1234",
     "city": "Paranaguá",
-    "description": ""
+    "description": "bbbbb",
+    "profile_picture": "bbbbb",
+    "header_picture": "bbbb"
 }
 
 
 ###
-PUT   http://localhost:3000/person/9c0be5d4-a47c-427c-8234-54c45e482448
+PUT   http://localhost:3000/person/8126f7de-fccf-4fa1-978f-115967e4a2cc
 Content-Type: application/json
 
 {
-    "cpf": "00000000001",
+    "cpf": "00000000007",
     "date_birth": "2002-02-11",
     "full_name": "hash",
     "username": "hash",
     "email": "hash@hash.com",
     "password": "Hash1234",
     "city": "Paranaguá",
-    "description": ""
+    "description": "aaaaaaa",
+    "profile_picture": "aaaaaaa",
+    "header_picture": "aaaaaa"
 }
 
 ###

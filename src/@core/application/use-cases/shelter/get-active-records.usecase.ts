@@ -51,6 +51,8 @@ export namespace ShelterGetActiveRecords {
     username: string;
     city: City;
     description: string;
+    profile_picture: string;
+    header_picture: string;
     email: string;
     password: string;
     role: Role;

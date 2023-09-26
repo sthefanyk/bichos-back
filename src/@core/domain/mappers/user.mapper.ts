@@ -12,6 +12,8 @@ export class UserMapper implements MapperMarker {
             username: props.username,
             city: CityMapper.getModel(props.city),
             description: props.description,
+            profile_picture: props.profile_picture,
+            header_picture: props.header_picture,
             email: props.email,
             password: props.password,
             role: props.role,

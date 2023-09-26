@@ -46,10 +46,20 @@ export default class UserProps extends EntityProps {
   @IsEnum(Role)
   role: Role;
 
-  @IsOptional()
-  @IsString()
   @MaxLength(255)
+  @IsString()
+  @IsOptional()
   description: string;
+
+  @MaxLength(255)
+  @IsString()
+  @IsOptional()
+  profile_picture: string;
+
+  @MaxLength(255)
+  @IsString()
+  @IsOptional()
+  header_picture: string;
 
   constructor(props: UserAttr) {
     super(props.id, props.created_at, props.updated_at, props.deleted_at);
@@ -60,6 +70,8 @@ export default class UserProps extends EntityProps {
     this.password = props.password;
     this.role = props.role;
     this.description = props.description;
+    this.profile_picture = props.profile_picture;
+    this.header_picture = props.header_picture;
   }
 }
 
