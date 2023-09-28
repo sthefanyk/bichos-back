@@ -12,6 +12,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { dataSourceOptions } from './database/data-source';
 import { NGOModule } from './routes/ngo/ngo.module';
+import { PostModule } from './routes/post/post.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { NGOModule } from './routes/ngo/ngo.module';
         },
       },
     }),
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
