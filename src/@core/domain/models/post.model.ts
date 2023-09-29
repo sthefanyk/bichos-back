@@ -2,9 +2,10 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import UserModel from './user.model';
 
 @Entity('post')
-export default class UserModel implements ModelMarker {
+export default class PostModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 
@@ -15,7 +16,7 @@ export default class UserModel implements ModelMarker {
   @JoinColumn({name: 'user_id'})
   posted_by: UserModel;
 
-  @Column({ type: 'number' })
+  @Column({ type: 'integer' })
   renewal_count: number;
 
   @Column({ type: 'simple-enum', default: StatusPost.WAITING_QUESTIONNAIRES })

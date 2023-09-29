@@ -7,8 +7,8 @@ import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 export type PostAttr = {
     urgent: boolean;
     posted_by: UUID;
-    renewal_count: number;
-    status: StatusPost;
+    renewal_count?: number;
+    status?: StatusPost;
     type: TypePost;
     urgency_justification?: string;
 
@@ -20,6 +20,8 @@ export type PostAttr = {
 
 export class Post extends Entity<PostProps> {
     constructor(private postProps: PostAttr) {
+        postProps.renewal_count = 0;
+        postProps.status = StatusPost.WAITING_QUESTIONNAIRES;
         const props = new PostProps(postProps);
         super(props);
     }

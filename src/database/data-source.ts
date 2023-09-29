@@ -7,7 +7,7 @@ export const dataSourceOptions: DataSourceOptions & SeederOptions = {
   type: 'sqlite',
   database: 'src/database/db.sqlite',
   logging: false,
-  // synchronize: true,
+  synchronize: true,
   entities: [`${__dirname}/../**/models/**/*.{ts,js}`],
   migrations: [`${__dirname}/migrations/**/*{.ts,.js}`],
   seeds: [MainSeeder],

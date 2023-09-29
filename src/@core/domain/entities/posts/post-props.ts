@@ -2,7 +2,7 @@ import EntityProps from "src/@core/shared/domain/entities/entity-props";
 import { PostAttr } from "./post";
 import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
-import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from "class-validator";
+import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 
 export class PostProps extends EntityProps {
 
@@ -10,7 +10,7 @@ export class PostProps extends EntityProps {
     @IsNotEmpty()
     urgent: boolean;
 
-    @Length(2, 255)
+    @MaxLength(255)
     @IsString()
     @IsOptional()
     urgency_justification: string;

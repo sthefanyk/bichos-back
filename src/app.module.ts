@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PersonalityModule } from './routes/personality/personality.module';
-import { PostsModule } from './routes/posts/posts.module';
 import { AuthModule } from './routes/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonModule } from './routes/person/person.module';
@@ -17,7 +16,6 @@ import { PostModule } from './routes/post/post.module';
 @Module({
   imports: [
     PersonalityModule,
-    PostsModule,
     AuthModule,
     PersonModule,
     LocalizationModule,

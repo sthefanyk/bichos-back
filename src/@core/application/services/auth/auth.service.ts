@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { IAuth } from './auth.interface';
 import IUserRepository from 'src/@core/domain/contracts/user-repository.interface';
 import * as jwt from 'jsonwebtoken';
