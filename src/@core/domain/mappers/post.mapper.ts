@@ -2,6 +2,7 @@ import { MapperMarker } from "src/@core/shared/domain/markers/mapper.marker";
 import { Post } from "../entities/posts/post";
 import PostModel from "../models/post.model";
 import UserModel from "../models/user.model";
+import { AnimalMapper } from "./animal.mapper";
 
 export class PostMapper implements MapperMarker {
     static getModel(entity: Post, user: UserModel) : PostModel {
@@ -14,6 +15,7 @@ export class PostMapper implements MapperMarker {
             renewal_count: props.renewal_count,
             status: props.status,
             type: props.type,
+            animal: AnimalMapper.getModel(props.animal),
             created_at: props.created_at,
             updated_at: props.updated_at,
             deleted_at: props.deleted_at

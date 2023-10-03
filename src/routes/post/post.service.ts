@@ -1,16 +1,23 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { PublishPost } from 'src/@core/application/use-cases/post/publish-post.usecase';
+import { PublishAdoptPost, PublishSponsorshipPost } from 'src/@core/application/use-cases/post';
 
 @Injectable()
 export class PostService {
 
-  @Inject(PublishPost.Usecase)
-  private publishPostUseCase: PublishPost.Usecase;
+  @Inject(PublishAdoptPost.Usecase)
+  private publishAdoptPostUseCase: PublishAdoptPost.Usecase;
 
-  async publishPost(data: PublishPost.Input) {
-    return this.publishPostUseCase.execute(data);
+  @Inject(PublishSponsorshipPost.Usecase)
+  private publishSponsorshipPostUseCase: PublishSponsorshipPost.Usecase;
+
+  async publishAdoptPost(data: PublishAdoptPost.Input) {
+    return this.publishAdoptPostUseCase.execute(data);
+  }
+
+  async publishSponsorshipPost(data: PublishSponsorshipPost.Input) {
+    return this.publishSponsorshipPostUseCase.execute(data);
   }
 
   create(createPostDto: CreatePostDto) {

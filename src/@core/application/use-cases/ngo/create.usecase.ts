@@ -4,7 +4,7 @@ import NGO from '../../../domain/entities/users/ngo';
 import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
 import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error copy';
+import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
 
 export namespace NGOCreate {

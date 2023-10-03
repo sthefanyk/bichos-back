@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import UserModel from './user.model';
+import AnimalModel from './animal.model';
 
 @Entity('post')
 export default class PostModel implements ModelMarker {
@@ -27,6 +28,10 @@ export default class PostModel implements ModelMarker {
 
   @Column({ type: 'varchar', default: '' })
   urgency_justification: string;
+
+  @OneToOne(() => AnimalModel, (animal) => animal.id)
+  @JoinColumn({name: 'animal'})
+  animal: AnimalModel;
 
   @Column({ type: 'datetime' })
   created_at: Date;

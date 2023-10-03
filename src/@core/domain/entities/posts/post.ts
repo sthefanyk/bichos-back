@@ -3,6 +3,7 @@ import { PostProps } from "./post-props";
 import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
+import { Animal } from "./animal";
 
 export type PostAttr = {
     urgent: boolean;
@@ -11,6 +12,7 @@ export type PostAttr = {
     status?: StatusPost;
     type: TypePost;
     urgency_justification?: string;
+    animal: Animal;
 
     id?: string,
     created_at?: Date,

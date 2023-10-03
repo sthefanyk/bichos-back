@@ -5,7 +5,7 @@ import { ILocalization } from 'src/@core/domain/contracts/localization-repositor
 import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error copy';
+import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 
 export namespace PersonCreate {
   export class Usecase implements UseCase<Input, Output> {

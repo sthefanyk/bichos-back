@@ -3,6 +3,7 @@ import { PostAttr } from "./post";
 import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
+import { Animal } from "./animal";
 
 export class PostProps extends EntityProps {
 
@@ -31,6 +32,9 @@ export class PostProps extends EntityProps {
     @IsNotEmpty()
     type: TypePost;
 
+    @IsNotEmpty()
+    animal: Animal;
+
     constructor(props: PostAttr){
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
         this.urgent = props.urgent;
@@ -39,6 +43,7 @@ export class PostProps extends EntityProps {
         this.renewal_count = props.renewal_count;
         this.status = props.status;
         this.type = props.type;
+        this.animal = props.animal;
 
         this.validate(this);
     }

@@ -4,7 +4,7 @@ import UseCase from "../usecase";
 import { AlreadyExistsError } from "src/@core/shared/domain/errors/already-exists.error";
 import { ILocalization } from "src/@core/domain/contracts";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
-import { RequiredError } from "src/@core/shared/domain/errors/required.error copy";
+import { RequiredError } from "src/@core/shared/domain/errors/required.error";
 
 export namespace ShelterUpdate {
     export class Usecase implements UseCase<Input, Output>{

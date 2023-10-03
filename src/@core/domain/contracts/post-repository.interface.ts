@@ -1,6 +1,11 @@
 import { Post } from "../entities/posts/post";
-import { PublishPost } from "src/@core/application/use-cases/post/publish-post.usecase";
+import { PublishAdoptPost, PublishSponsorshipPost } from "src/@core/application/use-cases/post";
 
 export interface IPostRepository {
-    publishPost(entity: Post): PublishPost.Output;
+    publishAdoptPost(entity: Post): PublishAdoptPost.Output;
+    publishSponsorshipPost(entity: Post): PublishSponsorshipPost.Output;
+    // getAdoptionListings(): PublishPost.Output;
+    // getSponsorshipListings(): PublishPost.Output;
+    // getPostById(id: string): PublishPost.Output;
+    // getPostByPosterId(id: string): PublishPost.Output;
 }
