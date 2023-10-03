@@ -42,3 +42,4 @@ export default class PostModel implements ModelMarker {
   @Column({ type: 'datetime', default: null })
   deleted_at: Date;
 }
+

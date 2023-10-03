@@ -8,8 +8,8 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('person')
-@UseGuards(AuthGuard, RoleGuard)
-@Roles(Role.ADMIN)
+// @UseGuards(AuthGuard, RoleGuard)
+// @Roles(Role.ADMIN)
 @Controller('person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}

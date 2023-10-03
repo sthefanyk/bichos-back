@@ -14,6 +14,7 @@ export default class AnimalAdoptModel implements ModelMarker {
   size: SizeAnimal;
 
   @OneToOne(() => AnimalModel)
-  @JoinColumn({name: 'animal'})
+  @JoinColumn({name: 'animal_id'})
   animal: AnimalModel;
 }
+

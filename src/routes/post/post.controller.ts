@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PostService } from './post.service';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { PublishAdoptPost, PublishSponsorshipPost } from 'src/@core/application/use-cases/post';
 
 @Controller('post')
@@ -17,23 +16,28 @@ export class PostController {
     return this.postService.publishSponsorshipPost(data);
   }
 
-  @Get()
-  findAll() {
-    return this.postService.findAll();
+  @Get('adopt')
+  findAllAdoptPost() {
+    return this.postService.findAllAdoptPost();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+  @Get('sponsorship')
+  findAllSponsorshipPost() {
+    return this.postService.findAllSponsorshipPost();
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(+id, updatePostDto);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.postService.findOne(+id);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+  //   return this.postService.update(+id, updatePostDto);
+  // }
+
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.postService.remove(+id);
+  // }
 }

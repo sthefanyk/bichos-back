@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
-import { PublishAdoptPost, PublishSponsorshipPost } from 'src/@core/application/use-cases/post';
+import { FindAllAdoptPost, FindAllSponsorshipPost, PublishAdoptPost, PublishSponsorshipPost } from 'src/@core/application/use-cases/post';
 
 export namespace PostProvider {
   export namespace Repositories {
@@ -49,5 +49,22 @@ export namespace PostProvider {
       },
       inject: [Repositories.REPO.provide, Repositories.USER_TYPEORM_REPO.provide],
     };
+
+    export const FIND_ALL_ADOPT_POST = {
+      provide: FindAllAdoptPost.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new FindAllAdoptPost.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const FIND_ALL_SPONSORSHIP_POST = {
+      provide: FindAllSponsorshipPost.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new FindAllSponsorshipPost.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+    
   }
 }
