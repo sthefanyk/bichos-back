@@ -18,6 +18,37 @@ export class AnimalSponsorshipMapper implements MapperMarker {
         };
     }
 
+    static getJsonWithEntity(entity: Post) {
+        const props = entity.getProps();
+        const propsAnimal = props.animal.getProps();
+        return {
+            id: props.id,
+            urgent: props.urgent,
+            posted_by: props.posted_by,
+            renewal_count: props.renewal_count,
+            status: props.status,
+            type: props.type,
+            urgency_justification: props.urgency_justification,
+            animal: {
+                id: propsAnimal.id,
+                name: propsAnimal.name,
+                sex: propsAnimal.sex,
+                date_birth: propsAnimal.date_birth,
+                species: propsAnimal.species,
+                history: propsAnimal.history,
+                characteristic: propsAnimal.characteristic,
+                accompany: (propsAnimal as any).accompany,
+                reason_request: (propsAnimal as any).reason_request,
+                created_at: propsAnimal.created_at,
+                updated_at: propsAnimal.updated_at,
+                deleted_at: propsAnimal.deleted_at,
+            },
+            created_at: props.created_at,
+            updated_at: props.updated_at,
+            deleted_at: props.deleted_at,
+        };
+    }
+
     static getEntityWithJsonData(data: {
         animal_sponsorship_accompany: string;
         animal_sponsorship_reason_request: string;

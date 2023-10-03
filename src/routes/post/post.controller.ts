@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { PostService } from './post.service';
-import { PublishAdoptPost, PublishSponsorshipPost } from 'src/@core/application/use-cases/post';
+import { PublishAdoptPost, PublishSponsorshipPost, SearchAdoptPost } from 'src/@core/application/use-cases/post';
+import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
 
 @Controller('post')
 export class PostController {
@@ -17,13 +18,13 @@ export class PostController {
   }
 
   @Get('adopt')
-  findAllAdoptPost() {
-    return this.postService.findAllAdoptPost();
+  findAllAdoptPost(@Query() searchParams: SearchAdoptPost.Input) {
+    return this.postService.searchAdoptPost(searchParams);
   }
 
   @Get('sponsorship')
-  findAllSponsorshipPost() {
-    return this.postService.findAllSponsorshipPost();
+  findAllSponsorshipPost(@Query() searchParams: SearchSponsorshipPost.Input) {
+    return this.postService.searchSponsorshipPost(searchParams);
   }
 
   // @Get(':id')
