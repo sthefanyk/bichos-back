@@ -9,9 +9,10 @@ import {
   PublishSponsorshipPost,
   SearchAdoptPost,
 } from 'src/@core/application/use-cases/post';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
+import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
 import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
 import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
+import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
 
 export namespace PostProvider {
   export namespace Repositories {
@@ -109,6 +110,14 @@ export namespace PostProvider {
       provide: FindByIdSponsorshipPost.Usecase,
       useFactory: (postRepo: PostTypeormRepository) => {
         return new FindByIdSponsorshipPost.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const INACTIVATE_POST = {
+      provide: PostInactivate.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new PostInactivate.Usecase(postRepo);
       },
       inject: [Repositories.REPO.provide],
     };

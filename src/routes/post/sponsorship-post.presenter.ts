@@ -5,7 +5,7 @@ import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
+import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
 
 export class SponsorshipPostPresenter {
   id: string;

@@ -8,9 +8,10 @@ import {
 } from 'src/@core/application/use-cases/post';
 import { AdoptPostCollectionPresenter } from './adopt-post.presenter';
 import { SponsorshipPostCollectionPresenter } from './sponsorship-post.presenter';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
+import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
 import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
 import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
+import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
 
 @Injectable()
 export class PostService {
@@ -37,6 +38,9 @@ export class PostService {
 
   @Inject(FindByIdSponsorshipPost.Usecase)
   private findByIdSponsorshipPostUseCase: FindByIdSponsorshipPost.Usecase;
+
+  @Inject(PostInactivate.Usecase)
+  private postInactivateUseCase: PostInactivate.Usecase;
 
   async publishAdoptPost(data: PublishAdoptPost.Input) {
     return this.publishAdoptPostUseCase.execute(data);
@@ -70,5 +74,9 @@ export class PostService {
 
   async findByIdSponsorshipPost(data: FindByIdSponsorshipPost.Input) {
     return this.findByIdSponsorshipPostUseCase.execute(data);
+  }
+
+  async inactivatePost(id: string, data: PostInactivate.Input) {
+    return await this.postInactivateUseCase.execute({id, ...data});
   }
 }

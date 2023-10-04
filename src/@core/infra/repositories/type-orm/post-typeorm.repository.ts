@@ -19,6 +19,7 @@ import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
 import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -35,6 +36,34 @@ export class PostTypeormRepository implements IPostRepository {
     this.animalSponsorshipRepo = this.dataSource.getRepository(
       AnimalSponsorshipModel,
     );
+  }
+
+  async findByIdPost(id: string): Promise<PostModel> {
+    return this.postRepo.findOne({ where: { id } });
+  }
+
+  async inactivate(entity: Post): PostInactivate.Output {
+    const user = await this.userRepo.findOne({
+      where: { id: entity.getProps().posted_by },
+    });
+
+    const model = PostMapper.getModel(entity, user);
+
+    const result = await this.postRepo.update(
+      model.id, model
+    );
+
+    if (result.affected === 0) {
+      throw new Error(
+        `Could not inactive post with ID ${model.id}`,
+      );
+    }
+
+    return {
+      id: model.id,
+      status: model.status,
+      type: model.type
+    }
   }
 
   async findByIdAdoptPost(id: string): FindByIdAdoptPost.Output {
@@ -54,8 +83,7 @@ export class PostTypeormRepository implements IPostRepository {
       .innerJoin(AnimalAdoptModel, 'animal_adopt', 'animal.id = animal_adopt.animal_id')
       .where('post.id = :id', { id })
       .getRawOne();
-    
-
+      
     if (!result) {
       throw new NotFoundError('Post not found');
     }

@@ -1,7 +1,20 @@
-import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Param,
+  Patch,
+} from '@nestjs/common';
 import { PostService } from './post.service';
-import { PublishAdoptPost, PublishSponsorshipPost, SearchAdoptPost } from 'src/@core/application/use-cases/post';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
+import {
+  PublishAdoptPost,
+  PublishSponsorshipPost,
+  SearchAdoptPost,
+} from 'src/@core/application/use-cases/post';
+import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
+import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
 
 @Controller('post')
 export class PostController {
@@ -37,13 +50,8 @@ export class PostController {
     return this.postService.findByIdSponsorshipPost({ id });
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-  //   return this.postService.update(+id, updatePostDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.postService.remove(+id);
-  // }
+  @Patch('inactivate/:id')
+  inactivate(@Param('id') id: string, @Body() data: PostInactivate.Input) {
+    return this.postService.inactivatePost(id, data);
+  }
 }

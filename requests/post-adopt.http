@@ -28,7 +28,7 @@ GET http://localhost:3000/post/adopt?page=1&per_page=2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/post/adopt/abda3eb9-9570-4813-b7e9-0712cd87ba7d
+GET http://localhost:3000/post/adopt/de35668e-49c0-43f5-bf61-fc983e021008
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -68,8 +68,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 }
 
 ###
-PATCH http://localhost:3000/post/adopt/inactivate/7b63310b-2905-41b7-a0d7-8216fb95d68d
+PATCH http://localhost:3000/post/inactivate/de35668e-49c0-43f5-bf61-fc983e021008
+Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
+
+{
+    "status": "4"
+}
 
 ###
 PATCH http://localhost:3000/post/adopt/activate/7b63310b-2905-41b7-a0d7-8216fb95d68d
