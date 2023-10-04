@@ -9,6 +9,8 @@ import {
 import { AdoptPostCollectionPresenter } from './adopt-post.presenter';
 import { SponsorshipPostCollectionPresenter } from './sponsorship-post.presenter';
 import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
+import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
+import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
 
 @Injectable()
 export class PostService {
@@ -29,6 +31,12 @@ export class PostService {
 
   @Inject(SearchSponsorshipPost.Usecase)
   private searchSponsorshipPostUseCase: SearchSponsorshipPost.Usecase;
+
+  @Inject(FindByIdAdoptPost.Usecase)
+  private findByIdAdoptPostUseCase: FindByIdAdoptPost.Usecase;
+
+  @Inject(FindByIdSponsorshipPost.Usecase)
+  private findByIdSponsorshipPostUseCase: FindByIdSponsorshipPost.Usecase;
 
   async publishAdoptPost(data: PublishAdoptPost.Input) {
     return this.publishAdoptPostUseCase.execute(data);
@@ -54,5 +62,13 @@ export class PostService {
   async searchSponsorshipPost(searchParams: SearchSponsorshipPost.Input) {
     const output = await this.searchSponsorshipPostUseCase.execute(searchParams);
     return new SponsorshipPostCollectionPresenter(output);
+  }
+
+  async findByIdAdoptPost(data: FindByIdAdoptPost.Input) {
+    return this.findByIdAdoptPostUseCase.execute(data);
+  }
+
+  async findByIdSponsorshipPost(data: FindByIdSponsorshipPost.Input) {
+    return this.findByIdSponsorshipPostUseCase.execute(data);
   }
 }

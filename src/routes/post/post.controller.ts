@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
 import { PostService } from './post.service';
 import { PublishAdoptPost, PublishSponsorshipPost, SearchAdoptPost } from 'src/@core/application/use-cases/post';
 import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
@@ -27,10 +27,15 @@ export class PostController {
     return this.postService.searchSponsorshipPost(searchParams);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.postService.findOne(+id);
-  // }
+  @Get('adopt/:id')
+  findByIdAdoptPost(@Param('id') id: string) {
+    return this.postService.findByIdAdoptPost({ id });
+  }
+
+  @Get('sponsorship/:id')
+  findByIdSponsorshipPost(@Param('id') id: string) {
+    return this.postService.findByIdSponsorshipPost({ id });
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {

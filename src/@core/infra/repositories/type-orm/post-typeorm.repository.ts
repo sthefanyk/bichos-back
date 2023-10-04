@@ -15,8 +15,10 @@ import {
 } from 'src/@core/application/use-cases/post';
 import AnimalSponsorshipModel from 'src/@core/domain/models/animal-sponsorship';
 import { AnimalSponsorshipMapper } from 'src/@core/domain/mappers/animal-sponsorship.mapper';
-import { Type } from 'class-transformer';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
+import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
+import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -33,6 +35,59 @@ export class PostTypeormRepository implements IPostRepository {
     this.animalSponsorshipRepo = this.dataSource.getRepository(
       AnimalSponsorshipModel,
     );
+  }
+
+  async findByIdAdoptPost(id: string): FindByIdAdoptPost.Output {
+    const queryBuilder = this.dataSource.createQueryBuilder();    
+    const result = await queryBuilder
+      .select([
+        'post.*',
+        'animal.*',
+        'animal_adopt.size',
+      ])
+      .addSelect('post.id AS post_id')
+      .addSelect('post.created_at AS post_created_at')
+      .addSelect('post.updated_at AS post_updated_at')
+      .addSelect('post.deleted_at AS post_deleted_at')
+      .from(AnimalModel, 'animal')
+      .innerJoin(PostModel, 'post', 'post.animal = animal.id')
+      .innerJoin(AnimalAdoptModel, 'animal_adopt', 'animal.id = animal_adopt.animal_id')
+      .where('post.id = :id', { id })
+      .getRawOne();
+    
+
+    if (!result) {
+      throw new NotFoundError('Post not found');
+    }
+
+    return AnimalAdoptMapper.getEntityWithJsonData(result);
+  }
+
+  async findByIdSponsorshipPost(id: string): FindByIdSponsorshipPost.Output {
+    const queryBuilder = this.dataSource.createQueryBuilder();
+    const result = await queryBuilder
+      .select([
+        'post.*',
+        'animal.*',
+        'animal_sponsorship.accompany',
+        'animal_sponsorship.reason_request',
+      ])
+      .addSelect('post.id AS post_id')
+      .addSelect('post.created_at AS post_created_at')
+      .addSelect('post.updated_at AS post_updated_at')
+      .addSelect('post.deleted_at AS post_deleted_at')
+      .from(AnimalModel, 'animal')
+      .innerJoin(PostModel, 'post', 'post.animal = animal.id')
+      .innerJoin(AnimalSponsorshipModel, 'animal_sponsorship', 'animal.id = animal_sponsorship.animal_id')
+      .where('post.id = :id', { id })
+      .getRawOne();
+
+    if (!result) {
+      throw new NotFoundError('Post not found');
+    }
+
+
+    return AnimalSponsorshipMapper.getEntityWithJsonData(result);
   }
 
   async publishAdoptPost(entity: Post): PublishAdoptPost.Output {

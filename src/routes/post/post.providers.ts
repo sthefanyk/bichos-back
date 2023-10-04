@@ -10,6 +10,8 @@ import {
   SearchAdoptPost,
 } from 'src/@core/application/use-cases/post';
 import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase copy';
+import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
+import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
 
 export namespace PostProvider {
   export namespace Repositories {
@@ -91,6 +93,22 @@ export namespace PostProvider {
       provide: SearchSponsorshipPost.Usecase,
       useFactory: (postRepo: PostTypeormRepository) => {
         return new SearchSponsorshipPost.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const FIND_BY_ID_ADOPT_POST = {
+      provide: FindByIdAdoptPost.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new FindByIdAdoptPost.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const FIND_BY_ID_SPONSORSHIP_POST = {
+      provide: FindByIdSponsorshipPost.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new FindByIdSponsorshipPost.Usecase(postRepo);
       },
       inject: [Repositories.REPO.provide],
     };

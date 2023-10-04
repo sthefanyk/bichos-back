@@ -91,7 +91,7 @@ export class AnimalAdoptMapper implements MapperMarker {
             deleted_at: new Date(data.deleted_at),
         });
 
-        return new Post({
+        const post = new Post({
             urgent: data.urgent === "true",
             posted_by: new UUID(data.posted_by),
             renewal_count: +data.renewal_count,
@@ -106,5 +106,7 @@ export class AnimalAdoptMapper implements MapperMarker {
             deleted_at: new Date(data.post_deleted_at),
             
         });
+
+        return post;
     }
 }
