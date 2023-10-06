@@ -1,8 +1,8 @@
-import Entity from '../../../shared/domain/entities/entity';
 import UserProps from './user-props';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
+import EntityProps from 'src/@core/shared/domain/entities/entity-props';
 
 export type UserAttr = {
   full_name: string,
@@ -20,10 +20,18 @@ export type UserAttr = {
   deleted_at?: Date,
 }
 
-export default abstract class User extends Entity<UserProps> {
+export default abstract class User {
 
-  constructor(props: UserProps){
-    super(props);
+  constructor(private props: UserProps){
+    this.validate(props);
+  }
+
+  toJson() {
+    return { ...this.props }
+  }
+
+  validate(props: EntityProps) {
+    props.validate(props);
   }
 
   public resetPassword(password: string) {
@@ -33,7 +41,29 @@ export default abstract class User extends Entity<UserProps> {
     this.props.validate(this.props);
   }
 
-  abstract update(data: any): void;
+  public updateUser(data: {
+    full_name: string;
+    username: string;
+    email: string;
+    password: string;
+    city: City;
+    description?: string;
+    profile_picture?: string;
+    header_picture?: string;
+  }) {
+    this.props.full_name = data.full_name.toLowerCase();
+    this.props.username = data.username.toLowerCase();
+    this.props.email = data.email.toLowerCase();
+    this.props.password = data.password;
+    this.props.city = data.city;
+    this.props.description = data.description ?? this.props.description;
+    this.props.profile_picture = data.profile_picture ?? this.props.profile_picture;
+    this.props.header_picture = data.header_picture ?? this.props.header_picture;
+
+    this.props.updated_at = new Date();
+    
+    this.props.validate(this.props);
+  }
 
   public activate() {
     this.props.deleted_at = null;
@@ -50,5 +80,57 @@ export default abstract class User extends Entity<UserProps> {
 
   public async verifyPassword(password: string) {
     return await bcrypt.compare(password, this.props.password);
+  }
+
+  get full_name(): string {
+    return this.props.full_name;
+  }
+
+  get username(): string {
+    return this.props.username;
+  }
+
+  get email(): string {
+    return this.props.email;
+  }
+
+  get password(): string {
+    return this.props.password;
+  }
+
+  get city(): City {
+    return this.props.city;
+  }
+
+  get role(): Role {
+    return this.props.role;
+  }
+
+  get description(): string {
+    return this.props.description;
+  }
+
+  get profile_picture(): string {
+    return this.props.profile_picture;
+  }
+
+  get header_picture(): string {
+    return this.props.header_picture;
+  }
+
+  get id(): string {
+    return this.props.id.id;
+  }
+
+  get created_at(): Date {
+    return this.props.created_at;
+  }
+
+  get updated_at(): Date {
+    return this.props.updated_at;
+  }
+
+  get deleted_at(): Date {
+    return this.props.deleted_at;
   }
 }

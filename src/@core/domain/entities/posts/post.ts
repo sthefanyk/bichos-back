@@ -1,10 +1,9 @@
-import Entity from "src/@core/shared/domain/entities/entity";
-import { PostProps } from "./post-props";
 import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 import { Animal } from "./animal";
 import { InvalidStatusError } from "src/@core/shared/domain/errors/invalid-status";
+import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 
 export type PostAttr = {
     urgent: boolean;
@@ -21,12 +20,14 @@ export type PostAttr = {
     deleted_at?: Date,
 }
 
-export class Post extends Entity<PostProps> {
+export class Post implements EntityMarker {
     constructor(private postProps: PostAttr) {
         postProps.renewal_count = postProps.renewal_count ?? 0;
         postProps.status = postProps.status ?? StatusPost.WAITING_QUESTIONNAIRES;
-        const props = new PostProps(postProps);
-        super(props);
+    }
+
+    toJson() {
+        return { ...this.postProps }
     }
 
     public inactivate(status: StatusPost) {
@@ -39,7 +40,52 @@ export class Post extends Entity<PostProps> {
             throw new InvalidStatusError('This status is invalid for deactivation');
         }
 
-        this.props.status = status;
-        this.props.deleted_at = new Date();
+        this.postProps.status = status;
+        this.postProps.deleted_at = new Date();
+    }
+
+
+    get urgent(): boolean {
+        return this.postProps.urgent;  
+    }
+
+    get posted_by(): UUID {
+        return this.postProps.posted_by; 
+    }
+
+    get renewal_count(): number {
+        return this.postProps.renewal_count; 
+    }
+
+    get status(): StatusPost {
+        return this.postProps.status;   
+    }
+
+    get type(): TypePost {
+        return this.postProps.type;   
+    }
+
+    get urgency_justification(): string {
+        return this.postProps.urgency_justification;   
+    }
+
+    get animal(): Animal {
+        return this.postProps.animal;   
+    }
+
+    get id(): string {
+        return this.postProps.id;   
+    }
+
+    get created_at(): Date {
+        return this.postProps.created_at;   
+    }
+
+    get updated_at(): Date {
+        return this.postProps.updated_at;
+    }
+
+    get deleted_at(): Date {
+        return this.postProps.deleted_at;  
     }
 }

@@ -48,8 +48,8 @@ export abstract class SearchService<E extends EntityMarker> {
     }
 
     return [...items].sort((a, b) => {
-      const aValue = custom_getter ? custom_getter(sort, a) : a.getProps()[sort];
-      const bValue = custom_getter ? custom_getter(sort, b) : b.getProps()[sort];
+      const aValue = custom_getter ? custom_getter(sort, a) : a[sort];
+      const bValue = custom_getter ? custom_getter(sort, b) : b[sort];
       if (aValue < bValue) {
         return sort_dir === 'asc' ? -1 : 1;
       }

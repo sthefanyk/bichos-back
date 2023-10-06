@@ -5,21 +5,20 @@ import { CityMapper } from "./city.mapper";
 
 export class UserMapper implements MapperMarker {
     static getModel(entity: User): UserModel {
-        const props = entity.getProps();
         return {
-            id: props.id.getIdString(),
-            full_name: props.full_name,
-            username: props.username,
-            city: CityMapper.getModel(props.city),
-            description: props.description,
-            profile_picture: props.profile_picture,
-            header_picture: props.header_picture,
-            email: props.email,
-            password: props.password,
-            role: props.role,
-            created_at: props.created_at,
-            updated_at: props.updated_at,
-            deleted_at: props.deleted_at,
+            id: entity.id,
+            full_name: entity.full_name,
+            username: entity.username,
+            city: CityMapper.getModel(entity.city),
+            description: entity.description,
+            profile_picture: entity.profile_picture,
+            header_picture: entity.header_picture,
+            email: entity.email,
+            password: entity.password,
+            role: entity.role,
+            created_at: entity.created_at,
+            updated_at: entity.updated_at,
+            deleted_at: entity.deleted_at,
         }
     }
 }

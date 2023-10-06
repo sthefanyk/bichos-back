@@ -2,10 +2,11 @@ import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { PersonAttr } from './person';
 import { UserAttr } from './user';
 import UserProps from './user-props';
-import { IsDate, IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty, Length } from 'class-validator';
 
 export default class PersonProps extends UserProps {
 
+  @Length(11, 11)
   @IsNotEmpty()
   cpf: string;
 

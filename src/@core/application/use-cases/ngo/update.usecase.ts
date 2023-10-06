@@ -57,7 +57,7 @@ export namespace NGOUpdate {
             const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
             const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
             
-            const id = ngo.getProps().id.getIdString();
+            const id = ngo.id;
             if (emailExists.id && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
             if (usernameExists.id && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
             if (cnpjExists.id && cnpjExists.id !== id) throw new AlreadyExistsError('CNPJ already exists');

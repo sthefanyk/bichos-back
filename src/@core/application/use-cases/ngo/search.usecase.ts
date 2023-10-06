@@ -73,7 +73,7 @@ export namespace NGOSearch {
       }
 
       return items.filter((i) => {
-        return i.getProps().full_name.toLowerCase().includes(filter.toLowerCase());
+        return i.full_name.toLowerCase().includes(filter.toLowerCase());
       });
     }
 

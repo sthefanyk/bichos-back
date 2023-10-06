@@ -12,22 +12,21 @@ export class AnimalAdoptMapper implements MapperMarker {
 
         return {
             id: animal.id,
-            size: (entity.getProps() as any).size,
+            size: (entity as any).size,
             animal,
         };
     }
 
     static getJsonWithEntity(entity: Post) {
-        const props = entity.getProps();
-        const propsAnimal = props.animal.getProps();
+        const propsAnimal = entity.animal;
         return {
-            id: props.id,
-            urgent: props.urgent,
-            posted_by: props.posted_by,
-            renewal_count: props.renewal_count,
-            status: props.status,
-            type: props.type,
-            urgency_justification: props.urgency_justification,
+            id: entity.id,
+            urgent: entity.urgent,
+            posted_by: entity.posted_by,
+            renewal_count: entity.renewal_count,
+            status: entity.status,
+            type: entity.type,
+            urgency_justification: entity.urgency_justification,
             animal: {
                 id: propsAnimal.id,
                 name: propsAnimal.name,
@@ -41,9 +40,9 @@ export class AnimalAdoptMapper implements MapperMarker {
                 updated_at: propsAnimal.updated_at,
                 deleted_at: propsAnimal.deleted_at,
             },
-            created_at: props.created_at,
-            updated_at: props.updated_at,
-            deleted_at: props.deleted_at,
+            created_at: entity.created_at,
+            updated_at: entity.updated_at,
+            deleted_at: entity.deleted_at,
         };
     }
 

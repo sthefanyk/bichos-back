@@ -6,19 +6,18 @@ import { AnimalMapper } from "./animal.mapper";
 
 export class PostMapper implements MapperMarker {
     static getModel(entity: Post, user: UserModel) : PostModel {
-        const props = entity.getProps();
         return {
-            id: props.id.getIdString(),
-            urgent: props.urgent,
-            urgency_justification: props.urgency_justification,
+            id: entity.id,
+            urgent: entity.urgent,
+            urgency_justification: entity.urgency_justification,
             posted_by: user,
-            renewal_count: props.renewal_count,
-            status: props.status,
-            type: props.type,
-            animal: AnimalMapper.getModel(props.animal),
-            created_at: props.created_at,
-            updated_at: props.updated_at,
-            deleted_at: props.deleted_at
+            renewal_count: entity.renewal_count,
+            status: entity.status,
+            type: entity.type,
+            animal: AnimalMapper.getModel(entity.animal),
+            created_at: entity.created_at,
+            updated_at: entity.updated_at,
+            deleted_at: entity.deleted_at
         }
     }
 }

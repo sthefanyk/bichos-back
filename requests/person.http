@@ -37,11 +37,11 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 {
-    "cpf": "00000000009",
+    "cpf": "00000000003",
     "date_birth": "2002-02-11",
     "full_name": "sthe",
-    "username": "sthefany",
-    "email": "sthe@sthe.com",
+    "username": "sthefany3",
+    "email": "sthe3@sthe.com",
     "password": "Sthe1234",
     "city": "Paranaguá",
     "description": "",
@@ -51,16 +51,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 
 ###
-PUT   http://localhost:3000/person/8126f7de-fccf-4fa1-978f-115967e4a2cc
+PUT   http://localhost:3000/person/bed665f8-1f38-4b8b-89f9-08dde37969d4
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 {
-    "cpf": "00000000007",
+    "cpf": "00000000003",
     "date_birth": "2002-02-11",
     "full_name": "hash",
-    "username": "hash",
-    "email": "hash@hash.com",
+    "username": "hash3",
+    "email": "hash3@hash.com",
     "password": "Hash1234",
     "city": "Paranaguá",
     "description": "aaaaaaa",

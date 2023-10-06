@@ -84,7 +84,7 @@ export namespace SearchSponsorshipPost {
       }
 
       return items.filter((i) => {
-        return i.getProps().animal.getProps().name.toLowerCase().includes(filter.toLowerCase());
+        return i.animal.name.toLowerCase().includes(filter.toLowerCase());
       });
     }
 

@@ -15,4 +15,8 @@ export class AnimalAdopt extends Animal {
         props.validate(props);
         super(props);
     }
+
+    get size(): SizeAnimal {
+        return this.animalAdoptProps.size;
+    }
 }

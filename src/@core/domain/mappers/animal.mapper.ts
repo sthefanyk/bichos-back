@@ -4,18 +4,17 @@ import AnimalModel from "../models/animal.model";
 
 export class AnimalMapper implements MapperMarker {
     static getModel(entity: Animal): AnimalModel {
-        const props = entity.getProps();
         return {
-            id: props.id.getIdString(),
-            name: props.name,
-            date_birth: props.date_birth.toDateString(),
-            sex: props.sex,
-            species: props.species,
-            history: props.history,
-            characteristic: props.characteristic,
-            created_at: props.created_at,
-            updated_at: props.updated_at,
-            deleted_at: props.deleted_at,
+            id: entity.id.getIdString(),
+            name: entity.name,
+            date_birth: entity.date_birth.toDateString(),
+            sex: entity.sex,
+            species: entity.species,
+            history: entity.history,
+            characteristic: entity.characteristic,
+            created_at: entity.created_at,
+            updated_at: entity.updated_at,
+            deleted_at: entity.deleted_at,
         }
     }
 }
