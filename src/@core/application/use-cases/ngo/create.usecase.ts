@@ -23,17 +23,17 @@ export namespace NGOCreate {
           cnpj: new CNPJ(input.cnpj),
           name_ngo: input.name_ngo,
           date_register: new Date(input.date_register),
-        },
-        {
-          full_name: input.full_name,
-          username: input.username,
-          email: input.email,
-          password: input.password,
-          city: city,
-          description: input.description,
-          profile_picture: input.profile_picture,
-          header_picture: input.header_picture,
-        },
+          userAttr: {
+            full_name: input.full_name,
+            username: input.username,
+            email: input.email,
+            password: input.password,
+            city: city,
+            description: input.description,
+            profile_picture: input.profile_picture,
+            header_picture: input.header_picture,
+          }
+        }
       );
 
       await user.generatePasswordHash();

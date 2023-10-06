@@ -2,7 +2,6 @@ import UserProps from './user-props';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
 
 export type UserAttr = {
   full_name: string,
@@ -23,15 +22,11 @@ export type UserAttr = {
 export default abstract class User {
 
   constructor(private props: UserProps){
-    this.validate(props);
+    props.validate(props);
   }
 
   toJson() {
     return { ...this.props }
-  }
-
-  validate(props: EntityProps) {
-    props.validate(props);
   }
 
   public resetPassword(password: string) {

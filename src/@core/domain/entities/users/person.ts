@@ -8,26 +8,25 @@ import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 export type PersonAttr = {
   cpf: CPF | string;
   date_birth: Date;
+  userAttr: UserAttr;
 };
 
 export default class Person extends User implements EntityMarker {
 
   private personProps: PersonProps;
 
-  constructor(
-    personAttr: PersonAttr,
-    userProps: UserAttr,
-  ) {
-    userProps.role = Role.PERSON;
+  constructor(personAttr: PersonAttr) {
+    personAttr.userAttr.role = Role.PERSON;
     personAttr.cpf =
       personAttr.cpf instanceof CPF
         ? personAttr.cpf
         : new CPF(personAttr.cpf);
 
-    const props = new PersonProps(personAttr, userProps);
+    const props = new PersonProps(personAttr);
 
     super(props);
     this.personProps = props;
+    this.personProps.validate(this.personProps);
   }
 
   public update(data: {
@@ -43,7 +42,7 @@ export default class Person extends User implements EntityMarker {
     header_picture?: string;
   }) {
     this.personProps.cpf =
-      data.cpf instanceof CPF ? data.cpf : new CPF(data.cpf);
+      (data.cpf instanceof CPF ? data.cpf : new CPF(data.cpf)).cpf;
     this.personProps.date_birth = data.date_birth;
     
     this.updateUser({
@@ -56,10 +55,12 @@ export default class Person extends User implements EntityMarker {
       profile_picture: data.profile_picture,
       header_picture: data.header_picture
     });
+
+    this.personProps.validate(this.personProps)
   }
 
   get cpf(): string {
-    return (this.personProps.cpf as any).cpf
+    return this.personProps.cpf
   }
 
   get date_birth(): Date {

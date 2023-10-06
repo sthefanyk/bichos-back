@@ -9,21 +9,22 @@ export class PersonMapper implements MapperMarker {
     static getEntity(personModel: PersonModel) : Person {
         return new Person({
             cpf: personModel.cpf,
-            date_birth: new Date(personModel.date_birth)
-        }, {
-            id: personModel.user.id,
-            full_name: personModel.user.full_name,
-            username: personModel.user.username,
-            email: personModel.user.email,
-            password: personModel.user.password,
-            city: CityMapper.getEntity(personModel.user.city),
-            role: +personModel.user.role,
-            description: personModel.user.description,
-            profile_picture: personModel.user.profile_picture,
-            header_picture: personModel.user.header_picture,
-            created_at: personModel.user.created_at,
-            updated_at: personModel.user.updated_at,
-            deleted_at: personModel.user.deleted_at,
+            date_birth: new Date(personModel.date_birth),
+            userAttr: {
+                id: personModel.user.id,
+                full_name: personModel.user.full_name,
+                username: personModel.user.username,
+                email: personModel.user.email,
+                password: personModel.user.password,
+                city: CityMapper.getEntity(personModel.user.city),
+                role: +personModel.user.role,
+                description: personModel.user.description,
+                profile_picture: personModel.user.profile_picture,
+                header_picture: personModel.user.header_picture,
+                created_at: personModel.user.created_at,
+                updated_at: personModel.user.updated_at,
+                deleted_at: personModel.user.deleted_at,
+            }
         });
     }
 
@@ -87,25 +88,26 @@ export class PersonMapper implements MapperMarker {
     }) : Person {
         return new Person({
             cpf: data.cpf,
-            date_birth: new Date(data.date_birth)
-        }, {
-            id: data.id,
-            full_name: data.full_name,
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            city: CityMapper.getEntityWithJsonData({
-                name: data.city_name,
-                state_name: data.state_name,
-                state_abbreviation: data.abbreviation
-            }),
-            role: +data.role,
-            description: data.description,
-            profile_picture: data.profile_picture,
-            header_picture: data.header_picture,
-            created_at: data.created_at ? new Date(data.created_at) : null,
-            updated_at: data.updated_at ? new Date(data.updated_at) : null,
-            deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+            date_birth: new Date(data.date_birth),
+            userAttr: {
+                id: data.id,
+                full_name: data.full_name,
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                city: CityMapper.getEntityWithJsonData({
+                    name: data.city_name,
+                    state_name: data.state_name,
+                    state_abbreviation: data.abbreviation
+                }),
+                role: +data.role,
+                description: data.description,
+                profile_picture: data.profile_picture,
+                header_picture: data.header_picture,
+                created_at: data.created_at ? new Date(data.created_at) : null,
+                updated_at: data.updated_at ? new Date(data.updated_at) : null,
+                deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+            }
         });
     }    
 }

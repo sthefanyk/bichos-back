@@ -44,8 +44,8 @@ export abstract class Animal {
         return this.props.characteristic;
     }
 
-    get id(): UUID {
-        return this.props.id;
+    get id(): string {
+        return this.props.id.getIdString();
     }
 
     get created_at(): Date {

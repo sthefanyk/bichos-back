@@ -5,7 +5,7 @@ import AnimalModel from "../models/animal.model";
 export class AnimalMapper implements MapperMarker {
     static getModel(entity: Animal): AnimalModel {
         return {
-            id: entity.id.getIdString(),
+            id: entity.id,
             name: entity.name,
             date_birth: entity.date_birth.toDateString(),
             sex: entity.sex,

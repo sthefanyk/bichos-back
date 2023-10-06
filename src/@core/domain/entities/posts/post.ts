@@ -4,6 +4,7 @@ import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 import { Animal } from "./animal";
 import { InvalidStatusError } from "src/@core/shared/domain/errors/invalid-status";
 import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
+import { PostProps } from "./post-props";
 
 export type PostAttr = {
     urgent: boolean;
@@ -21,9 +22,15 @@ export type PostAttr = {
 }
 
 export class Post implements EntityMarker {
-    constructor(private postProps: PostAttr) {
-        postProps.renewal_count = postProps.renewal_count ?? 0;
-        postProps.status = postProps.status ?? StatusPost.WAITING_QUESTIONNAIRES;
+
+    private postProps: PostProps;
+
+    constructor(private postAttr: PostAttr) {
+        postAttr.renewal_count = postAttr.renewal_count ?? 0;
+        postAttr.status = postAttr.status ?? StatusPost.WAITING_QUESTIONNAIRES;
+
+        this.postProps = new PostProps(postAttr);
+        this.postProps.validate(this.postProps);
     }
 
     toJson() {
@@ -49,7 +56,7 @@ export class Post implements EntityMarker {
         return this.postProps.urgent;  
     }
 
-    get posted_by(): UUID {
+    get posted_by(): string {
         return this.postProps.posted_by; 
     }
 
@@ -74,7 +81,7 @@ export class Post implements EntityMarker {
     }
 
     get id(): string {
-        return this.postProps.id;   
+        return this.postProps.id.getIdString();   
     }
 
     get created_at(): Date {

@@ -8,8 +8,8 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 
 @ApiTags('shelter')
-@UseGuards(AuthGuard, RoleGuard)
-@Roles(Role.ADMIN)
+// @UseGuards(AuthGuard, RoleGuard)
+// @Roles(Role.ADMIN)
 @Controller('shelter')
 export class ShelterController {
   constructor(private readonly shelterService: ShelterService) {}

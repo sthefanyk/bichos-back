@@ -12,20 +12,21 @@ export class ShelterMapper implements MapperMarker {
             responsible_date_birth: new Date(shelterModel.responsible_date_birth),
             name_shelter: shelterModel.name_shelter,
             star_date_shelter: new Date(shelterModel.star_date_shelter),
-        }, {
-            id: shelterModel.user.id,
-            full_name: shelterModel.user.full_name,
-            username: shelterModel.user.username,
-            email: shelterModel.user.email,
-            password: shelterModel.user.password,
-            city: CityMapper.getEntity(shelterModel.user.city),
-            role: +shelterModel.user.role,
-            description: shelterModel.user.description,
-            profile_picture: shelterModel.user.profile_picture,
-            header_picture: shelterModel.user.header_picture,
-            created_at: shelterModel.user.created_at,
-            updated_at: shelterModel.user.updated_at,
-            deleted_at: shelterModel.user.deleted_at,
+            userAttr: {
+                id: shelterModel.user.id,
+                full_name: shelterModel.user.full_name,
+                username: shelterModel.user.username,
+                email: shelterModel.user.email,
+                password: shelterModel.user.password,
+                city: CityMapper.getEntity(shelterModel.user.city),
+                role: +shelterModel.user.role,
+                description: shelterModel.user.description,
+                profile_picture: shelterModel.user.profile_picture,
+                header_picture: shelterModel.user.header_picture,
+                created_at: shelterModel.user.created_at,
+                updated_at: shelterModel.user.updated_at,
+                deleted_at: shelterModel.user.deleted_at,
+            }
         });
     }
 
@@ -98,24 +99,25 @@ export class ShelterMapper implements MapperMarker {
             responsible_date_birth: new Date(data.responsible_date_birth),
             name_shelter: data.name_shelter,
             star_date_shelter: new Date(data.star_date_shelter),
-        }, {
-            id: data.id,
-            full_name: data.full_name,
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            city: CityMapper.getEntityWithJsonData({
-                name: data.city_name,
-                state_name: data.state_name,
-                state_abbreviation: data.abbreviation
-            }),
-            role: +data.role,
-            description: data.description,
-            profile_picture: data.profile_picture,
-            header_picture: data.header_picture,
-            created_at: data.created_at ? new Date(data.created_at) : null,
-            updated_at: data.updated_at ? new Date(data.updated_at) : null,
-            deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+            userAttr: {
+                id: data.id,
+                full_name: data.full_name,
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                city: CityMapper.getEntityWithJsonData({
+                    name: data.city_name,
+                    state_name: data.state_name,
+                    state_abbreviation: data.abbreviation
+                }),
+                role: +data.role,
+                description: data.description,
+                profile_picture: data.profile_picture,
+                header_picture: data.header_picture,
+                created_at: data.created_at ? new Date(data.created_at) : null,
+                updated_at: data.updated_at ? new Date(data.updated_at) : null,
+                deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+            }
         });
     }
 }

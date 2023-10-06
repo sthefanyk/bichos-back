@@ -9,21 +9,23 @@ export type NGOAttr = {
   cnpj: CNPJ | string;
   name_ngo: string;
   date_register: Date;
+  userAttr: UserAttr;
 };
 
 export default class NGO extends User implements EntityMarker {
-  constructor(
-    private ngoProps: NGOAttr,
-    userProps: UserAttr,
-  ) {
-    userProps.role = Role.NGO;
-    ngoProps.cnpj =
-      ngoProps.cnpj instanceof CNPJ
-        ? ngoProps.cnpj
-        : new CNPJ(ngoProps.cnpj);
-    const props = new NGOProps(ngoProps, userProps);
-    props.validate(props);
+  
+  private NGOProps: NGOProps;
+
+  constructor(ngoAttr: NGOAttr) {
+    ngoAttr.userAttr.role = Role.NGO;
+    ngoAttr.cnpj =
+      ngoAttr.cnpj instanceof CNPJ
+        ? ngoAttr.cnpj
+        : new CNPJ(ngoAttr.cnpj);
+    const props = new NGOProps(ngoAttr);
     super(props);
+    this.NGOProps = props;
+    this.NGOProps.validate(this.NGOProps);
   }
 
   public update(data: {
@@ -39,10 +41,10 @@ export default class NGO extends User implements EntityMarker {
     profile_picture?: string;
     header_picture?: string;
   }) {
-    this.ngoProps.cnpj =
-      data.cnpj instanceof CNPJ ? data.cnpj : new CNPJ(data.cnpj);
-      this.ngoProps.name_ngo = data.name_ngo.toLowerCase();
-    this.ngoProps.date_register = data.date_register
+    this.NGOProps.cnpj =
+      (data.cnpj instanceof CNPJ ? data.cnpj : new CNPJ(data.cnpj)).cnpj;
+      this.NGOProps.name_ngo = data.name_ngo.toLowerCase();
+    this.NGOProps.date_register = data.date_register
     this.updateUser({
       full_name: data.full_name,
       username: data.username,
@@ -53,17 +55,19 @@ export default class NGO extends User implements EntityMarker {
       profile_picture: data.profile_picture,
       header_picture: data.header_picture
     });
+
+    this.NGOProps.validate(this.NGOProps);
   }
 
   get cnpj(): string {
-    return (this.ngoProps.cnpj as any).cnpj
+    return this.NGOProps.cnpj;
   }
 
   get name_ngo(): string {
-    return this.ngoProps.name_ngo;
+    return this.NGOProps.name_ngo;
   }
 
   get date_register(): Date {
-    return this.ngoProps.date_register;
+    return this.NGOProps.date_register;
   }
 }

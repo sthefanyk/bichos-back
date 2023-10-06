@@ -55,7 +55,7 @@ export class PersonPresenter {
     this.username = output.username;
     this.email = output.email;
     this.password = output.password;
-    this.city = output.city;
+    this.city = (output as any).city_name;
     this.description = output.description;
     this.profile_picture = output.profile_picture;
     this.header_picture = output.header_picture;

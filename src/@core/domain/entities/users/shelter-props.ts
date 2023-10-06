@@ -1,5 +1,4 @@
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
-import { UserAttr } from './user';
 import UserProps from './user-props';
 import { IsDate, IsNotEmpty, IsString, Length } from 'class-validator';
 import { ShelterAttr } from './shelter';
@@ -22,8 +21,8 @@ export default class ShelterProps extends UserProps {
   @IsNotEmpty()
   star_date_shelter: Date;
 
-  constructor(props: ShelterAttr, userProps: UserAttr) {
-    super(userProps);
+  constructor(props: ShelterAttr) {
+    super(props.userAttr);
     this.responsible_cpf =
       props.responsible_cpf instanceof CPF
         ? props.responsible_cpf.cpf

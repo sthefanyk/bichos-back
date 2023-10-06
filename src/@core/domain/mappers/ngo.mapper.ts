@@ -10,21 +10,22 @@ export class NGOMapper implements MapperMarker {
         return new NGO({
             cnpj: ngoModel.cnpj,
             name_ngo: ngoModel.name_ngo,
-            date_register: ngoModel.date_register
-        }, {
-            id: ngoModel.user.id,
-            full_name: ngoModel.user.full_name,
-            username: ngoModel.user.username,
-            email: ngoModel.user.email,
-            password: ngoModel.user.password,
-            city: CityMapper.getEntity(ngoModel.user.city),
-            role: +ngoModel.user.role,
-            description: ngoModel.user.description,
-            profile_picture: ngoModel.user.profile_picture,
-            header_picture: ngoModel.user.header_picture,
-            created_at: ngoModel.user.created_at,
-            updated_at: ngoModel.user.updated_at,
-            deleted_at: ngoModel.user.deleted_at,
+            date_register: ngoModel.date_register,
+            userAttr: {
+                id: ngoModel.user.id,
+                full_name: ngoModel.user.full_name,
+                username: ngoModel.user.username,
+                email: ngoModel.user.email,
+                password: ngoModel.user.password,
+                city: CityMapper.getEntity(ngoModel.user.city),
+                role: +ngoModel.user.role,
+                description: ngoModel.user.description,
+                profile_picture: ngoModel.user.profile_picture,
+                header_picture: ngoModel.user.header_picture,
+                created_at: ngoModel.user.created_at,
+                updated_at: ngoModel.user.updated_at,
+                deleted_at: ngoModel.user.deleted_at,
+            }
         });
     }
 
@@ -92,25 +93,26 @@ export class NGOMapper implements MapperMarker {
         return new NGO({
             cnpj: data.cnpj,
             name_ngo: data.name_ngo,
-            date_register: new Date(data.date_register)
-        }, {
-            id: data.id,
-            full_name: data.full_name,
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            city: CityMapper.getEntityWithJsonData({
-                name: data.city_name,
-                state_name: data.state_name,
-                state_abbreviation: data.abbreviation
-            }),
-            role: +data.role,
-            description: data.description,
-            profile_picture: data.profile_picture,
-            header_picture: data.header_picture,
-            created_at: data.created_at ? new Date(data.created_at) : null,
-            updated_at: data.updated_at ? new Date(data.updated_at) : null,
-            deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+            date_register: new Date(data.date_register),
+            userAttr: {
+                id: data.id,
+                full_name: data.full_name,
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                city: CityMapper.getEntityWithJsonData({
+                    name: data.city_name,
+                    state_name: data.state_name,
+                    state_abbreviation: data.abbreviation
+                }),
+                role: +data.role,
+                description: data.description,
+                profile_picture: data.profile_picture,
+                header_picture: data.header_picture,
+                created_at: data.created_at ? new Date(data.created_at) : null,
+                updated_at: data.updated_at ? new Date(data.updated_at) : null,
+                deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+            }
         });
     }    
 }

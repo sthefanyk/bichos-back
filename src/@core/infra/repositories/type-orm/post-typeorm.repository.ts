@@ -44,7 +44,7 @@ export class PostTypeormRepository implements IPostRepository {
 
   async inactivate(entity: Post): PostInactivate.Output {
     const user = await this.userRepo.findOne({
-      where: { id: entity.posted_by.id },
+      where: { id: entity.posted_by },
     });
 
     const model = PostMapper.getModel(entity, user);
@@ -120,7 +120,7 @@ export class PostTypeormRepository implements IPostRepository {
 
   async publishAdoptPost(entity: Post): PublishAdoptPost.Output {
     const user = await this.userRepo.findOne({
-      where: { id: entity.posted_by.getIdString() },
+      where: { id: entity.posted_by },
     });
 
     const model = PostMapper.getModel(entity, user);
@@ -143,7 +143,7 @@ export class PostTypeormRepository implements IPostRepository {
 
   async publishSponsorshipPost(entity: Post): PublishSponsorshipPost.Output {
     const user = await this.userRepo.findOne({
-      where: { id: entity.posted_by.getIdString() },
+      where: { id: entity.posted_by },
     });
 
     const model = PostMapper.getModel(entity, user);

@@ -23,17 +23,17 @@ export namespace ShelterCreate {
           responsible_date_birth: new Date(input.responsible_date_birth),
           name_shelter: input.name_shelter,
           star_date_shelter: new Date(input.star_date_shelter),
-        },
-        {
-          full_name: input.full_name,
-          username: input.username,
-          email: input.email,
-          password: input.password,
-          city: city,
-          description: input.description,
-          profile_picture: input.profile_picture,
-          header_picture: input.header_picture,
-        },
+          userAttr: {
+            full_name: input.full_name,
+            username: input.username,
+            email: input.email,
+            password: input.password,
+            city: city,
+            description: input.description,
+            profile_picture: input.profile_picture,
+            header_picture: input.header_picture,
+          }
+        }
       );
 
       await user.generatePasswordHash();

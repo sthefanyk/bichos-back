@@ -22,16 +22,16 @@ export namespace PersonCreate {
         {
           cpf: new CPF(input.cpf),
           date_birth: new Date(input.date_birth),
-        },
-        {
-          full_name: input.full_name,
-          username: input.username,
-          email: input.email,
-          password: input.password,
-          city: city,
-          description: input.description,
-          profile_picture: input.profile_picture,
-          header_picture: input.header_picture,
+          userAttr: {
+            full_name: input.full_name,
+            username: input.username,
+            email: input.email,
+            password: input.password,
+            city: city,
+            description: input.description,
+            profile_picture: input.profile_picture,
+            header_picture: input.header_picture,
+          }
         },
       );
 

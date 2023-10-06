@@ -10,21 +10,24 @@ export type ShelterAttr = {
   responsible_date_birth: Date;
   name_shelter: string;
   star_date_shelter: Date;
+  userAttr: UserAttr;
 };
 
 export default class Shelter extends User implements EntityMarker {
-  constructor(
-    private shelterProps: ShelterAttr,
-    userProps: UserAttr,
-  ) {
-    userProps.role = Role.SHELTER;
-    shelterProps.responsible_cpf =
-      shelterProps.responsible_cpf instanceof CPF
-        ? shelterProps.responsible_cpf
-        : new CPF(shelterProps.responsible_cpf);
-    const props = new ShelterProps(shelterProps, userProps);
-    props.validate(props);
+  private shelterProps: ShelterProps;
+
+  constructor(shelterAttr: ShelterAttr) {
+    shelterAttr.userAttr.role = Role.SHELTER;
+    shelterAttr.responsible_cpf =
+      shelterAttr.responsible_cpf instanceof CPF
+        ? shelterAttr.responsible_cpf
+        : new CPF(shelterAttr.responsible_cpf);
+
+    const props = new ShelterProps(shelterAttr);
+
     super(props);
+    this.shelterProps = props;
+    this.shelterProps.validate(this.shelterProps);
   }
 
   public update(data: {
@@ -42,9 +45,9 @@ export default class Shelter extends User implements EntityMarker {
     header_picture?: string;
   }) {
     this.shelterProps.responsible_cpf =
-      data.responsible_cpf instanceof CPF
+      (data.responsible_cpf instanceof CPF
         ? data.responsible_cpf
-        : new CPF(data.responsible_cpf);
+        : new CPF(data.responsible_cpf)).cpf;
     this.shelterProps.responsible_date_birth = data.responsible_date_birth;
     this.shelterProps.name_shelter = data.name_shelter;
     this.shelterProps.star_date_shelter = data.star_date_shelter;
@@ -58,10 +61,12 @@ export default class Shelter extends User implements EntityMarker {
       profile_picture: data.profile_picture,
       header_picture: data.header_picture
     });
+
+    this.shelterProps.validate(this.shelterProps);
   }
 
   get responsible_cpf(): string {
-    return (this.shelterProps.responsible_cpf as any).cpf;
+    return this.shelterProps.responsible_cpf;
   }
 
   get responsible_date_birth(): Date {
