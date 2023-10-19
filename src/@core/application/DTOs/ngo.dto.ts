@@ -8,6 +8,7 @@ export type NGOUpdateInputDto = {
     date_register: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;
@@ -22,6 +23,7 @@ export type NGOOutputDto = {
     date_register: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;

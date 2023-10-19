@@ -25,6 +25,7 @@ export namespace PersonCreate {
           userAttr: {
             full_name: input.full_name,
             username: input.username,
+            name: input.name,
             email: input.email,
             password: input.password,
             city: city,
@@ -44,6 +45,7 @@ export namespace PersonCreate {
       if(!input.date_birth) throw new RequiredError('date_birth');
       if(!input.full_name) throw new RequiredError('full_name');
       if(!input.username) throw new RequiredError('username');
+      if(!input.name) throw new RequiredError('name');
       if(!input.email) throw new RequiredError('email');
       if(!input.password) throw new RequiredError('password');
       if(!input.city) throw new RequiredError('city');
@@ -67,6 +69,7 @@ export namespace PersonCreate {
     date_birth: string;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: string;

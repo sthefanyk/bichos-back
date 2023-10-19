@@ -37,6 +37,7 @@ export default class Shelter extends User implements EntityMarker {
     star_date_shelter: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;
@@ -54,6 +55,7 @@ export default class Shelter extends User implements EntityMarker {
     this.updateUser({
       full_name: data.full_name,
       username: data.username,
+      name: data.name,
       email: data.email,
       password: data.password,
       city: data.city,

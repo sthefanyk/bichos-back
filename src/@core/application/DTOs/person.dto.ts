@@ -7,6 +7,7 @@ export type PersonUpdateInputDto = {
     date_birth: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;
@@ -20,6 +21,7 @@ export type PersonOutputDto = {
     date_birth: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;

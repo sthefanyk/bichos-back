@@ -16,6 +16,7 @@ export class ShelterMapper implements MapperMarker {
                 id: shelterModel.user.id,
                 full_name: shelterModel.user.full_name,
                 username: shelterModel.user.username,
+                name: shelterModel.user.name,
                 email: shelterModel.user.email,
                 password: shelterModel.user.password,
                 city: CityMapper.getEntity(shelterModel.user.city),
@@ -52,6 +53,7 @@ export class ShelterMapper implements MapperMarker {
             id: model.id,
             full_name: model.user.full_name,
             username: model.user.username,
+            name: model.user.name,
             email: model.user.email,
             password: model.user.password,
             description: model.user.description,
@@ -81,6 +83,7 @@ export class ShelterMapper implements MapperMarker {
         id: string;
         full_name: string;
         username: string;
+        name: string;
         email: string;
         password: string;
         description: string;
@@ -103,6 +106,7 @@ export class ShelterMapper implements MapperMarker {
                 id: data.id,
                 full_name: data.full_name,
                 username: data.username,
+                name: data.name,
                 email: data.email,
                 password: data.password,
                 city: CityMapper.getEntityWithJsonData({

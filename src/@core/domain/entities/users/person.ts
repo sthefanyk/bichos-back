@@ -34,6 +34,7 @@ export default class Person extends User implements EntityMarker {
     date_birth: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;
@@ -48,6 +49,7 @@ export default class Person extends User implements EntityMarker {
     this.updateUser({
       full_name: data.full_name,
       username: data.username,
+      name: data.name,
       email: data.email,
       password: data.password,
       city: data.city,

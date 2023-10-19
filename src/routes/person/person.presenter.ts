@@ -27,6 +27,8 @@ export class PersonPresenter {
 
   username: string;
 
+  name: string;
+
   email: string;
 
   password: string;
@@ -53,6 +55,7 @@ export class PersonPresenter {
     this.date_birth = output.date_birth;
     this.full_name = output.full_name;
     this.username = output.username;
+    this.name = output.name;
     this.email = output.email;
     this.password = output.password;
     this.city = (output as any).city_name;

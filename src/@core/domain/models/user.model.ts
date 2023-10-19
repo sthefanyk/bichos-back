@@ -14,6 +14,9 @@ export default class UserModel implements ModelMarker {
   @Column({ type: 'varchar', length: 16, unique: true })
   username: string;
 
+  @Column({ type: 'varchar', length: 16, default: '' })
+  name: string;
+
   @ManyToOne(() => CityModel, (city) => city.name)
   @JoinColumn({name: 'city_name'})
   city: CityModel;

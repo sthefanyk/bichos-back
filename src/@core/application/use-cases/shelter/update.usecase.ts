@@ -25,6 +25,7 @@ export namespace ShelterUpdate {
                 star_date_shelter: new Date(input.star_date_shelter),
                 full_name: input.full_name,
                 username: input.username,
+                name: input.name,
                 city: city,
                 email: input.email,
                 password: input.password,
@@ -44,6 +45,7 @@ export namespace ShelterUpdate {
             if(!input.star_date_shelter) throw new RequiredError('star_date_shelter');
             if(!input.full_name) throw new RequiredError('full_name');
             if(!input.username) throw new RequiredError('username');
+            if(!input.name) throw new RequiredError('name');
             if(!input.email) throw new RequiredError('email');
             if(!input.password) throw new RequiredError('password');
             if(!input.city) throw new RequiredError('city');
@@ -76,6 +78,7 @@ export namespace ShelterUpdate {
         star_date_shelter: string;
         full_name: string;
         username: string;
+        name: string;
         email: string;
         password: string;
         city: string;

@@ -46,6 +46,7 @@ export namespace PersonSearch {
     cpf: string;
     full_name: string;
     username: string;
+    name: string;
     city: City;
     description: string;
     profile_picture: string;

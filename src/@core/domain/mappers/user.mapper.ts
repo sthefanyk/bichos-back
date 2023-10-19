@@ -9,6 +9,7 @@ export class UserMapper implements MapperMarker {
             id: entity.id,
             full_name: entity.full_name,
             username: entity.username,
+            name: entity.name,
             city: CityMapper.getModel(entity.city),
             description: entity.description,
             profile_picture: entity.profile_picture,

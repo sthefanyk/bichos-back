@@ -14,6 +14,7 @@ export class PersonMapper implements MapperMarker {
                 id: personModel.user.id,
                 full_name: personModel.user.full_name,
                 username: personModel.user.username,
+                name: personModel.user.name,
                 email: personModel.user.email,
                 password: personModel.user.password,
                 city: CityMapper.getEntity(personModel.user.city),
@@ -46,6 +47,7 @@ export class PersonMapper implements MapperMarker {
             id: model.id,
             full_name: model.user.full_name,
             username: model.user.username,
+            name: model.user.name,
             email: model.user.email,
             password: model.user.password,
             description: model.user.description,
@@ -73,6 +75,7 @@ export class PersonMapper implements MapperMarker {
         id: string;
         full_name: string;
         username: string;
+        name: string;
         email: string;
         password: string;
         description: string;
@@ -93,6 +96,7 @@ export class PersonMapper implements MapperMarker {
                 id: data.id,
                 full_name: data.full_name,
                 username: data.username,
+                name: data.name,
                 email: data.email,
                 password: data.password,
                 city: CityMapper.getEntityWithJsonData({

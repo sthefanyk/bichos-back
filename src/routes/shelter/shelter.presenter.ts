@@ -34,6 +34,8 @@ export class ShelterPresenter {
 
   username: string;
 
+  name: string;
+
   email: string;
 
   password: string;
@@ -62,6 +64,7 @@ export class ShelterPresenter {
     this.star_date_shelter = output.star_date_shelter;
     this.full_name = output.full_name;
     this.username = output.username;
+    this.name = output.name;
     this.email = output.email;
     this.password = output.password;
     this.city = output.city;

@@ -9,6 +9,7 @@ export type ShelterUpdateInputDto = {
     star_date_shelter: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;
@@ -24,6 +25,7 @@ export type ShelterOutputDto = {
     star_date_shelter: Date;
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;

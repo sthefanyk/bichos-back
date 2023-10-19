@@ -6,6 +6,7 @@ import { City } from '../localization/city';
 export type UserAttr = {
   full_name: string,
   username: string,
+  name: string,
   email: string,
   password: string,
   city: City,
@@ -39,6 +40,7 @@ export default abstract class User {
   public updateUser(data: {
     full_name: string;
     username: string;
+    name: string;
     email: string;
     password: string;
     city: City;
@@ -48,6 +50,7 @@ export default abstract class User {
   }) {
     this.props.full_name = data.full_name.toLowerCase();
     this.props.username = data.username.toLowerCase();
+    this.props.name = data.name.toLowerCase();
     this.props.email = data.email.toLowerCase();
     this.props.password = data.password;
     this.props.city = data.city;
@@ -83,6 +86,10 @@ export default abstract class User {
 
   get username(): string {
     return this.props.username;
+  }
+
+  get name(): string {
+    return this.props.name;
   }
 
   get email(): string {

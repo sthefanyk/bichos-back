@@ -29,6 +29,8 @@ export class NGOPresenter {
 
   username: string;
 
+  name: string;
+
   email: string;
 
   password: string;
@@ -56,6 +58,7 @@ export class NGOPresenter {
     this.date_register = output.date_register;
     this.full_name = output.full_name;
     this.username = output.username;
+    this.name = output.name;
     this.email = output.email;
     this.password = output.password;
     this.city = (output as any).city_name;
