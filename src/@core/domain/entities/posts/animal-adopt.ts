@@ -3,7 +3,8 @@ import { Animal, AnimalAttr } from "./animal";
 import { AnimalAdoptProps } from "./animal-adopt-props";
 
 export type AnimalAdoptAttr = {
-    size: SizeAnimal;
+    size_current: SizeAnimal;
+    size_estimated: SizeAnimal;
 }
 
 export class AnimalAdopt extends Animal {
@@ -16,7 +17,11 @@ export class AnimalAdopt extends Animal {
         super(props);
     }
 
-    get size(): SizeAnimal {
-        return this.animalAdoptProps.size;
+    get size_current(): SizeAnimal {
+        return this.animalAdoptProps.size_current;
+    }
+
+    get size_estimated(): SizeAnimal {
+        return this.animalAdoptProps.size_estimated;
     }
 }

@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { PersonalityService } from './personality.service';
 import { PersonalityController } from './personality.controller';
-import { PERSONALITY_PROVIDERS } from './personality.providers';
+import { PersonalityProvider } from './personality.providers';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
+  imports: [AuthModule],
   controllers: [PersonalityController],
-  providers: [
-    PersonalityService,
-    PERSONALITY_PROVIDERS.REPOSITORIES.PERSONALITY_TYPEORM_REPO,
-    ...Object.values(PERSONALITY_PROVIDERS.USE_CASES),
+  providers: [PersonalityService,
+    PersonalityProvider.Repositories.PERSONALITY_TYPEORM_REPO,
+    ...Object.values(PersonalityProvider.UseCases)
   ],
 })
 export class PersonalityModule {}

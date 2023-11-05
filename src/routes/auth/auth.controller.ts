@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { ForgetAuthDto } from './dto/forget-auth.dto';
@@ -7,6 +7,8 @@ import { ResetAuthDto } from './dto/reset-auth.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { User } from 'src/decorators/user.decorator';
 import { ApiTags } from '@nestjs/swagger';
+import { Token } from 'src/decorators/token.decorator';
+import { TokenGuard } from 'src/guards/token.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -29,13 +31,14 @@ export class AuthController {
     return this.authService.forget(body);
   }
 
+  @UseGuards(TokenGuard)
   @Post('reset')
-  reset(@Body() body: ResetAuthDto) {
-    return this.authService.reset(body);
+  reset(@Body() body: {password: string}, @Token() token) {
+    return this.authService.reset({password: body.password, token});
   }
 
   @UseGuards(AuthGuard)
-  @Post('me')
+  @Get('me')
   me(@User() user) {
     return { user };
   }

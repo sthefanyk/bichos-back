@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import UserModel from 'src/@core/domain/models/user.model';
 import PasswordValidate from './password-validate';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
 
 export class AuthService implements IAuth {
   constructor(private repo: IUserRepository) {}
@@ -65,7 +66,7 @@ export class AuthService implements IAuth {
     const user = await this.repo.findUserByEmail(email);
 
     if (!user || !(await this.verifyPassword(password, user.password))) {
-      throw new Error('Email and/or password are incorrect');
+      throw new SingInError();
     }
 
     return this.createToken(user, '7d');

@@ -61,7 +61,8 @@ export namespace SearchAdoptPost {
       species: Species;
       history: string;
       characteristic: string;
-      size: SizeAnimal,
+      size_current: SizeAnimal,
+      size_estimated: SizeAnimal,
       created_at: Date,
       updated_at: Date,
       deleted_at: Date,

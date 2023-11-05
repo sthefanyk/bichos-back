@@ -1,19 +1,33 @@
-import IPersonalityRepository from "../../../domain/contracts/personality-repository.interface";
-import PersonalityProps from "../../../domain/entities/personality-props";
-import Personality from "../../../domain/entities/personality";
-import UseCase from "../usecase";
+import UseCase from '../usecase';
+import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
+import { Personality } from 'src/@core/domain/entities/personality';
+import { IPersonalityRepository } from 'src/@core/domain/contracts';
+import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
 
 export namespace PersonalityCreate {
-    export class Usecase implements UseCase<Input, Output> {
-        constructor(private repo: IPersonalityRepository){}
+  export class Usecase implements UseCase<Input, Output> {
+    constructor(private repo: IPersonalityRepository) {}
 
-        async execute(input: Input): Output {
-            const personality = new Personality(input);
-            // await this.repo.insert(personality);
-        }
+    async execute(input: Input): Output {
+      await this.validate(input);
+
+      const personality = new Personality({name: input.name});
+      return await this.repo.insert(personality);
     }
 
-    export type Input = PersonalityProps
+    async validate(input: Input) {
+      if(!input.name) throw new RequiredError('name');
 
-    export type Output = Promise<void>
+      const personalityExists = await this.repo.findByName(input.name);
+      if (personalityExists) throw new AlreadyExistsError('Name already exists');
+    }
+  }
+
+  export type Input = {
+    name: string;
+  };
+
+  export type Output = Promise<{
+    id: string;
+  }>;
 }

@@ -1,27 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CreatePersonalityDto } from './dto/create-personality.dto';
+import { Injectable, Inject } from '@nestjs/common';
 import {
   PersonalityCreate,
-  PersonalityDelete,
-  PersonalityFindAll,
   PersonalityFindById,
-  PersonalitySearch,
   PersonalityUpdate,
+  PersonalitySearch,
+  PersonalityActivate,
+  PersonalityInactivate,
   PersonalityGetActiveRecords,
   PersonalityGetInactiveRecords
 } from 'src/@core/application/use-cases/personality';
-import { SearchPersonalityDto } from './dto/search-personality.dto';
-import { UpdatePersonalityDto } from './dto/update-personality.dto';
-import PersonalityProps from 'src/@core/domain/entities/personality-props';
-import { PersonalityCollectionPresenter, PersonalityPresenter } from './presenter/personality.presenter';
+import { PersonalityCollectionPresenter } from './personality.presenter';
 
 @Injectable()
 export class PersonalityService {
   @Inject(PersonalityCreate.Usecase)
   private createUseCase: PersonalityCreate.Usecase;
-
-  @Inject(PersonalityFindAll.Usecase)
-  private listUseCase: PersonalityFindAll.Usecase;
 
   @Inject(PersonalityGetActiveRecords.Usecase)
   private getActiveRecordsUseCase: PersonalityGetActiveRecords.Usecase;
@@ -38,57 +31,45 @@ export class PersonalityService {
   @Inject(PersonalityUpdate.Usecase)
   private updateUseCase: PersonalityUpdate.Usecase;
 
-  @Inject(PersonalityDelete.Usecase)
-  private deleteUseCase: PersonalityDelete.Usecase;
+  @Inject(PersonalityInactivate.Usecase)
+  private inactivateUseCase: PersonalityInactivate.Usecase;
 
-  async create(data: CreatePersonalityDto) {
-    const props = new PersonalityProps(data.name);
-    // return this.createUseCase.execute(props);
+  @Inject(PersonalityActivate.Usecase)
+  private activateUseCase: PersonalityActivate.Usecase;
+
+  async create(data: PersonalityCreate.Input) {
+    return this.createUseCase.execute(data);
   }
 
-  async findAll(searchParams: SearchPersonalityDto) {
+  async search(searchParams: PersonalitySearch.Input) {
     const output = await this.searchUseCase.execute(searchParams);
-    // return new PersonalityCollectionPresenter(output);
+    return new PersonalityCollectionPresenter(output);
   }
 
-  async getActiveRecords(searchParams: SearchPersonalityDto) {
+  async getActiveRecords(searchParams: PersonalitySearch.Input) {
     const output = await this.getActiveRecordsUseCase.execute(searchParams);
-    // return new PersonalityCollectionPresenter(output);
+    return new PersonalityCollectionPresenter(output);
   }
 
-  async getInactiveRecords(searchParams: SearchPersonalityDto) {
+  async getInactiveRecords(searchParams: PersonalitySearch.Input) {
     const output = await this.getInactiveRecordsUseCase.execute(searchParams);
-    // return new PersonalityCollectionPresenter(output);
+    return new PersonalityCollectionPresenter(output);
   }
 
   async findOne(id: string) {
-    // const output = await this.getUseCase.execute({ id });
-    // return output;
-    // return PersonalitiesService.usersToResponse(output);
+    const output = await this.getUseCase.execute({ id });
+    return output.toJson();
   }
 
-  async update(id: string, updatePersonalitiesDto: UpdatePersonalityDto) {
-    // const output = await this.updateUseCase.execute({
-    //   id,
-    //   ...updatePersonalitiesDto,
-    // });
-    // return output;
-    // return PersonalitiesService.usersToResponse(output);
+  async update(id: string, data: PersonalityUpdate.Input) {
+    return this.updateUseCase.execute({ id, ...data });
   }
 
-  remove(id: string) {
-    // return this.deleteUseCase.execute({ id });
+  async inactivate(id: string) {
+    await this.inactivateUseCase.execute({ id });
   }
 
-  static usersToResponse(output: Output) {
-    // return new PersonalityPresenter(output);
+  async activate(id: string) {
+    await this.activateUseCase.execute({ id });
   }
 }
-
-export type Output = {
-  id: string;
-  name: string;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
-};

@@ -9,6 +9,6 @@ export class RequiredError extends Error implements CustomError {
   ) {
     super(message);
     this.name = this.className;
-    this.message = `${this.message} required`
+    this.message = `${this.message} required`;
   }
 }

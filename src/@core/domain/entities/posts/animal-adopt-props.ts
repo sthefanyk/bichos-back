@@ -8,14 +8,19 @@ export class AnimalAdoptProps extends AnimalProps {
 
     @IsEnum(SizeAnimal)
     @IsNotEmpty()
-    size: SizeAnimal;
+    size_current: SizeAnimal;
+
+    @IsEnum(SizeAnimal)
+    @IsNotEmpty()
+    size_estimated: SizeAnimal;
 
     constructor(
         props: AnimalAdoptAttr,
         animalProps: AnimalAttr
     ){
         super(animalProps);
-        this.size = props.size;
+        this.size_current = props.size_current;
+        this.size_estimated = props.size_estimated;
 
         this.validate(this);
     }

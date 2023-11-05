@@ -1,7 +1,6 @@
 import { SexAnimal } from "src/@core/shared/domain/enums/sex-animal";
 import { Species } from "src/@core/shared/domain/enums/species.enum";
 import { AnimalProps } from "./animal-props";
-import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 
 export type AnimalAttr = {
     name: string;

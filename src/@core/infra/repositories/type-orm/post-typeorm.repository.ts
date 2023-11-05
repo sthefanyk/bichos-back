@@ -72,7 +72,8 @@ export class PostTypeormRepository implements IPostRepository {
       .select([
         'post.*',
         'animal.*',
-        'animal_adopt.size',
+        'animal_adopt.size_current',
+        'animal_adopt.size_estimated',
       ])
       .addSelect('post.id AS post_id')
       .addSelect('post.created_at AS post_created_at')
@@ -172,7 +173,8 @@ export class PostTypeormRepository implements IPostRepository {
       .select([
         'post.*',
         'animal.*',
-        'animal_adopt.size',
+        'animal_adopt.size_current',
+        'animal_adopt.size_estimated',
       ])
       .addSelect('post.id AS post_id')
       .addSelect('post.created_at AS post_created_at')

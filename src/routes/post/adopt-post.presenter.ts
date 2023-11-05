@@ -30,7 +30,8 @@ export class AdoptPostPresenter {
     species: Species;
     history: string;
     characteristic: string;
-    size: SizeAnimal;
+    size_current: SizeAnimal;
+    size_estimated: SizeAnimal;
     id: string,
     created_at: Date,
     updated_at: Date,

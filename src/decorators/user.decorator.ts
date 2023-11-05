@@ -10,6 +10,9 @@ export const User = createParamDecorator((filter: string, context: ExecutionCont
         if (filter) {
             return request.user[filter];
         }
+
+        delete request.user.password;
+
         return request.user;
     }
 

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PersonalityModule } from './routes/personality/personality.module';
 import { AuthModule } from './routes/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonModule } from './routes/person/person.module';
@@ -12,10 +11,13 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { dataSourceOptions } from './database/data-source';
 import { NGOModule } from './routes/ngo/ngo.module';
 import { PostModule } from './routes/post/post.module';
+import { BreedModule } from './routes/breed/breed.module';
+import { PersonalityModule } from './routes/personality/personality.module';
 
 @Module({
   imports: [
     PersonalityModule,
+    BreedModule,
     AuthModule,
     PersonModule,
     LocalizationModule,

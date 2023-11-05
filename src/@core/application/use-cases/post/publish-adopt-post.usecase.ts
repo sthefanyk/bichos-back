@@ -25,7 +25,8 @@ export namespace PublishAdoptPost {
           type: TypePost.ADOPTION,
           animal: new AnimalAdopt(
           {
-            size: +input.size
+            size_current: +input.size_current,
+            size_estimated: +input.size_estimated,
           },
           {
             name: input.name,
@@ -46,7 +47,8 @@ export namespace PublishAdoptPost {
       if (input.urgent == "true" && !input.urgency_justification) throw new RequiredError('urgency_justification');
       if(!input.posted_by) throw new RequiredError('posted_by');
 
-      if(!input.size) throw new RequiredError('size');
+      if(!input.size_current) throw new RequiredError('size');
+      if(!input.size_estimated) throw new RequiredError('size');
       if(!input.name) throw new RequiredError('name');
       if(!input.sex) throw new RequiredError('sex');
       if(!input.date_birth) throw new RequiredError('date_birth');
@@ -61,7 +63,8 @@ export namespace PublishAdoptPost {
     urgency_justification?: string;
     posted_by: string;
 
-    size: string;
+    size_current: string;
+    size_estimated: string;
     name: string;
     sex: string;
     date_birth: string;

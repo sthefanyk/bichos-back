@@ -1,27 +1,25 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-
 import {
-  PersonalityCreate,
-  PersonalityDelete,
-  PersonalityFindAll,
-  PersonalityFindById,
-  PersonalitySearch,
+  PersonalityCreate, 
+  PersonalityFindById, 
+  PersonalitySearch, 
   PersonalityUpdate,
+  PersonalityActivate,
+  PersonalityInactivate,
   PersonalityGetActiveRecords,
   PersonalityGetInactiveRecords
 } from 'src/@core/application/use-cases/personality';
 import { PersonalityTypeormRepository } from 'src/@core/infra/repositories/type-orm/personality-typeorm.repository';
-import PersonalityModel from 'src/@core/domain/models/personality.model';
 
-export namespace PERSONALITY_PROVIDERS {
-  export namespace REPOSITORIES {
+export namespace PersonalityProvider {
+  export namespace Repositories {
     export const PERSONALITY_TYPEORM_REPO = {
       provide: 'PersonalityTypeormRepository',
-      useFactory: (dataSource: DataSource) =>{
-        return new PersonalityTypeormRepository(dataSource.getRepository(PersonalityModel));
+      useFactory: (dataSource: DataSource) => {
+        return new PersonalityTypeormRepository(dataSource);
       },
-      inject: [getDataSourceToken()]
+      inject: [getDataSourceToken()],
     };
 
     export const REPO = {
@@ -30,69 +28,69 @@ export namespace PERSONALITY_PROVIDERS {
     };
   }
 
-  export namespace USE_CASES {
+  export namespace UseCases {
     export const CREATE = {
       provide: PersonalityCreate.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityCreate.Usecase(userRepo);
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityCreate.Usecase(repo);
       },
-      inject: [REPOSITORIES.REPO.provide],
+      inject: [Repositories.REPO.provide],
     };
 
     export const GET = {
       provide: PersonalityFindById.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityFindById.Usecase(userRepo);
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityFindById.Usecase(repo);
       },
-      inject: [REPOSITORIES.REPO.provide],
-    };
-
-    export const LIST = {
-      provide: PersonalityFindAll.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityFindAll.Usecase(userRepo);
-      },
-      inject: [REPOSITORIES.REPO.provide],
+      inject: [Repositories.REPO.provide],
     };
 
     export const SEARCH = {
       provide: PersonalitySearch.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalitySearch.Usecase(userRepo);
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalitySearch.Usecase(repo);
       },
-      inject: [REPOSITORIES.REPO.provide],
-    };
-
-    export const GET_ACTIVATE = {
-      provide: PersonalityGetActiveRecords.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityGetActiveRecords.Usecase(userRepo);
-      },
-      inject: [REPOSITORIES.REPO.provide],
-    };
-
-    export const GET_INACTIVATE = {
-      provide: PersonalityGetInactiveRecords.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityGetInactiveRecords.Usecase(userRepo);
-      },
-      inject: [REPOSITORIES.REPO.provide],
+      inject: [Repositories.REPO.provide],
     };
 
     export const UPDATE = {
       provide: PersonalityUpdate.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityUpdate.Usecase(userRepo);
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityUpdate.Usecase(repo);
       },
-      inject: [REPOSITORIES.REPO.provide],
+      inject: [Repositories.REPO.provide],
     };
 
-    export const DELETE = {
-      provide: PersonalityDelete.Usecase,
-      useFactory: (userRepo: PersonalityTypeormRepository) => {
-        return new PersonalityDelete.Usecase(userRepo);
+    export const ACTIVATE = {
+      provide: PersonalityActivate.Usecase,
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityActivate.Usecase(repo);
       },
-      inject: [REPOSITORIES.REPO.provide],
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const INACTIVATE = {
+      provide: PersonalityInactivate.Usecase,
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityInactivate.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const LIST_ACTIVATE = {
+      provide: PersonalityGetActiveRecords.Usecase,
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityGetActiveRecords.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const LIST_INACTIVATE = {
+      provide: PersonalityGetInactiveRecords.Usecase,
+      useFactory: (repo: PersonalityTypeormRepository) => {
+        return new PersonalityGetInactiveRecords.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
     };
   }
 }

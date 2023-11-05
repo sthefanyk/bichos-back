@@ -28,7 +28,7 @@ GET http://localhost:3000/person?page=3&per_page=3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/person/99c15c49-700c-414f-9320-289906915b9f
+GET http://localhost:3000/person/70e0f719-9337-4837-9f68-e8258409c392
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -36,14 +36,15 @@ POST http://localhost:3000/person
 Content-Type: application/json
 
 {
-    "cpf": "00000000013",
+    "cpf": "00000000001",
     "date_birth": "2002-02-11",
-    "full_name": "Giovana Amorim",
-    "username": "Giovana3",
-    "name": "Giovana3",
-    "email": "gi3@amora.com",
+    "full_name": "Giovana1",
+    "username": "Giovana1",
+    "name": "Giovana1",
+    "email": "gi1@amora.com",
     "password": "Amora1234",
     "city": "Paranaguá",
+    "state": "Paranaguá",
     "description": "",
     "profile_picture": "",
     "header_picture": ""

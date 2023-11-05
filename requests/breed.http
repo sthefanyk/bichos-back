@@ -1,0 +1,44 @@
+GET http://localhost:3000/breed
+
+###
+GET http://localhost:3000/breed/active
+
+###
+GET http://localhost:3000/breed/inactive
+
+###
+GET http://localhost:3000/breed?filter=ca
+
+###
+GET http://localhost:3000/breed?sort=name&sort_dir=asc
+
+###
+GET http://localhost:3000/breed?sort=name&sort_dir=desc&filter=p
+
+###
+GET http://localhost:3000/breed?page=1&per_page=2
+
+###
+GET http://localhost:3000/breed/77aa2dba-e3f3-4d39-af3e-c6564315bd42
+
+###
+POST http://localhost:3000/breed
+Content-Type: application/json
+
+{
+    "name": "york shire"
+}
+
+###
+PATCH http://localhost:3000/breed/c84c203f-0d0b-48f7-bf6b-02f4ab4121f3
+Content-Type: application/json
+
+{
+    "name": "york shire"
+}
+
+###
+PATCH http://localhost:3000/breed/activate/77aa2dba-e3f3-4d39-af3e-c6564315bd42
+
+###
+PATCH http://localhost:3000/breed/inactivate/77aa2dba-e3f3-4d39-af3e-c6564315bd42

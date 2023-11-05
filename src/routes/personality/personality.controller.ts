@@ -1,62 +1,56 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
-  Query,
-  ParseUUIDPipe,
-} from '@nestjs/common';
-import { CreatePersonalityDto } from './dto/create-personality.dto';
-import { UpdatePersonalityDto } from './dto/update-personality.dto';
-import { SearchPersonalityDto } from './dto/search-personality.dto';
+import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { PersonalityService } from './personality.service';
+import { PersonalityCreate, PersonalitySearch, PersonalityUpdate } from 'src/@core/application/use-cases/personality';
+// import { RoleGuard } from 'src/guards/role.guard';
+// import { Roles } from 'src/decorators/roles.decorator';
+// import { Role } from 'src/@core/shared/domain/enums/role.enum';
+// import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('personalities')
+@ApiTags('personality')
+// @UseGuards(AuthGuard, RoleGuard)
+// @Roles(Role.ADMIN)
+@Controller('personality')
 export class PersonalityController {
   constructor(private readonly personalityService: PersonalityService) {}
 
   @Post()
-  create(@Body() createUserDto: CreatePersonalityDto) {
-    return this.personalityService.create(createUserDto);
+  create(@Body() data: PersonalityCreate.Input) {
+    return this.personalityService.create(data);
   }
 
   @Get()
-  findAll(@Query() searchParams: SearchPersonalityDto) {
-    return this.personalityService.findAll(searchParams);
+  search(@Query() searchParams: PersonalitySearch.Input) {
+    return this.personalityService.search(searchParams);
   }
 
   @Get('active')
-  getActivateRecords(@Query() searchParams: SearchPersonalityDto) {
+  getActivateRecords(@Query() searchParams: PersonalitySearch.Input) {
     return this.personalityService.getActiveRecords(searchParams);
   }
 
   @Get('inactive')
-  getDeactivateRecords(@Query() searchParams: SearchPersonalityDto) {
+  getDeactivateRecords(@Query() searchParams: PersonalitySearch.Input) {
     return this.personalityService.getInactiveRecords(searchParams);
   }
 
   @Get(':id')
-  findOne(
-    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
-  ) {
+  findOne(@Param('id') id: string) {
     return this.personalityService.findOne(id);
   }
 
-  @Put(':id')
-  update(
-    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
-    @Body() updateUserDto: UpdatePersonalityDto,
-  ) {
-    return this.personalityService.update(id, updateUserDto);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() data: PersonalityUpdate.Input) {
+    return this.personalityService.update(id, data);
   }
 
-  @Delete(':id')
-  remove(
-    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
-  ) {
-    return this.personalityService.remove(id);
+  @Patch('inactivate/:id')
+  inactivate(@Param('id') id: string) {
+    return this.personalityService.inactivate(id);
+  }
+
+  @Patch('activate/:id')
+  activate(@Param('id') id: string) {
+    return this.personalityService.activate(id);
   }
 }

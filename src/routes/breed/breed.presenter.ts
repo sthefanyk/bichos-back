@@ -1,25 +1,29 @@
 import { Transform } from 'class-transformer';
-import { CollectionPresenter } from '../../@share/presenters/collection.presenter';
-import { PersonalitySearch } from 'src/@core/application/use-cases/personality';
+import { CollectionPresenter } from '../@share/presenters/collection.presenter';
+import { BreedSearch } from 'src/@core/application/use-cases/breed';
+import { BreedOutputDto } from 'src/@core/application/DTOs/breed.dto';
 
-export class PersonalityPresenter {
+export class BreedPresenter {
   id: string;
+
   name: string;
-  is_active: boolean;
+
   @Transform(({ value }: { value: Date }) => {
     return value.toISOString();
   })
   created_at: Date;
+
   @Transform(({ value }: { value: Date }) => {
     return value.toISOString();
   })
   updated_at: Date;
+
   @Transform(({ value }: { value: Date }) => {
     return value.toISOString();
   })
   deleted_at: Date;
 
-  constructor(output: Output) {
+  constructor(output: BreedOutputDto) {
     this.id = output.id;
     this.name = output.name;
     this.created_at = output.created_at;
@@ -28,20 +32,12 @@ export class PersonalityPresenter {
   }
 }
 
-export type Output = {
-  id: string;
-  name: string;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
-};
+export class BreedCollectionPresenter extends CollectionPresenter {
+  data: BreedPresenter[];
 
-export class PersonalityCollectionPresenter extends CollectionPresenter {
-  data: PersonalityPresenter[];
-
-  constructor(output: PersonalitySearch.Output) {
+  constructor(output: BreedSearch.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
-    this.data = items.map((item) => new PersonalityPresenter(item));
+    this.data = items.map((item) => new BreedPresenter(item));
   }
 }

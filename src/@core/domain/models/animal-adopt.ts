@@ -11,7 +11,10 @@ export default class AnimalAdoptModel implements ModelMarker {
   id: string;
 
   @Column({ type: 'simple-enum' })
-  size: SizeAnimal;
+  size_current: SizeAnimal;
+
+  @Column({ type: 'simple-enum' })
+  size_estimated: SizeAnimal;
 
   @OneToOne(() => AnimalModel)
   @JoinColumn({name: 'animal_id'})
