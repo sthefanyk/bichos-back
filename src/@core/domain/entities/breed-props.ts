@@ -1,6 +1,7 @@
 import EntityProps from '../../shared/domain/entities/entity-props';
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length, IsEnum } from 'class-validator';
 import { BreedAttr } from './breed';
+import { Species } from 'src/@core/shared/domain/enums/species.enum';
 
 export default class BreedProps extends EntityProps {
   @IsNotEmpty()
@@ -8,10 +9,14 @@ export default class BreedProps extends EntityProps {
   @IsString()
   name: string;
 
+  @IsEnum(Species)
+  @IsNotEmpty()
+  specie: Species;
+
   constructor(props: BreedAttr) {
     super(props.id, props.created_at, props.updated_at, props.deleted_at);
     this.name = props.name.toLowerCase();
-
+    this.specie = props.specie;
     this.validate(this);
   }
 }

@@ -10,18 +10,18 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IBreedRepository} from '../../../domain/contracts/breed-repository.interface';
+import { IBreedRepository } from '../../../domain/contracts/breed-repository.interface';
 import { Breed } from 'src/@core/domain/entities/breed';
 
-export namespace BreedGetActiveRecords {
+export namespace BreedFindBySpecie {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IBreedRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
-      const personalities = await this.repo.getActiveRecords();
-      const service = new ServiceConfig(personalities, ['name', 'created_at']);
+    async execute(input: Input): Promise<SearchOutput> {
+      const breeds = await this.repo.findBySpecie(+input.specie);
+      const service = new ServiceConfig(breeds, ['name', 'created_at']);
 
-      const params = new SearchParams(input);
+      const params = new SearchParams(input.search);
 
       const searchResult = await service.search(params);
 
@@ -36,7 +36,10 @@ export namespace BreedGetActiveRecords {
     }
   }
 
-  export type Input = SearchInputDto;
+  export type Input = {
+    specie: string;
+    search: SearchInputDto;
+  };
 
   export type Output = Promise<Breed[]>;
 

@@ -39,6 +39,11 @@ export class BreedController {
     return this.breedService.findOne(id);
   }
 
+  @Get('specie/:specie')
+  findBySpecie(@Param('specie') specie: string, @Query() searchParams: BreedSearch.Input) {
+    return this.breedService.findBySpecie(searchParams, specie);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() data: BreedUpdate.Input) {
     return this.breedService.update(id, data);

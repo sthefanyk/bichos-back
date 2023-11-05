@@ -43,6 +43,7 @@ export namespace BreedSearch {
   export type SearchOutput = SearchOutputDto<{
     id: string;
     name: string;
+    specie: string;
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;

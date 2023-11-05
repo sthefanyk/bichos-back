@@ -7,7 +7,8 @@ import {
   BreedActivate,
   BreedInactivate,
   BreedGetActiveRecords,
-  BreedGetInactiveRecords
+  BreedGetInactiveRecords,
+  BreedFindBySpecie
 } from 'src/@core/application/use-cases/breed';
 import { BreedCollectionPresenter } from './breed.presenter';
 
@@ -27,6 +28,9 @@ export class BreedService {
 
   @Inject(BreedFindById.Usecase)
   private getUseCase: BreedFindById.Usecase;
+
+  @Inject(BreedFindBySpecie.Usecase)
+  private findBySpecieUseCase: BreedFindBySpecie.Usecase;
 
   @Inject(BreedUpdate.Usecase)
   private updateUseCase: BreedUpdate.Usecase;
@@ -59,6 +63,14 @@ export class BreedService {
   async findOne(id: string) {
     const output = await this.getUseCase.execute({ id });
     return output.toJson();
+  }
+
+  async findBySpecie(searchParams: BreedSearch.Input, specie: string) {
+    const output = await this.findBySpecieUseCase.execute({
+      search: searchParams, specie
+    });
+    
+    return new BreedCollectionPresenter(output);
   }
 
   async update(id: string, data: BreedUpdate.Input) {

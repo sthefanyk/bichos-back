@@ -2,6 +2,7 @@ import {
   BreedActivate,
   BreedFindById,
   BreedFindByName,
+  BreedFindBySpecie,
   BreedGetActiveRecords,
   BreedGetInactiveRecords,
   BreedInactivate,
@@ -11,6 +12,7 @@ import {
 import { IBreedRepository } from 'src/@core/domain/contracts';
 import { Breed } from 'src/@core/domain/entities/breed';
 import BreedModel from 'src/@core/domain/models/breed.model';
+import { Species } from 'src/@core/shared/domain/enums/species.enum';
 import { DataSource, IsNull, Not, Repository } from 'typeorm';
 
 export class BreedTypeormRepository implements IBreedRepository {
@@ -21,13 +23,7 @@ export class BreedTypeormRepository implements IBreedRepository {
   }
 
   async insert(entity: Breed) {
-    const breed = await this.repo.save({
-      name: entity.name,
-      id: entity.id,
-      created_at: entity.created_at,
-      updated_at: entity.updated_at,
-      deleted_at: entity.deleted_at,
-    });
+    const breed = await this.repo.save(entity.toJson());
 
     if (!breed) {
       throw new Error(`Could not save breed`);
@@ -43,7 +39,7 @@ export class BreedTypeormRepository implements IBreedRepository {
       throw new Error(`Could not update breed`);
     }
 
-    return { id: entity.id, name: entity.name };
+    return { id: entity.id, name: entity.name, specie: entity.specie+'' };
   }
 
   async findById(id: string): BreedFindById.Output {
@@ -64,6 +60,18 @@ export class BreedTypeormRepository implements IBreedRepository {
     }
 
     return new Breed(breed);
+  }
+
+  async findBySpecie(specie: Species): BreedFindBySpecie.Output {
+    const result = await this.repo.find({ where: {specie, deleted_at: IsNull()}});
+
+    const breeds: Breed[] = [];
+
+    result.forEach(breed => {
+      breeds.push(new Breed(breed));
+    });
+
+    return breeds;
   }
 
   async activate(entity: Breed): BreedActivate.Output {

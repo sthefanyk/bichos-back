@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { BreedActivate, BreedCreate, BreedFindById, BreedGetActiveRecords, BreedGetInactiveRecords, BreedInactivate, BreedSearch, BreedUpdate } from 'src/@core/application/use-cases/breed';
+import { BreedActivate, BreedCreate, BreedFindById, BreedFindBySpecie, BreedGetActiveRecords, BreedGetInactiveRecords, BreedInactivate, BreedSearch, BreedUpdate } from 'src/@core/application/use-cases/breed';
 import { BreedTypeormRepository } from 'src/@core/infra/repositories/type-orm/breed-typeorm.repository';
 
 export namespace BreedProvider {
@@ -79,6 +79,14 @@ export namespace BreedProvider {
       provide: BreedGetInactiveRecords.Usecase,
       useFactory: (repo: BreedTypeormRepository) => {
         return new BreedGetInactiveRecords.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const FIND_BY_SPECIE = {
+      provide: BreedFindBySpecie.Usecase,
+      useFactory: (repo: BreedTypeormRepository) => {
+        return new BreedFindBySpecie.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };

@@ -1,8 +1,10 @@
 import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 import BreedProps from './breed-props';
+import { Species } from 'src/@core/shared/domain/enums/species.enum';
 
 export type BreedAttr = {
   name: string;
+  specie: Species;
   id?: string;
   created_at?: Date;
   updated_at?: Date;
@@ -13,7 +15,8 @@ export class Breed implements EntityMarker {
   private breedProps: BreedProps;
 
   constructor(private breedAttr: BreedAttr) {
-    this.breedProps = new BreedProps(breedAttr);
+    breedAttr.specie = +breedAttr.specie;
+    this.breedProps = new BreedProps(this.breedAttr);
     this.breedProps.validate(this.breedProps);
   }
 
@@ -21,8 +24,9 @@ export class Breed implements EntityMarker {
     return { ...this.breedProps, id: this.breedProps.id.id };
   }
 
-  public update(name: string) {
+  public update(name: string, specie: Species) {
     this.breedProps.name = name;
+    this.breedProps.specie = specie;
     this.breedProps.updated_at = new Date();
 
     this.breedProps.validate(this.breedProps);
@@ -38,6 +42,10 @@ export class Breed implements EntityMarker {
 
   get name(): string {
     return this.breedProps.name;
+  }
+
+  get specie(): Species {
+    return this.breedProps.specie;
   }
 
   get id(): string {

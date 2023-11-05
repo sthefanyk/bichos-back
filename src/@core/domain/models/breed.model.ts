@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
+import { Species } from 'src/@core/shared/domain/enums/species.enum';
 
 @Entity('breed')
 export default class BreedModel implements ModelMarker {
@@ -8,6 +9,9 @@ export default class BreedModel implements ModelMarker {
 
   @Column({ type: 'varchar' })
   name: string;
+
+  @Column({ type: 'simple-enum', default: Species.DOG })
+  specie: Species;
 
   @Column({ type: 'datetime' })
   created_at: Date;
