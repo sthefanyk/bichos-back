@@ -7,6 +7,7 @@ import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
+import { Personality } from 'src/@core/domain/entities/personality';
 
 export class AdoptPostPresenter {
   id: string;
@@ -30,8 +31,9 @@ export class AdoptPostPresenter {
     species: Species;
     history: string;
     characteristic: string;
-    size_current: SizeAnimal;
-    size_estimated: SizeAnimal;
+    personalities: Personality[],
+    size_current: SizeAnimal,
+    size_estimated: SizeAnimal,
     id: string,
     created_at: Date,
     updated_at: Date,

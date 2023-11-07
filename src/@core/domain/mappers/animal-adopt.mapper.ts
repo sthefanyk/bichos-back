@@ -4,6 +4,8 @@ import AnimalAdoptModel from "../models/animal-adopt";
 import { AnimalMapper } from "./animal.mapper";
 import { Post } from "../entities/posts/post";
 import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
+import { Personality } from "../entities/personality";
+import { Breed } from "../entities/breed";
 
 export class AnimalAdoptMapper implements MapperMarker {
 
@@ -12,45 +14,17 @@ export class AnimalAdoptMapper implements MapperMarker {
 
         return {
             id: animal.id,
-            size_current: (entity as any).size_current,
-            size_estimated: (entity as any).size_estimated,
+            size_current: entity.size_current,
+            size_estimated: entity.size_estimated,
+            breed: entity.breed,
             animal,
-        };
-    }
-
-    static getJsonWithEntity(entity: Post) {
-        const propsAnimal = entity.animal;
-        return {
-            id: entity.id,
-            urgent: entity.urgent,
-            posted_by: entity.posted_by,
-            renewal_count: entity.renewal_count,
-            status: entity.status,
-            type: entity.type,
-            urgency_justification: entity.urgency_justification,
-            animal: {
-                id: propsAnimal.id,
-                name: propsAnimal.name,
-                sex: propsAnimal.sex,
-                date_birth: propsAnimal.date_birth,
-                species: propsAnimal.species,
-                history: propsAnimal.history,
-                characteristic: propsAnimal.characteristic,
-                size_current: (propsAnimal as any).size_current,
-                size_estimated: (propsAnimal as any).size_estimated,
-                created_at: propsAnimal.created_at,
-                updated_at: propsAnimal.updated_at,
-                deleted_at: propsAnimal.deleted_at,
-            },
-            created_at: entity.created_at,
-            updated_at: entity.updated_at,
-            deleted_at: entity.deleted_at,
         };
     }
 
     static getEntityWithJsonData(data: {
         animal_adopt_size_current: string;
         animal_adopt_size_estimated: string;
+        breed: Breed;
 
         name: string;
         sex: string;
@@ -58,6 +32,7 @@ export class AnimalAdoptMapper implements MapperMarker {
         species: string;
         history: string;
         characteristic: string;
+        personalities: Personality[];
 
         animal: string,
         created_at: string,
@@ -80,6 +55,7 @@ export class AnimalAdoptMapper implements MapperMarker {
         const animal = new AnimalAdopt({
             size_current: +data.animal_adopt_size_current,
             size_estimated: +data.animal_adopt_size_estimated,
+            breed: data.breed
         }, {
             name: data.name,
             sex: +data.sex,
@@ -87,6 +63,7 @@ export class AnimalAdoptMapper implements MapperMarker {
             species: +data.species,
             history: data.history,
             characteristic: data.characteristic,
+            personalities: data.personalities,
 
             id: data.animal,
             created_at: new Date(data.created_at),

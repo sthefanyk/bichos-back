@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
+import { PersonalityTypeormRepository } from 'src/@core/infra/repositories/type-orm/personality-typeorm.repository';
+import { BreedTypeormRepository } from 'src/@core/infra/repositories/type-orm/breed-typeorm.repository';
 import {
   FindAllAdoptPost,
   FindAllSponsorshipPost,
@@ -32,6 +34,22 @@ export namespace PostProvider {
       inject: [getDataSourceToken()],
     };
 
+    export const PERSONALITY_TYPEORM_REPO = {
+      provide: 'PersonalityTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new PersonalityTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
+    export const BREED_TYPEORM_REPO = {
+      provide: 'BreedTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new BreedTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
     export const REPO = {
       provide: 'PostTypeormRepository',
       useExisting: 'PostTypeormRepository',
@@ -43,12 +61,21 @@ export namespace PostProvider {
       useFactory: (
         postRepo: PostTypeormRepository,
         userRepo: UserTypeormRepository,
+        personalityRepo: PersonalityTypeormRepository,
+        breedRepo: BreedTypeormRepository,
       ) => {
-        return new PublishAdoptPost.Usecase(postRepo, userRepo);
+        return new PublishAdoptPost.Usecase(
+          postRepo, 
+          userRepo, 
+          personalityRepo,
+          breedRepo
+        );
       },
       inject: [
         Repositories.REPO.provide,
         Repositories.USER_TYPEORM_REPO.provide,
+        Repositories.PERSONALITY_TYPEORM_REPO.provide,
+        Repositories.BREED_TYPEORM_REPO.provide,
       ],
     };
 
@@ -57,12 +84,14 @@ export namespace PostProvider {
       useFactory: (
         postRepo: PostTypeormRepository,
         userRepo: UserTypeormRepository,
+        personalityRepo: PersonalityTypeormRepository,
       ) => {
-        return new PublishSponsorshipPost.Usecase(postRepo, userRepo);
+        return new PublishSponsorshipPost.Usecase(postRepo, userRepo, personalityRepo);
       },
       inject: [
         Repositories.REPO.provide,
         Repositories.USER_TYPEORM_REPO.provide,
+        Repositories.PERSONALITY_TYPEORM_REPO.provide,
       ],
     };
 

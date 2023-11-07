@@ -34,7 +34,11 @@ export class Post implements EntityMarker {
     }
 
     toJson() {
-        return { ...this.postProps }
+        return { 
+            ...this.postProps, 
+            id: this.postProps.id.id,
+            animal: this.postProps.animal.toJson()
+        };
     }
 
     public inactivate(status: StatusPost) {

@@ -12,7 +12,7 @@ export type PersonalityAttr = {
 export class Personality implements EntityMarker {
   private props: PersonalityProps;
 
-  constructor(private attr: PersonalityAttr) {
+  constructor(attr: PersonalityAttr) {
     this.props = new PersonalityProps(attr);
     this.props.validate(this.props);
   }

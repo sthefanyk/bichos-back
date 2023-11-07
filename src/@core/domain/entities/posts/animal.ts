@@ -1,6 +1,7 @@
 import { SexAnimal } from "src/@core/shared/domain/enums/sex-animal";
 import { Species } from "src/@core/shared/domain/enums/species.enum";
 import { AnimalProps } from "./animal-props";
+import { Personality } from "../personality";
 
 export type AnimalAttr = {
     name: string;
@@ -9,6 +10,7 @@ export type AnimalAttr = {
     species: Species;
     history?: string;
     characteristic?: string;
+    personalities: Personality[];
 
     id?: string,
     created_at?: Date,
@@ -18,6 +20,14 @@ export type AnimalAttr = {
 
 export abstract class Animal {
     constructor(private props: AnimalProps){}
+
+    toJson() {
+        return { 
+            ...this.props, 
+            id: this.props.id.id,
+            personalities: this.props.personalities.map(p => p.toJson())
+        };
+    }
 
     get name(): string {
         return this.props.name;
@@ -41,6 +51,10 @@ export abstract class Animal {
 
     get characteristic(): string {
         return this.props.characteristic;
+    }
+
+    get personalities(): Personality[] {
+        return this.props.personalities;
     }
 
     get id(): string {

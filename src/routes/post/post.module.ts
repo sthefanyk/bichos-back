@@ -8,6 +8,8 @@ import { PostProvider } from './post.providers';
   providers: [PostService,
     PostProvider.Repositories.POST_TYPEORM_REPO,
     PostProvider.Repositories.USER_TYPEORM_REPO,
+    PostProvider.Repositories.PERSONALITY_TYPEORM_REPO,
+    PostProvider.Repositories.BREED_TYPEORM_REPO,
     ...Object.values(PostProvider.UseCases)
   ],
 })

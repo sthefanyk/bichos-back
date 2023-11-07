@@ -7,18 +7,27 @@ import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import { IPersonalityRepository } from 'src/@core/domain/contracts';
+import { Personality } from 'src/@core/domain/entities/personality';
 
 export namespace PublishSponsorshipPost {
   export class Usecase implements UseCase<Input, Output> {
     constructor(
       private repo: IPostRepository,
       private repoUser: IUserRepository,
+      private repoPersonality: IPersonalityRepository,
     ) {}
 
     async execute(input: Input): Output {
       await this.validate(input);
 
-      
+      const personalities: Personality[] = [];
+
+      for (const personality of input.personalities) {
+        const foundPersonality = await this.repoPersonality.findByName(personality.toLowerCase());
+        personalities.push(foundPersonality);
+      }
+
       const post = new Post({
           urgent: input.urgent == "true",
           urgency_justification: input.urgency_justification,
@@ -35,7 +44,8 @@ export namespace PublishSponsorshipPost {
             date_birth: new Date(input.date_birth),
             species: +input.species,
             history: input.history,
-            characteristic: input.characteristic
+            characteristic: input.characteristic,
+            personalities
           }
           )
       });
@@ -54,8 +64,20 @@ export namespace PublishSponsorshipPost {
       if(!input.sex) throw new RequiredError('sex');
       if(!input.date_birth) throw new RequiredError('date_birth');
       if(!input.species) throw new RequiredError('species');
+      if(!input.personalities || input.personalities.length === 0) throw new RequiredError('personalities');
 
-      if (!await this.repoUser.findUserById(input.posted_by)) throw new NotFoundError('User not found');      
+      if (!await this.repoUser.findUserById(input.posted_by)) 
+        throw new NotFoundError('User not found');      
+      
+      await this.validatePersonalities(input.personalities);
+    }
+
+    async validatePersonalities(personalities: string[]) {
+      for (const personality of personalities) {
+        if (!(await this.repoPersonality.findByName(personality.toLowerCase()))) {
+          throw new NotFoundError(`Personality '${personality}' not found`);
+        }
+      }
     }
   }
 
@@ -72,6 +94,7 @@ export namespace PublishSponsorshipPost {
     species: string;
     characteristic: string;
     history: string;
+    personalities: string[];
   };
 
   export type Output = Promise<{

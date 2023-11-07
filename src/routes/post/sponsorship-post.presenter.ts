@@ -6,6 +6,7 @@ import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
+import { Personality } from 'src/@core/domain/entities/personality';
 
 export class SponsorshipPostPresenter {
   id: string;
@@ -29,6 +30,7 @@ export class SponsorshipPostPresenter {
     species: Species;
     history: string;
     characteristic: string;
+    personalities: Personality[];
     accompany: boolean;
     reason_request: string;
     id: string,

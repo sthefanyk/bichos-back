@@ -11,7 +11,6 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { Post } from 'src/@core/domain/entities/posts/post';
-import { AnimalAdoptMapper } from 'src/@core/domain/mappers/animal-adopt.mapper';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { UUID } from 'crypto';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
@@ -19,6 +18,7 @@ import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
+import { Personality } from 'src/@core/domain/entities/personality';
 
 export namespace SearchAdoptPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -37,7 +37,7 @@ export namespace SearchAdoptPost {
 
     private toOutput(searchResult: SearchResult): Output | any {
       return {
-        items: searchResult.items.map((i) => AnimalAdoptMapper.getJsonWithEntity(i)),
+        items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<Post>(searchResult),
       };
     }
@@ -61,6 +61,7 @@ export namespace SearchAdoptPost {
       species: Species;
       history: string;
       characteristic: string;
+      personalities: Personality[],
       size_current: SizeAnimal,
       size_estimated: SizeAnimal,
       created_at: Date,

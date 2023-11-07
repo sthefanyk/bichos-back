@@ -3,6 +3,7 @@ import { AnimalAttr } from "./animal";
 import { AnimalProps } from "./animal-props";
 import { AnimalAdoptAttr } from "./animal-adopt";
 import { SizeAnimal } from "src/@core/shared/domain/enums/size-animal";
+import { Breed } from "../breed";
 
 export class AnimalAdoptProps extends AnimalProps {
 
@@ -14,6 +15,9 @@ export class AnimalAdoptProps extends AnimalProps {
     @IsNotEmpty()
     size_estimated: SizeAnimal;
 
+    @IsNotEmpty()
+    breed: Breed;
+
     constructor(
         props: AnimalAdoptAttr,
         animalProps: AnimalAttr
@@ -21,6 +25,7 @@ export class AnimalAdoptProps extends AnimalProps {
         super(animalProps);
         this.size_current = props.size_current;
         this.size_estimated = props.size_estimated;
+        this.breed = props.breed;
 
         this.validate(this);
     }

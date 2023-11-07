@@ -11,13 +11,13 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { Post } from 'src/@core/domain/entities/posts/post';
-import { AnimalSponsorshipMapper } from 'src/@core/domain/mappers/animal-sponsorship.mapper';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { UUID } from 'crypto';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { Personality } from 'src/@core/domain/entities/personality';
 
 export namespace SearchSponsorshipPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -36,7 +36,7 @@ export namespace SearchSponsorshipPost {
 
     private toOutput(searchResult: SearchResult): Output | any {
       return {
-        items: searchResult.items.map((i) => AnimalSponsorshipMapper.getJsonWithEntity(i)),
+        items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<Post>(searchResult),
       };
     }
@@ -60,6 +60,7 @@ export namespace SearchSponsorshipPost {
       species: Species;
       history: string;
       characteristic: string;
+      personalities: Personality[];
       accompany: boolean;
       reason_request: string;
       created_at: Date,

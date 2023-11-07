@@ -1,3 +1,4 @@
+import { Personality } from "src/@core/domain/entities/personality";
 import { SexAnimal } from "src/@core/shared/domain/enums/sex-animal";
 import { SizeAnimal } from "src/@core/shared/domain/enums/size-animal";
 import { Species } from "src/@core/shared/domain/enums/species.enum";
@@ -20,6 +21,7 @@ export type AdoptPostOutputDto = {
         species: Species;
         history: string;
         characteristic: string;
+        personalities: Personality[];
         size_current: SizeAnimal;
         size_estimated: SizeAnimal;
         id: string,

@@ -15,4 +15,12 @@ export class AnimalSponsorship extends Animal {
         props.validate(props);
         super(props);
     }
+
+    get accompany(): boolean {
+        return this.animalSponsorshipProps.accompany;
+    }
+
+    get reason_request(): string {
+        return this.animalSponsorshipProps.reason_request;
+    }
 }

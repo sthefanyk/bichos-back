@@ -1,3 +1,4 @@
+import { Personality } from "src/@core/domain/entities/personality";
 import { SexAnimal } from "src/@core/shared/domain/enums/sex-animal";
 import { Species } from "src/@core/shared/domain/enums/species.enum";
 import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
@@ -19,6 +20,7 @@ export type SponsorshipPostOutputDto = {
         species: Species;
         history: string;
         characteristic: string;
+        personalities:Personality[];
         accompany: boolean;
         reason_request: string;
         id: string,

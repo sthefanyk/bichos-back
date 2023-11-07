@@ -69,11 +69,13 @@ export class PostService {
   }
 
   async findByIdAdoptPost(data: FindByIdAdoptPost.Input) {
-    return this.findByIdAdoptPostUseCase.execute(data);
+    const post = await this.findByIdAdoptPostUseCase.execute(data);
+    return (post as any).toJson();
   }
 
   async findByIdSponsorshipPost(data: FindByIdSponsorshipPost.Input) {
-    return this.findByIdSponsorshipPostUseCase.execute(data);
+    const post = await this.findByIdSponsorshipPostUseCase.execute(data);
+    return (post as any).toJson();
   }
 
   async inactivatePost(id: string, data: PostInactivate.Input) {

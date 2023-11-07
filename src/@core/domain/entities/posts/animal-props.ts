@@ -3,6 +3,7 @@ import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString, Length, MaxLength } f
 import { SexAnimal } from "src/@core/shared/domain/enums/sex-animal";
 import { AnimalAttr } from "./animal";
 import { Species } from "src/@core/shared/domain/enums/species.enum";
+import { Personality } from "../personality";
 
 export class AnimalProps extends EntityProps {
 
@@ -31,6 +32,7 @@ export class AnimalProps extends EntityProps {
     @IsOptional()
     characteristic?: string;
 
+    personalities: Personality[];
 
     constructor(props: AnimalAttr){
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
@@ -40,6 +42,7 @@ export class AnimalProps extends EntityProps {
         this.species = props.species;
         this.history = props.history;
         this.characteristic = props.characteristic;
+        this.personalities = props.personalities;
     }
 
 }
