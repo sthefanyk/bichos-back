@@ -13,9 +13,11 @@ import { NGOModule } from './routes/ngo/ngo.module';
 import { PostModule } from './routes/post/post.module';
 import { BreedModule } from './routes/breed/breed.module';
 import { PersonalityModule } from './routes/personality/personality.module';
+import { NeedModule } from './routes/need/need.module';
 
 @Module({
   imports: [
+    NeedModule,
     PersonalityModule,
     BreedModule,
     AuthModule,

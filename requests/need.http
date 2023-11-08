@@ -1,0 +1,44 @@
+GET http://localhost:3000/need
+
+###
+GET http://localhost:3000/need/active
+
+###
+GET http://localhost:3000/need/inactive
+
+###
+GET http://localhost:3000/need?filter=ca
+
+###
+GET http://localhost:3000/need?sort=name&sort_dir=asc
+
+###
+GET http://localhost:3000/need?sort=name&sort_dir=desc&filter=c
+
+###
+GET http://localhost:3000/need?page=1&per_page=1
+
+###
+GET http://localhost:3000/need/d755dae8-d2c8-4a4b-8ead-7991b184841c
+
+###
+POST http://localhost:3000/need
+Content-Type: application/json
+
+{
+    "name": "dinheiro"
+}
+
+###
+PATCH http://localhost:3000/need/d755dae8-d2c8-4a4b-8ead-7991b184841c
+Content-Type: application/json
+
+{
+    "name": "produtos de higiene"
+}
+
+###
+PATCH http://localhost:3000/need/activate/bdf7961c-9397-42c6-9486-05765ccf635a
+
+###
+PATCH http://localhost:3000/need/inactivate/bdf7961c-9397-42c6-9486-05765ccf635a
