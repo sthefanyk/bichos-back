@@ -2,6 +2,7 @@ import { IsBoolean, IsNotEmpty, IsString, Length } from "class-validator";
 import { AnimalAttr } from "./animal";
 import { AnimalProps } from "./animal-props";
 import { AnimalSponsorshipAttr } from "./animal-sponsorship";
+import { Need } from "../need";
 
 export class AnimalSponsorshipProps extends AnimalProps {
 
@@ -14,6 +15,9 @@ export class AnimalSponsorshipProps extends AnimalProps {
     @IsNotEmpty()
     reason_request: string;
 
+    @IsNotEmpty()
+    needs: Need[];
+
     constructor(
         props: AnimalSponsorshipAttr,
         animalProps: AnimalAttr
@@ -21,6 +25,7 @@ export class AnimalSponsorshipProps extends AnimalProps {
         super(animalProps);
         this.accompany = props.accompany;
         this.reason_request = props.reason_request;
+        this.needs = props.needs;
 
         this.validate(this);
     }

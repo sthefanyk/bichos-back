@@ -5,6 +5,7 @@ import { AnimalMapper } from "./animal.mapper";
 import { Post } from "../entities/posts/post";
 import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 import { Personality } from "../entities/personality";
+import { Need } from "../entities/need";
 
 export class AnimalSponsorshipMapper implements MapperMarker {
 
@@ -22,6 +23,7 @@ export class AnimalSponsorshipMapper implements MapperMarker {
     static getEntityWithJsonData(data: {
         animal_sponsorship_accompany: string;
         animal_sponsorship_reason_request: string;
+        needs: Need[];
 
         name: string;
         sex: string;
@@ -52,6 +54,7 @@ export class AnimalSponsorshipMapper implements MapperMarker {
         const animal = new AnimalSponsorship({
             accompany: data.animal_sponsorship_accompany === "true",
             reason_request: data.animal_sponsorship_reason_request,
+            needs: data.needs
         }, {
             name: data.name,
             sex: +data.sex,

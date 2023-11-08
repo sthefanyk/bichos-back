@@ -24,6 +24,9 @@ import AnimalHasPersonalityModel from 'src/@core/domain/models/animal-has-person
 import { Personality } from 'src/@core/domain/entities/personality';
 import PersonalityModel from 'src/@core/domain/models/personality.model';
 import BreedModel from 'src/@core/domain/models/breed.model';
+import { Need } from 'src/@core/domain/entities/need';
+import AnimalHasNeedModel from 'src/@core/domain/models/animal-has-need';
+import NeedModel from 'src/@core/domain/models/need.model';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -32,7 +35,9 @@ export class PostTypeormRepository implements IPostRepository {
   private animalAdoptRepo: Repository<AnimalAdoptModel>;
   private animalSponsorshipRepo: Repository<AnimalSponsorshipModel>;
   private animalHasPersonalityRepo: Repository<AnimalHasPersonalityModel>;
+  private animalHasNeedRepo: Repository<AnimalHasNeedModel>;
   private personalityRepo: Repository<PersonalityModel>;
+  private needRepo: Repository<NeedModel>;
   private breedRepo: Repository<BreedModel>;
 
   constructor(private dataSource: DataSource) {
@@ -46,7 +51,9 @@ export class PostTypeormRepository implements IPostRepository {
     this.animalHasPersonalityRepo = this.dataSource.getRepository(
       AnimalHasPersonalityModel,
     );
+    this.animalHasNeedRepo = this.dataSource.getRepository(AnimalHasNeedModel);
     this.personalityRepo = this.dataSource.getRepository(PersonalityModel);
+    this.needRepo = this.dataSource.getRepository(NeedModel);
     this.breedRepo = this.dataSource.getRepository(BreedModel);
   }
 
@@ -137,6 +144,7 @@ export class PostTypeormRepository implements IPostRepository {
     }
 
     result.personalities = await this.getPersonalities(result.animal);
+    result.needs = await this.getNeeds(result.animal);
 
     return AnimalSponsorshipMapper.getEntityWithJsonData(result);
   }
@@ -168,7 +176,6 @@ export class PostTypeormRepository implements IPostRepository {
     const user = await this.userRepo.findOne({
       where: { id: entity.posted_by },
     });
-
     
     const model = PostMapper.getModel(entity, user);
     const animalSponsorshipModel = AnimalSponsorshipMapper.getModel(
@@ -186,6 +193,7 @@ export class PostTypeormRepository implements IPostRepository {
     }
 
     await this.addPersonalities(entity.animal.personalities, animal.id);
+    await this.addNeeds((entity.animal as any).needs, animal.id);
 
     return {
       id: post.id,
@@ -217,13 +225,9 @@ export class PostTypeormRepository implements IPostRepository {
       .getRawMany();
 
     const promises = result.map(async (res) => {
-      const personalities = await this.getPersonalities(res.animal);
-      const breed = await this.breedRepo.findOne({where: {id: (result as any).breed}});
-      return AnimalAdoptMapper.getEntityWithJsonData({
-        ...res,
-        personalities,
-        breed
-      });
+      res.personalities = await this.getPersonalities(res.animal);
+      res.breed = await this.breedRepo.findOne({where: {id: (result as any).breed}});
+      return AnimalAdoptMapper.getEntityWithJsonData(res);
     });
 
     return await Promise.all(promises);
@@ -253,11 +257,9 @@ export class PostTypeormRepository implements IPostRepository {
       .getRawMany();
 
       const promises = result.map(async (res) => {
-        const personalities = await this.getPersonalities(res.animal);
-        return AnimalAdoptMapper.getEntityWithJsonData({
-          ...res,
-          personalities: personalities,
-        });
+        res.personalities = await this.getPersonalities(res.animal);
+        res.needs = await this.getNeeds(res.animal);
+        return AnimalSponsorshipMapper.getEntityWithJsonData(res);
       });
   
       return await Promise.all(promises);
@@ -285,6 +287,32 @@ export class PostTypeormRepository implements IPostRepository {
       await this.animalHasPersonalityRepo.save({
         id_animal: animalId,
         id_personality: personality.id,
+      });
+    }
+  }
+
+  async getNeeds(idAnimal: string): Promise<Need[]> {
+    const animalHasNeed = await this.animalHasNeedRepo.find({
+      where: { id_animal: idAnimal },
+    });
+
+    const needs: Need[] = [];
+
+    for (const need of animalHasNeed) {
+      const foundNeed = await this.needRepo.findOne({
+        where: { id: need.id_need },
+      });
+      needs.push(new Need(foundNeed));
+    }
+
+    return needs;
+  }
+
+  async addNeeds(needs: Need[], animalId: string) {
+    for (const need of needs) {
+      await this.animalHasNeedRepo.save({
+        id_animal: animalId,
+        id_need: need.id,
       });
     }
   }

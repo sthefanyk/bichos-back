@@ -7,8 +7,9 @@ import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { IPersonalityRepository } from 'src/@core/domain/contracts';
+import { INeedRepository, IPersonalityRepository } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
+import { Need } from 'src/@core/domain/entities/need';
 
 export namespace PublishSponsorshipPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -16,16 +17,22 @@ export namespace PublishSponsorshipPost {
       private repo: IPostRepository,
       private repoUser: IUserRepository,
       private repoPersonality: IPersonalityRepository,
+      private repoNeed: INeedRepository,
     ) {}
 
     async execute(input: Input): Output {
       await this.validate(input);
 
       const personalities: Personality[] = [];
-
       for (const personality of input.personalities) {
         const foundPersonality = await this.repoPersonality.findByName(personality.toLowerCase());
         personalities.push(foundPersonality);
+      }
+
+      const needs: Need[] = [];
+      for (const need of input.needs) {
+        const foundNeed = await this.repoNeed.findByName(need.toLowerCase());
+        needs.push(foundNeed);
       }
 
       const post = new Post({
@@ -37,6 +44,7 @@ export namespace PublishSponsorshipPost {
           {
             accompany: input.accompany == "true",
             reason_request: input.reason_request,
+            needs
           },
           {
             name: input.name,
@@ -65,17 +73,27 @@ export namespace PublishSponsorshipPost {
       if(!input.date_birth) throw new RequiredError('date_birth');
       if(!input.species) throw new RequiredError('species');
       if(!input.personalities || input.personalities.length === 0) throw new RequiredError('personalities');
+      if(!input.needs || input.needs.length === 0) throw new RequiredError('needs');
 
       if (!await this.repoUser.findUserById(input.posted_by)) 
         throw new NotFoundError('User not found');      
       
       await this.validatePersonalities(input.personalities);
+      await this.validateNeeds(input.needs);
     }
 
     async validatePersonalities(personalities: string[]) {
       for (const personality of personalities) {
         if (!(await this.repoPersonality.findByName(personality.toLowerCase()))) {
           throw new NotFoundError(`Personality '${personality}' not found`);
+        }
+      }
+    }
+
+    async validateNeeds(needs: string[]) {
+      for (const need of needs) {
+        if (!(await this.repoNeed.findByName(need.toLowerCase()))) {
+          throw new NotFoundError(`Need '${need}' not found`);
         }
       }
     }
@@ -88,6 +106,7 @@ export namespace PublishSponsorshipPost {
 
     accompany: string;
     reason_request: string;
+    needs: string[];
     name: string;
     sex: string;
     date_birth: string;

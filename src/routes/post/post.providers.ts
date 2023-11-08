@@ -15,6 +15,7 @@ import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/sear
 import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
 import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
 import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
+import { NeedTypeormRepository } from 'src/@core/infra/repositories/type-orm/need-typeorm.repository';
 
 export namespace PostProvider {
   export namespace Repositories {
@@ -46,6 +47,14 @@ export namespace PostProvider {
       provide: 'BreedTypeormRepository',
       useFactory: (dataSource: DataSource) => {
         return new BreedTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
+    export const NEED_TYPEORM_REPO = {
+      provide: 'NeedTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new NeedTypeormRepository(dataSource);
       },
       inject: [getDataSourceToken()],
     };
@@ -85,13 +94,20 @@ export namespace PostProvider {
         postRepo: PostTypeormRepository,
         userRepo: UserTypeormRepository,
         personalityRepo: PersonalityTypeormRepository,
+        needRepo: NeedTypeormRepository,
       ) => {
-        return new PublishSponsorshipPost.Usecase(postRepo, userRepo, personalityRepo);
+        return new PublishSponsorshipPost.Usecase(
+          postRepo, 
+          userRepo, 
+          personalityRepo,
+          needRepo
+        );
       },
       inject: [
         Repositories.REPO.provide,
         Repositories.USER_TYPEORM_REPO.provide,
         Repositories.PERSONALITY_TYPEORM_REPO.provide,
+        Repositories.NEED_TYPEORM_REPO.provide,
       ],
     };
 

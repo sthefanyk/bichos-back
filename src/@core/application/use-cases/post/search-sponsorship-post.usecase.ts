@@ -18,6 +18,7 @@ import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 import { Personality } from 'src/@core/domain/entities/personality';
+import { Need } from 'src/@core/domain/entities/need';
 
 export namespace SearchSponsorshipPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -63,6 +64,7 @@ export namespace SearchSponsorshipPost {
       personalities: Personality[];
       accompany: boolean;
       reason_request: string;
+      needs: Need[];
       created_at: Date,
       updated_at: Date,
       deleted_at: Date,

@@ -10,6 +10,7 @@ import { PostProvider } from './post.providers';
     PostProvider.Repositories.USER_TYPEORM_REPO,
     PostProvider.Repositories.PERSONALITY_TYPEORM_REPO,
     PostProvider.Repositories.BREED_TYPEORM_REPO,
+    PostProvider.Repositories.NEED_TYPEORM_REPO,
     ...Object.values(PostProvider.UseCases)
   ],
 })

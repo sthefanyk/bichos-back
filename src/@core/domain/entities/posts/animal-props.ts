@@ -32,6 +32,7 @@ export class AnimalProps extends EntityProps {
     @IsOptional()
     characteristic?: string;
 
+    @IsNotEmpty()
     personalities: Personality[];
 
     constructor(props: AnimalAttr){
