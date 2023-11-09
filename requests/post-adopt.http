@@ -19,7 +19,7 @@ GET http://localhost:3000/post/adopt?sort=name&sort_dir=asc
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/post/adopt?sort=full_name&sort_dir=asc&filter=5
+GET http://localhost:3000/post/adopt?sort=full_name&sort_dir=asc&filter=aa
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -27,7 +27,7 @@ GET http://localhost:3000/post/adopt?page=2&per_page=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/post/adopt/8bbff9a4-2aa0-4493-997f-249704fce80f
+GET http://localhost:3000/post/adopt/bb83fb65-4e8e-446c-ac30-2cd7e18d888a
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -38,20 +38,43 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 {
     "urgent": "false",
     "urgency_justification": "",
-    "posted_by": "0b759cb5-51e1-4a1e-b8da-4cd001fe00de",
+    "posted_by": "e5d13633-ab1d-48d1-91d3-7b17f4cc9397",
     "size_current": "1",
     "size_estimated": "2",
-    "breed": "794651af-20cd-4959-8ae6-38a48dca2f6c",
-    "name": "paçoca",
+    "breed": "rusk",
+    "name": "bbb",
     "sex": "0",
     "date_birth": "2020/11/20",
-    "species": "0",
+    "specie": "1",
     "characteristic": "",
     "history": "",
     "personalities": [
-        "calmo",
-        "dorminhoco"
-    ]
+        "calmo"
+    ],
+    "health": {
+        "neutered": true,
+        "disease_allergy": [
+            {
+                "name": "blabla",
+                "description": "blabla",
+                "type": 1
+            }
+        ],
+        "vaccines_medicines": [
+            {
+                "name": "blabla",
+                "type": 1,
+                "total_dose": 1,
+                "doses": [
+                    {
+                        "application_date": "2020/11/20",
+                        "applied": true,
+                        "number_dose": 1
+                    }
+                ]
+            }
+        ]
+    }
 }
 
 ###

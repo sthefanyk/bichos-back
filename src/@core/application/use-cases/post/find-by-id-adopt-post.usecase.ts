@@ -1,7 +1,7 @@
 import UseCase from "../usecase";
 import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
 import {IPostRepository} from "../../../domain/contracts/post-repository.interface";
-import { Post } from "src/routes/post/entities/post.entity";
+import { Post } from "src/@core/domain/entities/posts/post";
 
 export namespace FindByIdAdoptPost {
     export class Usecase implements UseCase<Input, Output> {

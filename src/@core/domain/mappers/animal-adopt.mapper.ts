@@ -5,7 +5,10 @@ import { AnimalMapper } from "./animal.mapper";
 import { Post } from "../entities/posts/post";
 import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 import { Personality } from "../entities/personality";
-import { Breed } from "../entities/breed";
+import { Health } from "../entities/health/health";
+import { DiseaseAllergy } from "../entities/health/disease-allergy";
+import { VaccineMedicine } from "../entities/health/vaccine-medicine";
+import { Dose } from "../entities/health/dose";
 
 export class AnimalAdoptMapper implements MapperMarker {
 
@@ -24,7 +27,8 @@ export class AnimalAdoptMapper implements MapperMarker {
     static getEntityWithJsonData(data: {
         animal_adopt_size_current: string;
         animal_adopt_size_estimated: string;
-        breed: Breed;
+        animal_adopt_breed: string;
+        health: any;
 
         name: string;
         sex: string;
@@ -55,7 +59,21 @@ export class AnimalAdoptMapper implements MapperMarker {
         const animal = new AnimalAdopt({
             size_current: +data.animal_adopt_size_current,
             size_estimated: +data.animal_adopt_size_estimated,
-            breed: data.breed
+            breed: data.animal_adopt_breed,
+            health: new Health({
+                additional: data.health.additional,
+                neutered: data.health.neutered,
+                disease_allergy: data.health.disease_allergy.map(
+                    item => new DiseaseAllergy({...item, type: +item.type}) 
+                ),
+                vaccines_medicines: data.health.vaccines_medicines.map(
+                    item => new VaccineMedicine({
+                        ...item,
+                        type: +item.type,
+                        doses: item.doses.map(item => new Dose(item))
+                    })
+                ),
+            }),
         }, {
             name: data.name,
             sex: +data.sex,

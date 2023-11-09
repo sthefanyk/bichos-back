@@ -1,12 +1,13 @@
 import { SizeAnimal } from "src/@core/shared/domain/enums/size-animal";
 import { Animal, AnimalAttr } from "./animal";
 import { AnimalAdoptProps } from "./animal-adopt-props";
-import { Breed } from "../breed";
+import { Health } from "../health/health";
 
 export type AnimalAdoptAttr = {
     size_current: SizeAnimal;
     size_estimated: SizeAnimal;
-    breed: Breed;
+    breed: string;
+    health: Health;
 }
 
 export class AnimalAdopt extends Animal {
@@ -19,6 +20,14 @@ export class AnimalAdopt extends Animal {
         super(props);
     }
 
+    toJson() {
+        const animal = super.toJson();
+        return { 
+            ...animal,
+            health: this.health.toJson()
+        };
+    }
+
     get size_current(): SizeAnimal {
         return this.animalAdoptProps.size_current;
     }
@@ -27,7 +36,11 @@ export class AnimalAdopt extends Animal {
         return this.animalAdoptProps.size_estimated;
     }
 
-    get breed(): Breed {
+    get breed(): string {
         return this.animalAdoptProps.breed;
+    }
+
+    get health(): Health {
+        return this.animalAdoptProps.health;
     }
 }

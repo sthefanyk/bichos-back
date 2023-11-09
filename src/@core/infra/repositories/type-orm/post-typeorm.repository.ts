@@ -27,6 +27,10 @@ import BreedModel from 'src/@core/domain/models/breed.model';
 import { Need } from 'src/@core/domain/entities/need';
 import AnimalHasNeedModel from 'src/@core/domain/models/animal-has-need';
 import NeedModel from 'src/@core/domain/models/need.model';
+import DiseaseAllergyModel from 'src/@core/domain/models/disease-allergy.model';
+import HealthModel from 'src/@core/domain/models/health.model';
+import VaccineMedicineModel from 'src/@core/domain/models/vaccine-medicine.model';
+import DoseModel from 'src/@core/domain/models/dose.model';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -39,6 +43,10 @@ export class PostTypeormRepository implements IPostRepository {
   private personalityRepo: Repository<PersonalityModel>;
   private needRepo: Repository<NeedModel>;
   private breedRepo: Repository<BreedModel>;
+  private healthRepo: Repository<HealthModel>;
+  private diseaseAllergyRepo: Repository<DiseaseAllergyModel>;
+  private vaccineMedicineRepo: Repository<VaccineMedicineModel>;
+  private doseRepo: Repository<DoseModel>;
 
   constructor(private dataSource: DataSource) {
     this.postRepo = this.dataSource.getRepository(PostModel);
@@ -55,6 +63,10 @@ export class PostTypeormRepository implements IPostRepository {
     this.personalityRepo = this.dataSource.getRepository(PersonalityModel);
     this.needRepo = this.dataSource.getRepository(NeedModel);
     this.breedRepo = this.dataSource.getRepository(BreedModel);
+    this.healthRepo = this.dataSource.getRepository(HealthModel);
+    this.diseaseAllergyRepo = this.dataSource.getRepository(DiseaseAllergyModel);
+    this.vaccineMedicineRepo = this.dataSource.getRepository(VaccineMedicineModel);
+    this.doseRepo = this.dataSource.getRepository(DoseModel);
   }
 
   async findByIdPost(id: string): Promise<PostModel> {
@@ -109,9 +121,15 @@ export class PostTypeormRepository implements IPostRepository {
       throw new NotFoundError('Post not found');
     }
 
-    result.breed = await this.breedRepo.findOne({where: {id: (result as any).breed}});
-
     result.personalities = await this.getPersonalities(result.animal);
+
+    result.health = await this.healthRepo.findOne({where: {id_animal: result.animal}});
+    result.health.disease_allergy = await this.diseaseAllergyRepo.find({where: {id_animal: result.animal}});
+    result.health.vaccines_medicines = await this.vaccineMedicineRepo.find({where: {id_animal: result.animal}});
+
+    for (const item of result.health.vaccines_medicines) {
+      item.doses = await this.doseRepo.find({ where: { id_vaccine_medicine: item.id } });
+    }
 
     return AnimalAdoptMapper.getEntityWithJsonData(result);
   }
@@ -162,6 +180,42 @@ export class PostTypeormRepository implements IPostRepository {
     const post = await this.postRepo.save(model);
 
     await this.addPersonalities(entity.animal.personalities, animal.id);
+
+    const health = (entity.animal as any).health;
+
+    await this.healthRepo.save({
+      id_animal: animal.id,
+      additional: health.additional,
+      neutered: health.neutered,
+    });
+
+    for (const disease_allergy of health.disease_allergy) {
+      await this.diseaseAllergyRepo.save({
+        id_animal: animal.id,
+        name: disease_allergy.name,
+        description: disease_allergy.description,
+        type: disease_allergy.type
+      });
+    }
+    
+    for (const vaccines_medicines of health.vaccines_medicines) {
+      await this.vaccineMedicineRepo.save({
+        id: vaccines_medicines.id,
+        id_animal: animal,
+        name: vaccines_medicines.name,
+        type: vaccines_medicines.type,
+        total_dose: vaccines_medicines.total_dose,
+      });
+
+      for (const dose of vaccines_medicines.doses) {
+        await this.doseRepo.save({
+          id_vaccine_medicine: vaccines_medicines.id,
+          application_date: dose.application_date,
+          applied: dose.applied,
+          number_dose: dose.number_dose
+        });
+      }
+    }
 
     if (!post || !animal || !animalAdopt) {
       throw new Error(`Could not save post`);
@@ -226,7 +280,15 @@ export class PostTypeormRepository implements IPostRepository {
 
     const promises = result.map(async (res) => {
       res.personalities = await this.getPersonalities(res.animal);
-      res.breed = await this.breedRepo.findOne({where: {id: (result as any).breed}});
+
+      res.health = await this.healthRepo.findOne({where: {id_animal: res.animal}});
+      res.health.disease_allergy = await this.diseaseAllergyRepo.find({where: {id_animal: res.animal}});
+      res.health.vaccines_medicines = await this.vaccineMedicineRepo.find({where: {id_animal: res.animal}});
+
+      for (const item of res.health.vaccines_medicines) {
+        item.doses = await this.doseRepo.find({ where: { id_vaccine_medicine: item.id } });
+      }
+
       return AnimalAdoptMapper.getEntityWithJsonData(res);
     });
 

@@ -1,9 +1,9 @@
-import { IsEnum, IsNotEmpty } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
 import { AnimalAttr } from "./animal";
 import { AnimalProps } from "./animal-props";
 import { AnimalAdoptAttr } from "./animal-adopt";
 import { SizeAnimal } from "src/@core/shared/domain/enums/size-animal";
-import { Breed } from "../breed";
+import { Health } from "../health/health";
 
 export class AnimalAdoptProps extends AnimalProps {
 
@@ -15,8 +15,12 @@ export class AnimalAdoptProps extends AnimalProps {
     @IsNotEmpty()
     size_estimated: SizeAnimal;
 
+    @IsString()
     @IsNotEmpty()
-    breed: Breed;
+    breed: string;
+
+    @IsNotEmpty()
+    health: Health;
 
     constructor(
         props: AnimalAdoptAttr,
@@ -26,6 +30,7 @@ export class AnimalAdoptProps extends AnimalProps {
         this.size_current = props.size_current;
         this.size_estimated = props.size_estimated;
         this.breed = props.breed;
+        this.health = props.health;
 
         this.validate(this);
     }

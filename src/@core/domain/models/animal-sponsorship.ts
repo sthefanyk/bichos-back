@@ -15,7 +15,6 @@ export default class AnimalSponsorshipModel implements ModelMarker {
   @Column({ type: 'varchar', length: 255 })
   reason_request: string;
 
-
   @OneToOne(() => AnimalModel)
   @JoinColumn({name: 'animal'})
   animal: AnimalModel;
