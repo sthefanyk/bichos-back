@@ -1,6 +1,7 @@
 import { DoseProps } from "./dose-props";
 
 export type DoseAttr = {
+    id?: string;
     number_dose: number;
     application_date: Date;
     applied: boolean;
@@ -14,7 +15,11 @@ export class Dose {
     }
 
     toJson() {
-        return { ...this.props };
+        return { ...this.props, id: this.id };
+    }
+
+    get id(): string {
+        return this.props.id.id;
     }
 
     get number_dose(): number {

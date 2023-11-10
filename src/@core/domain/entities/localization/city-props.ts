@@ -16,5 +16,7 @@ export class CityProps extends EntityProps {
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
         this.name = props.name.toUpperCase();
         this.state = props.state;
+
+        this.validate(this);
     }
 }

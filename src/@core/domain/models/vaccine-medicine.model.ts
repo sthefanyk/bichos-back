@@ -8,7 +8,7 @@ export default class VaccineMedicineModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   @OneToOne(() => AnimalModel, (animal) => animal.id)
   @JoinColumn({name: 'id_animal'})
-  id_animal: AnimalModel;
+  id_animal: string;
 
   @Column({ type: 'varchar' })
   id: string;

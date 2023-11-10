@@ -1,8 +1,11 @@
 import { IsBoolean, IsDate, IsNotEmpty, IsNumber } from "class-validator";
 import { DoseAttr } from "./dose";
 import EntityPropsValidation from "src/@core/shared/domain/entities/entity-props-validation";
+import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 
 export class DoseProps extends EntityPropsValidation {
+
+    id: UUID;
 
     @IsNumber()
     @IsNotEmpty()
@@ -18,6 +21,7 @@ export class DoseProps extends EntityPropsValidation {
 
     constructor(props: DoseAttr){
         super();
+        this.id = props.id ? new UUID(props.id) : new UUID();
         this.number_dose = props.number_dose;
         this.application_date = props.application_date;
         this.applied = props.applied;

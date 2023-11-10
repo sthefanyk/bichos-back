@@ -122,11 +122,12 @@ export class PostTypeormRepository implements IPostRepository {
     }
 
     result.personalities = await this.getPersonalities(result.animal);
-
+    
     result.health = await this.healthRepo.findOne({where: {id_animal: result.animal}});
     result.health.disease_allergy = await this.diseaseAllergyRepo.find({where: {id_animal: result.animal}});
-    result.health.vaccines_medicines = await this.vaccineMedicineRepo.find({where: {id_animal: result.animal}});
-
+    const animal = await this.animalRepo.findOne({where: {id: result.animal}});
+    result.health.vaccines_medicines = await this.vaccineMedicineRepo.find({where: {id_animal: animal.id}});
+    
     for (const item of result.health.vaccines_medicines) {
       item.doses = await this.doseRepo.find({ where: { id_vaccine_medicine: item.id } });
     }
@@ -199,9 +200,9 @@ export class PostTypeormRepository implements IPostRepository {
     }
     
     for (const vaccines_medicines of health.vaccines_medicines) {
-      await this.vaccineMedicineRepo.save({
+      const vm = await this.vaccineMedicineRepo.save({
         id: vaccines_medicines.id,
-        id_animal: animal,
+        id_animal: animal.id,
         name: vaccines_medicines.name,
         type: vaccines_medicines.type,
         total_dose: vaccines_medicines.total_dose,
@@ -209,7 +210,8 @@ export class PostTypeormRepository implements IPostRepository {
 
       for (const dose of vaccines_medicines.doses) {
         await this.doseRepo.save({
-          id_vaccine_medicine: vaccines_medicines.id,
+          id: dose.id,
+          id_vaccine_medicine: vm.id,
           application_date: dose.application_date,
           applied: dose.applied,
           number_dose: dose.number_dose
@@ -283,7 +285,8 @@ export class PostTypeormRepository implements IPostRepository {
 
       res.health = await this.healthRepo.findOne({where: {id_animal: res.animal}});
       res.health.disease_allergy = await this.diseaseAllergyRepo.find({where: {id_animal: res.animal}});
-      res.health.vaccines_medicines = await this.vaccineMedicineRepo.find({where: {id_animal: res.animal}});
+      const animal = await this.animalRepo.findOne({where: {id: res.animal}});
+      res.health.vaccines_medicines = await this.vaccineMedicineRepo.find({where: {id_animal: animal.id}});
 
       for (const item of res.health.vaccines_medicines) {
         item.doses = await this.doseRepo.find({ where: { id_vaccine_medicine: item.id } });

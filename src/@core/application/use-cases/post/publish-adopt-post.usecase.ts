@@ -131,7 +131,7 @@ export namespace PublishAdoptPost {
 
         item.doses.forEach(dose => {
           if(!dose.application_date) throw new RequiredError(`application_date in dose '${item.name}'`);
-          if(!dose.applied) throw new RequiredError(`applied in dose '${item.name}'`);
+          if(typeof dose.applied === "undefined") throw new RequiredError(`applied in dose '${item.name}'`);
           if(!dose.number_dose) throw new RequiredError(`number_dose in dose '${item.name}'`);
         })
       });

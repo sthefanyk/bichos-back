@@ -1,0 +1,30 @@
+GET http://localhost:3000/quiz/titulo4
+
+###
+POST http://localhost:3000/quiz
+Content-Type: application/json
+
+{
+    "title": "titulo4",
+    "description": "description quiz"
+}
+
+###
+POST http://localhost:3000/quiz/add/question
+Content-Type: application/json
+
+{
+    "id_quiz": "7c1f7e22-d8fb-4f6f-86e1-5b487458833b",
+    "question": {
+        "question": "Por que bla bla bla?",
+        "type": 1,
+        "others": false,
+        "alternatives": [
+            "bla1",
+            "bla2"
+        ]
+    }
+}
+
+###
+DELETE http://localhost:3000/quiz/question/a080e6f1-51a3-46a5-938d-249c5b872192

@@ -16,5 +16,7 @@ export class StateProps extends EntityProps {
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
         this.name = props.name.toUpperCase();
         this.abbreviation = props.abbreviation.toUpperCase();
+
+        this.validate(this);
     }
 }
