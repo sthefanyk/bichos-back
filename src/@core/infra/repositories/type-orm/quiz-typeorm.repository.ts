@@ -88,13 +88,15 @@ export class QuizTypeormRepository implements IQuizRepository {
   }
 
   async removeQuestionToQuiz(id_question: string): RemoveQuestionToQuiz.Output {
-    const result1 = await this.quizHasQuestionRepo.createQueryBuilder()
+    await this.quizHasQuestionRepo.createQueryBuilder()
     .delete().where("id_question = :id_question", { id_question }).execute();
 
-    const result = await this.questionRepo.createQueryBuilder()
+    await this.questionRepo.createQueryBuilder()
     .delete().where("id = :id", { id: id_question }).execute();
 
-    console.log(result1, result);
+    await this.alternativeRepo.createQueryBuilder()
+    .delete().where("id_question = :id_question", { id_question }).execute();
+
   }
 
   async getQuestions(idQuiz: string): Promise<Question[]> {

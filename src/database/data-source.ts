@@ -4,7 +4,7 @@ import { SeederOptions } from 'typeorm-extension';
 import MainSeeder from './seeds/main.seeder';
 
 export const dataSourceOptions: DataSourceOptions & SeederOptions = {
-  type: 'sqlite',
+  type: 'sqlite',  
   database: 'src/database/db.sqlite',
   logging: false,
   synchronize: true,

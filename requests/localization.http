@@ -23,7 +23,7 @@ POST http://localhost:3000/localization/city
 Content-Type: application/json
 
 {
-    "name": "paranaguá",
+    "name": "curitiba",
     "state": "Paraná"
 }
 

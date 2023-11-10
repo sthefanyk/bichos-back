@@ -31,6 +31,8 @@ import DiseaseAllergyModel from 'src/@core/domain/models/disease-allergy.model';
 import HealthModel from 'src/@core/domain/models/health.model';
 import VaccineMedicineModel from 'src/@core/domain/models/vaccine-medicine.model';
 import DoseModel from 'src/@core/domain/models/dose.model';
+import ContactModel from 'src/@core/domain/models/contact.model';
+import { CityMapper } from 'src/@core/domain/mappers/city.mapper';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -47,6 +49,7 @@ export class PostTypeormRepository implements IPostRepository {
   private diseaseAllergyRepo: Repository<DiseaseAllergyModel>;
   private vaccineMedicineRepo: Repository<VaccineMedicineModel>;
   private doseRepo: Repository<DoseModel>;
+  private contactRepo: Repository<ContactModel>;
 
   constructor(private dataSource: DataSource) {
     this.postRepo = this.dataSource.getRepository(PostModel);
@@ -67,6 +70,7 @@ export class PostTypeormRepository implements IPostRepository {
     this.diseaseAllergyRepo = this.dataSource.getRepository(DiseaseAllergyModel);
     this.vaccineMedicineRepo = this.dataSource.getRepository(VaccineMedicineModel);
     this.doseRepo = this.dataSource.getRepository(DoseModel);
+    this.contactRepo = this.dataSource.getRepository(ContactModel);
   }
 
   async findByIdPost(id: string): Promise<PostModel> {
@@ -179,6 +183,11 @@ export class PostTypeormRepository implements IPostRepository {
     const animal = await this.animalRepo.save(model.animal);
     const animalAdopt = await this.animalAdoptRepo.save(animalAdoptModel);
     const post = await this.postRepo.save(model);
+    
+    await this.contactRepo.save({
+      ...entity.contact,
+      city: CityMapper.getModel(entity.contact.city)
+    });
 
     await this.addPersonalities(entity.animal.personalities, animal.id);
 
@@ -243,6 +252,11 @@ export class PostTypeormRepository implements IPostRepository {
       animalSponsorshipModel,
     );
     const post = await this.postRepo.save(model);
+
+    await this.contactRepo.save({
+      ...entity.contact,
+      city: CityMapper.getModel(entity.contact.city)
+    });
 
     if (!post || !animal || !animalSponsorship) {
       throw new Error(`Could not save post`);

@@ -9,6 +9,10 @@ import { Health } from "../entities/health/health";
 import { DiseaseAllergy } from "../entities/health/disease-allergy";
 import { VaccineMedicine } from "../entities/health/vaccine-medicine";
 import { Dose } from "../entities/health/dose";
+import { Contact } from "../entities/contact";
+import Phone from "src/@core/shared/domain/value-objects/phone.vo";
+import { City } from "../entities/localization/city";
+import { State } from "../entities/localization/state";
 
 export class AnimalAdoptMapper implements MapperMarker {
 
@@ -55,6 +59,15 @@ export class AnimalAdoptMapper implements MapperMarker {
         post_updated_at: string,
         post_deleted_at: string,
 
+        contact_id: string;
+        contact_name: string;
+        contact_email: string;
+        contact_phone: string;
+
+        city_name: string,
+        state_name: string,
+        state_abbreviation: string,
+                
     }): Post {
         const animal = new AnimalAdopt({
             size_current: +data.animal_adopt_size_current,
@@ -97,6 +110,19 @@ export class AnimalAdoptMapper implements MapperMarker {
             type: +data.type,
             urgency_justification: data.urgency_justification,
             animal,
+            contact: new Contact({
+                id: data.contact_id,
+                name: data.contact_name,
+                email: data.contact_email,
+                phone: new Phone(data.contact_phone),
+                city: new City({
+                    name: data.city_name,
+                    state: new State({
+                        name: data.state_name,
+                        abbreviation: data.state_abbreviation
+                    }),
+                })
+            }),
 
             id: data.post_id,
             created_at: new Date(data.post_created_at),

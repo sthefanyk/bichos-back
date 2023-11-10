@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import {
   AddQuestionToQuiz,
   QuizCreate,
-  QuizFindByTitle,
+  QuizFindById,
   RemoveQuestionToQuiz,
 } from 'src/@core/application/use-cases/quiz';
 
@@ -11,8 +11,8 @@ export class QuizService {
   @Inject(QuizCreate.Usecase)
   private createUseCase: QuizCreate.Usecase;
 
-  @Inject(QuizFindByTitle.Usecase)
-  private findByTitleUseCase: QuizFindByTitle.Usecase;
+  @Inject(QuizFindById.Usecase)
+  private findByTitleUseCase: QuizFindById.Usecase;
 
   @Inject(AddQuestionToQuiz.Usecase)
   private addQuestionUseCase: AddQuestionToQuiz.Usecase;
@@ -24,7 +24,7 @@ export class QuizService {
     return this.createUseCase.execute(data);
   }
 
-  async findByTitle(data: QuizFindByTitle.Input) {
+  async findById(data: QuizFindById.Input) {
     const quiz =  await this.findByTitleUseCase.execute(data);
     return quiz.toJson();
   }

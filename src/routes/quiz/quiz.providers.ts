@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { QuizTypeormRepository } from 'src/@core/infra/repositories/type-orm/quiz-typeorm.repository';
-import { AddQuestionToQuiz, QuizCreate, QuizFindByTitle, RemoveQuestionToQuiz } from 'src/@core/application/use-cases/quiz';
+import { AddQuestionToQuiz, QuizCreate, QuizFindById, RemoveQuestionToQuiz } from 'src/@core/application/use-cases/quiz';
 
 export namespace QuizProvider {
   export namespace Repositories {
@@ -27,10 +27,10 @@ export namespace QuizProvider {
       inject: [Repositories.REPO.provide],
     };
 
-    export const FIND_BY_TITLE = {
-      provide: QuizFindByTitle.Usecase,
+    export const FIND_BY_ID = {
+      provide: QuizFindById.Usecase,
       useFactory: (repo: QuizTypeormRepository) => {
-        return new QuizFindByTitle.Usecase(repo);
+        return new QuizFindById.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };

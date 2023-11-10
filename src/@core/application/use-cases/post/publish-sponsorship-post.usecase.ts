@@ -7,9 +7,11 @@ import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { INeedRepository, IPersonalityRepository } from 'src/@core/domain/contracts';
+import { ILocalization, INeedRepository, IPersonalityRepository } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Need } from 'src/@core/domain/entities/need';
+import { Contact } from 'src/@core/domain/entities/contact';
+import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
 
 export namespace PublishSponsorshipPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -18,6 +20,7 @@ export namespace PublishSponsorshipPost {
       private repoUser: IUserRepository,
       private repoPersonality: IPersonalityRepository,
       private repoNeed: INeedRepository,
+      private repoLocalization: ILocalization,
     ) {}
 
     async execute(input: Input): Output {
@@ -35,27 +38,35 @@ export namespace PublishSponsorshipPost {
         needs.push(foundNeed);
       }
 
+      const city = await this.repoLocalization.getCityByName(input.contact.city);
+      if (!city) throw new NotFoundError('City not found');
+
       const post = new Post({
           urgent: input.urgent == "true",
           urgency_justification: input.urgency_justification,
           posted_by: new UUID(input.posted_by),
           type: TypePost.SPONSORSHIP,
           animal: new AnimalSponsorship(
-          {
-            accompany: input.accompany == "true",
-            reason_request: input.reason_request,
-            needs
-          },
-          {
-            name: input.name,
-            sex: +input.sex,
-            date_birth: new Date(input.date_birth),
-            species: +input.species,
-            history: input.history,
-            characteristic: input.characteristic,
-            personalities
-          }
-          )
+            {
+              accompany: input.accompany == "true",
+              reason_request: input.reason_request,
+              needs
+            },
+            {
+              name: input.name,
+              sex: +input.sex,
+              date_birth: new Date(input.date_birth),
+              species: +input.species,
+              history: input.history,
+              characteristic: input.characteristic,
+              personalities
+            }
+          ),
+          contact: new Contact({
+            ...input.contact,
+            phone: new Phone(input.contact.phone),
+            city
+          })
       });
 
       return await this.repo.publishSponsorshipPost(post);
@@ -114,6 +125,13 @@ export namespace PublishSponsorshipPost {
     characteristic: string;
     history: string;
     personalities: string[];
+
+    contact: {
+      name: string;
+      email: string;
+      phone: string;
+      city: string;
+    }
   };
 
   export type Output = Promise<{

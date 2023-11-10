@@ -15,9 +15,9 @@ export class QuizController {
     return this.quizService.create(data);
   }
 
-  @Get(':title')
-  findByTitle(@Param('title') title: string) {
-    return this.quizService.findByTitle({title});
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.quizService.findById({id});
   }
 
   @Post('add/question')

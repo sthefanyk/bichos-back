@@ -7,13 +7,16 @@ import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { IBreedRepository, IPersonalityRepository } from 'src/@core/domain/contracts';
+import { IBreedRepository, ILocalization, IPersonalityRepository } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Health } from 'src/@core/domain/entities/health/health';
 import { DiseaseAllergy } from 'src/@core/domain/entities/health/disease-allergy';
 import { VaccineMedicine } from 'src/@core/domain/entities/health/vaccine-medicine';
 import { Dose } from 'src/@core/domain/entities/health/dose';
 import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
+import { Contact } from 'src/@core/domain/entities/contact';
+import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
+import { City } from 'src/@core/domain/entities/localization/city';
 
 export namespace PublishAdoptPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -22,17 +25,23 @@ export namespace PublishAdoptPost {
       private repoUser: IUserRepository,
       private repoPersonality: IPersonalityRepository,
       private repoBreed: IBreedRepository,
+      private repoLocalization: ILocalization,
     ) {}
 
     async execute(input: Input): Output {
       await this.validate(input);
-
+      
       const personalities: Personality[] = [];
-
+      
       for (const personality of input.personalities) {
         const foundPersonality = await this.repoPersonality.findByName(personality.toLowerCase());
         personalities.push(foundPersonality);
       }
+      
+      const city = await this.repoLocalization.getCityByName("Paranaguá");
+      console.log(input.contact)
+      if (!city) throw new NotFoundError('City not found');
+
       
       const post = new Post({
           urgent: input.urgent == "true",
@@ -40,22 +49,27 @@ export namespace PublishAdoptPost {
           posted_by: new UUID(input.posted_by),
           type: TypePost.ADOPTION,
           animal: new AnimalAdopt(
-          {
-            size_current: +input.size_current,
-            size_estimated: +input.size_estimated,
-            breed: input.breed,
-            health: this.createHealth(input)
-          },
-          {
-            name: input.name,
-            sex: +input.sex,
-            date_birth: new Date(input.date_birth),
-            species: +input.specie,
-            history: input.history,
-            characteristic: input.characteristic,
-            personalities
-          }
-          )
+            {
+              size_current: +input.size_current,
+              size_estimated: +input.size_estimated,
+              breed: input.breed,
+              health: this.createHealth(input)
+            },
+            {
+              name: input.name,
+              sex: +input.sex,
+              date_birth: new Date(input.date_birth),
+              species: +input.specie,
+              history: input.history,
+              characteristic: input.characteristic,
+              personalities
+            }
+          ),
+          contact: new Contact({
+            ...input.contact,
+            phone: new Phone(input.contact.phone),
+            city
+          })
       });
 
       return await this.repo.publishAdoptPost(post);
@@ -198,6 +212,13 @@ export namespace PublishAdoptPost {
         type: number;
       }[];
       additional: string;
+    };
+
+    contact: {
+      name: string;
+      email: string;
+      phone: string;
+      city: string;
     }
   };
 

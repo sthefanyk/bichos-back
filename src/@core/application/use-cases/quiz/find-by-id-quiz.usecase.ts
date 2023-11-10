@@ -3,12 +3,12 @@ import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
 import { IQuizRepository } from "src/@core/domain/contracts";
 import { Quiz } from "src/@core/domain/entities/quiz/quiz";
 
-export namespace QuizFindByTitle {
+export namespace QuizFindById {
     export class Usecase implements UseCase<Input, Output> {
         constructor(private repo: IQuizRepository){}
     
         async execute(input: Input): Output {
-            const quiz = await this.repo.findQuizByTitle(input.title);
+            const quiz = await this.repo.findQuizById(input.id);
 
             if (!quiz) {
                 throw new NotFoundError("Quiz not found");
@@ -19,7 +19,7 @@ export namespace QuizFindByTitle {
     }
     
     export type Input = {
-        title: string
+        id: string
     }
     
     export type Output = Promise<Quiz>

@@ -5,6 +5,7 @@ import { Animal } from "./animal";
 import { InvalidStatusError } from "src/@core/shared/domain/errors/invalid-status";
 import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 import { PostProps } from "./post-props";
+import { Contact } from "../contact";
 
 export type PostAttr = {
     urgent: boolean;
@@ -14,6 +15,7 @@ export type PostAttr = {
     type: TypePost;
     urgency_justification?: string;
     animal: Animal;
+    contact: Contact;
 
     id?: string,
     created_at?: Date,
@@ -36,7 +38,8 @@ export class Post implements EntityMarker {
     toJson() {
         return { 
             ...this.postProps, 
-            id: this.postProps.id.id,
+            id: this.id,
+            contact: this.contact,
             animal: this.postProps.animal.toJson()
         };
     }
@@ -55,6 +58,10 @@ export class Post implements EntityMarker {
         this.postProps.deleted_at = new Date();
     }
 
+
+    get contact(): Contact {
+        return this.postProps.contact;  
+    }
 
     get urgent(): boolean {
         return this.postProps.urgent;  
