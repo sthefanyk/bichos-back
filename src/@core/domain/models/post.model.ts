@@ -4,6 +4,7 @@ import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import UserModel from './user.model';
 import AnimalModel from './animal.model';
+import { CityModel } from './city.model';
 
 @Entity('post')
 export default class PostModel implements ModelMarker {
@@ -28,6 +29,19 @@ export default class PostModel implements ModelMarker {
 
   @Column({ type: 'varchar', default: '' })
   urgency_justification: string;
+
+  @Column({ type: 'varchar' })
+  contact_name: string;
+
+  @Column({ type: 'varchar' })
+  contact_email: string;
+
+  @Column({ type: 'varchar' })
+  contact_phone: string;
+
+  @ManyToOne(() => CityModel, (city) => city.name)
+  @JoinColumn({name: 'city_name'})
+  contact_city: CityModel;
 
   @OneToOne(() => AnimalModel, (animal) => animal.id)
   @JoinColumn({name: 'animal'})

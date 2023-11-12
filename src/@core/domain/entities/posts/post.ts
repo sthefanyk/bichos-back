@@ -39,7 +39,7 @@ export class Post implements EntityMarker {
         return { 
             ...this.postProps, 
             id: this.id,
-            contact: this.contact,
+            contact: this.contact.toJson(),
             animal: this.postProps.animal.toJson()
         };
     }

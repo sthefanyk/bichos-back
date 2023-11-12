@@ -7,7 +7,11 @@ import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { IBreedRepository, ILocalization, IPersonalityRepository } from 'src/@core/domain/contracts';
+import {
+  IBreedRepository,
+  ILocalization,
+  IPersonalityRepository,
+} from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Health } from 'src/@core/domain/entities/health/health';
 import { DiseaseAllergy } from 'src/@core/domain/entities/health/disease-allergy';
@@ -16,7 +20,6 @@ import { Dose } from 'src/@core/domain/entities/health/dose';
 import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
 import { Contact } from 'src/@core/domain/entities/contact';
 import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
-import { City } from 'src/@core/domain/entities/localization/city';
 
 export namespace PublishAdoptPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -30,70 +33,72 @@ export namespace PublishAdoptPost {
 
     async execute(input: Input): Output {
       await this.validate(input);
-      
+
       const personalities: Personality[] = [];
-      
+
       for (const personality of input.personalities) {
-        const foundPersonality = await this.repoPersonality.findByName(personality.toLowerCase());
+        const foundPersonality = await this.repoPersonality.findByName(
+          personality.toLowerCase(),
+        );
         personalities.push(foundPersonality);
       }
-      
-      const city = await this.repoLocalization.getCityByName("Paranaguá");
-      console.log(input.contact)
+
+      const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
       if (!city) throw new NotFoundError('City not found');
 
-      
       const post = new Post({
-          urgent: input.urgent == "true",
-          urgency_justification: input.urgency_justification,
-          posted_by: new UUID(input.posted_by),
-          type: TypePost.ADOPTION,
-          animal: new AnimalAdopt(
-            {
-              size_current: +input.size_current,
-              size_estimated: +input.size_estimated,
-              breed: input.breed,
-              health: this.createHealth(input)
-            },
-            {
-              name: input.name,
-              sex: +input.sex,
-              date_birth: new Date(input.date_birth),
-              species: +input.specie,
-              history: input.history,
-              characteristic: input.characteristic,
-              personalities
-            }
-          ),
-          contact: new Contact({
-            ...input.contact,
-            phone: new Phone(input.contact.phone),
-            city
-          })
+        urgent: input.urgent == 'true',
+        urgency_justification: input.urgency_justification,
+        posted_by: new UUID(input.posted_by),
+        type: TypePost.ADOPTION,
+        animal: new AnimalAdopt(
+          {
+            size_current: +input.size_current,
+            size_estimated: +input.size_estimated,
+            breed: input.breed,
+            health: this.createHealth(input),
+          },
+          {
+            name: input.name,
+            sex: +input.sex,
+            date_birth: new Date(input.date_birth),
+            species: +input.specie,
+            history: input.history,
+            characteristic: input.characteristic,
+            personalities,
+          },
+        ),
+        contact: new Contact({
+          ...input.contact,
+          phone: new Phone(input.contact.phone),
+          city
+        }),
       });
 
       return await this.repo.publishAdoptPost(post);
     }
 
     async validate(input: Input) {
-      if(!input.urgent) throw new RequiredError('urgent');
-      if (input.urgent == "true" && !input.urgency_justification) throw new RequiredError('urgency_justification');
-      if(!input.posted_by) throw new RequiredError('posted_by');
+      if (!input.urgent) throw new RequiredError('urgent');
+      if (input.urgent == 'true' && !input.urgency_justification)
+        throw new RequiredError('urgency_justification');
+      if (!input.posted_by) throw new RequiredError('posted_by');
 
-      if(!input.size_current) throw new RequiredError('size');
-      if(!input.size_estimated) throw new RequiredError('size');
-      if(!input.breed) throw new RequiredError('breed');
-      if(!input.name) throw new RequiredError('name');
-      if(!input.sex) throw new RequiredError('sex');
-      if(!input.date_birth) throw new RequiredError('date_birth');
-      if(!input.specie) throw new RequiredError('species');
-      if(!input.personalities || input.personalities.length === 0) throw new RequiredError('personalities');
-      
+      if (!input.size_current) throw new RequiredError('size');
+      if (!input.size_estimated) throw new RequiredError('size');
+      if (!input.breed) throw new RequiredError('breed');
+      if (!input.name) throw new RequiredError('name');
+      if (!input.sex) throw new RequiredError('sex');
+      if (!input.date_birth) throw new RequiredError('date_birth');
+      if (!input.specie) throw new RequiredError('species');
+      if (!input.personalities || input.personalities.length === 0)
+        throw new RequiredError('personalities');
+
       const breed = await this.repoBreed.findByName(input.breed.toLowerCase());
       if (!breed || breed.specie !== +input.specie)
         throw new NotFoundError('Breed not found');
 
-      if (!await this.repoUser.findUserById(input.posted_by)) 
+      if (!(await this.repoUser.findUserById(input.posted_by)))
         throw new NotFoundError('User not found');
 
       await this.validatePersonalities(input.personalities);
@@ -102,52 +107,60 @@ export namespace PublishAdoptPost {
 
     async validatePersonalities(personalities: string[]) {
       for (const personality of personalities) {
-        if (!(await this.repoPersonality.findByName(personality.toLowerCase()))) {
+        if (
+          !(await this.repoPersonality.findByName(personality.toLowerCase()))
+        ) {
           throw new NotFoundError(`Personality '${personality}' not found`);
         }
       }
     }
 
     validateHealth(input: Input) {
-      if(!input.health) throw new RequiredError('health');
+      if (!input.health) throw new RequiredError('health');
 
-      if(!input.health.neutered) throw new RequiredError('neutered in health');
-      if(typeof input.health.neutered !== "boolean") 
+      if (!input.health.neutered) throw new RequiredError('neutered in health');
+      if (typeof input.health.neutered !== 'boolean')
         throw new EntityValidationError('The neutered is not a boolean');
 
-      if(!input.health.disease_allergy) 
+      if (!input.health.disease_allergy)
         throw new RequiredError('disease_allergy in health');
-      if(!(input.health.disease_allergy instanceof Array)) 
+      if (!(input.health.disease_allergy instanceof Array))
         throw new EntityValidationError('The disease_allergy is not a array');
 
-      if(!input.health.vaccines_medicines) 
+      if (!input.health.vaccines_medicines)
         throw new RequiredError('vaccines_medicines in health');
-      if(!(input.health.vaccines_medicines instanceof Array)) 
-        throw new EntityValidationError('The vaccines_medicines is not a array');
+      if (!(input.health.vaccines_medicines instanceof Array))
+        throw new EntityValidationError(
+          'The vaccines_medicines is not a array',
+        );
 
-      input.health.disease_allergy.forEach(item => {
-        if(!item.name) throw new RequiredError('name in disease_allergy');
-        if(!item.type) throw new RequiredError('type in disease_allergy');
+      input.health.disease_allergy.forEach((item) => {
+        if (!item.name) throw new RequiredError('name in disease_allergy');
+        if (!item.type) throw new RequiredError('type in disease_allergy');
       });
 
-      input.health.vaccines_medicines.forEach(item => {
-        if(!item.name) throw new RequiredError('name in vaccines_medicines');
-        if(!item.type) throw new RequiredError('type in vaccines_medicines');
-        if(!item.total_dose) throw new RequiredError('total_dose in vaccines_medicines');
-        if(!item.doses) throw new RequiredError('doses in vaccines_medicines');
+      input.health.vaccines_medicines.forEach((item) => {
+        if (!item.name) throw new RequiredError('name in vaccines_medicines');
+        if (!item.type) throw new RequiredError('type in vaccines_medicines');
+        if (!item.total_dose)
+          throw new RequiredError('total_dose in vaccines_medicines');
+        if (!item.doses) throw new RequiredError('doses in vaccines_medicines');
 
-        if(!(item.doses instanceof Array)) 
+        if (!(item.doses instanceof Array))
           throw new EntityValidationError('The doses is not a array');
-        
-        if(item.doses.length === 0) {
+
+        if (item.doses.length === 0) {
           throw new RequiredError('At least one dose in vaccines_medicines');
         }
 
-        item.doses.forEach(dose => {
-          if(!dose.application_date) throw new RequiredError(`application_date in dose '${item.name}'`);
-          if(typeof dose.applied === "undefined") throw new RequiredError(`applied in dose '${item.name}'`);
-          if(!dose.number_dose) throw new RequiredError(`number_dose in dose '${item.name}'`);
-        })
+        item.doses.forEach((dose) => {
+          if (!dose.application_date)
+            throw new RequiredError(`application_date in dose '${item.name}'`);
+          if (typeof dose.applied === 'undefined')
+            throw new RequiredError(`applied in dose '${item.name}'`);
+          if (!dose.number_dose)
+            throw new RequiredError(`number_dose in dose '${item.name}'`);
+        });
       });
     }
 
@@ -155,23 +168,30 @@ export namespace PublishAdoptPost {
       const health = new Health({
         neutered: input.health.neutered,
         additional: input.health.additional ?? '',
-        disease_allergy: input.health.disease_allergy.map(item => new DiseaseAllergy({
-          name: item.name,
-          description: item.description,
-          type: item.type
-        })),
-        vaccines_medicines: input.health.vaccines_medicines.map(item => new VaccineMedicine({
-          name: item.name,
-          total_dose: item.total_dose,
-          type: item.type,
-          doses: item.doses.map(
-            dose => new Dose({
-              application_date: new Date(dose.application_date),
-              applied: dose.applied,
-              number_dose: dose.number_dose,
-            })
-          )
-        }))
+        disease_allergy: input.health.disease_allergy.map(
+          (item) =>
+            new DiseaseAllergy({
+              name: item.name,
+              description: item.description,
+              type: item.type,
+            }),
+        ),
+        vaccines_medicines: input.health.vaccines_medicines.map(
+          (item) =>
+            new VaccineMedicine({
+              name: item.name,
+              total_dose: item.total_dose,
+              type: item.type,
+              doses: item.doses.map(
+                (dose) =>
+                  new Dose({
+                    application_date: new Date(dose.application_date),
+                    applied: dose.applied,
+                    number_dose: dose.number_dose,
+                  }),
+              ),
+            }),
+        ),
       });
 
       return health;
@@ -219,7 +239,7 @@ export namespace PublishAdoptPost {
       email: string;
       phone: string;
       city: string;
-    }
+    };
   };
 
   export type Output = Promise<{

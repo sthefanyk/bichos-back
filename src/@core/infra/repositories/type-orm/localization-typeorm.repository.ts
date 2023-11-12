@@ -76,6 +76,9 @@ export class LocalizationTypeormRepository implements ILocalization {
 
   async getCityByName(name: string): Promise<CityGetByName.Output> {
     const city = await this.getCity(name);
+
+    if (!city) return null;
+
     return CityMapper.getEntity(city);
   }
 

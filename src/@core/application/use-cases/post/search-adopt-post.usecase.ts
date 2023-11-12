@@ -12,13 +12,7 @@ import {
 import { SearchResult as SR } from '../../services/search/search-result';
 import { Post } from 'src/@core/domain/entities/posts/post';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
-import { UUID } from 'crypto';
-import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
-import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
-import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
-import { Personality } from 'src/@core/domain/entities/personality';
+import { AdoptPostOutputDto } from '../../DTOs/adopt-post.dto';
 
 export namespace SearchAdoptPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -45,33 +39,7 @@ export namespace SearchAdoptPost {
 
   export type Input = SearchInputDto;
 
-  export type Output = SearchOutputDto<{
-    id: string,
-    urgent: boolean;
-    posted_by: UUID;
-    renewal_count: number;
-    status: StatusPost;
-    type: TypePost;
-    urgency_justification: string;
-    animal: {
-      id: string,
-      name: string;
-      sex: SexAnimal;
-      date_birth: Date;
-      species: Species;
-      history: string;
-      characteristic: string;
-      personalities: Personality[],
-      size_current: SizeAnimal,
-      size_estimated: SizeAnimal,
-      created_at: Date,
-      updated_at: Date,
-      deleted_at: Date,
-    };
-    created_at: Date,
-    updated_at: Date,
-    deleted_at: Date,
-  }>;
+  export type Output = SearchOutputDto<AdoptPostOutputDto>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

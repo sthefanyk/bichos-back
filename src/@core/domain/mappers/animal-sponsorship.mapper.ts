@@ -9,7 +9,6 @@ import { Need } from "../entities/need";
 import Phone from "src/@core/shared/domain/value-objects/phone.vo";
 import { Contact } from "../entities/contact";
 import { City } from "../entities/localization/city";
-import { State } from "../entities/localization/state";
 
 export class AnimalSponsorshipMapper implements MapperMarker {
 
@@ -54,15 +53,11 @@ export class AnimalSponsorshipMapper implements MapperMarker {
         post_updated_at: string,
         post_deleted_at: string,
 
-
-        contact_id: string;
         contact_name: string;
         contact_email: string;
         contact_phone: string;
-
-        city_name: string,
-        state_name: string,
-        state_abbreviation: string,
+        
+        city: City;
     }): Post {
         const animal = new AnimalSponsorship({
             accompany: data.animal_sponsorship_accompany === "true",
@@ -92,17 +87,10 @@ export class AnimalSponsorshipMapper implements MapperMarker {
             urgency_justification: data.urgency_justification,
             animal,
             contact: new Contact({
-                id: data.contact_id,
                 name: data.contact_name,
                 email: data.contact_email,
                 phone: new Phone(data.contact_phone),
-                city: new City({
-                    name: data.city_name,
-                    state: new State({
-                        name: data.state_name,
-                        abbreviation: data.state_abbreviation
-                    }),
-                })
+                city: data.city
             }),
 
             id: data.post_id,

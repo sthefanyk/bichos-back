@@ -38,7 +38,7 @@ export namespace PublishSponsorshipPost {
         needs.push(foundNeed);
       }
 
-      const city = await this.repoLocalization.getCityByName(input.contact.city);
+      const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
       if (!city) throw new NotFoundError('City not found');
 
       const post = new Post({

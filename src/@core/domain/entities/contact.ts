@@ -4,7 +4,6 @@ import { City } from './localization/city';
 import ContactProps from './contact-props';
 
 export type ContactAttr = {
-	id?: string;
   name: string;
   email: string;
   phone: Phone;
@@ -21,15 +20,10 @@ export class Contact implements EntityMarker {
 
   toJson() {
     return { 
-			...this.props, 
-			id: this.id,
+			...this.props,
 			phone: this.phone,
       city: this.city.getProps().name
 		};
-  }
-
-	get id(): string {
-    return this.props.id.id;
   }
  
   get name(): string {
@@ -40,8 +34,8 @@ export class Contact implements EntityMarker {
 		return this.props.email;
 	}
 
-	get phone(): Phone {
-		return this.props.phone;
+	get phone(): string {
+		return this.props.phone.phone;
 	}
 
 	get city(): City {

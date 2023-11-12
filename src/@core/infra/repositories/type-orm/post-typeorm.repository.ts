@@ -31,7 +31,7 @@ import DiseaseAllergyModel from 'src/@core/domain/models/disease-allergy.model';
 import HealthModel from 'src/@core/domain/models/health.model';
 import VaccineMedicineModel from 'src/@core/domain/models/vaccine-medicine.model';
 import DoseModel from 'src/@core/domain/models/dose.model';
-import ContactModel from 'src/@core/domain/models/contact.model';
+import { CityModel } from 'src/@core/domain/models/city.model';
 import { CityMapper } from 'src/@core/domain/mappers/city.mapper';
 
 export class PostTypeormRepository implements IPostRepository {
@@ -49,7 +49,7 @@ export class PostTypeormRepository implements IPostRepository {
   private diseaseAllergyRepo: Repository<DiseaseAllergyModel>;
   private vaccineMedicineRepo: Repository<VaccineMedicineModel>;
   private doseRepo: Repository<DoseModel>;
-  private contactRepo: Repository<ContactModel>;
+  private cityRepo: Repository<CityModel>;
 
   constructor(private dataSource: DataSource) {
     this.postRepo = this.dataSource.getRepository(PostModel);
@@ -70,7 +70,7 @@ export class PostTypeormRepository implements IPostRepository {
     this.diseaseAllergyRepo = this.dataSource.getRepository(DiseaseAllergyModel);
     this.vaccineMedicineRepo = this.dataSource.getRepository(VaccineMedicineModel);
     this.doseRepo = this.dataSource.getRepository(DoseModel);
-    this.contactRepo = this.dataSource.getRepository(ContactModel);
+    this.cityRepo = this.dataSource.getRepository(CityModel);
   }
 
   async findByIdPost(id: string): Promise<PostModel> {
@@ -125,6 +125,12 @@ export class PostTypeormRepository implements IPostRepository {
       throw new NotFoundError('Post not found');
     }
 
+    const city = await this.cityRepo.findOne({
+      where: { name: result.city_name },
+      relations: ['state'],
+    });
+    result.city = CityMapper.getEntity(city);
+    
     result.personalities = await this.getPersonalities(result.animal);
     
     result.health = await this.healthRepo.findOne({where: {id_animal: result.animal}});
@@ -167,6 +173,13 @@ export class PostTypeormRepository implements IPostRepository {
     }
 
     result.personalities = await this.getPersonalities(result.animal);
+
+    const city = await this.cityRepo.findOne({
+      where: { name: result.city_name },
+      relations: ['state'],
+    });
+    result.city = CityMapper.getEntity(city);
+
     result.needs = await this.getNeeds(result.animal);
 
     return AnimalSponsorshipMapper.getEntityWithJsonData(result);
@@ -183,11 +196,6 @@ export class PostTypeormRepository implements IPostRepository {
     const animal = await this.animalRepo.save(model.animal);
     const animalAdopt = await this.animalAdoptRepo.save(animalAdoptModel);
     const post = await this.postRepo.save(model);
-    
-    await this.contactRepo.save({
-      ...entity.contact,
-      city: CityMapper.getModel(entity.contact.city)
-    });
 
     await this.addPersonalities(entity.animal.personalities, animal.id);
 
@@ -253,11 +261,6 @@ export class PostTypeormRepository implements IPostRepository {
     );
     const post = await this.postRepo.save(model);
 
-    await this.contactRepo.save({
-      ...entity.contact,
-      city: CityMapper.getModel(entity.contact.city)
-    });
-
     if (!post || !animal || !animalSponsorship) {
       throw new Error(`Could not save post`);
     }
@@ -296,6 +299,12 @@ export class PostTypeormRepository implements IPostRepository {
 
     const promises = result.map(async (res) => {
       res.personalities = await this.getPersonalities(res.animal);
+
+      const city = await this.cityRepo.findOne({
+        where: { name: res.city_name },
+        relations: ['state'],
+      });
+      res.city = CityMapper.getEntity(city);
 
       res.health = await this.healthRepo.findOne({where: {id_animal: res.animal}});
       res.health.disease_allergy = await this.diseaseAllergyRepo.find({where: {id_animal: res.animal}});
@@ -337,6 +346,13 @@ export class PostTypeormRepository implements IPostRepository {
 
       const promises = result.map(async (res) => {
         res.personalities = await this.getPersonalities(res.animal);
+
+        const city = await this.cityRepo.findOne({
+          where: { name: res.city_name },
+          relations: ['state'],
+        });
+        res.city = CityMapper.getEntity(city);
+
         res.needs = await this.getNeeds(res.animal);
         return AnimalSponsorshipMapper.getEntityWithJsonData(res);
       });

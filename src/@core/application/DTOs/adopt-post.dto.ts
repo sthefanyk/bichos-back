@@ -29,6 +29,12 @@ export type AdoptPostOutputDto = {
         updated_at: Date,
         deleted_at: Date,
     };
+    contact: {
+        name: string,
+        email: string,
+        phone: string,
+        city: string
+    }
     id: string;
     created_at: Date;
     updated_at: Date;
