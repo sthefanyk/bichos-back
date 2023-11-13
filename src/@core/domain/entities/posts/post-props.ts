@@ -1,6 +1,6 @@
 import EntityProps from "src/@core/shared/domain/entities/entity-props";
 import { PostAttr } from "./post";
-import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
+import { StatusPost } from "src/@core/shared/domain/enums/status_post_adopt.enum";
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { Animal } from "./animal";

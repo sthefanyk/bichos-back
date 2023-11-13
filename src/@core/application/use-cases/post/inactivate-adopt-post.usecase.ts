@@ -4,7 +4,7 @@ import { IPostRepository } from "../../../domain/contracts/post-repository.inter
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import { InvalidStatusError } from "src/@core/shared/domain/errors/invalid-status";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
-import { StatusPost } from "src/@core/shared/domain/enums/status_post.enum";
+import { StatusPost } from "src/@core/shared/domain/enums/status_post_adopt.enum";
 import { Post } from "src/@core/domain/entities/posts/post";
 
 export namespace PostInactivate {

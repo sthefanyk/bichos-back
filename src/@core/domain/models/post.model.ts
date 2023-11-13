@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { StatusPost } from 'src/@core/shared/domain/enums/status_post.enum';
+import { StatusPost } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import UserModel from './user.model';
 import AnimalModel from './animal.model';
