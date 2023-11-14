@@ -15,9 +15,11 @@ import { BreedModule } from './routes/breed/breed.module';
 import { PersonalityModule } from './routes/personality/personality.module';
 import { NeedModule } from './routes/need/need.module';
 import { QuizModule } from './routes/quiz/quiz.module';
+import { AdoptModule } from './routes/adopt/adopt.module';
 
 @Module({
   imports: [
+    AdoptModule,
     QuizModule,
     NeedModule,
     PersonalityModule,

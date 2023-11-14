@@ -49,7 +49,6 @@ export class AnimalAdoptMapper implements MapperMarker {
         urgent: string;
         user_id: string;
         renewal_count: string;
-        status: string;
         type: string;
         urgency_justification: string;
 
@@ -64,7 +63,6 @@ export class AnimalAdoptMapper implements MapperMarker {
         
         city: City;
     }): Post {
-        console.log(data)
         const animal = new AnimalAdopt({
             size_current: +data.animal_adopt_size_current,
             size_estimated: +data.animal_adopt_size_estimated,
@@ -102,7 +100,6 @@ export class AnimalAdoptMapper implements MapperMarker {
             urgent: data.urgent === "true",
             posted_by: new UUID(data.user_id),
             renewal_count: +data.renewal_count,
-            status: +data.status,
             type: +data.type,
             urgency_justification: data.urgency_justification,
             animal,

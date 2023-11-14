@@ -1,0 +1,45 @@
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { ModelMarker } from '../../shared/domain/markers/model.marker';
+import UserModel from './user.model';
+import PostModel from './post.model';
+import QuizModel from './quiz.model';
+import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';
+
+@Entity('adopt')
+export default class AdoptModel implements ModelMarker {
+  @PrimaryColumn()
+  id: string;
+
+  @ManyToOne(() => UserModel, user => user.id)
+  @JoinColumn({name: 'id_adopter'})
+  adopter: UserModel;
+
+  @ManyToOne(() => PostModel, post => post.id)
+  @JoinColumn({name: 'id_post'})
+  post: PostModel;
+
+  @ManyToOne(() => QuizModel, quiz => quiz.id)
+  @JoinColumn({name: 'id_quiz'})
+  quiz: QuizModel;
+
+  @Column({ type: 'simple-enum', default: StatusAdopt.WAITING_QUIZ_CLOSE })
+  status: StatusAdopt;
+
+  @Column({ type: 'double' })
+  punctuation: number;
+
+  @Column({ type: 'varchar' })
+  feedback_poster: string;
+
+  @Column({ type: 'varchar' })
+  feedback_godfather: string;
+
+  @Column({ type: 'datetime' })
+  created_at: Date;
+
+  @Column({ type: 'datetime', default: null })
+  updated_at: Date;
+
+  @Column({ type: 'datetime', default: null })
+  deleted_at: Date;
+}

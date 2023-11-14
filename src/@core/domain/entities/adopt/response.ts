@@ -14,6 +14,7 @@ export class Response implements EntityMarker {
   private props: ResponseProps;
 
   constructor(responseAttr: ResponseAttr) {
+    responseAttr.evaluation = responseAttr.evaluation ?? EvaluationResponse.NOT_EVALUATED;
     this.props = new ResponseProps(responseAttr);
   }
 

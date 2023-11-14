@@ -1,4 +1,7 @@
-GET http://localhost:3000/quiz/242e3501-ad44-49d0-af32-c536e5e796d7
+GET http://localhost:3000/quiz/986167ca-183a-455d-9a4e-fcf3c9cc6c2e
+
+###
+GET http://localhost:3000/quiz
 
 ###
 POST http://localhost:3000/quiz
@@ -14,7 +17,7 @@ POST http://localhost:3000/quiz/add/question
 Content-Type: application/json
 
 {
-    "id_quiz": "242e3501-ad44-49d0-af32-c536e5e796d7",
+    "id_quiz": "986167ca-183a-455d-9a4e-fcf3c9cc6c2e",
     "question": {
         "question": "Por que bla bla bla?",
         "type": 1,

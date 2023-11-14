@@ -7,6 +7,7 @@ export interface IQuizRepository {
     findQuizByTitle(title: string): Promise<Quiz>;
     findQuestionById(id: string): Promise<Question>;
     findQuizById(id: string): Promise<Quiz>;
+    findAllQuiz(): Promise<Quiz[]>;
     addQuestionToQuiz(id: string, entity: Question): AddQuestionToQuiz.Output;
     removeQuestionToQuiz(id_question: string): RemoveQuestionToQuiz.Output;
 }

@@ -22,6 +22,23 @@ export class QuizTypeormRepository implements IQuizRepository {
     this.quizHasQuestionRepo = this.dataSource.getRepository(QuizHasQuestionModel);
   }
 
+
+  async findAllQuiz(): Promise<Quiz[]> {
+    const result = await this.quizRepo.find();
+
+    const quizzes: Quiz[] = [];
+
+    for (const quiz of result){
+      const questions: Question[] = await this.getQuestions(quiz.id);
+      quizzes.push(new Quiz({
+        ...quiz,
+        questions
+      }));
+    }
+
+    return quizzes;
+  }
+
   async createQuiz(entity: Quiz): QuizCreate.Output {
     const model = await this.quizRepo.save(entity.toJson());
 
@@ -80,7 +97,7 @@ export class QuizTypeormRepository implements IQuizRepository {
         alternative: alternative.alternative
       });
     }
-
+    
     await this.quizHasQuestionRepo.save({
       id_question: question.id,
       id_quiz

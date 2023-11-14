@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Query } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { AddQuestionToQuiz, QuizCreate, RemoveQuestionToQuiz } from 'src/@core/application/use-cases/quiz';
 import { ApiTags } from '@nestjs/swagger';
+import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
 
 @ApiTags('quiz')
 // @UseGuards(AuthGuard, RoleGuard)
@@ -13,6 +14,11 @@ export class QuizController {
   @Post()
   create(@Body() data: QuizCreate.Input) {
     return this.quizService.create(data);
+  }
+
+  @Get()
+  search(@Query() searchParams: SearchQuiz.Input) {
+    return this.quizService.searchQuiz(searchParams);
   }
 
   @Get(':id')

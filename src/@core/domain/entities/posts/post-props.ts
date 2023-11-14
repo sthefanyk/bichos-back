@@ -1,6 +1,5 @@
 import EntityProps from "src/@core/shared/domain/entities/entity-props";
 import { PostAttr } from "./post";
-import { StatusPost } from "src/@core/shared/domain/enums/status_post_adopt.enum";
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { Animal } from "./animal";
@@ -24,10 +23,6 @@ export class PostProps extends EntityProps {
     @IsNumber()
     @IsNotEmpty()
     renewal_count: number;
-
-    @IsEnum(StatusPost)
-    @IsNotEmpty()
-    status: StatusPost;
     
     @IsEnum(TypePost)
     @IsNotEmpty()
@@ -45,7 +40,6 @@ export class PostProps extends EntityProps {
         this.urgency_justification = props.urgency_justification;
         this.posted_by = props.posted_by.getIdString();
         this.renewal_count = props.renewal_count;
-        this.status = props.status;
         this.type = props.type;
         this.animal = props.animal;
         this.contact = props.contact;

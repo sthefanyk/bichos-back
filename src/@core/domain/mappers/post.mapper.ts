@@ -13,7 +13,6 @@ export class PostMapper implements MapperMarker {
             urgency_justification: entity.urgency_justification,
             posted_by: user,
             renewal_count: entity.renewal_count,
-            status: entity.status,
             type: entity.type,
             animal: AnimalMapper.getModel(entity.animal),
             contact_name: entity.contact.name,

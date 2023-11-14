@@ -1,0 +1,25 @@
+GET http://localhost:3000/adopt
+
+###
+GET http://localhost:3000/adopt/15d4e9a1-b10a-4faa-a5e1-fc7290ae7a9d
+
+###
+POST http://localhost:3000/adopt
+Content-Type: application/json
+
+{
+    "id_adopter": "b00d483e-1cae-469d-acfb-204dc3e310c0",
+    "id_post": "3108e0c7-ada0-4887-9d8a-e61749df00e1",
+    "id_quiz": "986167ca-183a-455d-9a4e-fcf3c9cc6c2e",
+    "responses": [
+        {
+            "id_question": "33b6b50d-b140-42ca-8c0f-5302422ca2c7",
+            "response": "aaaaaaaa"
+        },
+        {
+            "id_question": "45a64572-9e30-4929-906e-af9e32896d03",
+            "response": "bbbbbbb"
+        }
+    ]
+}
+

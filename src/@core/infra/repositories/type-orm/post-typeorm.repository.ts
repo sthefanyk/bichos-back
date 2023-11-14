@@ -92,7 +92,6 @@ export class PostTypeormRepository implements IPostRepository {
 
     return {
       id: model.id,
-      status: model.status,
       type: model.type,
     };
   }

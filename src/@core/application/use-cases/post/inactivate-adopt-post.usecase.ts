@@ -4,7 +4,6 @@ import { IPostRepository } from "../../../domain/contracts/post-repository.inter
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import { InvalidStatusError } from "src/@core/shared/domain/errors/invalid-status";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
-import { StatusPost } from "src/@core/shared/domain/enums/status_post_adopt.enum";
 import { Post } from "src/@core/domain/entities/posts/post";
 
 export namespace PostInactivate {
@@ -34,25 +33,22 @@ export namespace PostInactivate {
                 throw new NotFoundError("Post not found");
             }
 
-            post.inactivate(+input.status);
+            post.inactivate();
             
             return await this.repo.inactivate(post);
         }
 
         async validate(input: Input) {
             if(!input.id) throw new RequiredError('id');
-            if(!input.status) throw new RequiredError('status');
         }
     }
 
     export type Input = {
         id: string;
-        status: string;
     }
 
     export type Output = Promise<{
         id: string,
-        status: StatusPost
         type: TypePost
     }>;
 }

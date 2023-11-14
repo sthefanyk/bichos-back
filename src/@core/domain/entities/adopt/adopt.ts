@@ -1,16 +1,18 @@
 import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';
 import AdoptProps from './adopt-props';
+import { Response } from './response';
 
 export type AdoptAttr = {
   id?: string;
   id_adopter: string;
   id_post: string;
-  id_response_quiz: string;
+  id_quiz: string;
   punctuation?: number;
   status?: StatusAdopt;
   feedback_poster?: string;
   feedback_godfather?: string;
+  responses: Response[];
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
@@ -29,8 +31,13 @@ export class Adopt implements EntityMarker {
         id: this.id,
         id_adopter: this.id_adopter,
         id_post: this.id_post,
-        id_response_quiz: this.id_response_quiz,
+        id_quiz: this.id_quiz,
+        responses: this.responses.map(r => r.toJson())
     };
+  }
+
+  get responses(): Response[] {
+    return this.props.responses;
   }
 
   get punctuation(): number {
@@ -45,8 +52,8 @@ export class Adopt implements EntityMarker {
     return this.props.feedback_poster;
   }
 
-  get id_response_quiz(): string {
-    return this.props.id_response_quiz.id;
+  get id_quiz(): string {
+    return this.props.id_quiz.id;
   }
 
   get id_post(): string {

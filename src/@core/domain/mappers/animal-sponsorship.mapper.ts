@@ -44,7 +44,6 @@ export class AnimalSponsorshipMapper implements MapperMarker {
         urgent: string;
         user_id: string;
         renewal_count: string;
-        status: string;
         type: string;
         urgency_justification: string;
 
@@ -82,7 +81,6 @@ export class AnimalSponsorshipMapper implements MapperMarker {
             urgent: data.urgent === "true",
             posted_by: new UUID(data.user_id),
             renewal_count: +data.renewal_count,
-            status: +data.status,
             type: +data.type,
             urgency_justification: data.urgency_justification,
             animal,

@@ -5,6 +5,8 @@ import {
   QuizFindById,
   RemoveQuestionToQuiz,
 } from 'src/@core/application/use-cases/quiz';
+import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
+import { QuizCollectionPresenter } from './quiz.presenter';
 
 @Injectable()
 export class QuizService {
@@ -13,6 +15,9 @@ export class QuizService {
 
   @Inject(QuizFindById.Usecase)
   private findByTitleUseCase: QuizFindById.Usecase;
+
+  @Inject(SearchQuiz.Usecase)
+  private quizSearchUseCase: SearchQuiz.Usecase;
 
   @Inject(AddQuestionToQuiz.Usecase)
   private addQuestionUseCase: AddQuestionToQuiz.Usecase;
@@ -27,6 +32,11 @@ export class QuizService {
   async findById(data: QuizFindById.Input) {
     const quiz =  await this.findByTitleUseCase.execute(data);
     return quiz.toJson();
+  }
+
+  async searchQuiz(searchParams: SearchQuiz.Input) {
+    const output = await this.quizSearchUseCase.execute(searchParams);
+    return new QuizCollectionPresenter(output);
   }
 
   async addQuestion(data: AddQuestionToQuiz.Input) {
