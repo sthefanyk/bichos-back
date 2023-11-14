@@ -1,13 +1,12 @@
 import UseCase from '../usecase';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import IUserRepository from 'src/@core/domain/contracts/user-repository.interface';
 import { Post } from 'src/@core/domain/entities/posts/post';
 import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { ILocalization, INeedRepository, IPersonalityRepository } from 'src/@core/domain/contracts';
+import { ILocalization, INeedRepository, IPersonalityRepository, IUserRepository } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Need } from 'src/@core/domain/entities/need';
 import { Contact } from 'src/@core/domain/entities/contact';

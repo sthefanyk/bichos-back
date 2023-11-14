@@ -1,7 +1,6 @@
 import UseCase from '../usecase';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import IUserRepository from 'src/@core/domain/contracts/user-repository.interface';
 import { Post } from 'src/@core/domain/entities/posts/post';
 import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
@@ -11,6 +10,7 @@ import {
   IBreedRepository,
   ILocalization,
   IPersonalityRepository,
+  IUserRepository
 } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Health } from 'src/@core/domain/entities/health/health';

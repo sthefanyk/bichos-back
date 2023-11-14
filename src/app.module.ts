@@ -16,9 +16,11 @@ import { PersonalityModule } from './routes/personality/personality.module';
 import { NeedModule } from './routes/need/need.module';
 import { QuizModule } from './routes/quiz/quiz.module';
 import { AdoptModule } from './routes/adopt/adopt.module';
+import { SponsorshipModule } from './routes/sponsorship/sponsorship.module';
 
 @Module({
   imports: [
+    SponsorshipModule,
     AdoptModule,
     QuizModule,
     NeedModule,

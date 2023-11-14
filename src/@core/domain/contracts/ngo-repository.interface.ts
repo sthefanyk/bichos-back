@@ -1,5 +1,5 @@
 import NGO from "../entities/users/ngo";
-import IUserRepository from "./user-repository.interface";
+import { IUserRepository } from "./user-repository.interface";
 import CNPJ from "src/@core/shared/domain/value-objects/cnpj.vo";
 import { NGOCreate, NGOFindByCnpj, NGOFindById, NGOUpdate } from "src/@core/application/use-cases/ngo";
 

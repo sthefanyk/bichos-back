@@ -2,7 +2,7 @@ import { UserFindByEmail } from "src/@core/application/use-cases/user/find-by-em
 import { UserFindByUsername } from "src/@core/application/use-cases/user/find-by-username.usecase";
 import UserModel from "../models/user.model";
 
-export default interface IUserRepository{
+export interface IUserRepository{
     findUserByEmail(email: string) : Promise<UserModel>;
     findUserById(id: string): Promise<UserModel>;
     findByEmail(email: string): UserFindByEmail.Output;

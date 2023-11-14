@@ -1,6 +1,6 @@
 import UseCase from "../usecase";
 import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
-import IUserRepository from "src/@core/domain/contracts/user-repository.interface";
+import { IUserRepository } from "src/@core/domain/contracts/user-repository.interface";
 
 export namespace UserFindByEmail {
     export class Usecase implements UseCase<Input, Output> {

@@ -4,9 +4,9 @@ import {
   IAdoptRepository,
   IQuizRepository,
   IPostRepository,
+  IUserRepository
 } from 'src/@core/domain/contracts';
 import { Adopt as AdoptEntity } from 'src/@core/domain/entities/adopt/adopt';
-import IUserRepository from 'src/@core/domain/contracts/user-repository.interface';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
 import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
@@ -48,7 +48,7 @@ export namespace AdoptUsecase {
       if (!input.id_adopter) throw new RequiredError('id_adopter');
       if (!input.id_post) throw new RequiredError('id_post');
       if (!input.id_quiz) throw new RequiredError('id_quiz');
-
+      
       if (!(await this.repoPost.findByIdAdoptPost(input.id_post)))
         throw new NotFoundError('No post found');
 

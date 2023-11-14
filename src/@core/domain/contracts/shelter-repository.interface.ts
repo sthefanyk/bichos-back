@@ -1,5 +1,5 @@
 import Shelter from "../entities/users/shelter";
-import IUserRepository from "./user-repository.interface";
+import { IUserRepository } from "./user-repository.interface";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
 import { ShelterCreate, ShelterFindById, ShelterUpdate } from "src/@core/application/use-cases/shelter";
 import { ShelterFindByCpf } from "src/@core/application/use-cases/shelter/find-by-cpf.usecase";

@@ -1,0 +1,14 @@
+GET http://localhost:3000/sponsorship
+
+###
+GET http://localhost:3000/sponsorship/2d94c6c0-87ea-4452-a24e-04e564ec879c
+
+###
+POST http://localhost:3000/sponsorship
+Content-Type: application/json
+
+{
+    "id_godfather": "b00d483e-1cae-469d-acfb-204dc3e310c0",
+    "id_post": "74d9fffc-a38b-4b30-82db-879a2788dfe4"
+}
+

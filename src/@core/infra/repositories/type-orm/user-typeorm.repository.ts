@@ -1,6 +1,6 @@
 import { UserFindByEmail } from "src/@core/application/use-cases/user/find-by-email.usecase";
 import { UserFindByUsername } from "src/@core/application/use-cases/user/find-by-username.usecase";
-import IUserRepository from "src/@core/domain/contracts/user-repository.interface";
+import { IUserRepository } from "src/@core/domain/contracts/user-repository.interface";
 import UserModel from "src/@core/domain/models/user.model";
 import { DataSource, Repository } from "typeorm";
 

@@ -1,6 +1,6 @@
 import { PersonCreate, PersonFindById, PersonUpdate } from "src/@core/application/use-cases/person";
 import Person from "../entities/users/person";
-import IUserRepository from "./user-repository.interface";
+import { IUserRepository } from "./user-repository.interface";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
 import { PersonFindByCpf } from "src/@core/application/use-cases/person/find-by-cpf.usecase";
 
