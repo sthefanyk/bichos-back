@@ -109,17 +109,13 @@ export class UserTypeormRepository implements IUserRepository {
     });
   }
 
-  async resetPassword(id: string, newPassword: string): Promise<User> {
-    const user = await this.findUserById(id);
-    user.resetPassword(newPassword);
+  async resetPassword(user: User): Promise<User> {
+    const userUpdateResult = await this.repo.update(
+      user.id, { password: user.password }
+    );
 
-    const result = await this.repo.update(user.id, user);
-
-    if (result.affected === 0) {
-      throw new Error(
-        `Could not update person with ID ${user.id}`,
-      );
-    }
+    if (userUpdateResult.affected === 0)
+      return null;
 
     return user;
   }

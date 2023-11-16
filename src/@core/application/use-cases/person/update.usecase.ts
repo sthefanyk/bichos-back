@@ -27,12 +27,10 @@ export namespace PersonUpdate {
                 name: input.name,
                 city: city,
                 email: input.email,
-                password: input.password,
                 description: input.description,
                 profile_picture: input.profile_picture,
                 header_picture: input.header_picture
             });
-            await person.generatePasswordHash();
 
             const result = await this.repo.update(person);
             if (!result) 
@@ -48,7 +46,6 @@ export namespace PersonUpdate {
             if(!input.username) throw new RequiredError('username');
             if(!input.name) throw new RequiredError('name');
             if(!input.email) throw new RequiredError('email');
-            if(!input.password) throw new RequiredError('password');
             if(!input.city) throw new RequiredError('city');
             
             const person = await this.repo.findById(input.id);
@@ -75,7 +72,6 @@ export namespace PersonUpdate {
         username: string;
         name: string;
         email: string;
-        password: string;
         city: string;
         description?: string;
         profile_picture?: string;

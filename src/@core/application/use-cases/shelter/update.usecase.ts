@@ -29,12 +29,10 @@ export namespace ShelterUpdate {
                 name: input.name,
                 city: city,
                 email: input.email,
-                password: input.password,
                 description: input.description,
                 profile_picture: input.profile_picture,
                 header_picture: input.header_picture,
             });
-            await shelter.generatePasswordHash();
 
             const result = await this.repo.update(shelter);
             if (!result) throw new UpdateError(`Could not update shelter with ID ${shelter.id}`);
@@ -51,7 +49,6 @@ export namespace ShelterUpdate {
             if(!input.username) throw new RequiredError('username');
             if(!input.name) throw new RequiredError('name');
             if(!input.email) throw new RequiredError('email');
-            if(!input.password) throw new RequiredError('password');
             if(!input.city) throw new RequiredError('city');
             
             const shelter = await this.repo.findById(input.id);
@@ -84,7 +81,6 @@ export namespace ShelterUpdate {
         username: string;
         name: string;
         email: string;
-        password: string;
         city: string;
         description?: string;
         profile_picture?: string;

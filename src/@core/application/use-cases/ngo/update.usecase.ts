@@ -28,12 +28,10 @@ export namespace NGOUpdate {
                 name: input.name,
                 city: city,
                 email: input.email,
-                password: input.password,
                 description: input.description,
                 profile_picture: input.profile_picture,
                 header_picture: input.header_picture
             });
-            await ngo.generatePasswordHash();
 
             const result = await this.repo.update(ngo);
             if (!result) throw new UpdateError(`Could not update ngo with ID ${ngo.id}`);
@@ -49,7 +47,6 @@ export namespace NGOUpdate {
             if(!input.username) throw new RequiredError('username');
             if(!input.name) throw new RequiredError('name');
             if(!input.email) throw new RequiredError('email');
-            if(!input.password) throw new RequiredError('password');
             if(!input.city) throw new RequiredError('city');
             
             const ngo = await this.repo.findById(input.id);
@@ -79,7 +76,6 @@ export namespace NGOUpdate {
         username: string;
         name: string;
         email: string;
-        password: string;
         city: string;
         description?: string;
         profile_picture?: string;

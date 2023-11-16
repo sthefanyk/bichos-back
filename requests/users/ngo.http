@@ -58,7 +58,6 @@ Content-Type: application/json
     "username": "ong up",
     "name": "ong1 up",
     "email": "ong3@ong.com",
-    "password": "Ong12345",
     "city": "Paranaguá",
     "description": "ong description",
     "profile_picture": "ong profile_picture",

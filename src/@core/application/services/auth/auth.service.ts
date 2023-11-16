@@ -6,10 +6,10 @@ import { IUserRepository } from 'src/@core/domain/contracts/user-repository.inte
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import UserModel from 'src/@core/domain/models/user.model';
-import PasswordValidate from './password-validate';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
 import User from 'src/@core/domain/entities/users/user';
+import { UpdateError } from 'src/@core/shared/domain/errors/update.error';
 
 export class AuthService implements IAuth {
   constructor(private repo: IUserRepository) {}
@@ -49,11 +49,6 @@ export class AuthService implements IAuth {
     return await bcrypt.compare(password, passwordCrypt);
   }
 
-  async generatePasswordHash(password: string): Promise<string> {
-    const salt = await bcrypt.genSalt();
-    return await bcrypt.hash(password, salt);
-  }
-
   isValidToken(token: string) {
     try {
       this.checkTokenUser(token);
@@ -82,9 +77,13 @@ export class AuthService implements IAuth {
   async reset( token: string, password: string ): Promise<{ accessToken: string }> {
     const { sub } = this.checkTokenUser(token);
 
-    const passwordValidated = new PasswordValidate(password);
-    const passwordValidatedAndCrypt = await this.generatePasswordHash(passwordValidated.password);
-    const user = await this.repo.resetPassword(sub.toString(), passwordValidatedAndCrypt);
+    const user = await this.repo.findUserById(sub.toString());
+    if (!user) throw new NotFoundError('User not found');
+
+    await user.resetPassword(password);
+    
+    const result = await this.repo.resetPassword(user);
+    if (!result) throw new UpdateError(`Could not update user`);
 
     return this.createToken(user, '30min');
   }
@@ -97,7 +96,7 @@ export class AuthService implements IAuth {
     return this.createToken(user, '7days');
   }
 
-  async findUserById(id: string): Promise<UserModel> {
+  async findUserById(id: string): Promise<User> {
     const user = await this.repo.findUserById(id);
 
     if (!user) {

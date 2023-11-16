@@ -4,7 +4,6 @@ import { ForgetAuthDto } from './dto/forget-auth.dto';
 import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
 import { ResetAuthDto } from './dto/reset-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
-import { RegisterAuthDto } from './dto/register-auth.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
@@ -40,10 +39,5 @@ export class AuthService {
 
   async me(token: string) {
     return this.service.me(token);
-  }
-
-  async register(data: RegisterAuthDto) {
-    // const id = await this.usersService.create(data);
-    // return this.service.register(id);
   }
 }

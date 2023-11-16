@@ -1,0 +1,29 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "sthe@sthe.com",
+    "password": "Sthe1234"
+}
+
+###
+POST http://localhost:3000/auth/reset
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE3MDAxMDM5NzgsImV4cCI6MTcwMDcwODc3OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiMjY2YTE1OTMtN2EzOC00Yjc5LThkNzktM2Y4ZDg0OGUwMzlmIn0.sYMO9mAb59ycMXbDLgdRWi49pLTVqQZT-9ZVDg90i1o
+
+{
+    "password": "Sthe1234"
+}
+
+###
+POST http://localhost:3000/auth/forget
+Content-Type: application/json
+
+{
+    "email": "sthe@sthe.com"
+}
+
+###
+GET http://localhost:3000/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGUiLCJlbWFpbCI6InN0aGVAc3RoZS5jb20iLCJpYXQiOjE3MDAxMDQwMjIsImV4cCI6MTcwMDcwODgyMiwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiMjY2YTE1OTMtN2EzOC00Yjc5LThkNzktM2Y4ZDg0OGUwMzlmIn0.G26UY4hJxQraMlzYTCPoAQLxYvHYSars0LUBckHjgUw

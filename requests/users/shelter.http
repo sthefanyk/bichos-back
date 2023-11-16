@@ -55,7 +55,6 @@ Content-Type: application/json
     "username": "ssssssss",
     "name": "sssssssss",
     "email": "sssss@admin.com",
-    "password": "AdminUp123",
     "city": "Paranaguá",
     "description": "bbbb",
     "profile_picture": "bbbb",

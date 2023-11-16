@@ -7,5 +7,5 @@ export interface IUserRepository{
     findUserByEmail(email: string): UserFindByEmail.Output;
     findUserByUsername(username: string): UserFindByUsername.Output;
     findAllUser(): UserSearch.Output;
-    resetPassword(id: string, newPassword: string): Promise<User>;
+    resetPassword(user: User): Promise<User>;
 }

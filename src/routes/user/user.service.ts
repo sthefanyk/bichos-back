@@ -12,7 +12,8 @@ export class UserService {
   private userSearchUseCase: UserSearch.Usecase;
 
   async findOne(id: string) {
-    return await this.getUseCase.execute({ id });
+    const user = await this.getUseCase.execute({ id });
+    return user.toJson();
   }
 
   async search(searchParams: UserSearch.Input) {

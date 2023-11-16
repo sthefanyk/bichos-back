@@ -36,7 +36,6 @@ export default class NGO extends User implements EntityMarker {
     username: string;
     name: string;
     email: string;
-    password: string;
     city: City;
     description?: string;
     profile_picture?: string;
@@ -51,7 +50,6 @@ export default class NGO extends User implements EntityMarker {
       username: data.username,
       name: data.name,
       email: data.email,
-      password: data.password,
       city: data.city,
       description: data.description,
       profile_picture: data.profile_picture,

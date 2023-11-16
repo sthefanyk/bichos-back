@@ -42,11 +42,12 @@ export default abstract class User implements EntityMarker {
     }
   }
 
-  public resetPassword(password: string) {
+  public async resetPassword(password: string) {
     this.props.password = password;
     this.props.updated_at = new Date();
     
     this.props.validate(this.props);
+    await this.generatePasswordHash();
   }
 
   public updateUser(data: {
@@ -54,7 +55,6 @@ export default abstract class User implements EntityMarker {
     username: string;
     name: string;
     email: string;
-    password: string;
     city: City;
     description?: string;
     profile_picture?: string;
@@ -64,7 +64,6 @@ export default abstract class User implements EntityMarker {
     this.props.username = data.username.toLowerCase();
     this.props.name = data.name.toLowerCase();
     this.props.email = data.email.toLowerCase();
-    this.props.password = data.password;
     this.props.city = data.city;
     this.props.description = data.description ?? this.props.description;
     this.props.profile_picture = data.profile_picture ?? this.props.profile_picture;
@@ -86,10 +85,6 @@ export default abstract class User implements EntityMarker {
   public async generatePasswordHash() {
     const salt = await bcrypt.genSalt();
     this.props.password =  await bcrypt.hash(this.props.password, salt);
-  }
-
-  public async verifyPassword(password: string) {
-    return await bcrypt.compare(password, this.props.password);
   }
 
   get user(): UserAttr {
