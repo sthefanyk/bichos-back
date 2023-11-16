@@ -24,19 +24,20 @@ GET http://localhost:3000/ngo?sort=full_name&sort_dir=asc&filter=5
 GET http://localhost:3000/ngo?page=3&per_page=3
 
 ###
-GET http://localhost:3000/ngo/9c0be5d4-a47c-427c-8234-54c45e482448
+GET http://localhost:3000/ngo/15918dfb-df63-43b9-9e11-e90150c43275
 
 ###
 POST http://localhost:3000/ngo
 Content-Type: application/json
 
 {
-    "cnpj": "00000000002",
-    "name_ngo": "ong2",
+    "cnpj": "0000000000001",
+    "name_ngo": "ong1",
     "date_register": "2002",
-    "full_name": "ong2",
-    "username": "ong2",
-    "email": "ong2@ong.com",
+    "full_name": "ong1",
+    "username": "ong1",
+    "name": "ong1",
+    "email": "ong1@ong.com",
     "password": "Ong12345",
     "city": "Paranaguá",
     "description": "ong description",
@@ -46,7 +47,7 @@ Content-Type: application/json
 
 
 ###
-PUT   http://localhost:3000/ngo/b71ef844-1313-4255-98c3-9f4269d46df1
+PUT   http://localhost:3000/ngo/15918dfb-df63-43b9-9e11-e90150c43275
 Content-Type: application/json
 
 {
@@ -54,8 +55,9 @@ Content-Type: application/json
     "name_ngo": "ong",
     "date_register": "2020-08-20",
     "full_name": "ong up2",
-    "username": "ong",
-    "email": "ong2@ong.com",
+    "username": "ong up",
+    "name": "ong1 up",
+    "email": "ong3@ong.com",
     "password": "Ong12345",
     "city": "Paranaguá",
     "description": "ong description",
@@ -64,9 +66,9 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/ngo/inactivate/da2263c2-db0f-48c3-93a5-7d3e3f913ac5
+PATCH http://localhost:3000/ngo/inactivate/15918dfb-df63-43b9-9e11-e90150c43275
 Content-Type: application/json
 
 ###
-PATCH http://localhost:3000/ngo/activate/da2263c2-db0f-48c3-93a5-7d3e3f913ac5
+PATCH http://localhost:3000/ngo/activate/15918dfb-df63-43b9-9e11-e90150c43275
 Content-Type: application/json

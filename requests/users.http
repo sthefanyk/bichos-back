@@ -1,9 +1,5 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NTAwMjg1NSwiZXhwIjoxNjk1NjA3NjU1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIxMTRlNDY3Yi01YmJkLTRmOWUtODgxYS0xNjA1MjFlNDdhNjEifQ.J0QnfX7HrsHk3Lyu_327AJVzm5tbCXX_TgrfZA7cnv8
-
-###
-GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicGVyc29uIiwiZW1haWwiOiJwZXJzb25AcGVyc29uLmNvbSIsImlhdCI6MTY5NTAwMjkxNywiZXhwIjoxNjk1NjA3NzE3LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIyZWZmZDBkNy1kYjIyLTRjNWYtYTk4Yi01NWM1MTA4YmUzYmUifQ.cf-JG8k5nAPpWVfHB_gpk-RZ5vTWZ6YpSn2WMVl2mvQ
 
 ###
 GET http://localhost:3000/users/active
@@ -21,7 +17,7 @@ GET http://localhost:3000/users?sort=name&sort_dir=desc&filter=a
 GET http://localhost:3000/users?page=1&per_page=5
 
 ###
-GET http://localhost:3000/users/76f67c5e-5444-4e03-8216-61d7407ce626
+GET http://localhost:3000/user/b00d483e-1cae-469d-acfb-204dc3e310c0
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NTAwMjg1NSwiZXhwIjoxNjk1NjA3NjU1LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiIxMTRlNDY3Yi01YmJkLTRmOWUtODgxYS0xNjA1MjFlNDdhNjEifQ.J0QnfX7HrsHk3Lyu_327AJVzm5tbCXX_TgrfZA7cnv8
 
 ###

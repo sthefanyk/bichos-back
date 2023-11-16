@@ -11,16 +11,6 @@ export class CityMapper implements MapperMarker {
             state: StateMapper.getEntity(model.state)
         });
     }
-    
-    static getModel(entity: City): CityModel {
-        const props = entity.getProps();
-        const model = {
-            name: props.name,
-            state: StateMapper.getModel(props.state)
-        }
-
-        return model
-    }
 
     static getEntityWithJsonData(data: {
         name: string,

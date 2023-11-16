@@ -12,15 +12,12 @@ export type PersonAttr = {
 };
 
 export default class Person extends User implements EntityMarker {
-
   private personProps: PersonProps;
 
   constructor(personAttr: PersonAttr) {
     personAttr.userAttr.role = Role.PERSON;
     personAttr.cpf =
-      personAttr.cpf instanceof CPF
-        ? personAttr.cpf
-        : new CPF(personAttr.cpf);
+      personAttr.cpf instanceof CPF ? personAttr.cpf : new CPF(personAttr.cpf);
 
     const props = new PersonProps(personAttr);
 
@@ -42,10 +39,11 @@ export default class Person extends User implements EntityMarker {
     profile_picture?: string;
     header_picture?: string;
   }) {
-    this.personProps.cpf =
-      (data.cpf instanceof CPF ? data.cpf : new CPF(data.cpf)).cpf;
+    this.personProps.cpf = (
+      data.cpf instanceof CPF ? data.cpf : new CPF(data.cpf)
+    ).cpf;
     this.personProps.date_birth = data.date_birth;
-    
+
     this.updateUser({
       full_name: data.full_name,
       username: data.username,
@@ -55,14 +53,14 @@ export default class Person extends User implements EntityMarker {
       city: data.city,
       description: data.description,
       profile_picture: data.profile_picture,
-      header_picture: data.header_picture
+      header_picture: data.header_picture,
     });
 
-    this.personProps.validate(this.personProps)
+    this.personProps.validate(this.personProps);
   }
 
   get cpf(): string {
-    return this.personProps.cpf
+    return this.personProps.cpf;
   }
 
   get date_birth(): Date {

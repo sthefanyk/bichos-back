@@ -15,7 +15,7 @@ export default class NGOModel implements ModelMarker {
   @Column({ type: 'varchar', length: 45, unique: true })
   name_ngo: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'datetime' })
   date_register: Date;
 
   @OneToOne(() => UserModel, (user) => user.id)

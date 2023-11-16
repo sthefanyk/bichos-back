@@ -5,6 +5,7 @@ import { AlreadyExistsError } from "src/@core/shared/domain/errors/already-exist
 import { ILocalization } from "src/@core/domain/contracts";
 import CNPJ from "src/@core/shared/domain/value-objects/cnpj.vo";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
+import { UpdateError } from "src/@core/shared/domain/errors/update.error";
 
 export namespace NGOUpdate {
     export class Usecase implements UseCase<Input, Output>{
@@ -33,8 +34,11 @@ export namespace NGOUpdate {
                 header_picture: input.header_picture
             });
             await ngo.generatePasswordHash();
+
+            const result = await this.repo.update(ngo);
+            if (!result) throw new UpdateError(`Could not update ngo with ID ${ngo.id}`);
             
-            return await this.repo.update(ngo);
+            return result;
         }
 
         async validate(input: Input) {
@@ -56,13 +60,13 @@ export namespace NGOUpdate {
             await this.repoLocalization.getCityByName(input.city.toUpperCase());
 
             const cnpjExists = await this.repo.findByCnpj(new CNPJ(input.cnpj));
-            const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
-            const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
+            const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
+            const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
             
             const id = ngo.id;
-            if (emailExists.id && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
-            if (usernameExists.id && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
-            if (cnpjExists.id && cnpjExists.id !== id) throw new AlreadyExistsError('CNPJ already exists');
+            if (emailExists && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
+            if (usernameExists && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
+            if (cnpjExists && cnpjExists.id !== id) throw new AlreadyExistsError('CNPJ already exists');
         }
     }
 
@@ -82,10 +86,5 @@ export namespace NGOUpdate {
         header_picture?: string;
     }
 
-    export type Output = Promise<{
-        id: string;
-        name_ngo: string;
-        username: string;
-        email: string;
-    }>;
+    export type Output = Promise<{ id: string }>;
 }

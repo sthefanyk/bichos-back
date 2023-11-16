@@ -9,14 +9,13 @@ import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-em
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
 import { IShelterRepository } from 'src/@core/domain/contracts/shelter-repository.interface';
 import Shelter from 'src/@core/domain/entities/users/shelter';
-import { ShelterMapper } from 'src/@core/domain/mappers/shelter.mapper';
-import { CityModel } from 'src/@core/domain/models/city.model';
 import ShelterModel from 'src/@core/domain/models/shelter.model';
-import { StateModel } from 'src/@core/domain/models/state.model';
 import UserModel from 'src/@core/domain/models/user.model';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { DataSource, Repository } from 'typeorm';
 import { UserTypeormRepository } from './user-typeorm.repository';
+import { City } from 'src/@core/domain/entities/localization/city';
+import { State } from 'src/@core/domain/entities/localization/state';
 
 export class ShelterTypeormRepository extends UserTypeormRepository implements IShelterRepository  {
   private shelterRepo: Repository<ShelterModel>;
@@ -28,22 +27,13 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
     this.userRepo = this.dataSource.getRepository(UserModel);
   }
 
-  async insert(entity: Shelter): ShelterCreate.Output {
-    const model = ShelterMapper.getModel(entity);
-    
-    const user = await this.userRepo.save(model.user);
-    const shelter = await this.shelterRepo.save(model);
+  async insert(entity: Shelter): ShelterCreate.Output {    
+    const user = await this.userRepo.save(entity.user);
+    const shelter = await this.shelterRepo.save({...entity.toJson(), user});
 
-    if (!user || !shelter) {
-      throw new Error(`Could not save user`);
-    }
+    if (!user || !shelter) return null;
 
-    return {
-      id: user.id,
-      name: shelter.user.full_name,
-      name_shelter: shelter.name_shelter,
-      email: shelter.user.email
-    };
+    return { id: user.id };
   }
 
   async findById(id: string): ShelterFindById.Output {
@@ -51,91 +41,57 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
   }
 
   async findAll(): Promise<Shelter[]> {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(ShelterModel, 'shelter')
-      .innerJoin(UserModel, 'user', 'shelter.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
-      .getRawMany();
+    const models = await this.shelterRepo.createQueryBuilder('shelter')
+      .leftJoinAndSelect('shelter.user', 'user')
+      .leftJoinAndSelect('user.city', 'city')
+      .leftJoinAndSelect('city.state', 'state')
+      .getMany();
 
-    const entities: Shelter[] = [];
-
-    result.forEach(async (res) => {
-      entities.push(ShelterMapper.getEntityWithJsonData(res));
-    });
-
-    return entities;
+    return this._convertAll(models);
   }
 
   async update(entity: Shelter): ShelterUpdate.Output {
-    const model = ShelterMapper.getModel(entity);
+    const userUpdateResult = await this.userRepo.update(
+      entity.id, entity.user
+    );
 
     const shelterUpdateResult = await this.shelterRepo.update(
-      model.user.id, model
+      entity.id, {
+        id: entity.id,
+        name_shelter: entity.name_shelter,
+        responsible_cpf: entity.responsible_cpf,
+        responsible_date_birth: entity.responsible_date_birth,
+        star_date_shelter: entity.star_date_shelter,
+        user: entity.user
+      }
     );
 
-    const userUpdateResult = await this.userRepo.update(
-      model.user.id, model.user
-    );
+    if (shelterUpdateResult.affected === 0 || userUpdateResult.affected === 0)
+      return null;
 
-    if (shelterUpdateResult.affected === 0 || userUpdateResult.affected === 0) {
-      throw new Error(
-        `Could not update shelter with ID ${model.user.id}`,
-      );
-    }
-
-    return {
-      id: model.id,
-      name: model.user.full_name,
-      name_shelter: model.name_shelter,
-      email: model.user.email
-    }
-  }
-  
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    return { id: entity.id };
   }
 
   async getActiveRecords(): Promise<Shelter[]> {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(ShelterModel, 'shelter')
-      .innerJoin(UserModel, 'user', 'shelter.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+    const models = await this.shelterRepo.createQueryBuilder('shelter')
+      .leftJoinAndSelect('shelter.user', 'user')
+      .leftJoinAndSelect('user.city', 'city')
+      .leftJoinAndSelect('city.state', 'state')
       .where('user.deleted_at IS NULL')
-      .getRawMany();
+      .getMany();
 
-    const entities: Shelter[] = [];
-
-    result.forEach(async (res) => {
-      entities.push(ShelterMapper.getEntityWithJsonData(res));
-    });
-
-    return entities;
+    return this._convertAll(models);
   }
 
   async getInactiveRecords(): Promise<Shelter[]> {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(ShelterModel, 'shelter')
-      .innerJoin(UserModel, 'user', 'shelter.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+    const models = await this.shelterRepo.createQueryBuilder('shelter')
+      .leftJoinAndSelect('shelter.user', 'user')
+      .leftJoinAndSelect('user.city', 'city')
+      .leftJoinAndSelect('city.state', 'state')
       .where('user.deleted_at NOT NULL')
-      .getRawMany();
+      .getMany();
 
-    const entities: Shelter[] = [];
-
-    result.forEach(async (res) => {
-      entities.push(ShelterMapper.getEntityWithJsonData(res));
-    });
-
-    return entities;
+    return this._convertAll(models);
   }
 
   async findByNameShelter(name: string): ShelterFindByNameShelter.Output {
@@ -143,10 +99,9 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
       where: { name_shelter: name }
     });
 
-    if (model) 
-      return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return await this._get(model.id);
   }
 
   async findByCpf(cpf: CPF): ShelterFindByCpf.Output {
@@ -154,10 +109,9 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
       where: { responsible_cpf: cpf.cpf }
     });
 
-    if (model) 
-      return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return await this._get(model.id);
   }
 
   async findByEmail(email: string): UserFindByEmail.Output {
@@ -165,10 +119,9 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
         where: { email }
     });
 
-    if (model) 
-    return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return await this._get(model.id);
   }
 
   async findByUsername(username: string): UserFindByUsername.Output {
@@ -176,27 +129,49 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
       where: { username }
     });
 
-    if (model) 
-      return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return await this._get(model.id);
   }
 
   async _get(id: string) {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(ShelterModel, 'shelter')
-      .innerJoin(UserModel, 'user', 'shelter.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
-      .where('shelter.id = :id', { id })
-      .getRawOne();
+    const shelter = await this.shelterRepo.findOne({ 
+      where: { id }, 
+      relations: ['user', 'user.city', 'user.city.state']}
+    )
 
-    if (!result) {
-      return null;
-    }
+    if (!shelter) return null;
 
-    return ShelterMapper.getEntityWithJsonData(result);
+    return new Shelter({
+      ...shelter,
+      userAttr: {
+        ...shelter.user,
+        city: new City({ 
+          ...shelter.user.city, 
+          state: new State({ ...shelter.user.city.state })
+        })
+      }
+    })
+  }
+
+  async _convertAll(models: ShelterModel[]) {
+    const shelters: Shelter[] = [];
+
+    models.forEach(shelter => {
+      shelters.push(
+        new Shelter({
+          ...shelter,
+          userAttr: {
+            ...shelter.user,
+            city: new City({ 
+              ...shelter.user.city, 
+              state: new State({ ...shelter.user.city.state })
+            })
+          }
+        })
+      )
+    })
+
+    return shelters;
   }
 }

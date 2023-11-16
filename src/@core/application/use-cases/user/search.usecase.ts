@@ -10,16 +10,16 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {INGORepository} from '../../../domain/contracts/ngo-repository.interface';
-import NGO, { NGOAttr } from '../../../domain/entities/users/ngo';
+import {IUserRepository} from '../../../domain/contracts/user-repository.interface';
+import User, { UserAttr } from 'src/@core/domain/entities/users/user';
 
-export namespace NGOGetInactiveRecords {
-  export class Usecase implements UseCase<Input, Output> {
-    constructor(private repo: INGORepository) {}
+export namespace UserSearch {
+  export class Usecase implements UseCase<Input, SearchOutput> {
+    constructor(private repo: IUserRepository) {}
 
-    async execute(input: Input) : Promise<Output> {
-      const ngos = await this.repo.getInactiveRecords();
-      const service = new ServiceConfig(ngos, ['full_name', 'created_at']);
+    async execute(input: Input) : Promise<SearchOutput> {
+      const users = await this.repo.findAllUser();
+      const service = new ServiceConfig(users, ['name', 'created_at']);
 
       const params = new SearchParams(input);
 
@@ -28,40 +28,42 @@ export namespace NGOGetInactiveRecords {
       return this.toOutput(searchResult);
     }
 
-    private toOutput(searchResult: SearchResult) : Output | any {
+    private toOutput(searchResult: SearchResult): SearchOutput | any {
       return {
         items: searchResult.items.map((i) => i.toJson()),
-        ...SearchOutputMapper.toOutput<NGO>(searchResult),
+        ...SearchOutputMapper.toOutput<User>(searchResult),
       };
     }
   }
 
   export type Input = SearchInputDto;
 
-  export type Output = SearchOutputDto<NGOAttr>;
+  export type Output = Promise<User[]>;
+
+  export type SearchOutput = SearchOutputDto<UserAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}
-  export class SearchResult extends SR<NGO, Filter> {}
-  class ServiceConfig extends SearchService<NGO> {
+  export class SearchResult extends SR<User, Filter> {}
+  class ServiceConfig extends SearchService<User> {
     protected async applyFilter(
-      items: NGO[],
+      items: User[],
       filter: string | null,
-    ): Promise<NGO[]> {
+    ): Promise<User[]> {
       if (!filter) {
         return items;
       }
 
       return items.filter((i) => {
-        return i.full_name.toLowerCase().includes(filter.toLowerCase());
+        return i.name.toLowerCase().includes(filter.toLowerCase());
       });
     }
 
     protected async applySort(
-      items: NGO[],
+      items: User[],
       sort: string | null,
       sort_dir: SortDirection | null,
-    ): Promise<NGO[]> {
+    ): Promise<User[]> {
       return !sort
         ? super.applySort(items, 'created_at', 'desc')
         : super.applySort(items, sort, sort_dir);

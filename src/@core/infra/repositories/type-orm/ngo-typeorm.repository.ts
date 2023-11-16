@@ -3,14 +3,13 @@ import NGO from '../../../domain/entities/users/ngo';
 import { DataSource, Repository } from 'typeorm';
 import NGOModel from '../../../domain/models/ngo.model';
 import UserModel from '../../../domain/models/user.model';
-import { NGOMapper } from '../../../domain/mappers/ngo.mapper';
 import { NGOCreate, NGOFindByCnpj, NGOFindById, NGOUpdate } from 'src/@core/application/use-cases/ngo';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
-import { CityModel } from 'src/@core/domain/models/city.model';
-import { StateModel } from 'src/@core/domain/models/state.model';
 import { UserTypeormRepository } from './user-typeorm.repository';
 import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
+import { State } from 'src/@core/domain/entities/localization/state';
+import { City } from 'src/@core/domain/entities/localization/city';
 
 export class NGOTypeormRepository extends UserTypeormRepository implements INGORepository {
   private ngoRepo: Repository<NGOModel>;
@@ -27,10 +26,9 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
       where: { email }
     });
 
-    if (model) 
-      return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return await this._get(model.id);
   }
 
   async findByUsername(username: string): UserFindByUsername.Output {
@@ -38,33 +36,22 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
       where: { username }
     });
 
-    if (model) 
-      return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return await this._get(model.id);
   }
 
   async insert(entity: NGO): NGOCreate.Output {
-    const model = NGOMapper.getModel(entity);
+    const user = await this.userRepo.save(entity.user);
+    const ngo = await this.ngoRepo.save({...entity.toJson(), user});
 
-    const user = await this.userRepo.save(model.user);
-    const ngo = await this.ngoRepo.save(model);
+    if (!user || !ngo) return null;
 
-    if (!user || !ngo) {
-      throw new Error(`Could not save user`);
-    }
-
-    return {
-      id: user.id,
-      name_ngo: ngo.name_ngo,
-      username: ngo.user.username,
-      email: ngo.user.email
-    };
+    return { id: user.id };
   }
 
-  async findById(id: string): NGOFindById.Output {
-    const entity = await this._get(id);
-    return entity;
+  async findById(id: string): NGOFindById.Output { 
+    return this._get(id);
   }
 
   async findByCnpj(cnpj: CNPJ): NGOFindByCnpj.Output {
@@ -72,124 +59,99 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
       where: { cnpj: cnpj.cnpj }
     });
 
-    if (model) 
-      return { id: model.id }
+    if (!model) return null;
 
-    return { id: '' };
+    return { id: model.id };
   }
 
   async findAll(): Promise<NGO[]> {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(NGOModel, 'ngo')
-      .innerJoin(UserModel, 'user', 'ngo.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
-      .getRawMany();
+    const models = await this.ngoRepo.find({
+      relations: ['user', 'user.city', 'user.city.state']}
+    )
 
-    const entities: NGO[] = [];
-
-    result.forEach(async (res) => {
-      entities.push(NGOMapper.getEntityWithJsonData(res));
-    });
-
-    return entities;
+    return this._convertAll(models);
   }
 
   async update(entity: NGO): NGOUpdate.Output {
-    const model = NGOMapper.getModel(entity);
+    const userUpdateResult = await this.userRepo.update(
+      entity.id, entity.user
+    );
 
     const ngoUpdateResult = await this.ngoRepo.update(
-      model.user.id, model
+      entity.id, {
+        id: entity.id,
+        cnpj: entity.cnpj,
+        date_register: entity.date_register,
+        name_ngo: entity.name_ngo
+      }
     );
 
-    const userUpdateResult = await this.userRepo.update(
-      model.user.id, model.user
-    );
-
-    if (ngoUpdateResult.affected === 0 || userUpdateResult.affected === 0) {
-      throw new Error(
-        `Could not update ngo with ID ${model.user.id}`,
-      );
-    }
-
-    return {
-      id: model.id,
-      name_ngo: model.name_ngo,
-      username: model.user.username,
-      email: model.user.email
-    }
-  }
-
-  async delete(id: string): Promise<void> {
-    // const model = await this._get(id);
-
-    // const userDeleteResult = await this.userRepo.delete({ id: model.id });
-    // const ngoDeleteResult = await this.ngoRepo.delete({ user_id: model.id });
-
-    // if (ngoDeleteResult.affected === 0 || userDeleteResult.affected === 0) {
-    //   throw new Error(`Could not delete ngo with ID ${id}`);
-    // }
+    if (ngoUpdateResult.affected === 0 || userUpdateResult.affected === 0)
+      return null;
+    
+    return { id: entity.id }
   }
 
   async getActiveRecords(): Promise<NGO[]> {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(NGOModel, 'ngo')
-      .innerJoin(UserModel, 'user', 'ngo.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+    const models = await this.ngoRepo.createQueryBuilder('ngo')
+      .leftJoinAndSelect('ngo.user', 'user')
+      .leftJoinAndSelect('user.city', 'city')
+      .leftJoinAndSelect('city.state', 'state')
       .where('user.deleted_at IS NULL')
-      .getRawMany();
+      .getMany();
 
-    const entities: NGO[] = [];
-
-    result.forEach(async (res) => {
-      entities.push(NGOMapper.getEntityWithJsonData(res));
-    });
-
-    return entities;
+    return this._convertAll(models);
   }
 
   async getInactiveRecords(): Promise<NGO[]> {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(NGOModel, 'ngo')
-      .innerJoin(UserModel, 'user', 'ngo.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
+    const models = await this.ngoRepo.createQueryBuilder('ngo')
+      .leftJoinAndSelect('ngo.user', 'user')
+      .leftJoinAndSelect('user.city', 'city')
+      .leftJoinAndSelect('city.state', 'state')
       .where('user.deleted_at NOT NULL')
-      .getRawMany();
+      .getMany();
 
-    const entities: NGO[] = [];
-
-    result.forEach(async (res) => {
-      entities.push(NGOMapper.getEntityWithJsonData(res));
-    });
-
-    return entities;
+    return this._convertAll(models);
   }
 
   async _get(id: string) {
-    const queryBuilder = this.dataSource.createQueryBuilder();
-    const result = await queryBuilder
-      .select()
-      .from(NGOModel, 'ngo')
-      .innerJoin(UserModel, 'user', 'ngo.id = user.id')
-      .innerJoin(CityModel, 'city', 'user.city_name = city.name')
-      .innerJoin(StateModel, 'state', 'city.state_name = state.name')
-      .where('ngo.id = :id', { id })
-      .getRawOne();
+    const ngo = await this.ngoRepo.findOne({ 
+      where: { id }, 
+      relations: ['user', 'user.city', 'user.city.state']}
+    )
 
-    // const result = await this.userRepo.findOne({ where: { id }, relations: ['city']})
+    if (!ngo) return null;
 
-    if (!result) {
-      return null;
-    }
+    return new NGO({
+      ...ngo,
+      userAttr: {
+        ...ngo.user,
+        city: new City({ 
+          ...ngo.user.city, 
+          state: new State({ ...ngo.user.city.state })
+        })
+      }
+    });
+  }
 
-    return NGOMapper.getEntityWithJsonData(result);
+  async _convertAll(models: NGOModel[]) {
+    const ngos: NGO[] = [];
+
+    models.forEach(ngo => {
+      ngos.push(
+        new NGO({
+          ...ngo,
+          userAttr: {
+            ...ngo.user,
+            city: new City({ 
+              ...ngo.user.city, 
+              state: new State({ ...ngo.user.city.state })
+            })
+          }
+        })
+      )
+    })
+
+    return ngos;
   }
 }

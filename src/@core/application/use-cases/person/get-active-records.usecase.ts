@@ -10,11 +10,8 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import { Role } from '../../../shared/domain/enums/role.enum';
 import {IPersonRepository} from '../../../domain/contracts/person-repository.interface';
-import Person from '../../../domain/entities/users/person';
-import { PersonMapper } from '../../../domain/mappers/person.mapper';
-import { City } from '../../../domain/entities/localization/city';
+import Person, { PersonAttr } from '../../../domain/entities/users/person';
 
 export namespace PersonGetActiveRecords {
   export class Usecase implements UseCase<Input, Output> {
@@ -33,7 +30,7 @@ export namespace PersonGetActiveRecords {
 
     private toOutput(searchResult: SearchResult) : Output | any {
       return {
-        items: searchResult.items.map((i) => PersonMapper.getJsonWithEntity(i)),
+        items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<Person>(searchResult),
       };
     }
@@ -41,24 +38,7 @@ export namespace PersonGetActiveRecords {
 
   export type Input = SearchInputDto;
 
-  export type Output = SearchOutputDto<{
-    id: string;
-    cpf: string;
-    full_name: string;
-    username: string;
-    name: string;
-    city: City;
-    description: string;
-    profile_picture: string;
-    header_picture: string;
-    date_birth: Date;
-    email: string;
-    password: string;
-    role: Role;
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date;
-  }>;
+  export type Output = SearchOutputDto<PersonAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

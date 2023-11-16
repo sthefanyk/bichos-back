@@ -1,17 +1,17 @@
 import UseCase from "../usecase";
 import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
-import {IShelterRepository} from "../../../domain/contracts/shelter-repository.interface";
+import { IUserRepository } from "src/@core/domain/contracts/user-repository.interface";
 import User from "src/@core/domain/entities/users/user";
 
-export namespace ShelterFindByNameShelter {
+export namespace UserFindById {
     export class Usecase implements UseCase<Input, Output> {
-        constructor(private repo: IShelterRepository){}
+        constructor(private repo: IUserRepository){}
     
         async execute(input: Input): Output {
-            const user = await this.repo.findByNameShelter(input.name_shelter);
+            const user = await this.repo.findUserById(input.id);
 
             if (!user) {
-                throw new NotFoundError("Shelter not found");
+                throw new NotFoundError("User not found");
             }
 
             return user;
@@ -19,10 +19,10 @@ export namespace ShelterFindByNameShelter {
     }
     
     export type Input = {
-        name_shelter: string
+        id: string
     }
     
-    export type Output = Promise<User>
+    export type Output = Promise<User>;
 }
 
 

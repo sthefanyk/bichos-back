@@ -11,7 +11,6 @@ export interface IShelterRepository extends IUserRepository{
     findByNameShelter(name_shelter: string): ShelterFindByNameShelter.Output
     findAll(): Promise<Shelter[]>;
     update(entity: Shelter): ShelterUpdate.Output;
-    delete(id: string): Promise<void>;
     getActiveRecords(): Promise<Shelter[]>;
     getInactiveRecords(): Promise<Shelter[]>;
     findByCpf(cpf: CPF): ShelterFindByCpf.Output;

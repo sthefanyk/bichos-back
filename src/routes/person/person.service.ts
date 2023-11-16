@@ -1,8 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { PersonCreate, PersonInactivate, PersonFindAll, PersonFindById, PersonGetActiveRecords, PersonGetInactiveRecords, PersonSearch, PersonUpdate } from 'src/@core/application/use-cases/person';
-import { PersonOutputDto } from 'src/@core/application/DTOs/person.dto';
-import { PersonCollectionPresenter, PersonPresenter } from './person.presenter';
-import { PersonMapper } from 'src/@core/domain/mappers/person.mapper';
+import {
+  PersonCreate,
+  PersonInactivate,
+  PersonFindAll,
+  PersonFindById,
+  PersonGetActiveRecords,
+  PersonGetInactiveRecords,
+  PersonSearch,
+  PersonUpdate,
+} from 'src/@core/application/use-cases/person';
+import { PersonCollectionPresenter } from './person.presenter';
 import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
 
 @Injectable()
@@ -53,14 +60,9 @@ export class PersonService {
     return new PersonCollectionPresenter(output);
   }
 
-  async findAll() {
-    // const output = await this.searchUseCase.execute(searchParams);
-    // return new PersonCollectionPresenter(output);
-  }
-
   async findOne(id: string) {
     const output = await this.getUseCase.execute({ id });
-    return PersonMapper.getJsonWithEntity(output);
+    return output.toJson();
   }
 
   async update(id: string, data: PersonUpdate.Input) {
@@ -73,9 +75,5 @@ export class PersonService {
 
   async activate(id: string) {
     await this.activateUseCase.execute({ id });
-  }
-
-  static personToResponse(output: PersonOutputDto) {
-    return new PersonPresenter(output);
   }
 }

@@ -10,11 +10,8 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import { Role } from '../../../shared/domain/enums/role.enum';
 import {IShelterRepository} from '../../../domain/contracts/shelter-repository.interface';
-import Shelter from '../../../domain/entities/users/shelter';
-import { ShelterMapper } from '../../../domain/mappers/shelter.mapper';
-import { City } from '../../../domain/entities/localization/city';
+import Shelter, { ShelterAttr } from '../../../domain/entities/users/shelter';
 
 export namespace ShelterGetActiveRecords {
   export class Usecase implements UseCase<Input, Output> {
@@ -33,7 +30,7 @@ export namespace ShelterGetActiveRecords {
 
     private toOutput(searchResult: SearchResult) : Output | any {
       return {
-        items: searchResult.items.map((i) => ShelterMapper.getJsonWithEntity(i)),
+        items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<Shelter>(searchResult),
       };
     }
@@ -41,26 +38,7 @@ export namespace ShelterGetActiveRecords {
 
   export type Input = SearchInputDto;
 
-  export type Output = SearchOutputDto<{
-    id: string;
-    responsible_cpf: string;
-    responsible_date_birth: Date;
-    name_shelter: string;
-    star_date_shelter: Date;
-    full_name: string;
-    username: string;
-    name: string;
-    city: City;
-    description: string;
-    profile_picture: string;
-    header_picture: string;
-    email: string;
-    password: string;
-    role: Role;
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date;
-  }>;
+  export type Output = SearchOutputDto<ShelterAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

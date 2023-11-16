@@ -24,8 +24,8 @@ export abstract class Animal {
     toJson() {
         return { 
             ...this.props, 
-            id: this.props.id.id,
-            personalities: this.props.personalities.map(p => p.toJson())
+            id: this.id,
+            personalities: this.personalities.map(p => p.toJson())
         };
     }
 
@@ -58,7 +58,7 @@ export abstract class Animal {
     }
 
     get id(): string {
-        return this.props.id.getIdString();
+        return this.props.id.id;
     }
 
     get created_at(): Date {

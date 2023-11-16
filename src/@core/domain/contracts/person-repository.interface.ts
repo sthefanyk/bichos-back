@@ -9,7 +9,6 @@ export interface IPersonRepository extends IUserRepository{
     findById(id: string): PersonFindById.Output;
     findAll(): Promise<Person[]>;
     update(entity: Person): PersonUpdate.Output;
-    delete(id: string): Promise<void>;
     getActiveRecords(): Promise<Person[]>;
     getInactiveRecords(): Promise<Person[]>;
     findByCpf(cpf: CPF): PersonFindByCpf.Output;

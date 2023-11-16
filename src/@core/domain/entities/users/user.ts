@@ -2,6 +2,7 @@ import UserProps from './user-props';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
+import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 
 export type UserAttr = {
   full_name: string,
@@ -20,14 +21,25 @@ export type UserAttr = {
   deleted_at?: Date,
 }
 
-export default abstract class User {
+export default abstract class User implements EntityMarker {
 
   constructor(private props: UserProps){
     props.validate(props);
   }
 
   toJson() {
-    return { ...this.props }
+    const city = this.city.toJson();
+    return {
+      ...this.props,
+      id: this.id,
+      city: {
+        name: city.name,
+        state: {
+          name: city.state.name,
+          abbreviation: city.state.abbreviation,
+        }
+      },
+    }
   }
 
   public resetPassword(password: string) {
@@ -78,6 +90,25 @@ export default abstract class User {
 
   public async verifyPassword(password: string) {
     return await bcrypt.compare(password, this.props.password);
+  }
+
+  get user(): UserAttr {
+    return {
+      id: this.id,
+      full_name: this.full_name,
+      name: this.name,
+      username: this.username,
+      email: this.email,
+      password: this.password,
+      description: this.description,
+      header_picture: this.header_picture,
+      profile_picture: this.profile_picture,
+      role: this.role,
+      city: this.city,
+      created_at: this.created_at,
+      deleted_at: this.deleted_at,
+      updated_at: this.updated_at,
+    };
   }
 
   get full_name(): string {

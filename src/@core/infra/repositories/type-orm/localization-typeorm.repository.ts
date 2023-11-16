@@ -83,7 +83,7 @@ export class LocalizationTypeormRepository implements ILocalization {
   }
 
   async insertState(state: State): Promise<StateInsert.Output> {
-    const result = await this.stateRepo.save(StateMapper.getModel(state));
+    const result = await this.stateRepo.save(state.toJson());
     return {
       name: result.name,
       abbreviation: result.abbreviation,
@@ -91,7 +91,7 @@ export class LocalizationTypeormRepository implements ILocalization {
   }
 
   async insertCity(city: City): Promise<CityInsert.Output> {
-    const result = await this.cityRepo.save(CityMapper.getModel(city));
+    const result = await this.cityRepo.save(city.toJson());
     return {
       name: result.name,
       state: {

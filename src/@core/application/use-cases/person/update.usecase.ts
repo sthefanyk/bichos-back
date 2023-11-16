@@ -5,6 +5,7 @@ import { AlreadyExistsError } from "src/@core/shared/domain/errors/already-exist
 import { ILocalization } from "src/@core/domain/contracts";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
+import { UpdateError } from "src/@core/shared/domain/errors/update.error";
 
 export namespace PersonUpdate {
     export class Usecase implements UseCase<Input, Output>{
@@ -32,10 +33,14 @@ export namespace PersonUpdate {
                 header_picture: input.header_picture
             });
             await person.generatePasswordHash();
-            
-            return await this.repo.update(person);
-        }
 
+            const result = await this.repo.update(person);
+            if (!result) 
+                throw new UpdateError(`Could not update person with ID ${person.id}`);
+            
+            return result;
+        }
+        
         async validate(input: Input) {
             if(!input.cpf) throw new RequiredError('cpf');
             if(!input.date_birth) throw new RequiredError('date_birth');
@@ -50,17 +55,15 @@ export namespace PersonUpdate {
 
             if (!person) throw new NotFoundError("User not found");
             if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
-      
-            await this.repoLocalization.getCityByName(input.city.toUpperCase());
-
+            
             const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
-            const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
-            const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
+            const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
+            const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
             
             const id = person.id;
-            if (emailExists.id && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
-            if (usernameExists.id && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
-            if (cpfExists.id && cpfExists.id !== id) throw new AlreadyExistsError('CPF already exists');
+            if (emailExists && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
+            if (usernameExists && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
+            if (cpfExists && cpfExists.id !== id) throw new AlreadyExistsError('CPF already exists');
         }
     }
 
@@ -81,7 +84,5 @@ export namespace PersonUpdate {
 
     export type Output = Promise<{
         id: string;
-        name: string;
-        email: string;
     }>
 }

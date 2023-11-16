@@ -28,7 +28,7 @@ GET http://localhost:3000/person?page=3&per_page=3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/person/70e0f719-9337-4837-9f68-e8258409c392
+GET http://localhost:3000/person/a37870ae-97ce-4dc9-a88b-2bb735869142
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -44,7 +44,6 @@ Content-Type: application/json
     "email": "gi1@amora.com",
     "password": "Amora1234",
     "city": "Paranaguá",
-    "state": "Paranaguá",
     "description": "",
     "profile_picture": "",
     "header_picture": ""
@@ -52,27 +51,28 @@ Content-Type: application/json
 
 
 ###
-PUT   http://localhost:3000/person/bed665f8-1f38-4b8b-89f9-08dde37969d4
+PUT http://localhost:3000/person/a37870ae-97ce-4dc9-a88b-2bb735869142
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 {
-    "cpf": "00000000003",
+    "cpf": "00000000002",
     "date_birth": "2002-02-11",
-    "full_name": "hash",
-    "username": "hash3",
-    "email": "hash3@hash.com",
-    "password": "Hash1234",
+    "full_name": "Giovana2",
+    "username": "Giovana1",
+    "name": "Giovana2",
+    "email": "gi2@amora.com",
+    "password": "Amora1234",
+    "description": "aaaaaaaa",
+    "profile_picture": "aaaaaa",
     "city": "Paranaguá",
-    "description": "aaaaaaa",
-    "profile_picture": "aaaaaaa",
-    "header_picture": "aaaaaa"
+    "header_picture": "aaaaaaaa"
 }
 
 ###
-PATCH http://localhost:3000/person/inactivate/7b63310b-2905-41b7-a0d7-8216fb95d68d
+PATCH http://localhost:3000/person/inactivate/ffa0d15d-cf6f-46ba-931c-282635a32401
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-PATCH http://localhost:3000/person/activate/7b63310b-2905-41b7-a0d7-8216fb95d68d
+PATCH http://localhost:3000/person/activate/ffa0d15d-cf6f-46ba-931c-282635a32401
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA

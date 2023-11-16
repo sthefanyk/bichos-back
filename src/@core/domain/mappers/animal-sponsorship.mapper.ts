@@ -1,7 +1,5 @@
 import { MapperMarker } from "src/@core/shared/domain/markers/mapper.marker";
 import { AnimalSponsorship } from "../entities/posts/animal-sponsorship";
-import AnimalSponsorshipModel from "../models/animal-sponsorship";
-import { AnimalMapper } from "./animal.mapper";
 import { Post } from "../entities/posts/post";
 import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 import { Personality } from "../entities/personality";
@@ -11,17 +9,6 @@ import { Contact } from "../entities/contact";
 import { City } from "../entities/localization/city";
 
 export class AnimalSponsorshipMapper implements MapperMarker {
-
-    static getModel(entity: AnimalSponsorship) : AnimalSponsorshipModel {
-        const animal = AnimalMapper.getModel(entity);
-
-        return {
-            id: animal.id,
-            accompany: entity.accompany,
-            reason_request: entity.reason_request,
-            animal,
-        };
-    }
 
     static getEntityWithJsonData(data: {
         animal_sponsorship_accompany: string;

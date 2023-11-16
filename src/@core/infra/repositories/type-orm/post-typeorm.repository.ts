@@ -190,7 +190,7 @@ export class PostTypeormRepository implements IPostRepository {
     });
 
     const model = PostMapper.getModel(entity, user);
-    const animalAdoptModel = AnimalAdoptMapper.getModel(entity.animal as any);
+    const animalAdoptModel = entity.animal.toJson();
 
     const animal = await this.animalRepo.save(model.animal);
     const animalAdopt = await this.animalAdoptRepo.save(animalAdoptModel);
@@ -250,9 +250,7 @@ export class PostTypeormRepository implements IPostRepository {
     });
     
     const model = PostMapper.getModel(entity, user);
-    const animalSponsorshipModel = AnimalSponsorshipMapper.getModel(
-      entity.animal as any,
-    );
+    const animalSponsorshipModel = entity.animal.toJson();
 
     const animal = await this.animalRepo.save(model.animal);
     const animalSponsorship = await this.animalSponsorshipRepo.save(

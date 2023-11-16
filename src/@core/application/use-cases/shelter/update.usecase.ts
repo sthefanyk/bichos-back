@@ -5,6 +5,7 @@ import { AlreadyExistsError } from "src/@core/shared/domain/errors/already-exist
 import { ILocalization } from "src/@core/domain/contracts";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
+import { UpdateError } from "src/@core/shared/domain/errors/update.error";
 
 export namespace ShelterUpdate {
     export class Usecase implements UseCase<Input, Output>{
@@ -34,8 +35,11 @@ export namespace ShelterUpdate {
                 header_picture: input.header_picture,
             });
             await shelter.generatePasswordHash();
+
+            const result = await this.repo.update(shelter);
+            if (!result) throw new UpdateError(`Could not update shelter with ID ${shelter.id}`);
             
-            return await this.repo.update(shelter);
+            return result;
         }
 
         async validate(input: Input) {
@@ -59,14 +63,14 @@ export namespace ShelterUpdate {
 
             const cpfExists = await this.repo.findByCpf(responsible_cpf);
             const nameShelterExists = await this.repo.findByNameShelter(input.name_shelter.toLowerCase());
-            const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
-            const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
+            const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
+            const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
             
             const id = shelter.id;
-            if (emailExists.id && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
-            if (nameShelterExists.id && nameShelterExists.id !== id) throw new AlreadyExistsError('Name shelter already exists');
-            if (usernameExists.id && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
-            if (cpfExists.id && cpfExists.id !== id) throw new AlreadyExistsError('CPF already exists');
+            if (emailExists && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');
+            if (nameShelterExists && nameShelterExists.id !== id) throw new AlreadyExistsError('Name shelter already exists');
+            if (usernameExists && usernameExists.id !== id) throw new AlreadyExistsError('Username already exists');
+            if (cpfExists && cpfExists.id !== id) throw new AlreadyExistsError('CPF already exists');
         }
     }
 
@@ -87,10 +91,5 @@ export namespace ShelterUpdate {
         header_picture?: string;
     }
     
-    export type Output = Promise<{
-        id: string;
-        name: string;
-        name_shelter: string;
-        email: string;
-    }>;
+    export type Output = Promise<{ id: string }>;
 }

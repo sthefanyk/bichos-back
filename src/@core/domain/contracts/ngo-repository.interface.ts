@@ -8,7 +8,6 @@ export interface INGORepository extends IUserRepository{
     findById(id: string): NGOFindById.Output;
     findAll(): Promise<NGO[]>;
     update(entity: NGO): NGOUpdate.Output;
-    delete(id: string): Promise<void>;
     getActiveRecords(): Promise<NGO[]>;
     getInactiveRecords(): Promise<NGO[]>;
     findByCnpj(cnpj: CNPJ): NGOFindByCnpj.Output;

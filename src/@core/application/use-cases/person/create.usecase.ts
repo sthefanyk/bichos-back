@@ -6,6 +6,7 @@ import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exist
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
+import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
 
 export namespace PersonCreate {
   export class Usecase implements UseCase<Input, Output> {
@@ -16,7 +17,7 @@ export namespace PersonCreate {
 
     async execute(input: Input): Output {
       await this.validate(input);
-           
+      
       const city = await this.repoLocalization.getCityByName(input.city.toUpperCase());
       const user = new Person(
         {
@@ -37,7 +38,11 @@ export namespace PersonCreate {
       );
 
       await user.generatePasswordHash();
-      return await this.repo.insert(user);
+
+      const result = await this.repo.insert(user);
+      if (!result) throw new InsertError(`Could not save user`);
+
+      return result;
     }
 
     async validate(input: Input) {
@@ -53,14 +58,13 @@ export namespace PersonCreate {
       if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
-      
       const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
-      const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
-      const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
-      
-      if (emailExists.id) throw new AlreadyExistsError('Email already exists');
-      if (usernameExists.id) throw new AlreadyExistsError('Username already exists');
-      if (cpfExists.id) throw new AlreadyExistsError('CPF already exists');
+      const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
+      const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+            
+      if (emailExists) throw new AlreadyExistsError('Email already exists');
+      if (usernameExists) throw new AlreadyExistsError('Username already exists');
+      if (cpfExists) throw new AlreadyExistsError('CPF already exists');
     }
   }
 
@@ -80,7 +84,5 @@ export namespace PersonCreate {
 
   export type Output = Promise<{
     id: string;
-    name: string;
-    email: string;
   }>;
 }

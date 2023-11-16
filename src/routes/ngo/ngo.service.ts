@@ -1,17 +1,20 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { NGOCreate, NGOInactivate, NGOFindAll, NGOFindById, NGOGetActiveRecords, NGOGetInactiveRecords, NGOSearch, NGOUpdate } from 'src/@core/application/use-cases/ngo';
-import { NGOOutputDto } from 'src/@core/application/DTOs/ngo.dto';
-import { NGOCollectionPresenter, NGOPresenter } from './ngo.presenter';
-import { NGOMapper } from 'src/@core/domain/mappers/ngo.mapper';
+import {
+  NGOCreate,
+  NGOInactivate,
+  NGOFindById,
+  NGOGetActiveRecords,
+  NGOGetInactiveRecords,
+  NGOSearch,
+  NGOUpdate,
+} from 'src/@core/application/use-cases/ngo';
+import { NGOCollectionPresenter } from './ngo.presenter';
 import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
 
 @Injectable()
 export class NGOService {
   @Inject(NGOCreate.Usecase)
   private createUseCase: NGOCreate.Usecase;
-
-  @Inject(NGOFindAll.Usecase)
-  private listUseCase: NGOFindAll.Usecase;
 
   @Inject(NGOGetActiveRecords.Usecase)
   private getActiveRecordsUseCase: NGOGetActiveRecords.Usecase;
@@ -53,14 +56,9 @@ export class NGOService {
     return new NGOCollectionPresenter(output);
   }
 
-  async findAll() {
-    // const output = await this.searchUseCase.execute(searchParams);
-    // return new NGOCollectionPresenter(output);
-  }
-
   async findOne(id: string) {
     const output = await this.getUseCase.execute({ id });
-    return NGOMapper.getJsonWithEntity(output);
+    return output.toJson();
   }
 
   async update(id: string, data: NGOUpdate.Input) {
@@ -73,9 +71,5 @@ export class NGOService {
 
   async activate(id: string) {
     await this.activateUseCase.execute({ id });
-  }
-
-  static ngoToResponse(output: NGOOutputDto) {
-    return new NGOPresenter(output);
   }
 }

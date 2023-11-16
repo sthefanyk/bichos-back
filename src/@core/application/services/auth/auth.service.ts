@@ -9,11 +9,12 @@ import UserModel from 'src/@core/domain/models/user.model';
 import PasswordValidate from './password-validate';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
+import User from 'src/@core/domain/entities/users/user';
 
 export class AuthService implements IAuth {
   constructor(private repo: IUserRepository) {}
 
-  createToken(user: UserModel, time: string) {
+  createToken(user: User, time: string) {
     const token = jwt.sign(
       {
         username: user.username,
@@ -73,7 +74,7 @@ export class AuthService implements IAuth {
   }
 
   async forget(email: string): Promise<UserModel> {
-    const user = await this.repo.findByEmail(email);
+    const user = await this.repo.findUserByEmail(email);
 
     return user as any;
   }
@@ -92,8 +93,8 @@ export class AuthService implements IAuth {
     return this.checkTokenUser(token);
   }
 
-  async register(model: UserModel): Promise<{ accessToken: string }> {
-    return this.createToken(model, '7days');
+  async register(user: User): Promise<{ accessToken: string }> {
+    return this.createToken(user, '7days');
   }
 
   async findUserById(id: string): Promise<UserModel> {

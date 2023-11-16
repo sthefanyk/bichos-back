@@ -10,12 +10,7 @@ import {
   ShelterUpdate,
   ShelterActivate
 } from 'src/@core/application/use-cases/shelter';
-import { ShelterOutputDto } from 'src/@core/application/DTOs/shelter.dto';
-import {
-  ShelterCollectionPresenter,
-  ShelterPresenter,
-} from './shelter.presenter';
-import { ShelterMapper } from 'src/@core/domain/mappers/shelter.mapper';
+import { ShelterCollectionPresenter } from './shelter.presenter';
 
 @Injectable()
 export class ShelterService {
@@ -65,14 +60,9 @@ export class ShelterService {
     return new ShelterCollectionPresenter(output);
   }
 
-  async findAll() {
-    // const output = await this.searchUseCase.execute(searchParams);
-    // return new ShelterCollectionPresenter(output);
-  }
-
   async findOne(id: string) {
     const output = await this.getUseCase.execute({ id });
-    return ShelterMapper.getJsonWithEntity(output);
+    return output.toJson();
   }
 
   async update(id: string, data: ShelterUpdate.Input) {
@@ -85,9 +75,5 @@ export class ShelterService {
 
   async activate(id: string) {
     await this.activateUseCase.execute({ id });
-  }
-
-  static shelterToResponse(output: ShelterOutputDto) {
-    return new ShelterPresenter(output);
   }
 }

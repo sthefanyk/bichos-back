@@ -19,39 +19,41 @@ GET http://localhost:3000/shelter?sort=full_name&sort_dir=asc&filter=5
 GET http://localhost:3000/shelter?page=1&per_page=3
 
 ###
-GET http://localhost:3000/shelter/9c0be5d4-a47c-427c-8234-54c45e482448
+GET http://localhost:3000/shelter/a6415b19-8611-41b0-93cb-d47245ae88a5
 
 ###
 POST http://localhost:3000/shelter
 Content-Type: application/json
 
 {
-    "responsible_cpf": "00000000050",
+    "responsible_cpf": "00000000001",
     "responsible_date_birth": "2002-02-11",
-    "name_shelter": "sthe950",
+    "name_shelter": "sthe1",
     "star_date_shelter": "2002-02-11",
-    "full_name": "sthe50",
-    "username": "sthe950",
-    "email": "sthe50@admin.com",
-    "password": "AdminUp123",
+    "full_name": "sthe1",
+    "username": "sthe1",
+    "name": "sthe1",
+    "email": "sthe1@admin.com",
+    "password": "Sthe1234",
     "city": "Paranaguá",
-    "description": "ccccc",
-    "profile_picture": "ccccc",
-    "header_picture": "ccccc"
+    "description": "",
+    "profile_picture": "",
+    "header_picture": ""
 }
 
 
 ###
-PUT   http://localhost:3000/shelter/63bba682-8200-4990-88d3-744f967282bf
+PUT   http://localhost:3000/shelter/a6415b19-8611-41b0-93cb-d47245ae88a5
 Content-Type: application/json
 
 {
-    "responsible_cpf": "00000000009",
+    "responsible_cpf": "00000000002",
     "responsible_date_birth": "2002-02-11",
     "name_shelter": "ssssss",
     "star_date_shelter": "2002-02-11",
     "full_name": "abrigo",
     "username": "ssssssss",
+    "name": "sssssssss",
     "email": "sssss@admin.com",
     "password": "AdminUp123",
     "city": "Paranaguá",
@@ -61,9 +63,9 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/shelter/inactivate/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+PATCH http://localhost:3000/shelter/inactivate/a6415b19-8611-41b0-93cb-d47245ae88a5
 Content-Type: application/json
 
 ###
-PATCH http://localhost:3000/shelter/activate/e2c82320-2ad8-464f-abe3-596c1f3a8f2b
+PATCH http://localhost:3000/shelter/activate/a6415b19-8611-41b0-93cb-d47245ae88a5
 Content-Type: application/json

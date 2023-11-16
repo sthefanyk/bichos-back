@@ -11,8 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { IQuizRepository } from 'src/@core/domain/contracts/quiz-repository.interface';
-import { QuizOutputDto } from '../../DTOs/quiz.dto';
-import { Quiz } from 'src/@core/domain/entities/quiz/quiz';
+import { Quiz, QuizAttr } from 'src/@core/domain/entities/quiz/quiz';
 
 export namespace SearchQuiz {
   export class Usecase implements UseCase<Input, Output> {
@@ -39,7 +38,7 @@ export namespace SearchQuiz {
 
   export type Input = SearchInputDto;
 
-  export type Output = SearchOutputDto<QuizOutputDto>;
+  export type Output = SearchOutputDto<QuizAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

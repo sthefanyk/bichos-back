@@ -10,11 +10,8 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import { Role } from '../../../shared/domain/enums/role.enum';
 import {INGORepository} from '../../../domain/contracts/ngo-repository.interface';
-import NGO from '../../../domain/entities/users/ngo';
-import { NGOMapper } from '../../../domain/mappers/ngo.mapper';
-import { City } from '../../../domain/entities/localization/city';
+import NGO, { NGOAttr } from '../../../domain/entities/users/ngo';
 
 export namespace NGOSearch {
   export class Usecase implements UseCase<Input, Output> {
@@ -33,7 +30,7 @@ export namespace NGOSearch {
 
     private toOutput(searchResult: SearchResult): Output | any {
       return {
-        items: searchResult.items.map((i) => NGOMapper.getJsonWithEntity(i)),
+        items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<NGO>(searchResult),
       };
     }
@@ -41,25 +38,7 @@ export namespace NGOSearch {
 
   export type Input = SearchInputDto;
 
-  export type Output = SearchOutputDto<{
-    id: string;
-    cnpj: string;
-    name_ngo: string;
-    date_register: Date;
-    full_name: string;
-    username: string;
-    name: string;
-    city: City;
-    description: string;
-    profile_picture: string;
-    header_picture: string;
-    email: string;
-    password: string;
-    role: Role;
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date;
-  }>;
+  export type Output = SearchOutputDto<NGOAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

@@ -12,13 +12,13 @@ export default class ShelterModel implements ModelMarker {
   @Column({ type: 'varchar', length: 11, unique: true })
   responsible_cpf: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'datetime' })
   responsible_date_birth: Date;
 
   @Column({ type: 'varchar' })
   name_shelter: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'datetime' })
   star_date_shelter: Date;
 
   @OneToOne(() => UserModel, (user) => user.id)

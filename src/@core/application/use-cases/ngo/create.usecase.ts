@@ -6,6 +6,7 @@ import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exist
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
+import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
 
 export namespace NGOCreate {
   export class Usecase implements UseCase<Input, Output> {
@@ -38,7 +39,11 @@ export namespace NGOCreate {
       );
 
       await user.generatePasswordHash();
-      return await this.repo.insert(user);
+
+      const result = await this.repo.insert(user);
+      if (!result) throw new InsertError('Could not save user');
+
+      return result;
     }
 
     async validate(input: Input) {
@@ -57,12 +62,12 @@ export namespace NGOCreate {
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       
       const cnpjExists = await this.repo.findByCnpj(new CNPJ(input.cnpj));
-      const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
-      const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
+      const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
+      const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
       
-      if (emailExists.id) throw new AlreadyExistsError('Email already exists');
-      if (usernameExists.id) throw new AlreadyExistsError('Username already exists');
-      if (cnpjExists.id) throw new AlreadyExistsError('CNPJ already exists');
+      if (cnpjExists) throw new AlreadyExistsError('CNPJ already exists');
+      if (emailExists) throw new AlreadyExistsError('Email already exists');
+      if (usernameExists) throw new AlreadyExistsError('Username already exists');
     }
   }
 
@@ -81,10 +86,5 @@ export namespace NGOCreate {
     header_picture?: string;
   };
 
-  export type Output = Promise<{
-    id: string;
-    name_ngo: string;
-    username: string;
-    email: string;
-  }>;
+  export type Output = Promise<{ id: string }>;
 }

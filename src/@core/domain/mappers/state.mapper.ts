@@ -12,14 +12,6 @@ export class StateMapper implements MapperMarker {
         });
     }
 
-    static getModel(entity: State): StateModel {
-        const props = entity.getProps();
-        return {
-            name: props.name,
-            abbreviation: props.abbreviation
-        }
-    }
-
     static getEntityWithJsonData(data: { name: string, abbreviation: string}): State {
         return new State({
             name: data.name,

@@ -30,6 +30,14 @@ export default class Shelter extends User implements EntityMarker {
     this.shelterProps.validate(this.shelterProps);
   }
 
+  toJson() {
+    const user = super.toJson();
+    return {
+      ...user,
+      responsible_cpf: this.responsible_cpf,
+    }
+  }
+
   public update(data: {
     responsible_cpf: CPF | string;
     responsible_date_birth: Date;

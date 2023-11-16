@@ -22,7 +22,7 @@ export class Contact implements EntityMarker {
     return { 
 			...this.props,
 			phone: this.phone,
-      city: this.city.getProps().name
+      city: this.city.toJson().name
 		};
   }
  

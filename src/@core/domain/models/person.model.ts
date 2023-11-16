@@ -12,7 +12,7 @@ export default class PersonModel implements ModelMarker {
   @Column({ type: 'varchar', length: 11, unique: true })
   cpf: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'datetime' })
   date_birth: Date;
 
   @OneToOne(() => UserModel, (user) => user.id)

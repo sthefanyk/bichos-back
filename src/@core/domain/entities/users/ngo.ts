@@ -27,7 +27,7 @@ export default class NGO extends User implements EntityMarker {
     this.NGOProps = props;
     this.NGOProps.validate(this.NGOProps);
   }
-
+  
   public update(data: {
     cnpj: CNPJ | string;
     name_ngo: string;
