@@ -5,6 +5,7 @@ import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/pos
 import { PersonalityTypeormRepository } from 'src/@core/infra/repositories/type-orm/personality-typeorm.repository';
 import { BreedTypeormRepository } from 'src/@core/infra/repositories/type-orm/breed-typeorm.repository';
 import {
+  CheckAndUpdateStatusSponsorshipPost,
   FindAllAdoptPost,
   FindAllSponsorshipPost,
   PublishAdoptPost,
@@ -17,6 +18,7 @@ import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/fi
 import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
 import { NeedTypeormRepository } from 'src/@core/infra/repositories/type-orm/need-typeorm.repository';
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { CheckAndUpdateStatusAdoptPost } from 'src/@core/application/use-cases/post/check-and-update-status-adopt-post.usecase';
 
 export namespace PostProvider {
   export namespace Repositories {
@@ -179,6 +181,22 @@ export namespace PostProvider {
       provide: PostInactivate.Usecase,
       useFactory: (postRepo: PostTypeormRepository) => {
         return new PostInactivate.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const CHECK_AND_UPDATE_STATUS_ADOPT_POST = {
+      provide: CheckAndUpdateStatusAdoptPost.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new CheckAndUpdateStatusAdoptPost.Usecase(postRepo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const CHECK_AND_UPDATE_STATUS_SPONSORSHIP_POST = {
+      provide: CheckAndUpdateStatusSponsorshipPost.Usecase,
+      useFactory: (postRepo: PostTypeormRepository) => {
+        return new CheckAndUpdateStatusSponsorshipPost.Usecase(postRepo);
       },
       inject: [Repositories.REPO.provide],
     };

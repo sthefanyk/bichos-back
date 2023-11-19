@@ -27,7 +27,7 @@ GET http://localhost:3000/post/sponsorship?page=1&per_page=4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/post/sponsorship/31b52ae4-0632-4a99-b915-a646e5b88a7e
+GET http://localhost:3000/post/sponsorship/a17e3ef8-63ba-4906-8d99-bf8c51f20d36
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 {
     "urgent": "false",
     "urgency_justification": "",
-    "posted_by": "b00d483e-1cae-469d-acfb-204dc3e310c0",
+    "posted_by": "8661eaa0-5488-4dd1-a970-04fb883a5ee4",
     "accompany": "true",
     "reason_request": "motivo",
     "name": "theo",

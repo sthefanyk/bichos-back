@@ -29,6 +29,8 @@ export abstract class Animal {
         };
     }
 
+    abstract checkStatus();
+
     get name(): string {
         return this.props.name;
     }

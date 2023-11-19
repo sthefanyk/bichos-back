@@ -3,6 +3,7 @@ import {
   AdoptFindById,
   AdoptSearch,
   AdoptUsecase,
+  EvaluateResponses,
 } from 'src/@core/application/use-cases/adopt';
 import { AdoptCollectionPresenter } from './adopt.presenter';
 
@@ -17,6 +18,9 @@ export class AdoptService {
   @Inject(AdoptSearch.Usecase)
   private adoptSearch: AdoptSearch.Usecase;
 
+  @Inject(EvaluateResponses.Usecase)
+  private evaluateResponsesUseCase: EvaluateResponses.Usecase;
+
   async adopt(data: AdoptUsecase.Input) {
     return await this.adoptUseCase.execute(data);
   }
@@ -29,5 +33,9 @@ export class AdoptService {
   async search(searchParams: AdoptSearch.Input) {
     const output = await this.adoptSearch.execute(searchParams);
     return new AdoptCollectionPresenter(output);
+  }
+
+  async evaluateResponses(data: EvaluateResponses.Input) {
+    return await this.evaluateResponsesUseCase.execute(data);
   }
 }

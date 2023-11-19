@@ -20,6 +20,7 @@ import { Dose } from 'src/@core/domain/entities/health/dose';
 import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
 import { Contact } from 'src/@core/domain/entities/contact';
 import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
+import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
 
 export namespace PublishAdoptPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -57,6 +58,8 @@ export namespace PublishAdoptPost {
             size_estimated: +input.size_estimated,
             breed: input.breed,
             health: this.createHealth(input),
+            status: StatusPostAdopt.WAITING_QUESTIONNAIRES,
+            update_status_at: new Date()
           },
           {
             name: input.name,
@@ -240,9 +243,9 @@ export namespace PublishAdoptPost {
       phone: string;
       city: string;
     };
-  };
+    };
 
-  export type Output = Promise<{
-    id: string;
-  }>;
+    export type Output = Promise<{
+      id: string;
+    }>;
 }

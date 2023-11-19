@@ -1,24 +1,41 @@
 GET http://localhost:3000/adopt
 
 ###
-GET http://localhost:3000/adopt/15d4e9a1-b10a-4faa-a5e1-fc7290ae7a9d
+GET http://localhost:3000/adopt/b311acdf-8b30-4306-a300-e345b63d3b6c
 
 ###
 POST http://localhost:3000/adopt
 Content-Type: application/json
 
 {
-    "id_adopter": "b00d483e-1cae-469d-acfb-204dc3e310c0",
-    "id_post": "3108e0c7-ada0-4887-9d8a-e61749df00e1",
-    "id_quiz": "986167ca-183a-455d-9a4e-fcf3c9cc6c2e",
+    "id_adopter": "266a1593-7a38-4b79-8d79-3f8d848e039f",
+    "id_post": "107f1538-aa52-4707-a6e0-2db7a2550e3a",
+    "id_quiz": "1eef8c38-785a-402d-9fdf-97c7cea2096a",
     "responses": [
         {
-            "id_question": "33b6b50d-b140-42ca-8c0f-5302422ca2c7",
+            "id_question": "29173629-a4c9-4295-a903-3531f419cff2",
             "response": "aaaaaaaa"
         },
         {
-            "id_question": "45a64572-9e30-4929-906e-af9e32896d03",
+            "id_question": "b7548269-13c7-4d2a-89f7-0f75332f0950",
             "response": "bbbbbbb"
+        }
+    ]
+}
+
+###
+POST http://localhost:3000/adopt/evaluate/responses/b311acdf-8b30-4306-a300-e345b63d3b6c
+Content-Type: application/json
+
+{
+    "evaluations": [
+        {
+            "id_response": "f1921ead-0027-495c-8862-70f3bf186a80",
+            "evaluation": 1
+        },
+        {
+            "id_response": "dc9f756b-f2c5-4bfc-864a-ebd355b4ff98",
+            "evaluation": 2
         }
     ]
 }

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { AdoptService } from './adopt.service';
-import { AdoptSearch, AdoptUsecase } from 'src/@core/application/use-cases/adopt';
+import { AdoptSearch, AdoptUsecase, EvaluateResponses } from 'src/@core/application/use-cases/adopt';
 // import { RoleGuard } from 'src/guards/role.guard';
 // import { Roles } from 'src/decorators/roles.decorator';
 // import { Role } from 'src/@core/shared/domain/enums/role.enum';
@@ -27,6 +27,11 @@ export class AdoptController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.adoptService.findOne(id);
+  }
+
+  @Post('evaluate/responses/:id_adopt')
+  evaluateResponses(@Param('id_adopt') id_adopt: string, @Body() data: EvaluateResponses.Input){
+    return this.adoptService.evaluateResponses({id_adopt,  ...data});
   }
 }
 

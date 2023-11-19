@@ -40,6 +40,10 @@ export class Post implements EntityMarker {
         };
     }
 
+    public checkStatus(){
+        this.animal.checkStatus();
+    }
+
     public inactivate() {
         this.postProps.deleted_at = new Date();
     }

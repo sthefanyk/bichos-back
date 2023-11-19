@@ -4,8 +4,6 @@ import { ILocalization } from '../../../domain/contracts/localization-repository
 import { DataSource, Repository } from 'typeorm';
 import { StateModel } from '../../../domain/models/state.model';
 import { CityModel } from '../../../domain/models/city.model';
-import { StateMapper } from '../../../domain/mappers/state.mapper';
-import { CityMapper } from '../../../domain/mappers/city.mapper';
 import {
   CityDelete,
   CityGetByName,
@@ -79,7 +77,7 @@ export class LocalizationTypeormRepository implements ILocalization {
 
     if (!city) return null;
 
-    return CityMapper.getEntity(city);
+    return new City({ ...city, state: new State({ ...city.state })});
   }
 
   async insertState(state: State): Promise<StateInsert.Output> {

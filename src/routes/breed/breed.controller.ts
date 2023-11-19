@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards, Put } from '@nestjs/common';
 import { BreedService } from './breed.service';
 import { BreedCreate, BreedSearch, BreedUpdate } from 'src/@core/application/use-cases/breed';
 // import { RoleGuard } from 'src/guards/role.guard';
@@ -44,7 +44,7 @@ export class BreedController {
     return this.breedService.findBySpecie(searchParams, specie);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() data: BreedUpdate.Input) {
     return this.breedService.update(id, data);
   }

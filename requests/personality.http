@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/personality/ee09e9e0-204c-4f9e-bbe8-5fc7968929ed
+PUT http://localhost:3000/personality/ee09e9e0-204c-4f9e-bbe8-5fc7968929ed
 Content-Type: application/json
 
 {

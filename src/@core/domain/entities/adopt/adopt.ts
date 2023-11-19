@@ -35,6 +35,10 @@ export class Adopt implements EntityMarker {
         responses: this.responses.map(r => r.toJson())
     };
   }
+  
+  get status(): StatusAdopt {
+    return this.props.status;
+  }
 
   get responses(): Response[] {
     return this.props.responses;

@@ -27,6 +27,12 @@ export class Response implements EntityMarker {
     };
   }
 
+  evaluate(evaluation: EvaluationResponse){
+    this.props.evaluation = evaluation;
+
+    this.props.validate(this.props);
+  }
+
   get id(): string {
     return this.props.id.id;
   }

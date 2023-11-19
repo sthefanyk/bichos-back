@@ -1,4 +1,5 @@
 import { AdoptFindById, AdoptSearch, AdoptUsecase } from 'src/@core/application/use-cases/adopt';
+import { EvaluateResponses } from 'src/@core/application/use-cases/adopt/evaluate-responses.usecase';
 import { IAdoptRepository } from 'src/@core/domain/contracts';
 import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
 import { Response } from 'src/@core/domain/entities/adopt/response';
@@ -25,6 +26,14 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     this.repoPost = this.dataSource.getRepository(PostModel);
     this.repoResponse = this.dataSource.getRepository(ResponseModel);
     this.repoQuestion = this.dataSource.getRepository(QuestionModel);
+  }
+
+  async evaluateResponses(entity: Adopt): EvaluateResponses.Output {
+    for (const response of entity.responses) {
+      await this.repoResponse.update(response.id, {
+        evaluation: response.evaluation
+      });
+    }
   }
 
   async findById(id: string): AdoptFindById.Output {

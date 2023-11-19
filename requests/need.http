@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/need/d755dae8-d2c8-4a4b-8ead-7991b184841c
+PUT http://localhost:3000/need/8d3867a2-3e31-430a-a0f7-461dba9dfe3b
 Content-Type: application/json
 
 {
@@ -41,4 +41,4 @@ Content-Type: application/json
 PATCH http://localhost:3000/need/activate/bdf7961c-9397-42c6-9486-05765ccf635a
 
 ###
-PATCH http://localhost:3000/need/inactivate/bdf7961c-9397-42c6-9486-05765ccf635a
+PATCH http://localhost:3000/need/inactivate/8d3867a2-3e31-430a-a0f7-461dba9dfe3b

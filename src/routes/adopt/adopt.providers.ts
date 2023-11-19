@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { AdoptFindById, AdoptSearch, AdoptUsecase } from 'src/@core/application/use-cases/adopt';
+import { AdoptFindById, AdoptSearch, AdoptUsecase, EvaluateResponses } from 'src/@core/application/use-cases/adopt';
 import { AdoptTypeormRepository } from 'src/@core/infra/repositories/type-orm/adopt-typeorm.repository';
 import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
@@ -81,6 +81,14 @@ export namespace AdoptProvider {
       provide: AdoptSearch.Usecase,
       useFactory: (repo: AdoptTypeormRepository) => {
         return new AdoptSearch.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const EVALUATE_RESPONSES = {
+      provide: EvaluateResponses.Usecase,
+      useFactory: (repo: AdoptTypeormRepository) => {
+        return new EvaluateResponses.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };

@@ -4,17 +4,16 @@ import { IPostRepository } from 'src/@core/domain/contracts/post-repository.inte
 import { PublishAdoptPost } from 'src/@core/application/use-cases/post/publish-adopt-post.usecase';
 import { Post } from 'src/@core/domain/entities/posts/post';
 import PostModel from 'src/@core/domain/models/post.model';
-import { PostMapper } from 'src/@core/domain/mappers/post.mapper';
 import AnimalModel from 'src/@core/domain/models/animal.model';
 import AnimalAdoptModel from 'src/@core/domain/models/animal-adopt';
-import { AnimalAdoptMapper } from 'src/@core/domain/mappers/animal-adopt.mapper';
 import {
+  CheckAndUpdateStatusAdoptPost,
+  CheckAndUpdateStatusSponsorshipPost,
   FindAllAdoptPost,
   FindAllSponsorshipPost,
   PublishSponsorshipPost,
 } from 'src/@core/application/use-cases/post';
 import AnimalSponsorshipModel from 'src/@core/domain/models/animal-sponsorship';
-import { AnimalSponsorshipMapper } from 'src/@core/domain/mappers/animal-sponsorship.mapper';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
 import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
@@ -32,7 +31,17 @@ import HealthModel from 'src/@core/domain/models/health.model';
 import VaccineMedicineModel from 'src/@core/domain/models/vaccine-medicine.model';
 import DoseModel from 'src/@core/domain/models/dose.model';
 import { CityModel } from 'src/@core/domain/models/city.model';
-import { CityMapper } from 'src/@core/domain/mappers/city.mapper';
+import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
+import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
+import { City } from 'src/@core/domain/entities/localization/city';
+import { State } from 'src/@core/domain/entities/localization/state';
+import { Health } from 'src/@core/domain/entities/health/health';
+import { DiseaseAllergy } from 'src/@core/domain/entities/health/disease-allergy';
+import { VaccineMedicine } from 'src/@core/domain/entities/health/vaccine-medicine';
+import { Dose } from 'src/@core/domain/entities/health/dose';
+import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+import { Contact } from 'src/@core/domain/entities/contact';
+import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -73,6 +82,26 @@ export class PostTypeormRepository implements IPostRepository {
     this.cityRepo = this.dataSource.getRepository(CityModel);
   }
 
+  async updateStatusAdoptPost(entities: Post[]): CheckAndUpdateStatusAdoptPost.Output {
+    for (const entity of entities) {
+      const animal: AnimalAdopt = entity.animal as any;
+      await this.animalAdoptRepo.update(animal.id, {
+        status: animal.status,
+        update_status_at: animal.update_status_at
+      });
+    }
+  }
+
+  async updateStatusSponsorshipPost(entities: Post[]): CheckAndUpdateStatusSponsorshipPost.Output {
+    for (const entity of entities) {
+      const animal: AnimalSponsorship = entity.animal as any;
+      await this.animalSponsorshipRepo.update(animal.id, {
+        status: animal.status,
+        update_status_at: animal.update_status_at
+      });
+    }
+  }
+
   async findByIdPost(id: string): Promise<PostModel> {
     return this.postRepo.findOne({ where: { id } });
   }
@@ -82,17 +111,23 @@ export class PostTypeormRepository implements IPostRepository {
       where: { id: entity.posted_by },
     });
 
-    const model = PostMapper.getModel(entity, user);
-
-    const result = await this.postRepo.update(model.id, model);
+    const result = await this.postRepo.update(entity.id, {
+      ...entity.toJson(),
+      posted_by: user,
+      animal: entity.animal.toJson(),
+      contact_name: entity.contact.name,
+      contact_email: entity.contact.email,
+      contact_phone: entity.contact.phone,
+      contact_city: entity.contact.city.toJson(),
+    });
 
     if (result.affected === 0) {
-      throw new Error(`Could not inactive post with ID ${model.id}`);
+      throw new Error(`Could not inactive post with ID ${entity.id}`);
     }
 
     return {
-      id: model.id,
-      type: model.type,
+      id: entity.id,
+      type: entity.type,
     };
   }
 
@@ -105,6 +140,7 @@ export class PostTypeormRepository implements IPostRepository {
         'animal_adopt.size_current',
         'animal_adopt.size_estimated',
         'animal_adopt.breed',
+        'animal_adopt.status',
       ])
       .addSelect('post.id AS post_id')
       .addSelect('post.created_at AS post_created_at')
@@ -128,7 +164,7 @@ export class PostTypeormRepository implements IPostRepository {
       where: { name: result.city_name },
       relations: ['state'],
     });
-    result.city = CityMapper.getEntity(city);
+    result.city = new City({ ...city, state: new State({ ...city.state })});
     
     result.personalities = await this.getPersonalities(result.animal);
     
@@ -141,7 +177,7 @@ export class PostTypeormRepository implements IPostRepository {
       item.doses = await this.doseRepo.find({ where: { id_vaccine_medicine: item.id } });
     }
 
-    return AnimalAdoptMapper.getEntityWithJsonData(result);
+    return this.getEntityWithJsonData(result);
   }
 
   async findByIdSponsorshipPost(id: string): FindByIdSponsorshipPost.Output {
@@ -177,11 +213,11 @@ export class PostTypeormRepository implements IPostRepository {
       where: { name: result.city_name },
       relations: ['state'],
     });
-    result.city = CityMapper.getEntity(city);
+    result.city = new City({ ...city, state: new State({ ...city.state })});
 
     result.needs = await this.getNeeds(result.animal);
 
-    return AnimalSponsorshipMapper.getEntityWithJsonData(result);
+    return this.sponsorshipGetEntityWithJsonData(result);
   }
 
   async publishAdoptPost(entity: Post): PublishAdoptPost.Output {
@@ -189,12 +225,26 @@ export class PostTypeormRepository implements IPostRepository {
       where: { id: entity.posted_by },
     });
 
-    const model = PostMapper.getModel(entity, user);
-    const animalAdoptModel = entity.animal.toJson();
-
-    const animal = await this.animalRepo.save(model.animal);
-    const animalAdopt = await this.animalAdoptRepo.save(animalAdoptModel);
-    const post = await this.postRepo.save(model);
+    const animalAdoptModel: AnimalAdopt = entity.animal.toJson() as any;
+    
+    const animal = await this.animalRepo.save(entity.animal.toJson());
+    const animalAdopt = await this.animalAdoptRepo.save({
+      id: animalAdoptModel.id,
+      breed: animalAdoptModel.breed,
+      size_current: animalAdoptModel.size_current,
+      size_estimated: animalAdoptModel.size_estimated,
+      status: animalAdoptModel.status,
+      update_status_at: animalAdoptModel.update_status_at,
+    });
+    const post = await this.postRepo.save({
+      ...entity.toJson(),
+      posted_by: user,
+      animal,
+      contact_name: entity.contact.name,
+      contact_email: entity.contact.email,
+      contact_phone: entity.contact.phone,
+      contact_city: entity.contact.city.toJson(),
+    });
 
     await this.addPersonalities(entity.animal.personalities, animal.id);
 
@@ -249,14 +299,25 @@ export class PostTypeormRepository implements IPostRepository {
       where: { id: entity.posted_by },
     });
     
-    const model = PostMapper.getModel(entity, user);
-    const animalSponsorshipModel = entity.animal.toJson();
+    const animalSponsorshipModel: AnimalSponsorship = entity.animal.toJson() as any;
 
-    const animal = await this.animalRepo.save(model.animal);
-    const animalSponsorship = await this.animalSponsorshipRepo.save(
-      animalSponsorshipModel,
-    );
-    const post = await this.postRepo.save(model);
+    const animal = await this.animalRepo.save(entity.animal.toJson());
+    const animalSponsorship = await this.animalSponsorshipRepo.save({
+      id: animalSponsorshipModel.id,
+      accompany: animalSponsorshipModel.accompany,
+      reason_request: animalSponsorshipModel.reason_request,
+      status: animalSponsorshipModel.status,
+      update_status_at: animalSponsorshipModel.update_status_at
+    });
+    const post = await this.postRepo.save({
+      ...entity.toJson(),
+      posted_by: user,
+      animal,
+      contact_name: entity.contact.name,
+      contact_email: entity.contact.email,
+      contact_phone: entity.contact.phone,
+      contact_city: entity.contact.city.toJson(),
+    });
 
     if (!post || !animal || !animalSponsorship) {
       throw new Error(`Could not save post`);
@@ -279,6 +340,8 @@ export class PostTypeormRepository implements IPostRepository {
         'animal_adopt.size_current',
         'animal_adopt.size_estimated',
         'animal_adopt.breed',
+        'animal_adopt.status',
+        'animal_adopt.update_status_at',
       ])
       .addSelect('post.id AS post_id')
       .addSelect('post.created_at AS post_created_at')
@@ -301,7 +364,7 @@ export class PostTypeormRepository implements IPostRepository {
         where: { name: res.city_name },
         relations: ['state'],
       });
-      res.city = CityMapper.getEntity(city);
+      res.city = new City({ ...city, state: new State({ ...city.state })});
 
       res.health = await this.healthRepo.findOne({where: {id_animal: res.animal}});
       res.health.disease_allergy = await this.diseaseAllergyRepo.find({where: {id_animal: res.animal}});
@@ -312,7 +375,7 @@ export class PostTypeormRepository implements IPostRepository {
         item.doses = await this.doseRepo.find({ where: { id_vaccine_medicine: item.id } });
       }
 
-      return AnimalAdoptMapper.getEntityWithJsonData(res);
+      return this.getEntityWithJsonData(res);
     });
 
     return await Promise.all(promises);
@@ -326,6 +389,8 @@ export class PostTypeormRepository implements IPostRepository {
         'animal.*',
         'animal_sponsorship.accompany',
         'animal_sponsorship.reason_request',
+        'animal_sponsorship.status',
+        'animal_sponsorship.update_status_at',
       ])
       .addSelect('post.id AS post_id')
       .addSelect('post.created_at AS post_created_at')
@@ -348,10 +413,10 @@ export class PostTypeormRepository implements IPostRepository {
           where: { name: res.city_name },
           relations: ['state'],
         });
-        res.city = CityMapper.getEntity(city);
+        res.city = new City({ ...city, state: new State({ ...city.state })});
 
         res.needs = await this.getNeeds(res.animal);
-        return AnimalSponsorshipMapper.getEntityWithJsonData(res);
+        return this.sponsorshipGetEntityWithJsonData(res);
       });
   
       return await Promise.all(promises);
@@ -407,5 +472,183 @@ export class PostTypeormRepository implements IPostRepository {
         id_need: need.id,
       });
     }
+  }
+
+  getEntityWithJsonData(data: {
+    animal_adopt_size_current: string;
+    animal_adopt_size_estimated: string;
+    animal_adopt_breed: string;
+    animal_adopt_status: string;
+    animal_adopt_update_status_at: Date;
+    
+    health: any;
+
+    name: string;
+    sex: string;
+    date_birth: string;
+    species: string;
+    history: string;
+    characteristic: string;
+    personalities: Personality[];
+
+    animal: string,
+    created_at: string,
+    updated_at: string,
+    deleted_at: string,
+
+    urgent: string;
+    user_id: string;
+    renewal_count: string;
+    type: string;
+    urgency_justification: string;
+
+    post_id: string,
+    post_created_at: string,
+    post_updated_at: string,
+    post_deleted_at: string,
+
+    contact_name: string;
+    contact_email: string;
+    contact_phone: string;
+    
+    city: City;
+  }): Post {
+      const animal = new AnimalAdopt({
+          size_current: +data.animal_adopt_size_current,
+          size_estimated: +data.animal_adopt_size_estimated,
+          breed: data.animal_adopt_breed,
+          status: +data.animal_adopt_status,
+          update_status_at: data.animal_adopt_update_status_at,
+          health: new Health({
+              additional: data.health.additional,
+              neutered: data.health.neutered,
+              disease_allergy: data.health.disease_allergy.map(
+                  item => new DiseaseAllergy({...item, type: +item.type}) 
+              ),
+              vaccines_medicines: data.health.vaccines_medicines.map(
+                  item => new VaccineMedicine({
+                      ...item,
+                      type: +item.type,
+                      doses: item.doses.map(item => new Dose(item))
+                  })
+              ),
+          }),
+      }, {
+          name: data.name,
+          sex: +data.sex,
+          date_birth: new Date(data.date_birth),
+          species: +data.species,
+          history: data.history,
+          characteristic: data.characteristic,
+          personalities: data.personalities,
+
+          id: data.animal,
+          created_at: new Date(data.created_at),
+          updated_at: new Date(data.updated_at),
+          deleted_at: new Date(data.deleted_at),
+      });
+
+      const post = new Post({
+          urgent: data.urgent === "true",
+          posted_by: new UUID(data.user_id),
+          renewal_count: +data.renewal_count,
+          type: +data.type,
+          urgency_justification: data.urgency_justification,
+          animal,
+          contact: new Contact({
+              name: data.contact_name,
+              email: data.contact_email,
+              phone: new Phone(data.contact_phone),
+              city: data.city
+          }),
+
+          id: data.post_id,
+          created_at: new Date(data.post_created_at),
+          updated_at: new Date(data.post_updated_at),
+          deleted_at: new Date(data.post_deleted_at),
+          
+      });
+
+      return post;
+  }
+
+  sponsorshipGetEntityWithJsonData(data: {
+    animal_sponsorship_accompany: string;
+    animal_sponsorship_reason_request: string;
+    animal_sponsorship_status: string;
+    animal_sponsorship_update_status_at: Date;
+    needs: Need[];
+
+    name: string;
+    sex: string;
+    date_birth: string;
+    species: string;
+    history: string;
+    characteristic: string;
+    personalities: Personality[];
+
+    animal: string,
+    created_at: string,
+    updated_at: string,
+    deleted_at: string,
+
+    urgent: string;
+    user_id: string;
+    renewal_count: string;
+    type: string;
+    urgency_justification: string;
+
+    post_id: string,
+    post_created_at: string,
+    post_updated_at: string,
+    post_deleted_at: string,
+
+    contact_name: string;
+    contact_email: string;
+    contact_phone: string;
+    
+    city: City;
+  }): Post {
+      const animal = new AnimalSponsorship({
+          accompany: data.animal_sponsorship_accompany === "true",
+          reason_request: data.animal_sponsorship_reason_request,
+          needs: data.needs,
+          status: +data.animal_sponsorship_status,
+          update_status_at: data.animal_sponsorship_update_status_at
+      }, {
+          name: data.name,
+          sex: +data.sex,
+          date_birth: new Date(data.date_birth),
+          species: +data.species,
+          history: data.history,
+          characteristic: data.characteristic,
+          personalities:data.personalities,
+
+          id: data.animal,
+          created_at: new Date(data.created_at),
+          updated_at: new Date(data.updated_at),
+          deleted_at: new Date(data.deleted_at),
+      });
+
+      return new Post({
+          urgent: data.urgent === "true",
+          posted_by: new UUID(data.user_id),
+          renewal_count: +data.renewal_count,
+          type: +data.type,
+          urgency_justification: data.urgency_justification,
+          animal,
+          contact: new Contact({
+              name: data.contact_name,
+              email: data.contact_email,
+              phone: new Phone(data.contact_phone),
+              city: data.city
+          }),
+
+          id: data.post_id,
+          created_at: new Date(data.post_created_at),
+          updated_at: new Date(data.post_updated_at),
+          deleted_at: new Date(data.post_deleted_at),
+          
+      });
   }
 }

@@ -29,7 +29,6 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/localization/city/Paranaguá
-Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/localization/state/Paraná

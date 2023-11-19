@@ -4,6 +4,7 @@ import { AnimalProps } from "./animal-props";
 import { AnimalAdoptAttr } from "./animal-adopt";
 import { SizeAnimal } from "src/@core/shared/domain/enums/size-animal";
 import { Health } from "../health/health";
+import { StatusPostAdopt } from "src/@core/shared/domain/enums/status_post_adopt.enum";
 
 export class AnimalAdoptProps extends AnimalProps {
 
@@ -22,6 +23,12 @@ export class AnimalAdoptProps extends AnimalProps {
     @IsNotEmpty()
     health: Health;
 
+    @IsEnum(StatusPostAdopt)
+    status: StatusPostAdopt;
+
+    @IsNotEmpty()
+    update_status_at: Date;
+
     constructor(
         props: AnimalAdoptAttr,
         animalProps: AnimalAttr
@@ -31,6 +38,8 @@ export class AnimalAdoptProps extends AnimalProps {
         this.size_estimated = props.size_estimated;
         this.breed = props.breed;
         this.health = props.health;
+        this.status = this.status ?? StatusPostAdopt.WAITING_QUESTIONNAIRES;
+        this.update_status_at = props.update_status_at ?? new Date();
 
         this.validate(this);
     }

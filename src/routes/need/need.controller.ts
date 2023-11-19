@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards, Put } from '@nestjs/common';
 import { NeedService } from './need.service';
 import { NeedCreate, NeedSearch, NeedUpdate } from 'src/@core/application/use-cases/need';
 // import { RoleGuard } from 'src/guards/role.guard';
@@ -39,7 +39,7 @@ export class NeedController {
     return this.needService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() data: NeedUpdate.Input) {
     return this.needService.update(id, data);
   }

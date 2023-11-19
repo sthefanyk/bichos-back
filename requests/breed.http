@@ -30,11 +30,11 @@ Content-Type: application/json
 
 {
     "name": "rusk",
-    "specie": "1"
+    "specie": 1
 }
 
 ###
-PATCH http://localhost:3000/breed/c84c203f-0d0b-48f7-bf6b-02f4ab4121f3
+PUT http://localhost:3000/breed/c84c203f-0d0b-48f7-bf6b-02f4ab4121f3
 Content-Type: application/json
 
 {

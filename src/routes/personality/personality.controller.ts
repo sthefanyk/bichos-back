@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards, Put } from '@nestjs/common';
 import { PersonalityService } from './personality.service';
 import { PersonalityCreate, PersonalitySearch, PersonalityUpdate } from 'src/@core/application/use-cases/personality';
 // import { RoleGuard } from 'src/guards/role.guard';
@@ -39,7 +39,7 @@ export class PersonalityController {
     return this.personalityService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() data: PersonalityUpdate.Input) {
     return this.personalityService.update(id, data);
   }

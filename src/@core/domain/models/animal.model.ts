@@ -14,17 +14,17 @@ export default class AnimalModel implements ModelMarker {
   @Column({ type: 'simple-enum', default: SexAnimal.MALE })
   sex: SexAnimal;
 
-  @Column({ type: 'varchar' })
-  date_birth: string;
+  @Column({ type: 'datetime' })
+  date_birth: Date;
 
   @Column({ type: 'simple-enum', default: Species.DOG })
   species: Species;
 
   @Column({ type: 'varchar', default: '' })
-  history: string;
+  history?: string;
 
   @Column({ type: 'varchar', default: '' })
-  characteristic: string;
+  characteristic?: string;
 
   @Column({ type: 'datetime' })
   created_at: Date;
