@@ -1,9 +1,9 @@
-import { AdoptOutputDto } from 'src/@core/application/DTOs/adopt.dto';
 import { CollectionPresenter } from '../@share/presenters/collection.presenter';
 import { AdoptSearch } from 'src/@core/application/use-cases/adopt/search.usecase';
+import { AdoptAttr } from 'src/@core/domain/entities/adopt/adopt';
 
 export class AdoptCollectionPresenter extends CollectionPresenter {
-  data: AdoptOutputDto[];
+  data: AdoptAttr[];
 
   constructor(output: AdoptSearch.SearchOutput) {
     const { items, ...paginationProps } = output;

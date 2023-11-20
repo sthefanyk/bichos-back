@@ -5,7 +5,7 @@ import { ShelterSearch } from "src/@core/application/use-cases/shelter";
 export class ShelterCollectionPresenter extends CollectionPresenter {
   data: ShelterAttr[];
 
-  constructor(output: ShelterSearch.Output) {
+  constructor(output: ShelterSearch.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
     this.data = items;

@@ -11,8 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import {ISponsorshipRepository} from '../../../domain/contracts/sponsorship-repository.interface';
-import { Sponsorship } from 'src/@core/domain/entities/sponsorship/sponsorship';
-import { SponsorshipOutputDto } from '../../DTOs/sponsorship.dto';
+import { Sponsorship, SponsorshipAttr } from 'src/@core/domain/entities/sponsorship/sponsorship';
 
 export namespace SponsorshipSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
@@ -41,7 +40,7 @@ export namespace SponsorshipSearch {
 
   export type Output = Promise<Sponsorship[]>;
 
-  export type SearchOutput = SearchOutputDto<SponsorshipOutputDto>;
+  export type SearchOutput = SearchOutputDto<SponsorshipAttr>;
 
   export type Filter = string;
 

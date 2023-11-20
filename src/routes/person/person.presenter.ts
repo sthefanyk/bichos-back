@@ -5,7 +5,7 @@ import { PersonSearch } from "src/@core/application/use-cases/person";
 export class PersonCollectionPresenter extends CollectionPresenter {
   data: PersonAttr[];
 
-  constructor(output: PersonSearch.Output) {
+  constructor(output: PersonSearch.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
     this.data = items;

@@ -4,9 +4,6 @@ import {
     BreedUpdate,
     BreedActivate,
     BreedInactivate,
-    BreedSearch,
-    BreedGetActiveRecords,
-    BreedGetInactiveRecords,
     BreedFindByName,
     BreedFindBySpecie,
 } from "src/@core/application/use-cases/breed";
@@ -21,7 +18,7 @@ export interface IBreedRepository {
     findById(id: string): BreedFindById.Output;
     findByName(name: string): BreedFindByName.Output;
     findBySpecie(specie: Species): BreedFindBySpecie.Output;
-    findAll(): BreedSearch.Output;
-    getActiveRecords(): BreedGetActiveRecords.Output;
-    getInactiveRecords(): BreedGetInactiveRecords.Output;
+    findAll(): Promise<Breed[]>;
+    getActiveRecords(): Promise<Breed[]>;
+    getInactiveRecords(): Promise<Breed[]>;
 }

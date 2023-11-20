@@ -11,8 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import {IAdoptRepository} from '../../../domain/contracts/adopt-repository.interface';
-import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
-import { AdoptOutputDto } from '../../DTOs/adopt.dto';
+import { Adopt, AdoptAttr } from 'src/@core/domain/entities/adopt/adopt';
 
 export namespace AdoptSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
@@ -41,7 +40,7 @@ export namespace AdoptSearch {
 
   export type Output = Promise<Adopt[]>;
 
-  export type SearchOutput = SearchOutputDto<AdoptOutputDto>;
+  export type SearchOutput = SearchOutputDto<AdoptAttr>;
 
   export type Filter = string;
 

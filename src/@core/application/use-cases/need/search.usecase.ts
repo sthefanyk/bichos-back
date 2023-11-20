@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import {INeedRepository} from '../../../domain/contracts/need-repository.interface';
-import { Need } from 'src/@core/domain/entities/need';
+import { Need, NeedAttr } from 'src/@core/domain/entities/need';
 
 export namespace NeedSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
@@ -40,13 +40,7 @@ export namespace NeedSearch {
 
   export type Output = Promise<Need[]>;
 
-  export type SearchOutput = SearchOutputDto<{
-    id: string;
-    name: string;
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date;
-  }>;
+  export type SearchOutput = SearchOutputDto<NeedAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

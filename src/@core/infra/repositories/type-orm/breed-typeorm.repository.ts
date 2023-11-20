@@ -3,10 +3,7 @@ import {
   BreedFindById,
   BreedFindByName,
   BreedFindBySpecie,
-  BreedGetActiveRecords,
-  BreedGetInactiveRecords,
   BreedInactivate,
-  BreedSearch,
   BreedUpdate,
 } from 'src/@core/application/use-cases/breed';
 import { IBreedRepository } from 'src/@core/domain/contracts';
@@ -94,7 +91,7 @@ export class BreedTypeormRepository implements IBreedRepository {
     return entity;
   }
 
-  async findAll(): BreedSearch.Output {
+  async findAll() {
     const result = await this.repo.find();
 
     const breeds: Breed[] = [];
@@ -106,7 +103,7 @@ export class BreedTypeormRepository implements IBreedRepository {
     return breeds;
   }
 
-  async getActiveRecords(): BreedGetActiveRecords.Output {
+  async getActiveRecords() {
     const result = await this.repo.find({where: {deleted_at: IsNull()} });
 
     const breeds: Breed[] = [];
@@ -118,7 +115,7 @@ export class BreedTypeormRepository implements IBreedRepository {
     return breeds;
   }
 
-  async getInactiveRecords(): BreedGetInactiveRecords.Output {
+  async getInactiveRecords() {
     const result = await this.repo.find({where: {deleted_at: Not(IsNull())} });
 
     const breeds: Breed[] = [];

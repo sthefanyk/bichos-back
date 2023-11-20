@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import {IPersonalityRepository} from '../../../domain/contracts/personality-repository.interface';
-import { Personality } from 'src/@core/domain/entities/personality';
+import { Personality, PersonalityAttr } from 'src/@core/domain/entities/personality';
 
 export namespace PersonalitySearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
@@ -40,13 +40,7 @@ export namespace PersonalitySearch {
 
   export type Output = Promise<Personality[]>;
 
-  export type SearchOutput = SearchOutputDto<{
-    id: string;
-    name: string;
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date;
-  }>;
+  export type SearchOutput = SearchOutputDto<PersonalityAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

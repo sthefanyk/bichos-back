@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import {IBreedRepository} from '../../../domain/contracts/breed-repository.interface';
-import { Breed } from 'src/@core/domain/entities/breed';
+import { Breed, BreedAttr } from 'src/@core/domain/entities/breed';
 
 export namespace BreedGetInactiveRecords {
   export class Usecase implements UseCase<Input, SearchOutput> {
@@ -40,14 +40,7 @@ export namespace BreedGetInactiveRecords {
 
   export type Output = Promise<Breed[]>;
 
-  export type SearchOutput = SearchOutputDto<{
-    id: string;
-    name: string;
-    specie: string;
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date;
-  }>;
+  export type SearchOutput = SearchOutputDto<BreedAttr>;
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

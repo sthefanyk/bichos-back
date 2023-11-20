@@ -5,7 +5,7 @@ import { QuizAttr } from 'src/@core/domain/entities/quiz/quiz';
 export class QuizCollectionPresenter extends CollectionPresenter {
   data: QuizAttr[];
 
-  constructor(output: SearchQuiz.Output) {
+  constructor(output: SearchQuiz.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
     this.data = items
