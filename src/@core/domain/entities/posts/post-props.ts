@@ -4,6 +4,7 @@ import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
 import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { Animal } from "./animal";
 import { Contact } from "../contact";
+import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 
 export class PostProps extends EntityProps {
 
@@ -16,9 +17,7 @@ export class PostProps extends EntityProps {
     @IsOptional()
     urgency_justification: string;
     
-    @IsString()
-    @IsNotEmpty()
-    posted_by: string;
+    posted_by: UUID;
 
     @IsNumber()
     @IsNotEmpty()
@@ -38,7 +37,7 @@ export class PostProps extends EntityProps {
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
         this.urgent = props.urgent;
         this.urgency_justification = props.urgency_justification;
-        this.posted_by = props.posted_by.getIdString();
+        this.posted_by = new UUID(props.posted_by);
         this.renewal_count = props.renewal_count;
         this.type = props.type;
         this.animal = props.animal;

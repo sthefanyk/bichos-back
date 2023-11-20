@@ -10,7 +10,7 @@ import {
 } from 'src/@core/application/use-cases/need';
 import { INeedRepository } from 'src/@core/domain/contracts';
 import { Need } from 'src/@core/domain/entities/need';
-import NeedModel from 'src/@core/domain/models/need.model';
+import { NeedModel } from 'src/@core/domain/models/need.model';
 import { DataSource, IsNull, Not, Repository } from 'typeorm';
 
 export class NeedTypeormRepository implements INeedRepository {

@@ -1,12 +1,11 @@
 import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
-import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
 import { City } from './localization/city';
 import ContactProps from './contact-props';
 
 export type ContactAttr = {
   name: string;
   email: string;
-  phone: Phone;
+  phone: string;
   city: City;
 };
 

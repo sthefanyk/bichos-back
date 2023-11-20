@@ -1,12 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import UserModel from './user.model';
-import PostModel from './post.model';
-import QuizModel from './quiz.model';
 import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';
+import { UserModel, PostModel, QuizModel } from '.';
 
 @Entity('adopt')
-export default class AdoptModel implements ModelMarker {
+export class AdoptModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 

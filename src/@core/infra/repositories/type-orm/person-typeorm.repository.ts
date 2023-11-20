@@ -1,8 +1,7 @@
 import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import Person from '../../../domain/entities/users/person';
 import { DataSource, Repository } from 'typeorm';
-import PersonModel from '../../../domain/models/person.model';
-import UserModel from '../../../domain/models/user.model';
+import { PersonModel, UserModel } from '../../../domain/models';
 import { PersonCreate, PersonFindById, PersonUpdate, PersonFindByCpf } from 'src/@core/application/use-cases/person';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { UserFindByEmail, UserFindByUsername } from 'src/@core/application/use-cases/user';

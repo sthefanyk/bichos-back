@@ -1,9 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import AnimalModel from './animal.model';
+import { AnimalModel, DiseaseAllergyModel, VaccineMedicineModel } from '.';
 
 @Entity('health')
-export default class HealthModel implements ModelMarker {
+export class HealthModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   @OneToOne(() => AnimalModel, (animal) => animal.id)
   @JoinColumn({name: 'id_animal'})
@@ -14,4 +14,12 @@ export default class HealthModel implements ModelMarker {
 
   @Column({ type: 'varchar' })
   additional: string;
+
+  @OneToMany(() => DiseaseAllergyModel, (i) => i.health)
+  @JoinColumn({name: 'disease_allergy'})
+  disease_allergy: DiseaseAllergyModel[];
+
+  @OneToMany(() => VaccineMedicineModel, (i) => i.health)
+  @JoinColumn({name: 'vaccines_medicines'})
+  vaccines_medicines: VaccineMedicineModel[];
 }

@@ -1,11 +1,11 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
-import AnimalModel from './animal.model';
+import { AnimalModel, HealthModel } from '.';
 import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
 
 @Entity('animal_adopt')
-export default class AnimalAdoptModel implements ModelMarker {
+export class AnimalAdoptModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => AnimalModel, (animal) => animal.id)
   @JoinColumn({name: 'animal_id'})
@@ -29,5 +29,9 @@ export default class AnimalAdoptModel implements ModelMarker {
 
   @Column({ type: 'datetime' })
   update_status_at: Date;
+
+  @OneToOne(() => HealthModel, (i) => i)
+  @JoinColumn({name: 'health'})
+  health: HealthModel;
 }
 

@@ -2,7 +2,6 @@ import UseCase from '../usecase';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import { Post } from 'src/@core/domain/entities/posts/post';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
@@ -19,7 +18,6 @@ import { VaccineMedicine } from 'src/@core/domain/entities/health/vaccine-medici
 import { Dose } from 'src/@core/domain/entities/health/dose';
 import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
 import { Contact } from 'src/@core/domain/entities/contact';
-import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
 import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
 
 export namespace PublishAdoptPost {
@@ -50,7 +48,7 @@ export namespace PublishAdoptPost {
       const post = new Post({
         urgent: input.urgent == 'true',
         urgency_justification: input.urgency_justification,
-        posted_by: new UUID(input.posted_by),
+        posted_by: input.posted_by,
         type: TypePost.ADOPTION,
         animal: new AnimalAdopt(
           {
@@ -73,7 +71,7 @@ export namespace PublishAdoptPost {
         ),
         contact: new Contact({
           ...input.contact,
-          phone: new Phone(input.contact.phone),
+          phone: input.contact.phone,
           city
         }),
       });

@@ -10,7 +10,7 @@ import {
 } from 'src/@core/application/use-cases/personality';
 import { IPersonalityRepository } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
-import PersonalityModel from 'src/@core/domain/models/personality.model';
+import { PersonalityModel } from 'src/@core/domain/models/personality.model';
 import { DataSource, IsNull, Not, Repository } from 'typeorm';
 
 export class PersonalityTypeormRepository implements IPersonalityRepository {

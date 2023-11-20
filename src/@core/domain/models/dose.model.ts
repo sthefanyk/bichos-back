@@ -1,9 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import VaccineMedicineModel from './vaccine-medicine.model';
+import { VaccineMedicineModel } from './vaccine-medicine.model';
 
 @Entity('dose')
-export default class DoseModel implements ModelMarker {
+export class DoseModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 
@@ -16,9 +16,9 @@ export default class DoseModel implements ModelMarker {
   @Column({ type: 'boolean', default: false })
   applied: boolean;
 
-  // @ManyToOne(() => VaccineMedicineModel, (vm) => vm.id)
-  // @JoinColumn({ name: 'id_vaccine_medicine', referencedColumnName: 'id' })
-  // vaccineMedicine: VaccineMedicineModel;
+  @ManyToOne(() => VaccineMedicineModel, (i) => i.doses)
+  @JoinColumn({ name: 'vaccine_medicine' })
+  vaccine_medicine: VaccineMedicineModel;
 
   @Column({ type: 'varchar' })
   id_vaccine_medicine: string;

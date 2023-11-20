@@ -3,12 +3,7 @@ import { EvaluateResponses } from 'src/@core/application/use-cases/adopt/evaluat
 import { IAdoptRepository } from 'src/@core/domain/contracts';
 import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
 import { Response } from 'src/@core/domain/entities/adopt/response';
-import AdoptModel from 'src/@core/domain/models/adopt.model';
-import PostModel from 'src/@core/domain/models/post.model';
-import QuestionModel from 'src/@core/domain/models/question.model';
-import QuizModel from 'src/@core/domain/models/quiz.model';
-import ResponseModel from 'src/@core/domain/models/response.model';
-import UserModel from 'src/@core/domain/models/user.model';
+import { AdoptModel, PostModel, QuestionModel, QuizModel, ResponseModel, UserModel } from 'src/@core/domain/models';
 import { DataSource, Repository } from 'typeorm';
 
 export class AdoptTypeormRepository implements IAdoptRepository {

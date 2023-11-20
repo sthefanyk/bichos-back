@@ -2,7 +2,6 @@ import UseCase from '../usecase';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import { Post } from 'src/@core/domain/entities/posts/post';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
@@ -10,7 +9,6 @@ import { ILocalization, INeedRepository, IPersonalityRepository, IUserRepository
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Need } from 'src/@core/domain/entities/need';
 import { Contact } from 'src/@core/domain/entities/contact';
-import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
 
 export namespace PublishSponsorshipPost {
   export class Usecase implements UseCase<Input, Output> {
@@ -43,7 +41,7 @@ export namespace PublishSponsorshipPost {
       const post = new Post({
           urgent: input.urgent == "true",
           urgency_justification: input.urgency_justification,
-          posted_by: new UUID(input.posted_by),
+          posted_by: input.posted_by,
           type: TypePost.SPONSORSHIP,
           animal: new AnimalSponsorship(
             {
@@ -65,7 +63,7 @@ export namespace PublishSponsorshipPost {
           ),
           contact: new Contact({
             ...input.contact,
-            phone: new Phone(input.contact.phone),
+            phone: input.contact.phone,
             city
           })
       });

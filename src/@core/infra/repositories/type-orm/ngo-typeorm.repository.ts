@@ -1,8 +1,7 @@
 import { INGORepository } from '../../../domain/contracts/ngo-repository.interface';
 import NGO from '../../../domain/entities/users/ngo';
 import { DataSource, Repository } from 'typeorm';
-import NGOModel from '../../../domain/models/ngo.model';
-import UserModel from '../../../domain/models/user.model';
+import { NGOModel, UserModel } from '../../../domain/models';
 import { NGOCreate, NGOFindByCnpj, NGOFindById, NGOUpdate } from 'src/@core/application/use-cases/ngo';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
 import { UserTypeormRepository } from './user-typeorm.repository';

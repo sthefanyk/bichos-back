@@ -1,11 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { EvaluationResponse } from 'src/@core/shared/domain/enums/evaluation-response.enum';
-import QuestionModel from './question.model';
-import AdoptModel from './adopt.model';
+import { QuestionModel, AdoptModel } from '.';
 
 @Entity('response')
-export default class ResponseModel implements ModelMarker {
+export class ResponseModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 

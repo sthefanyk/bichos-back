@@ -8,7 +8,7 @@ import {
 } from 'src/@core/application/use-cases/breed';
 import { IBreedRepository } from 'src/@core/domain/contracts';
 import { Breed } from 'src/@core/domain/entities/breed';
-import BreedModel from 'src/@core/domain/models/breed.model';
+import { BreedModel } from 'src/@core/domain/models/breed.model';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 import { DataSource, IsNull, Not, Repository } from 'typeorm';
 

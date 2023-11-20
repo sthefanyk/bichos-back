@@ -8,7 +8,7 @@ POST http://localhost:3000/sponsorship
 Content-Type: application/json
 
 {
-    "id_godfather": "b00d483e-1cae-469d-acfb-204dc3e310c0",
-    "id_post": "74d9fffc-a38b-4b30-82db-879a2788dfe4"
+    "id_godfather": "23c76141-b764-4255-8b5f-cf615525c0ba",
+    "id_post": "93632074-8ec9-4bff-bba8-8f0bb8ebf6d0"
 }
 

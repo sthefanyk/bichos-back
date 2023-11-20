@@ -3,7 +3,7 @@ import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { QuestionTypes } from 'src/@core/shared/domain/enums/question-types.enum';
 
 @Entity('question')
-export default class QuestionModel implements ModelMarker {
+export class QuestionModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 

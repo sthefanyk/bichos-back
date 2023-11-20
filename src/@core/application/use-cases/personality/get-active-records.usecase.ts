@@ -28,7 +28,7 @@ export namespace PersonalityGetActiveRecords {
       return this.toOutput(searchResult);
     }
 
-    private toOutput(searchResult: SearchResult): SearchOutput | any {
+    private toOutput(searchResult: SearchResult): SearchOutput {
       return {
         items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<Personality>(searchResult),

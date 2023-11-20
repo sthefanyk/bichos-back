@@ -25,7 +25,7 @@ export abstract class Animal {
         return { 
             ...this.props, 
             id: this.id,
-            personalities: this.personalities.map(p => p.toJson())
+            personalities: this.personalities.map(p => p.name)
         };
     }
 

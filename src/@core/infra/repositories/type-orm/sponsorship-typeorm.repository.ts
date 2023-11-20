@@ -1,11 +1,8 @@
 import { SponsorshipFindById, SponsorshipSearch, SponsorshipUsecase } from 'src/@core/application/use-cases/sponsorship';
 import { ISponsorshipRepository } from 'src/@core/domain/contracts';
 import { Sponsorship } from 'src/@core/domain/entities/sponsorship/sponsorship';
-import SponsorshipModel from 'src/@core/domain/models/sponsorship.model';
-import PostModel from 'src/@core/domain/models/post.model';
-import UserModel from 'src/@core/domain/models/user.model';
+import { SponsorshipModel, PostModel, UserModel, NeedModel } from 'src/@core/domain/models';
 import { DataSource, Repository } from 'typeorm';
-import NeedModel from 'src/@core/domain/models/need.model';
 
 export class SponsorshipTypeormRepository implements ISponsorshipRepository {
   private repoSponsorship: Repository<SponsorshipModel>;

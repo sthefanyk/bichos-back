@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import UserModel from './user.model';
+import { UserModel } from './user.model';
 
 @Entity('person')
-export default class PersonModel implements ModelMarker {
+export class PersonModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => UserModel, (user) => user.id)
   @JoinColumn({name: 'user_id'})

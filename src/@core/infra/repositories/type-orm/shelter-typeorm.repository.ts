@@ -9,8 +9,7 @@ import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-em
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
 import { IShelterRepository } from 'src/@core/domain/contracts/shelter-repository.interface';
 import Shelter from 'src/@core/domain/entities/users/shelter';
-import ShelterModel from 'src/@core/domain/models/shelter.model';
-import UserModel from 'src/@core/domain/models/user.model';
+import { ShelterModel, UserModel } from 'src/@core/domain/models';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { DataSource, Repository } from 'typeorm';
 import { UserTypeormRepository } from './user-typeorm.repository';

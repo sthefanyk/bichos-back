@@ -25,7 +25,7 @@ export default class ContactProps extends EntityPropsValidation {
     super();
     this.name = props.name;
     this.email = props.email;
-    this.phone = props.phone;
+    this.phone = new Phone(props.phone);
     this.city = props.city;
 
     this.validate(this);

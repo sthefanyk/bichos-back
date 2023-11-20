@@ -1,10 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import AnimalModel from './animal.model';
 import { DiseaseAllergyTypes } from 'src/@core/shared/domain/enums/disease-allergy.enum';
+import { HealthModel, AnimalModel } from '.';
 
 @Entity('disease_allergy')
-export default class DiseaseAllergyModel implements ModelMarker {
+export class DiseaseAllergyModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   @OneToOne(() => AnimalModel, (animal) => animal.id)
   @JoinColumn({name: 'id_animal'})
@@ -18,4 +18,8 @@ export default class DiseaseAllergyModel implements ModelMarker {
 
   @Column({ type: 'simple-enum', default: DiseaseAllergyTypes.DISEASE })
   type: DiseaseAllergyTypes;
+
+  @ManyToOne(() => HealthModel, (i) => i.disease_allergy)
+  @JoinColumn({name: 'health'})
+  health: HealthModel;
 }

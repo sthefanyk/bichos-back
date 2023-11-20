@@ -4,7 +4,7 @@ import { Role } from '../../shared/domain/enums/role.enum';
 import { CityModel } from './city.model';
 
 @Entity('user')
-export default class UserModel implements ModelMarker {
+export class UserModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 

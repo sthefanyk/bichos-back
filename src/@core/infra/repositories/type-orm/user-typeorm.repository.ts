@@ -6,8 +6,7 @@ import { City } from "src/@core/domain/entities/localization/city";
 import { State } from "src/@core/domain/entities/localization/state";
 import User, { UserAttr } from "src/@core/domain/entities/users/user";
 import UserProps from "src/@core/domain/entities/users/user-props";
-import { CityModel } from "src/@core/domain/models/city.model";
-import UserModel from "src/@core/domain/models/user.model";
+import { UserModel, CityModel } from "src/@core/domain/models";
 import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 import { DataSource, Repository } from "typeorm";
 

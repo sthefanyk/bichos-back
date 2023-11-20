@@ -1,11 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import UserModel from './user.model';
-import PostModel from './post.model';
+import { UserModel, PostModel } from '.';
 import { StatusSponsorship } from 'src/@core/shared/domain/enums/status_sponsorship.enum';
 
 @Entity('sponsorship')
-export default class AdoptModel implements ModelMarker {
+export class SponsorshipModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 

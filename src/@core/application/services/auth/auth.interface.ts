@@ -1,4 +1,4 @@
-import UserModel from "src/@core/domain/models/user.model";
+import { UserModel } from "src/@core/domain/models";
 
 export interface IAuth {
     singIn(email: string, password: string): Promise<{ accessToken: string }>;

@@ -1,12 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import UserModel from './user.model';
-import AnimalModel from './animal.model';
-import { CityModel } from './city.model';
+import { UserModel, AnimalModel, CityModel } from '.';
 
 @Entity('post')
-export default class PostModel implements ModelMarker {
+export class PostModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 

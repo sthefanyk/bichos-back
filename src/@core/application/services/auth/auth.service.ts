@@ -5,7 +5,7 @@ import { IAuth } from './auth.interface';
 import { IUserRepository } from 'src/@core/domain/contracts/user-repository.interface';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-import UserModel from 'src/@core/domain/models/user.model';
+import { UserModel } from 'src/@core/domain/models';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
 import User from 'src/@core/domain/entities/users/user';

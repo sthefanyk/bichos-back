@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import AnimalModel from './animal.model';
+import { AnimalModel } from './animal.model';
 import { StatusPostSponsorship } from 'src/@core/shared/domain/enums/status_post_sponsorship.enum';
 
 @Entity('animal_sponsorship')
-export default class AnimalSponsorshipModel implements ModelMarker {
+export class AnimalSponsorshipModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => AnimalModel, (animal) => animal.id)
   @JoinColumn({name: 'animal_id'})

@@ -3,7 +3,7 @@ import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 
 @Entity('breed')
-export default class BreedModel implements ModelMarker {
+export class BreedModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 

@@ -1,5 +1,4 @@
 import { TypePost } from "src/@core/shared/domain/enums/type_post.enum";
-import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 import { Animal } from "./animal";
 import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 import { PostProps } from "./post-props";
@@ -7,7 +6,7 @@ import { Contact } from "../contact";
 
 export type PostAttr = {
     urgent: boolean;
-    posted_by: UUID;
+    posted_by: string;
     renewal_count?: number;
     type: TypePost;
     urgency_justification?: string;
@@ -24,7 +23,7 @@ export class Post implements EntityMarker {
 
     private postProps: PostProps;
 
-    constructor(private postAttr: PostAttr) {
+    constructor(postAttr: PostAttr) {
         postAttr.renewal_count = postAttr.renewal_count ?? 0;
 
         this.postProps = new PostProps(postAttr);
@@ -35,8 +34,9 @@ export class Post implements EntityMarker {
         return { 
             ...this.postProps, 
             id: this.id,
+            posted_by: this.posted_by,
             contact: this.contact.toJson(),
-            animal: this.postProps.animal.toJson()
+            animal: this.postProps.animal.toJson(),
         };
     }
 
@@ -57,7 +57,7 @@ export class Post implements EntityMarker {
     }
 
     get posted_by(): string {
-        return this.postProps.posted_by; 
+        return this.postProps.posted_by.id; 
     }
 
     get renewal_count(): number {

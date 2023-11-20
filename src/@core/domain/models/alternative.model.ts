@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 
 @Entity('alternative')
-export default class AlternativeModel implements ModelMarker {
+export class AlternativeModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 

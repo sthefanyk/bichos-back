@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 
 @Entity('quiz')
-export default class QuizModel implements ModelMarker {
+export class QuizModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 

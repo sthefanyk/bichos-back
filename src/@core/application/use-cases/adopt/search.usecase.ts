@@ -28,9 +28,9 @@ export namespace AdoptSearch {
       return this.toOutput(searchResult);
     }
 
-    private toOutput(searchResult: SearchResult): SearchOutput | any {
+    private toOutput(searchResult: SearchResult): SearchOutput {
       return {
-        items: searchResult.items.map((i) => i.toJson()),
+        items: searchResult.items.map((i) => i.toJson()) as any,
         ...SearchOutputMapper.toOutput<Adopt>(searchResult),
       };
     }

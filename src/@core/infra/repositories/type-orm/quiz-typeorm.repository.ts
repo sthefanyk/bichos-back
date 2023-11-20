@@ -3,10 +3,7 @@ import { IQuizRepository } from 'src/@core/domain/contracts';
 import { Alternative } from 'src/@core/domain/entities/quiz/alternative';
 import { Question } from 'src/@core/domain/entities/quiz/question';
 import { Quiz } from 'src/@core/domain/entities/quiz/quiz';
-import AlternativeModel from 'src/@core/domain/models/alternative.model';
-import QuestionModel from 'src/@core/domain/models/question.model';
-import QuizHasQuestionModel from 'src/@core/domain/models/quiz-has-question';
-import QuizModel from 'src/@core/domain/models/quiz.model';
+import { AlternativeModel, QuestionModel, QuizHasQuestionModel, QuizModel } from 'src/@core/domain/models';
 import { DataSource, Repository } from 'typeorm';
 
 export class QuizTypeormRepository implements IQuizRepository {

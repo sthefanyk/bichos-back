@@ -4,7 +4,7 @@ import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
 import { Species } from 'src/@core/shared/domain/enums/species.enum';
 
 @Entity('animal')
-export default class AnimalModel implements ModelMarker {
+export class AnimalModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
   id: string;
 
