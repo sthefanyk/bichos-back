@@ -19,6 +19,7 @@ import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-
 import { NeedTypeormRepository } from 'src/@core/infra/repositories/type-orm/need-typeorm.repository';
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
 import { CheckAndUpdateStatusAdoptPost } from 'src/@core/application/use-cases/post/check-and-update-status-adopt-post.usecase';
+import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 
 export namespace PostProvider {
   export namespace Repositories {
@@ -70,6 +71,14 @@ export namespace PostProvider {
       inject: [getDataSourceToken()],
     };
 
+    export const GALLERY_TYPEORM_REPO = {
+      provide: 'GalleryTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new GalleryTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
     export const REPO = {
       provide: 'PostTypeormRepository',
       useExisting: 'PostTypeormRepository',
@@ -84,13 +93,15 @@ export namespace PostProvider {
         personalityRepo: PersonalityTypeormRepository,
         breedRepo: BreedTypeormRepository,
         localizationRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
       ) => {
         return new PublishAdoptPost.Usecase(
           postRepo, 
           userRepo, 
           personalityRepo,
           breedRepo,
-          localizationRepo
+          localizationRepo,
+          galleryRepo
         );
       },
       inject: [
@@ -99,6 +110,7 @@ export namespace PostProvider {
         Repositories.PERSONALITY_TYPEORM_REPO.provide,
         Repositories.BREED_TYPEORM_REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
     };
 
@@ -110,14 +122,15 @@ export namespace PostProvider {
         personalityRepo: PersonalityTypeormRepository,
         needRepo: NeedTypeormRepository,
         localizationRepo: LocalizationTypeormRepository,
-
+        galleryRepo: GalleryTypeormRepository,
       ) => {
         return new PublishSponsorshipPost.Usecase(
           postRepo, 
           userRepo, 
           personalityRepo,
           needRepo,
-          localizationRepo
+          localizationRepo,
+          galleryRepo
         );
       },
       inject: [
@@ -126,6 +139,7 @@ export namespace PostProvider {
         Repositories.PERSONALITY_TYPEORM_REPO.provide,
         Repositories.NEED_TYPEORM_REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
     };
 

@@ -7,6 +7,7 @@ import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import {
   IBreedRepository,
+  IGalleryRepository,
   ILocalization,
   IPersonalityRepository,
   IUserRepository
@@ -28,11 +29,13 @@ export namespace PublishAdoptPost {
       private repoPersonality: IPersonalityRepository,
       private repoBreed: IBreedRepository,
       private repoLocalization: ILocalization,
+      private repoGallery: IGalleryRepository,
     ) {}
 
     async execute(input: Input): Output {
       await this.validate(input);
 
+      
       const personalities: Personality[] = [];
 
       for (const personality of input.personalities) {
@@ -41,10 +44,10 @@ export namespace PublishAdoptPost {
         );
         personalities.push(foundPersonality);
       }
-
+      
       const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
       if (!city) throw new NotFoundError('City not found');
-
+      
       const post = new Post({
         urgent: input.urgent == 'true',
         urgency_justification: input.urgency_justification,
@@ -67,16 +70,20 @@ export namespace PublishAdoptPost {
             history: input.history,
             characteristic: input.characteristic,
             personalities,
+            main_image: input.main_image,
+            second_image: input.second_image,
+            third_image: input.third_image,
+            fourth_image: input.fourth_image,
           },
-        ),
-        contact: new Contact({
-          ...input.contact,
-          phone: input.contact.phone,
-          city
-        }),
-      });
-
-      return await this.repo.publishAdoptPost(post);
+          ),
+          contact: new Contact({
+            ...input.contact,
+            phone: input.contact.phone,
+            city
+          }),
+        });
+        
+        return await this.repo.publishAdoptPost(post);
     }
 
     async validate(input: Input) {
@@ -92,6 +99,16 @@ export namespace PublishAdoptPost {
       if (!input.sex) throw new RequiredError('sex');
       if (!input.date_birth) throw new RequiredError('date_birth');
       if (!input.specie) throw new RequiredError('species');
+      if (!input.main_image) throw new RequiredError('main_image');
+      if (!input.second_image) throw new RequiredError('second_image');
+      if (!input.third_image) throw new RequiredError('third_image');
+      if (!input.fourth_image) throw new RequiredError('fourth_image');
+
+      if (!await this.repoGallery.findImageById(input.main_image)) throw new NotFoundError('Image main not found');
+      if (!await this.repoGallery.findImageById(input.second_image)) throw new NotFoundError('Image second not found');
+      if (!await this.repoGallery.findImageById(input.third_image)) throw new NotFoundError('Image third not found');
+      if (!await this.repoGallery.findImageById(input.fourth_image)) throw new NotFoundError('Image fourth not found');
+
       if (!input.personalities || input.personalities.length === 0)
         throw new RequiredError('personalities');
 
@@ -214,6 +231,11 @@ export namespace PublishAdoptPost {
     characteristic: string;
     history: string;
     personalities: string[];
+    
+    main_image: string;
+    second_image: string;
+    third_image: string;
+    fourth_image: string;
 
     health: {
       neutered: boolean;

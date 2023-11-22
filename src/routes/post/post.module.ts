@@ -13,6 +13,7 @@ import { PostCronService } from './post-cron.service';
     PostProvider.Repositories.BREED_TYPEORM_REPO,
     PostProvider.Repositories.NEED_TYPEORM_REPO,
     PostProvider.Repositories.LOCAL_TYPEORM_REPO,
+    PostProvider.Repositories.GALLERY_TYPEORM_REPO,
     ...Object.values(PostProvider.UseCases)
   ],
 })

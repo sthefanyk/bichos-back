@@ -131,12 +131,14 @@ export class PostTypeormRepository implements IPostRepository {
     return this._get(id);
   }
 
-  async publishAdoptPost(entity: Post, ): PublishAdoptPost.Output {
+  async publishAdoptPost(entity: Post): PublishAdoptPost.Output {
     const user = await this.userRepo.findOne({
       where: { id: entity.posted_by },
     });
 
     const animal = await this.animalRepo.save(entity.animal.toJson());
+
+    if (!animal) return null;
 
     const post = await this.postRepo.save({
       ...entity.toJson(),

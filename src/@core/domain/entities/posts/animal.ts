@@ -12,6 +12,11 @@ export type AnimalAttr = {
     characteristic?: string;
     personalities: Personality[];
 
+    main_image: string;
+    second_image: string;
+    third_image: string;
+    fourth_image: string;
+
     id?: string,
     created_at?: Date,
     updated_at?: Date,
@@ -25,6 +30,10 @@ export abstract class Animal {
         return { 
             ...this.props, 
             id: this.id,
+            main_image: this.main_image,
+            second_image: this.second_image,
+            third_image: this.third_image,
+            fourth_image: this.fourth_image,
             personalities: this.personalities.map(p => p.name)
         };
     }
@@ -57,6 +66,22 @@ export abstract class Animal {
 
     get personalities(): Personality[] {
         return this.props.personalities;
+    }
+
+    get main_image(): string {
+        return this.props.main_image.id;
+    }
+
+    get second_image(): string {
+        return this.props.second_image.id;
+    }
+
+    get third_image(): string {
+        return this.props.third_image.id;
+    }
+
+    get fourth_image(): string {
+        return this.props.fourth_image.id;
     }
 
     get id(): string {

@@ -5,7 +5,7 @@ import { Post } from 'src/@core/domain/entities/posts/post';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { ILocalization, INeedRepository, IPersonalityRepository, IUserRepository } from 'src/@core/domain/contracts';
+import { IGalleryRepository, ILocalization, INeedRepository, IPersonalityRepository, IUserRepository } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Need } from 'src/@core/domain/entities/need';
 import { Contact } from 'src/@core/domain/entities/contact';
@@ -18,6 +18,7 @@ export namespace PublishSponsorshipPost {
       private repoPersonality: IPersonalityRepository,
       private repoNeed: INeedRepository,
       private repoLocalization: ILocalization,
+      private repoGallery: IGalleryRepository,
     ) {}
 
     async execute(input: Input): Output {
@@ -58,7 +59,11 @@ export namespace PublishSponsorshipPost {
               species: +input.species,
               history: input.history,
               characteristic: input.characteristic,
-              personalities
+              personalities,
+              main_image: input.main_image,
+              second_image: input.second_image,
+              third_image: input.third_image,
+              fourth_image: input.fourth_image,
             }
           ),
           contact: new Contact({
@@ -82,6 +87,13 @@ export namespace PublishSponsorshipPost {
       if(!input.sex) throw new RequiredError('sex');
       if(!input.date_birth) throw new RequiredError('date_birth');
       if(!input.species) throw new RequiredError('species');
+
+
+      if (!await this.repoGallery.findImageById(input.main_image)) throw new NotFoundError('Image main not found');
+      if (!await this.repoGallery.findImageById(input.second_image)) throw new NotFoundError('Image second not found');
+      if (!await this.repoGallery.findImageById(input.third_image)) throw new NotFoundError('Image third not found');
+      if (!await this.repoGallery.findImageById(input.fourth_image)) throw new NotFoundError('Image fourth not found');
+
       if(!input.personalities || input.personalities.length === 0) throw new RequiredError('personalities');
       if(!input.needs || input.needs.length === 0) throw new RequiredError('needs');
 
@@ -124,6 +136,11 @@ export namespace PublishSponsorshipPost {
     characteristic: string;
     history: string;
     personalities: string[];
+
+    main_image: string;
+    second_image: string;
+    third_image: string;
+    fourth_image: string;
 
     contact: {
       name: string;

@@ -26,6 +26,18 @@ export class AnimalModel implements ModelMarker {
   @Column({ type: 'varchar', default: '' })
   characteristic?: string;
 
+  @Column({ type: 'varchar' })
+  main_image: string;
+
+  @Column({ type: 'varchar' })
+  second_image: string;
+
+  @Column({ type: 'varchar' })
+  third_image: string;
+
+  @Column({ type: 'varchar' })
+  fourth_image: string;
+
   @Column({ type: 'datetime' })
   created_at: Date;
 
