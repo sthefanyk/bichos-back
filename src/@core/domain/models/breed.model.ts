@@ -10,7 +10,7 @@ export class BreedModel implements ModelMarker {
   @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'simple-enum', default: Species.DOG })
+  @Column({ type: 'enum', enum: Species, default: Species.DOG })
   specie: Species;
 
   @Column({ type: 'datetime' })

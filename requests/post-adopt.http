@@ -27,7 +27,7 @@ GET http://localhost:3000/post/adopt?page=2&per_page=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/post/adopt/b805e19c-d163-44fd-a3a1-4fab28fe9884
+GET http://localhost:3000/post/adopt/fc692a4a-3f78-4576-859c-cdcc0eca6b5c
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 {
     "urgent": "false",
     "urgency_justification": "",
-    "posted_by": "23c76141-b764-4255-8b5f-cf615525c0ba",
+    "posted_by": "7c4dcc36-f5db-4be4-af8c-11e121d01dd9",
     "size_current": "1",
     "size_estimated": "2",
     "breed": "rusk",

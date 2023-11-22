@@ -6,6 +6,8 @@ import {
   Query,
   Param,
   Patch,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import {
@@ -15,11 +17,14 @@ import {
 } from 'src/@core/application/use-cases/post';
 import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
 import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import PhotosConfig from 'src/@core/domain/entities/posts/post';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
-
+  
+  @UseInterceptors(FileFieldsInterceptor(PhotosConfig))
   @Post('adopt')
   publishAdoptPost(@Body() data: PublishAdoptPost.Input) {
     return this.postService.publishAdoptPost(data);

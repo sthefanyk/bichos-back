@@ -11,20 +11,20 @@ export class AnimalAdoptModel implements ModelMarker {
   @JoinColumn({name: 'animal_id'})
   id: string;
 
-  @Column({ type: 'simple-enum' })
+  @Column({ type: 'enum', enum: SizeAnimal })
   size_current: SizeAnimal;
 
-  @Column({ type: 'simple-enum' })
+  @Column({ type: 'enum', enum: SizeAnimal })
   size_estimated: SizeAnimal;
 
   @Column({ type: 'varchar' })
   breed: string;
 
   @OneToOne(() => AnimalModel)
-  @JoinColumn({name: 'animal_id'})
+  @JoinColumn({name: 'animal'})
   animal: AnimalModel;
 
-  @Column({ type: 'simple-enum', default: StatusPostAdopt.WAITING_QUESTIONNAIRES })
+  @Column({ type: 'enum', enum: StatusPostAdopt, default: StatusPostAdopt.WAITING_QUESTIONNAIRES })
   status: StatusPostAdopt;
 
   @Column({ type: 'datetime' })

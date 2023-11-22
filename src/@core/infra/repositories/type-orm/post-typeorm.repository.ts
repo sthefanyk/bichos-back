@@ -131,7 +131,7 @@ export class PostTypeormRepository implements IPostRepository {
     return this._get(id);
   }
 
-  async publishAdoptPost(entity: Post): PublishAdoptPost.Output {
+  async publishAdoptPost(entity: Post, ): PublishAdoptPost.Output {
     const user = await this.userRepo.findOne({
       where: { id: entity.posted_by },
     });
@@ -247,11 +247,11 @@ export class PostTypeormRepository implements IPostRepository {
   }
 
   async findAllAdoptPost(): FindAllAdoptPost.Output {
-    return this._getAll(0);
+    return this._getAll('0');
   }
 
   async findAllSponsorshipPost(): FindAllSponsorshipPost.Output {
-    return this._getAll(1);
+    return this._getAll('1');
   }
 
   async findByIdAdoptPost(id: string): FindByIdAdoptPost.Output {
@@ -268,7 +268,7 @@ export class PostTypeormRepository implements IPostRepository {
     return this._getPost(post);
   }
 
-  async _getAll(type: number) {
+  async _getAll(type: string) {
     const posts = await this.postRepo.find({
       where: { type },
       relations: ['contact_city', 'contact_city.state', 'animal', 'posted_by'],
@@ -286,7 +286,7 @@ export class PostTypeormRepository implements IPostRepository {
 
     if (+post.type === 0) {
       const animal_adopt = await this.animalAdoptRepo.findOne({
-        where: { animal: post.animal },
+        where: { id: post.animal.id },
         relations: [
           'health',
           'health.disease_allergy',

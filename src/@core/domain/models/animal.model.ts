@@ -11,13 +11,13 @@ export class AnimalModel implements ModelMarker {
   @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'simple-enum', default: SexAnimal.MALE })
+  @Column({ type: 'enum', enum: SexAnimal, default: SexAnimal.MALE })
   sex: SexAnimal;
 
   @Column({ type: 'datetime' })
   date_birth: Date;
 
-  @Column({ type: 'simple-enum', default: Species.DOG })
+  @Column({ type: 'enum', enum: Species, default: Species.DOG })
   species: Species;
 
   @Column({ type: 'varchar', default: '' })

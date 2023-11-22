@@ -36,7 +36,7 @@ export class UserModel implements ModelMarker {
   @Column({ type: 'varchar' })
   password: string;
 
-  @Column({ type: 'simple-enum', default: Role.PERSON })
+  @Column({ type: 'enum', enum: Role, default: Role.PERSON })
   role: Role;
 
   @Column({ type: 'datetime' })

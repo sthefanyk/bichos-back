@@ -16,7 +16,7 @@ export class SponsorshipModel implements ModelMarker {
   @JoinColumn({name: 'id_post'})
   post: PostModel;
 
-  @Column({ type: 'simple-enum', default: StatusSponsorship.IN_PROCESS })
+  @Column({ type: 'enum', enum: StatusSponsorship, default: StatusSponsorship.IN_PROCESS })
   status: StatusSponsorship;
 
   @Column({ type: 'varchar' })

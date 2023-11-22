@@ -20,7 +20,7 @@ export class AnimalSponsorshipModel implements ModelMarker {
   @JoinColumn({name: 'animal'})
   animal: AnimalModel;
 
-  @Column({ type: 'simple-enum', default: StatusPostSponsorship.WAITING_GODFATHER })
+  @Column({ type: 'enum', enum: StatusPostSponsorship, default: StatusPostSponsorship.WAITING_GODFATHER })
   status: StatusPostSponsorship;
 
   @Column({ type: 'datetime' })

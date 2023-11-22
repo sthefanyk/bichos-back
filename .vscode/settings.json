@@ -8,6 +8,7 @@
         "nestjs",
         "seedwork",
         "smtps",
+        "supabase",
         "typeorm",
         "usecase"
     ]

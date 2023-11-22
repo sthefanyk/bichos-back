@@ -16,7 +16,7 @@ export class ResponseModel implements ModelMarker {
   @JoinColumn({name: 'id_adopt'})
   adopt: AdoptModel;
 
-  @Column({ type: 'simple-enum', default: EvaluationResponse.NOT_EVALUATED })
+  @Column({ type: 'enum', enum: EvaluationResponse, default: EvaluationResponse.NOT_EVALUATED })
   evaluation: EvaluationResponse;
 
   @Column({ type: 'varchar' })

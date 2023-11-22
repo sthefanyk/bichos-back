@@ -20,10 +20,10 @@ export class AdoptModel implements ModelMarker {
   @JoinColumn({name: 'id_quiz'})
   quiz: QuizModel;
 
-  @Column({ type: 'simple-enum', default: StatusAdopt.WAITING_QUIZ_CLOSE })
+  @Column({ type: 'enum', enum: StatusAdopt, default: StatusAdopt.WAITING_QUIZ_CLOSE })
   status: StatusAdopt;
 
-  @Column({ type: 'double' })
+  @Column({ type: 'double', default: 0 })
   punctuation: number;
 
   @Column({ type: 'varchar' })

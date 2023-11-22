@@ -241,9 +241,9 @@ export namespace PublishAdoptPost {
       phone: string;
       city: string;
     };
-    };
+  };
 
-    export type Output = Promise<{
-      id: string;
-    }>;
+  export type Output = Promise<{
+    id: string;
+  }>;
 }

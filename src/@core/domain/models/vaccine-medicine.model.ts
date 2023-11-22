@@ -16,7 +16,7 @@ export class VaccineMedicineModel implements ModelMarker {
   @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'simple-enum', default: VaccineMedicineTypes.MEDICINES })
+  @Column({ type: 'enum', enum: VaccineMedicineTypes, default: VaccineMedicineTypes.MEDICINES })
   type: VaccineMedicineTypes;
 
   @Column({ type: 'integer' })

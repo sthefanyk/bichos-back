@@ -41,6 +41,7 @@ export class AnimalAdopt extends Animal {
         const current_date = new Date();
         const updated_date = new Date(this.update_status_at);
         const days = 15 * 24 * 60 * 60 * 1000; // 15 days
+        const min = 1 * 60 * 1000; // 1 min
         
         if (
             this.status === StatusPostAdopt.WAITING_QUESTIONNAIRES &&
@@ -49,6 +50,13 @@ export class AnimalAdopt extends Animal {
             this.animalAdoptProps.status = StatusPostAdopt.WAITING_RENEWAL
             this.animalAdoptProps.update_status_at = new Date();
         }
+
+        // console.log({
+        //     current_date,
+        //     updated_date,
+        //     status: this.status
+        // })
+
     }
 
     get status(): StatusPostAdopt {

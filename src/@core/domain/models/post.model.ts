@@ -18,8 +18,8 @@ export class PostModel implements ModelMarker {
   @Column({ type: 'integer' })
   renewal_count: number;
 
-  @Column({ type: 'simple-enum', default: TypePost.ADOPTION })
-  type: TypePost;
+  @Column({ type: 'enum', enum: TypePost, default: TypePost.ADOPTION })
+  type: TypePost | string;
 
   @Column({ type: 'varchar', default: '' })
   urgency_justification: string;

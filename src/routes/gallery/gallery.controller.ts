@@ -1,0 +1,19 @@
+import { Controller, Post, Body, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { GalleryService } from './gallery.service';
+
+@Controller('gallery')
+export class GalleryController {
+  constructor(private readonly galleryService: GalleryService) {}
+
+  @UseInterceptors(FileInterceptor('photo'))
+  @Post('image')
+  insertImage(@Body() data, @UploadedFile() photo: Express.Multer.File) {
+    return this.galleryService.insertImage({
+      owner_id: data.owner_id,
+      type: data.type,
+      photo
+    });
+  }
+}
+

@@ -4,6 +4,15 @@ import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 import { PostProps } from "./post-props";
 import { Contact } from "../contact";
 
+const PhotosConfig = [
+  { name: 'main_photo', maxCount: 1 },
+  { name: 'second_photo', maxCount: 1 },
+  { name: 'third_photo', maxCount: 1 },
+  { name: 'fourth_photo', maxCount: 1 },
+];
+
+export default PhotosConfig;
+
 export type PostAttr = {
     urgent: boolean;
     posted_by: string;
