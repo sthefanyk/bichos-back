@@ -10,6 +10,7 @@ import { AuthModule } from '../auth/auth.module';
   providers: [ShelterService,
     ShelterProvider.Repositories.SHELTER_TYPEORM_REPO,
     ShelterProvider.Repositories.LOCAL_TYPEORM_REPO,
+    ShelterProvider.Repositories.GALLERY_TYPEORM_REPO,
     ...Object.values(ShelterProvider.UseCases)],
 })
 export class ShelterModule {}

@@ -1,18 +1,18 @@
-import { IShelterRepository } from '../../../domain/contracts/shelter-repository.interface';
 import UseCase from '../usecase';
 import Shelter from '../../../domain/entities/users/shelter';
-import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
 import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
+import { IGalleryRepository, ILocalization, IShelterRepository } from 'src/@core/domain/contracts';
 
 export namespace ShelterCreate {
   export class Usecase implements UseCase<Input, Output> {
     constructor(
       private repo: IShelterRepository,
       private repoLocalization: ILocalization,
+      private repoGallery: IGalleryRepository,
     ) {}
 
     async execute(input: Input): Output {
@@ -57,8 +57,12 @@ export namespace ShelterCreate {
       if(!input.email) throw new RequiredError('email');
       if(!input.password) throw new RequiredError('password');
       if(!input.city) throw new RequiredError('city');
+      if(!input.profile_picture) throw new RequiredError('profile_picture');
+      if(!input.header_picture) throw new RequiredError('header_picture');
 
       if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
+      if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
+      if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       

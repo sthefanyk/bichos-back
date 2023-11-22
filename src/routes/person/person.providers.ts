@@ -13,6 +13,7 @@ import {
 } from 'src/@core/application/use-cases/person';
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
 import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
+import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 
 export namespace PersonProvider {
   export namespace Repositories {
@@ -32,6 +33,14 @@ export namespace PersonProvider {
       inject: [getDataSourceToken()],
     };
 
+    export const GALLERY_TYPEORM_REPO = {
+      provide: 'GalleryTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new GalleryTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
     export const REPO = {
       provide: 'PersonTypeormRepository',
       useExisting: 'PersonTypeormRepository',
@@ -43,10 +52,15 @@ export namespace PersonProvider {
       useFactory: (
         personRepo: PersonTypeormRepository,
         localRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
       ) => {
-        return new PersonCreate.Usecase(personRepo, localRepo);
+        return new PersonCreate.Usecase(personRepo, localRepo, galleryRepo);
       },
-      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+      inject: [
+        Repositories.REPO.provide, 
+        Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
+      ],
     };
 
     export const GET = {
@@ -94,10 +108,15 @@ export namespace PersonProvider {
       useFactory: (
         personRepo: PersonTypeormRepository,
         localRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
       ) => {
-        return new PersonUpdate.Usecase(personRepo, localRepo);
+        return new PersonUpdate.Usecase(personRepo, localRepo, galleryRepo);
       },
-      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+      inject: [
+        Repositories.REPO.provide, 
+        Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
+      ],
     };
 
     export const INACTIVATE = {

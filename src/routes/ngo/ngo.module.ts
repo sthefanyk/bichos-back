@@ -10,6 +10,7 @@ import { AuthModule } from '../auth/auth.module';
   providers: [NGOService,
     NGOProvider.Repositories.PERSON_TYPEORM_REPO,
     NGOProvider.Repositories.LOCAL_TYPEORM_REPO,
+    NGOProvider.Repositories.GALLERY_TYPEORM_REPO,
     ...Object.values(NGOProvider.UseCases)
   ],
 })

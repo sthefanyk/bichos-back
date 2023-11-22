@@ -13,6 +13,7 @@ import {
   ShelterUpdate,
   ShelterActivate
 } from 'src/@core/application/use-cases/shelter';
+import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 
 export namespace ShelterProvider {
   export namespace Repositories {
@@ -32,6 +33,14 @@ export namespace ShelterProvider {
       inject: [getDataSourceToken()],
     };
 
+    export const GALLERY_TYPEORM_REPO = {
+      provide: 'GalleryTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new GalleryTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
     export const REPO = {
       provide: 'ShelterTypeormRepository',
       useExisting: 'ShelterTypeormRepository',
@@ -43,10 +52,16 @@ export namespace ShelterProvider {
       useFactory: (
         shelterRepo: ShelterTypeormRepository,
         localRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
+
       ) => {
-        return new ShelterCreate.Usecase(shelterRepo, localRepo);
+        return new ShelterCreate.Usecase(shelterRepo, localRepo, galleryRepo);
       },
-      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+      inject: [
+        Repositories.REPO.provide, 
+        Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
+      ],
     };
 
     export const GET = {
@@ -94,10 +109,16 @@ export namespace ShelterProvider {
       useFactory: (
         shelterRepo: ShelterTypeormRepository,
         localRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
+
       ) => {
-        return new ShelterUpdate.Usecase(shelterRepo, localRepo);
+        return new ShelterUpdate.Usecase(shelterRepo, localRepo, galleryRepo);
       },
-      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+      inject: [
+        Repositories.REPO.provide, 
+        Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
+      ],
     };
 
     export const INACTIVATE = {

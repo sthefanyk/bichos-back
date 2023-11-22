@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Body, UploadedFile, UseInterceptors, Get, Param } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GalleryService } from './gallery.service';
 
@@ -14,6 +14,11 @@ export class GalleryController {
       type: data.type,
       photo
     });
+  }
+
+  @Get('image/url/:id')
+  getImageUrl(@Param('id') id: string) {
+    return this.galleryService.getImageUrl({id});
   }
 }
 

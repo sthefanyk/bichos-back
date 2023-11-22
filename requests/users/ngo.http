@@ -41,8 +41,8 @@ Content-Type: application/json
     "password": "Ong12345",
     "city": "Paranaguá",
     "description": "ong description",
-    "profile_picture": "ong profile_picture",
-    "header_picture": "ong header_picture"
+    "profile_picture": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110",
+    "header_picture": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110"
 }
 
 

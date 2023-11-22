@@ -10,6 +10,7 @@ import { AuthModule } from '../auth/auth.module';
   providers: [PersonService,
     PersonProvider.Repositories.PERSON_TYPEORM_REPO,
     PersonProvider.Repositories.LOCAL_TYPEORM_REPO,
+    PersonProvider.Repositories.GALLERY_TYPEORM_REPO,
     ...Object.values(PersonProvider.UseCases)
   ],
 })

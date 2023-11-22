@@ -1,8 +1,7 @@
-import {INGORepository} from "../../../domain/contracts/ngo-repository.interface";
 import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
 import UseCase from "../usecase";
 import { AlreadyExistsError } from "src/@core/shared/domain/errors/already-exists.error";
-import { ILocalization } from "src/@core/domain/contracts";
+import { IGalleryRepository, ILocalization, INGORepository } from "src/@core/domain/contracts";
 import CNPJ from "src/@core/shared/domain/value-objects/cnpj.vo";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
 import { UpdateError } from "src/@core/shared/domain/errors/update.error";
@@ -12,6 +11,7 @@ export namespace NGOUpdate {
         constructor(
             private repo: INGORepository,
             private repoLocalization: ILocalization,
+            private repoGallery: IGalleryRepository,
         ) {}
 
         async execute(input: Input): Output {
@@ -48,13 +48,15 @@ export namespace NGOUpdate {
             if(!input.name) throw new RequiredError('name');
             if(!input.email) throw new RequiredError('email');
             if(!input.city) throw new RequiredError('city');
+            if(!input.profile_picture) throw new RequiredError('profile_picture');
+            if(!input.header_picture) throw new RequiredError('header_picture');
             
             const ngo = await this.repo.findById(input.id);
 
             if (!ngo) throw new NotFoundError("User not found");
             if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
-      
-            await this.repoLocalization.getCityByName(input.city.toUpperCase());
+            if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
+            if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
 
             const cnpjExists = await this.repo.findByCnpj(new CNPJ(input.cnpj));
             const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());

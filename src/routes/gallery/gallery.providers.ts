@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
-import { GalleryInsertImageUseCase } from 'src/@core/application/use-cases/gallery';
+import { GalleryGetImageUrlUseCase, GalleryInsertImageUseCase } from 'src/@core/application/use-cases/gallery';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace GalleryProvider {
@@ -43,6 +43,16 @@ export namespace GalleryProvider {
         Repositories.REPO.provide,
         Repositories.USER_TYPEORM_REPO.provide
       ],
+    };
+
+    export const GET_IMAGE_URL = {
+      provide: GalleryGetImageUrlUseCase.Usecase,
+      useFactory: (
+        repo: GalleryTypeormRepository
+      ) => {
+        return new GalleryGetImageUrlUseCase.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
     };
   }
 }

@@ -26,19 +26,19 @@ POST http://localhost:3000/shelter
 Content-Type: application/json
 
 {
-    "responsible_cpf": "00000000001",
+    "responsible_cpf": "00000000002",
     "responsible_date_birth": "2002-02-11",
-    "name_shelter": "sthe1",
+    "name_shelter": "sthe2",
     "star_date_shelter": "2002-02-11",
-    "full_name": "sthe1",
-    "username": "sthe1",
-    "name": "sthe1",
-    "email": "sthe1@admin.com",
+    "full_name": "sthe2",
+    "username": "sthe2",
+    "name": "sthe2",
+    "email": "sthe2@admin.com",
     "password": "Sthe1234",
     "city": "Paranaguá",
     "description": "",
-    "profile_picture": "",
-    "header_picture": ""
+    "profile_picture": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110",
+    "header_picture": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110"
 }
 
 

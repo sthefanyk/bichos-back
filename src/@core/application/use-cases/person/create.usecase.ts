@@ -7,12 +7,14 @@ import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
 import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
+import { IGalleryRepository } from 'src/@core/domain/contracts';
 
 export namespace PersonCreate {
   export class Usecase implements UseCase<Input, Output> {
     constructor(
       private repo: IPersonRepository,
       private repoLocalization: ILocalization,
+      private repoGallery: IGalleryRepository,
     ) {}
 
     async execute(input: Input): Output {
@@ -54,8 +56,12 @@ export namespace PersonCreate {
       if(!input.email) throw new RequiredError('email');
       if(!input.password) throw new RequiredError('password');
       if(!input.city) throw new RequiredError('city');
+      if(!input.profile_picture) throw new RequiredError('profile_picture');
+      if(!input.header_picture) throw new RequiredError('header_picture');
 
       if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
+      if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
+      if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
@@ -78,8 +84,8 @@ export namespace PersonCreate {
     password: string;
     city: string;
     description?: string;
-    profile_picture?: string;
-    header_picture?: string;
+    profile_picture: string;
+    header_picture: string;
   };
 
   export type Output = Promise<{

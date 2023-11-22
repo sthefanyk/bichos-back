@@ -12,6 +12,7 @@ import {
 } from 'class-validator';
 import { UserAttr } from './user';
 import { City } from '../localization/city';
+import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 
 export default class UserProps extends EntityProps {
   @IsNotEmpty()
@@ -56,15 +57,9 @@ export default class UserProps extends EntityProps {
   @IsOptional()
   description: string;
 
-  @MaxLength(255)
-  @IsString()
-  @IsOptional()
-  profile_picture: string;
+  profile_picture: UUID;
 
-  @MaxLength(255)
-  @IsString()
-  @IsOptional()
-  header_picture: string;
+  header_picture: UUID;
 
   constructor(props: UserAttr) {
     super(props.id, props.created_at, props.updated_at, props.deleted_at);
@@ -76,8 +71,8 @@ export default class UserProps extends EntityProps {
     this.password = props.password;
     this.role = props.role;
     this.description = props.description;
-    this.profile_picture = props.profile_picture;
-    this.header_picture = props.header_picture;
+    this.profile_picture = new UUID(props.profile_picture);
+    this.header_picture = new UUID(props.header_picture);
   }
 }
 

@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
 import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 
 export type UserAttr = {
   full_name: string,
@@ -13,8 +14,8 @@ export type UserAttr = {
   city: City,
   role?: Role,
   description?: string,
-  profile_picture?: string,
-  header_picture?: string,
+  profile_picture: string,
+  header_picture: string,
   id?: string,
   created_at?: Date,
   updated_at?: Date,
@@ -32,6 +33,8 @@ export default abstract class User implements EntityMarker {
     return {
       ...this.props,
       id: this.id,
+      profile_picture: this.profile_picture,
+      header_picture: this.header_picture,
       city: {
         name: city.name,
         state: {
@@ -66,8 +69,8 @@ export default abstract class User implements EntityMarker {
     this.props.email = data.email.toLowerCase();
     this.props.city = data.city;
     this.props.description = data.description ?? this.props.description;
-    this.props.profile_picture = data.profile_picture ?? this.props.profile_picture;
-    this.props.header_picture = data.header_picture ?? this.props.header_picture;
+    this.props.profile_picture = new UUID(data.profile_picture);
+    this.props.header_picture = new UUID(data.header_picture);
 
     this.props.updated_at = new Date();
     
@@ -139,11 +142,11 @@ export default abstract class User implements EntityMarker {
   }
 
   get profile_picture(): string {
-    return this.props.profile_picture;
+    return this.props.profile_picture.id;
   }
 
   get header_picture(): string {
-    return this.props.header_picture;
+    return this.props.header_picture.id;
   }
 
   get id(): string {

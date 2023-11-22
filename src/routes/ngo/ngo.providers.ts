@@ -13,6 +13,7 @@ import {
 } from 'src/@core/application/use-cases/ngo';
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
 import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
+import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 
 export namespace NGOProvider {
   export namespace Repositories {
@@ -32,6 +33,14 @@ export namespace NGOProvider {
       inject: [getDataSourceToken()],
     };
 
+    export const GALLERY_TYPEORM_REPO = {
+      provide: 'GalleryTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new GalleryTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
     export const REPO = {
       provide: 'NGOTypeormRepository',
       useExisting: 'NGOTypeormRepository',
@@ -43,10 +52,15 @@ export namespace NGOProvider {
       useFactory: (
         ngoRepo: NGOTypeormRepository,
         localRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
       ) => {
-        return new NGOCreate.Usecase(ngoRepo, localRepo);
+        return new NGOCreate.Usecase(ngoRepo, localRepo, galleryRepo);
       },
-      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+      inject: [
+        Repositories.REPO.provide, 
+        Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
+      ],
     };
 
     export const GET = {
@@ -94,10 +108,15 @@ export namespace NGOProvider {
       useFactory: (
         ngoRepo: NGOTypeormRepository,
         localRepo: LocalizationTypeormRepository,
+        galleryRepo: GalleryTypeormRepository,
       ) => {
-        return new NGOUpdate.Usecase(ngoRepo, localRepo);
+        return new NGOUpdate.Usecase(ngoRepo, localRepo, galleryRepo);
       },
-      inject: [Repositories.REPO.provide, Repositories.LOCAL_TYPEORM_REPO.provide],
+      inject: [
+        Repositories.REPO.provide, 
+        Repositories.LOCAL_TYPEORM_REPO.provide,
+        Repositories.GALLERY_TYPEORM_REPO.provide,
+      ],
     };
 
     export const INACTIVATE = {
