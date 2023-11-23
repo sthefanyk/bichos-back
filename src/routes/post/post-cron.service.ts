@@ -8,7 +8,7 @@ import {
 @Injectable()
 export class PostCronService implements OnModuleInit {
   private readonly expressionCron = '0 0 * * *'; // At 00:00
-  private readonly expressionCronTest = '*/10 * * * * *'; // At 00:00
+  private readonly expressionCronTest = '*/5 * * * * *';
   
   @Inject(CheckAndUpdateStatusAdoptPost.Usecase)
   private useCaseAdopt: CheckAndUpdateStatusAdoptPost.Usecase;
@@ -21,10 +21,10 @@ export class PostCronService implements OnModuleInit {
   }
 
   private startCron() {
-    cron.schedule(this.expressionCron, async () => {
+    cron.schedule(this.expressionCronTest, async () => {
+      console.log('---------------');
       await this.useCaseAdopt.execute();
       await this.useCaseSponsorship.execute();
-      // console.log('---------------');
     });
   }
 }

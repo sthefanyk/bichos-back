@@ -20,7 +20,6 @@ export class PostProps extends EntityProps {
     posted_by: UUID;
 
     @IsNumber()
-    @IsNotEmpty()
     renewal_count: number;
     
     @IsEnum(TypePost)
@@ -33,15 +32,18 @@ export class PostProps extends EntityProps {
     @IsNotEmpty()
     contact: Contact;
 
+    latest_status_update: Date;
+
     constructor(props: PostAttr){
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
         this.urgent = props.urgent;
         this.urgency_justification = props.urgency_justification;
         this.posted_by = new UUID(props.posted_by);
-        this.renewal_count = props.renewal_count;
+        this.renewal_count = props.renewal_count ?? 0;
         this.type = props.type;
         this.animal = props.animal;
         this.contact = props.contact;
+        this.latest_status_update = props.latest_status_update ?? new Date();
 
         this.validate(this);
     }

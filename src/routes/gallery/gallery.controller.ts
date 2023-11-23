@@ -10,7 +10,6 @@ export class GalleryController {
   @Post('image')
   insertImage(@Body() data, @UploadedFile() photo: Express.Multer.File) {
     return this.galleryService.insertImage({
-      owner_id: data.owner_id,
       type: data.type,
       photo
     });

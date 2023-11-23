@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, IsNull, Repository } from 'typeorm';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { PublishAdoptPost } from 'src/@core/application/use-cases/post/publish-adopt-post.usecase';
 import { Post } from 'src/@core/domain/entities/posts/post';
@@ -82,8 +82,11 @@ export class PostTypeormRepository implements IPostRepository {
     for (const entity of entities) {
       const animal: AnimalAdopt = entity.animal as any;
       await this.animalAdoptRepo.update(animal.id, {
-        status: animal.status,
-        update_status_at: animal.update_status_at,
+        status: animal.status
+      });
+
+      await this.postRepo.update(entity.id, {
+        latest_status_update: entity.latest_status_update
       });
     }
   }
@@ -93,9 +96,14 @@ export class PostTypeormRepository implements IPostRepository {
   ): CheckAndUpdateStatusSponsorshipPost.Output {
     for (const entity of entities) {
       const animal: AnimalSponsorship = entity.animal as any;
+
       await this.animalSponsorshipRepo.update(animal.id, {
-        status: animal.status,
-        update_status_at: animal.update_status_at,
+        status: animal.status
+      });
+
+      await this.postRepo.update(entity.id, {
+        latest_status_update: entity.latest_status_update,
+        deleted_at: entity.deleted_at
       });
     }
   }
@@ -199,7 +207,6 @@ export class PostTypeormRepository implements IPostRepository {
       size_current: animalAdoptModel.size_current,
       size_estimated: animalAdoptModel.size_estimated,
       status: animalAdoptModel.status,
-      update_status_at: animalAdoptModel.update_status_at,
       health: healthModel,
     });
 
@@ -226,7 +233,6 @@ export class PostTypeormRepository implements IPostRepository {
       accompany: animalSponsorshipModel.accompany,
       reason_request: animalSponsorshipModel.reason_request,
       status: animalSponsorshipModel.status,
-      update_status_at: animalSponsorshipModel.update_status_at,
     });
     const post = await this.postRepo.save({
       ...entity.toJson(),
@@ -256,6 +262,10 @@ export class PostTypeormRepository implements IPostRepository {
     return this._getAll('1');
   }
 
+  async findActivesSponsorshipPost(): FindAllSponsorshipPost.Output {
+    return this._getActives('1');
+  }
+
   async findByIdAdoptPost(id: string): FindByIdAdoptPost.Output {
     return this._get(id);
   }
@@ -268,6 +278,17 @@ export class PostTypeormRepository implements IPostRepository {
 
     if (!post) return null;
     return this._getPost(post);
+  }
+
+  async _getActives(type: string) {
+    const posts = await this.postRepo.find({
+      where: { type, deleted_at: IsNull() },
+      relations: ['contact_city', 'contact_city.state', 'animal', 'posted_by'],
+    });
+
+    return await Promise.all(
+      posts.map(async (post) => await this._getPost(post)),
+    );
   }
 
   async _getAll(type: string) {
@@ -305,7 +326,6 @@ export class PostTypeormRepository implements IPostRepository {
           size_current: +animal_adopt.size_current,
           size_estimated: +animal_adopt.size_estimated,
           status: +animal_adopt.status,
-          update_status_at: animal_adopt.update_status_at,
           health: new Health({
             ...animal_adopt.health,
             disease_allergy: animal_adopt.health.disease_allergy.map(

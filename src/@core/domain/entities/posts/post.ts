@@ -17,6 +17,7 @@ export type PostAttr = {
     urgent: boolean;
     posted_by: string;
     renewal_count?: number;
+    latest_status_update?: Date;
     type: TypePost;
     urgency_justification?: string;
     animal: Animal;
@@ -33,15 +34,12 @@ export class Post implements EntityMarker {
     private postProps: PostProps;
 
     constructor(postAttr: PostAttr) {
-        postAttr.renewal_count = postAttr.renewal_count ?? 0;
-
         this.postProps = new PostProps(postAttr);
-        this.postProps.validate(this.postProps);
     }
 
     toJson() {
         return { 
-            ...this.postProps, 
+            ...this.postProps,
             id: this.id,
             posted_by: this.posted_by,
             contact: this.contact.toJson(),
@@ -49,12 +47,12 @@ export class Post implements EntityMarker {
         };
     }
 
-    public checkStatus(){
-        this.animal.checkStatus();
-    }
-
     public inactivate() {
         this.postProps.deleted_at = new Date();
+    }
+
+    public setLatestStatusUpdate() {
+        this.postProps.latest_status_update = new Date();
     }
 
     get contact(): Contact {
@@ -83,6 +81,10 @@ export class Post implements EntityMarker {
 
     get animal(): Animal {
         return this.postProps.animal;   
+    }
+
+    get latest_status_update(): Date {
+        return this.postProps.latest_status_update;
     }
 
     get id(): string {

@@ -9,12 +9,10 @@ export type AnimalAdoptAttr = {
     size_estimated: SizeAnimal;
     breed: string;
     health: Health;
-    status: StatusPostAdopt;
-    update_status_at: Date;
+    status?: StatusPostAdopt;
 }
 
 export class AnimalAdopt extends Animal {
-    
     constructor(
         private animalAdoptProps: AnimalAdoptAttr,
         animalProps: AnimalAttr,
@@ -32,31 +30,16 @@ export class AnimalAdopt extends Animal {
             size_estimated: this.size_estimated,
             breed: this.breed,
             status: this.status,
-            update_status_at: this.update_status_at,
             health: this.health.toJson(),
         };
     }
 
-    checkStatus() {
-        const current_date = new Date();
-        const updated_date = new Date(this.update_status_at);
-        const days = 15 * 24 * 60 * 60 * 1000; // 15 days
-        const min = 1 * 60 * 1000; // 1 min
-        
-        if (
-            this.status === StatusPostAdopt.WAITING_QUESTIONNAIRES &&
-            (current_date.getTime() - updated_date.getTime()) > days
-        ) {
-            this.animalAdoptProps.status = StatusPostAdopt.WAITING_RENEWAL
-            this.animalAdoptProps.update_status_at = new Date();
-        }
+    updateStatus(status: StatusPostAdopt){
+        this.animalAdoptProps.status = status;
+    }
 
-        // console.log({
-        //     current_date,
-        //     updated_date,
-        //     status: this.status
-        // })
-
+    getStatus(){
+        return this.animalAdoptProps.status;
     }
 
     get status(): StatusPostAdopt {
@@ -77,9 +60,5 @@ export class AnimalAdopt extends Animal {
 
     get health(): Health {
         return this.animalAdoptProps.health;
-    }
-
-    get update_status_at(): Date {
-        return this.animalAdoptProps.update_status_at;
     }
 }

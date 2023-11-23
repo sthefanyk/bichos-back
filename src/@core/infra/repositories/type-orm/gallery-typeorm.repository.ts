@@ -4,15 +4,12 @@ import { Image } from 'src/@core/domain/entities/gallery/image';
 import { GalleryModel } from 'src/@core/domain/models';
 import supabase from 'src/database/supabase/config';
 import { DataSource, Repository } from 'typeorm';
-import { UserTypeormRepository } from './user-typeorm.repository';
 
 export class GalleryTypeormRepository implements IGalleryRepository {
   private repo: Repository<GalleryModel>;
-  private repoUser: UserTypeormRepository;
 
   constructor(private dataSource: DataSource) {
     this.repo = this.dataSource.getRepository(GalleryModel);
-    this.repoUser = new UserTypeormRepository(dataSource);
   }
 
   async insertImage(entity: Image, photo: Express.Multer.File): GalleryInsertImageUseCase.Output {
@@ -53,20 +50,14 @@ export class GalleryTypeormRepository implements IGalleryRepository {
 
   async findImageById(id: string): GalleryFindImageByIdUseCase.Output {
     const model = await this.repo.findOne({ 
-      where: { id },
-      relations: ['owner']
+      where: { id }
     });
     
     if (!model) return null;
 
-    const owner = await this.repoUser.findUserById(model.owner.id);
-
-    if (!owner) return null;
-
     return new Image({ 
       id: model.id,
-      owner,
-      type: +model.type 
+      type: +model.type
     });
   }
   

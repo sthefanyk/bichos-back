@@ -22,7 +22,4 @@ export class AnimalSponsorshipModel implements ModelMarker {
 
   @Column({ type: 'enum', enum: StatusPostSponsorship, default: StatusPostSponsorship.WAITING_GODFATHER })
   status: StatusPostSponsorship;
-
-  @Column({ type: 'datetime' })
-  update_status_at: Date;
 }

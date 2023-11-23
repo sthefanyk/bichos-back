@@ -27,9 +27,6 @@ export class AnimalAdoptModel implements ModelMarker {
   @Column({ type: 'enum', enum: StatusPostAdopt, default: StatusPostAdopt.WAITING_QUESTIONNAIRES })
   status: StatusPostAdopt;
 
-  @Column({ type: 'datetime' })
-  update_status_at: Date;
-
   @OneToOne(() => HealthModel, (i) => i)
   @JoinColumn({name: 'health'})
   health: HealthModel;

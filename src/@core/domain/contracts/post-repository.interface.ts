@@ -12,6 +12,7 @@ export interface IPostRepository {
     updateStatusSponsorshipPost(entities: Post[]): CheckAndUpdateStatusSponsorshipPost.Output;
     findAllAdoptPost(): FindAllAdoptPost.Output;
     findAllSponsorshipPost(): FindAllSponsorshipPost.Output;
+    findActivesSponsorshipPost(): FindAllSponsorshipPost.Output;
     findByIdAdoptPost(id: string): FindByIdAdoptPost.Output;
     findByIdSponsorshipPost(id: string): FindByIdSponsorshipPost.Output;
     findByIdPost(id: string): Promise<PostModel>;

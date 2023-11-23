@@ -9,7 +9,6 @@ import { AuthModule } from '../auth/auth.module';
   controllers: [GalleryController],
   providers: [GalleryService,
     GalleryProvider.Repositories.GALLERY_TYPEORM_REPO,
-    GalleryProvider.Repositories.USER_TYPEORM_REPO,
     ...Object.values(GalleryProvider.UseCases)
   ],
 })

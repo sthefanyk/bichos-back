@@ -26,9 +26,6 @@ export class AnimalAdoptProps extends AnimalProps {
     @IsEnum(StatusPostAdopt)
     status: StatusPostAdopt;
 
-    @IsNotEmpty()
-    update_status_at: Date;
-
     constructor(
         props: AnimalAdoptAttr,
         animalProps: AnimalAttr
@@ -39,7 +36,6 @@ export class AnimalAdoptProps extends AnimalProps {
         this.breed = props.breed;
         this.health = props.health;
         this.status = this.status ?? StatusPostAdopt.WAITING_QUESTIONNAIRES;
-        this.update_status_at = props.update_status_at ?? new Date();
 
         this.validate(this);
     }

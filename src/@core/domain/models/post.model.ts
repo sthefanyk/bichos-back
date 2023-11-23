@@ -42,6 +42,9 @@ export class PostModel implements ModelMarker {
   animal: AnimalModel;
 
   @Column({ type: 'datetime' })
+  latest_status_update: Date;
+
+  @Column({ type: 'datetime' })
   created_at: Date;
 
   @Column({ type: 'datetime', default: null })

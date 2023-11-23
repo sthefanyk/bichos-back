@@ -48,9 +48,7 @@ export namespace PublishSponsorshipPost {
             {
               accompany: input.accompany == "true",
               reason_request: input.reason_request,
-              needs,
-              status: 0,
-              update_status_at: new Date()
+              needs
             },
             {
               name: input.name,
