@@ -38,6 +38,8 @@ import {
   UserModel,
   VaccineMedicineModel,
 } from 'src/@core/domain/models';
+import { UserTypeormRepository } from './user-typeorm.repository';
+import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
 export class PostTypeormRepository implements IPostRepository {
   private postRepo: Repository<PostModel>;
@@ -53,6 +55,8 @@ export class PostTypeormRepository implements IPostRepository {
   private diseaseAllergyRepo: Repository<DiseaseAllergyModel>;
   private vaccineMedicineRepo: Repository<VaccineMedicineModel>;
   private doseRepo: Repository<DoseModel>;
+  private repoUser: UserTypeormRepository;
+  private repoGallery: GalleryTypeormRepository;
 
   constructor(private dataSource: DataSource) {
     this.postRepo = this.dataSource.getRepository(PostModel);
@@ -74,6 +78,8 @@ export class PostTypeormRepository implements IPostRepository {
     this.vaccineMedicineRepo =
       this.dataSource.getRepository(VaccineMedicineModel);
     this.doseRepo = this.dataSource.getRepository(DoseModel);
+    this.repoUser = new UserTypeormRepository(dataSource);
+    this.repoGallery = new GalleryTypeormRepository(dataSource);
   }
 
   async updateStatusAdoptPost(
@@ -114,13 +120,19 @@ export class PostTypeormRepository implements IPostRepository {
 
   async inactivate(entity: Post): PostInactivate.Output {
     const user = await this.userRepo.findOne({
-      where: { id: entity.posted_by },
+      where: { id: entity.posted_by.id },
     });
 
     const result = await this.postRepo.update(entity.id, {
       ...entity.toJson(),
       posted_by: user,
-      animal: entity.animal.toJson(),
+      animal: {
+        ...entity.animal.toJson(),
+        main_image: entity.animal.main_image.id,
+        second_image: entity.animal.second_image.id,
+        third_image: entity.animal.third_image.id,
+        fourth_image: entity.animal.fourth_image.id,
+      },
       contact_name: entity.contact.name,
       contact_email: entity.contact.email,
       contact_phone: entity.contact.phone,
@@ -141,10 +153,16 @@ export class PostTypeormRepository implements IPostRepository {
 
   async publishAdoptPost(entity: Post): PublishAdoptPost.Output {
     const user = await this.userRepo.findOne({
-      where: { id: entity.posted_by },
+      where: { id: entity.posted_by.id },
     });
 
-    const animal = await this.animalRepo.save(entity.animal.toJson());
+    const animal = await this.animalRepo.save({
+      ...entity.animal.toJson(),
+      main_image: entity.animal.main_image.id,
+      second_image: entity.animal.second_image.id,
+      third_image: entity.animal.third_image.id,
+      fourth_image: entity.animal.fourth_image.id,
+    });
 
     if (!animal) return null;
 
@@ -170,7 +188,7 @@ export class PostTypeormRepository implements IPostRepository {
 
     for (const disease_allergy of health.disease_allergy) {
       await this.diseaseAllergyRepo.save({
-        id_animal: animal.id,
+        id: disease_allergy.id,
         name: disease_allergy.name,
         description: disease_allergy.description,
         type: disease_allergy.type,
@@ -181,7 +199,6 @@ export class PostTypeormRepository implements IPostRepository {
     for (const vaccines_medicines of health.vaccines_medicines) {
       const vm = await this.vaccineMedicineRepo.save({
         id: vaccines_medicines.id,
-        id_animal: animal.id,
         name: vaccines_medicines.name,
         type: vaccines_medicines.type,
         total_dose: vaccines_medicines.total_dose,
@@ -221,13 +238,20 @@ export class PostTypeormRepository implements IPostRepository {
 
   async publishSponsorshipPost(entity: Post): PublishSponsorshipPost.Output {
     const user = await this.userRepo.findOne({
-      where: { id: entity.posted_by },
+      where: { id: entity.posted_by.id },
     });
 
     const animalSponsorshipModel: AnimalSponsorship =
       entity.animal.toJson() as any;
 
-    const animal = await this.animalRepo.save(entity.animal.toJson());
+    const animal = await this.animalRepo.save({
+      ...entity.animal.toJson(),
+      main_image: entity.animal.main_image.id,
+      second_image: entity.animal.second_image.id,
+      third_image: entity.animal.third_image.id,
+      fourth_image: entity.animal.fourth_image.id,
+    });
+
     const animalSponsorship = await this.animalSponsorshipRepo.save({
       id: animalSponsorshipModel.id,
       accompany: animalSponsorshipModel.accompany,
@@ -254,8 +278,8 @@ export class PostTypeormRepository implements IPostRepository {
     };
   }
 
-  async findAllAdoptPost(): FindAllAdoptPost.Output {
-    return this._getAll('0');
+  async findAllAdoptPost(): FindAllAdoptPost.Output {    
+    return await this._getAll('0');
   }
 
   async findAllSponsorshipPost(): FindAllSponsorshipPost.Output {
@@ -307,6 +331,11 @@ export class PostTypeormRepository implements IPostRepository {
 
     let animal;
 
+    const main_image = await this.repoGallery.getImageUrl(post.animal.main_image);
+    const second_image = await this.repoGallery.getImageUrl(post.animal.second_image);
+    const third_image = await this.repoGallery.getImageUrl(post.animal.third_image);
+    const fourth_image = await this.repoGallery.getImageUrl(post.animal.fourth_image);
+
     if (+post.type === 0) {
       const animal_adopt = await this.animalAdoptRepo.findOne({
         where: { id: post.animal.id },
@@ -347,6 +376,10 @@ export class PostTypeormRepository implements IPostRepository {
           sex: +post.animal.sex,
           species: +post.animal.species,
           personalities,
+          main_image: { id: post.animal.main_image, url: main_image.url },
+          second_image: { id: post.animal.second_image, url: second_image.url },
+          third_image: { id: post.animal.third_image, url: third_image.url },
+          fourth_image: { id: post.animal.fourth_image, url: fourth_image.url },
         },
       );
     } else if (+post.type === 1) {
@@ -366,13 +399,19 @@ export class PostTypeormRepository implements IPostRepository {
           sex: +post.animal.sex,
           species: +post.animal.species,
           personalities,
+          main_image: { id: post.animal.main_image, url: main_image.url },
+          second_image: { id: post.animal.second_image, url: second_image.url },
+          third_image: { id: post.animal.third_image, url: third_image.url },
+          fourth_image: { id: post.animal.fourth_image, url: fourth_image.url },
         },
       );
     }
 
+    const user = await this.repoUser.findUserById(post.posted_by.id);
+
     return new Post({
       ...post,
-      posted_by: post.posted_by.id,
+      posted_by: user,
       contact: new Contact({
         name: post.contact_name,
         email: post.contact_email,

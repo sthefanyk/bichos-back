@@ -21,7 +21,7 @@ export class PostCronService implements OnModuleInit {
   }
 
   private startCron() {
-    cron.schedule(this.expressionCronTest, async () => {
+    cron.schedule(this.expressionCron, async () => {
       console.log('---------------');
       await this.useCaseAdopt.execute();
       await this.useCaseSponsorship.execute();

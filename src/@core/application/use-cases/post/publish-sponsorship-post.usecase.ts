@@ -39,10 +39,13 @@ export namespace PublishSponsorshipPost {
       const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
       if (!city) throw new NotFoundError('City not found');
 
+      const user = await this.repoUser.findUserById(input.posted_by);
+      if (!user) throw new NotFoundError('User not found');
+
       const post = new Post({
           urgent: input.urgent == "true",
           urgency_justification: input.urgency_justification,
-          posted_by: input.posted_by,
+          posted_by: user,
           type: TypePost.SPONSORSHIP,
           animal: new AnimalSponsorship(
             {
@@ -58,10 +61,10 @@ export namespace PublishSponsorshipPost {
               history: input.history,
               characteristic: input.characteristic,
               personalities,
-              main_image: input.main_image,
-              second_image: input.second_image,
-              third_image: input.third_image,
-              fourth_image: input.fourth_image,
+              main_image: {id: input.main_image},
+              second_image: {id: input.second_image},
+              third_image: {id: input.third_image},
+              fourth_image: {id: input.fourth_image},
             }
           ),
           contact: new Contact({

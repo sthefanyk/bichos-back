@@ -60,8 +60,8 @@ export namespace PersonUpdate {
             if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
             
             const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
-            const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
-            const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+            const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
+            const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
             
             const id = person.id;
             if (emailExists && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');

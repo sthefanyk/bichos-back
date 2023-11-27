@@ -66,8 +66,8 @@ export namespace ShelterUpdate {
 
             const cpfExists = await this.repo.findByCpf(responsible_cpf);
             const nameShelterExists = await this.repo.findByNameShelter(input.name_shelter.toLowerCase());
-            const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
-            const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+            const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
+            const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
             
             const id = shelter.id;
             if (emailExists && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');

@@ -23,7 +23,7 @@ GET http://localhost:3000/post/adopt?sort=full_name&sort_dir=asc&filter=aa
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/post/adopt?page=2&per_page=1
+GET http://localhost:3000/post/adopt?page=1&per_page=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -36,37 +36,65 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 {
-    "urgent": "false",
-    "urgency_justification": "",
-    "posted_by": "2bd90caa-f13b-4780-ab03-997dfef1bae1",
-    "size_current": "1",
-    "size_estimated": "2",
+    "urgent": false,
+    "urgency_justification": "aaaaaaaaaaa",
+    "posted_by": "2bcd6cb3-07bc-462c-98be-a79b8d9a9a94",
+    "size_current": "2",
+    "size_estimated": "0",
     "breed": "rusk",
-    "name": "paçoca",
+    "name": "marcus",
     "sex": "0",
-    "date_birth": "2020/11/20",
+    "date_birth": "2023/10/20",
     "specie": "1",
-    "characteristic": "",
-    "history": "",
+    "characteristic": "aaaaaaaaaaa",
+    "history": "aaaaaaaaaaaa",
     "personalities": [
-        "calmo"
+        "calmo",
+        "dorminhoco"
     ],
-    "main_image": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110",
-    "second_image": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110",
-    "third_image": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110",
-    "fourth_image": "8cd05280-bc3e-42b4-bd9f-50c53fa3a110",
+    "main_image": "74738803-87e0-4b03-8702-db5980976db4",
+    "second_image": "74738803-87e0-4b03-8702-db5980976db4",
+    "third_image": "74738803-87e0-4b03-8702-db5980976db4",
+    "fourth_image": "74738803-87e0-4b03-8702-db5980976db4",
     "health": {
-        "neutered": true,
+        "neutered": false,
         "disease_allergy": [
             {
                 "name": "blabla",
                 "description": "blabla",
                 "type": 1
+            },
+            {
+                "name": "blablablabla",
+                "description": "blabla",
+                "type": 0
             }
         ],
         "vaccines_medicines": [
             {
-                "name": "blabla",
+                "name": "vermífugo",
+                "type": 0,
+                "total_dose": 5,
+                "doses": [
+                    {
+                        "application_date": "2020/11/20",
+                        "applied": true,
+                        "number_dose": 1
+                    },
+                    {
+                        "application_date": "2020/12/20",
+                        "applied": false,
+                        "number_dose": 2
+                    },
+                    {
+                        "application_date": "2020/12/20",
+                        "applied": true,
+                        "number_dose": 5
+                    }
+                ]
+            },
+            {
+                "name": "anti-parasitário",
                 "type": 1,
                 "total_dose": 2,
                 "doses": [
@@ -92,6 +120,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
         "city": "Paranaguá"
     }
 }
+
 
 ###
 PUT   http://localhost:3000/post/adopt/8126f7de-fccf-4fa1-978f-115967e4a2cc

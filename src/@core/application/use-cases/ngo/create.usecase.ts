@@ -32,8 +32,8 @@ export namespace NGOCreate {
             password: input.password,
             city: city,
             description: input.description,
-            profile_picture: input.profile_picture,
-            header_picture: input.header_picture,
+            profile_picture: { id: input.profile_picture },
+            header_picture: { id: input.header_picture },
           }
         }
       );
@@ -66,8 +66,8 @@ export namespace NGOCreate {
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       
       const cnpjExists = await this.repo.findByCnpj(new CNPJ(input.cnpj));
-      const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
-      const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+      const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
+      const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
       
       if (cnpjExists) throw new AlreadyExistsError('CNPJ already exists');
       if (emailExists) throw new AlreadyExistsError('Email already exists');

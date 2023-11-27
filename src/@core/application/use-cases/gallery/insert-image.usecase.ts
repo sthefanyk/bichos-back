@@ -9,7 +9,7 @@ export namespace GalleryInsertImageUseCase {
 
     async execute(input: Input): Output {
         const img = new Image({
-            type: input.type
+          type: +input.type
         });
 
         return await this.repo.insertImage(img, input.photo);
@@ -17,7 +17,7 @@ export namespace GalleryInsertImageUseCase {
   }
 
   export type Input = {
-    type: number;
+    type: string;
     photo: Express.Multer.File;
   };
 

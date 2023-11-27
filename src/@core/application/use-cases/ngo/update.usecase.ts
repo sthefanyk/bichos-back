@@ -59,8 +59,8 @@ export namespace NGOUpdate {
             if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
 
             const cnpjExists = await this.repo.findByCnpj(new CNPJ(input.cnpj));
-            const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
-            const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+            const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
+            const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
             
             const id = ngo.id;
             if (emailExists && emailExists.id !== id) throw new AlreadyExistsError('Email already exists');

@@ -1,10 +1,9 @@
 import EntityProps from "src/@core/shared/domain/entities/entity-props";
 import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString, Length, MaxLength } from "class-validator";
 import { SexAnimal } from "src/@core/shared/domain/enums/sex-animal";
-import { AnimalAttr } from "./animal";
+import { AnimalAttr, ImageAttr } from "./animal";
 import { Species } from "src/@core/shared/domain/enums/species.enum";
 import { Personality } from "../personality";
-import UUID from "src/@core/shared/domain/value-objects/uuid.vo";
 
 export class AnimalProps extends EntityProps {
 
@@ -36,10 +35,10 @@ export class AnimalProps extends EntityProps {
     @IsNotEmpty()
     personalities: Personality[];
 
-    main_image: UUID;
-    second_image: UUID;
-    third_image: UUID;
-    fourth_image: UUID;
+    main_image: ImageAttr;
+    second_image: ImageAttr;
+    third_image: ImageAttr;
+    fourth_image: ImageAttr;
 
     constructor(props: AnimalAttr){
         super(props.id, props.created_at, props.updated_at, props.deleted_at);
@@ -50,10 +49,10 @@ export class AnimalProps extends EntityProps {
         this.history = props.history;
         this.characteristic = props.characteristic;
         this.personalities = props.personalities;
-        this.main_image = new UUID(props.main_image);
-        this.second_image = new UUID(props.second_image);
-        this.third_image = new UUID(props.third_image);
-        this.fourth_image = new UUID(props.fourth_image);
+        this.main_image = props.main_image;
+        this.second_image = props.second_image;
+        this.third_image = props.third_image;
+        this.fourth_image = props.fourth_image;
     }
 
 }

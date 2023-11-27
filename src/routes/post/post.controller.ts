@@ -6,8 +6,7 @@ import {
   Query,
   Param,
   Patch,
-  UseInterceptors,
-  UploadedFiles,
+  UseInterceptors
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import {

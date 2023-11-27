@@ -9,6 +9,11 @@ import UserProps from "src/@core/domain/entities/users/user-props";
 import { UserModel, CityModel } from "src/@core/domain/models";
 import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 import { DataSource, Repository } from "typeorm";
+import { GalleryTypeormRepository } from "./gallery-typeorm.repository";
+import { PersonTypeormRepository } from "./person-typeorm.repository";
+import { ShelterTypeormRepository } from "./shelter-typeorm.repository";
+import { NGOTypeormRepository } from "./ngo-typeorm.repository";
+import { Role } from "src/@core/shared/domain/enums/role.enum";
 
 export class UserImpl extends User implements EntityMarker {
   constructor(user: UserAttr) {
@@ -20,10 +25,18 @@ export class UserImpl extends User implements EntityMarker {
 export class UserTypeormRepository implements IUserRepository {
   private repo: Repository<UserModel>;
   private repoCity: Repository<CityModel>;
+  protected repoGallery: GalleryTypeormRepository;
+  protected RepoPerson: PersonTypeormRepository;
+  protected RepoShelter: ShelterTypeormRepository;
+  protected RepoNGO: NGOTypeormRepository;
 
   constructor(dataSource: DataSource) {
     this.repo = dataSource.getRepository(UserModel);
     this.repoCity = dataSource.getRepository(CityModel);
+    this.repoGallery = new GalleryTypeormRepository(dataSource);
+    this.RepoPerson = new PersonTypeormRepository(dataSource);
+    this.RepoShelter = new ShelterTypeormRepository(dataSource);
+    this.RepoNGO = new NGOTypeormRepository(dataSource);
   }
   
   async findAllUser(): UserSearch.Output {
@@ -37,11 +50,27 @@ export class UserTypeormRepository implements IUserRepository {
         relations: ['state']
       });
 
-      users.push(new UserImpl({
-        ...user,
-        role: +user.role,
-        city: new City({...city, state: new State({...city.state})}),
-      }));
+      const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+      const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+      if(user.role === Role.PERSON){
+        const aux = await this.RepoPerson.findById(user.id);
+        users.push(aux);
+      } else if(user.role === Role.SHELTER){
+        const aux = await this.RepoShelter.findById(user.id);
+        users.push(aux);
+      } else if(user.role === Role.NGO){
+        const aux = await this.RepoNGO.findById(user.id);
+        users.push(aux);
+      } else {
+        users.push(new UserImpl({
+          ...user,
+          role: +user.role,
+          profile_picture: { id: user.profile_picture, url: profile_picture.url },
+          header_picture: { id: user.header_picture, url: header_picture.url },
+          city: new City({...city, state: new State({...city.state})}),
+        }));
+      }
     }
 
     return users
@@ -61,9 +90,23 @@ export class UserTypeormRepository implements IUserRepository {
       relations: ['state']
     });
 
+    const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+    const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+    if(user.role === Role.PERSON)
+      return this.RepoPerson.findById(user.id);
+
+    if(user.role === Role.SHELTER)
+      return this.RepoShelter.findById(user.id);
+
+    if(user.role === Role.NGO)
+      return this.RepoNGO.findById(user.id);
+
     return new UserImpl({
       ...user,
       role: +user.role,
+      profile_picture: { id: user.profile_picture, url: profile_picture.url },
+      header_picture: { id: user.header_picture, url: header_picture.url },
       city: new City({...city, state: new State({...city.state})}),
     })
   }
@@ -81,9 +124,23 @@ export class UserTypeormRepository implements IUserRepository {
       relations: ['state']
     });
 
+    const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+    const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+    if(user.role === Role.PERSON)
+      return this.RepoPerson.findById(user.id);
+
+    if(user.role === Role.SHELTER)
+      return this.RepoShelter.findById(user.id);
+
+    if(user.role === Role.NGO)
+      return this.RepoNGO.findById(user.id);
+
     return new UserImpl({
       ...user,
       role: +user.role,
+      profile_picture: { id: user.profile_picture, url: profile_picture.url },
+      header_picture: { id: user.header_picture, url: header_picture.url },
       city: new City({...city, state: new State({...city.state})}),
     });
   }
@@ -101,8 +158,22 @@ export class UserTypeormRepository implements IUserRepository {
       relations: ['state']
     });
 
+    const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+    const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+    if(user.role === Role.PERSON)
+      return this.RepoPerson.findById(user.id);
+
+    if(user.role === Role.SHELTER)
+      return this.RepoShelter.findById(user.id);
+
+    if(user.role === Role.NGO)
+      return this.RepoNGO.findById(user.id);
+
     return new UserImpl({
       ...user,
+      profile_picture: { id: user.profile_picture, url: profile_picture.url },
+      header_picture: { id: user.header_picture, url: header_picture.url },
       role: +user.role,
       city: new City({...city, state: new State({...city.state})}),
     });

@@ -29,8 +29,8 @@ POST http://localhost:3000/breed
 Content-Type: application/json
 
 {
-    "name": "rusk",
-    "specie": 1
+    "name": "york shire",
+    "specie": "0"
 }
 
 ###

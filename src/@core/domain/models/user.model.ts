@@ -21,7 +21,7 @@ export class UserModel implements ModelMarker {
   @JoinColumn({name: 'city_name'})
   city: CityModel;
 
-  @Column({ type: 'text', default: '' })
+  @Column({ type: 'varchar', default: '' })
   description: string;
 
   @Column({ type: 'varchar', default: '' })

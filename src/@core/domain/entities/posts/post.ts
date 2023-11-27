@@ -3,6 +3,7 @@ import { Animal } from "./animal";
 import { EntityMarker } from "src/@core/shared/domain/markers/entity.marker";
 import { PostProps } from "./post-props";
 import { Contact } from "../contact";
+import User from "../users/user";
 
 const PhotosConfig = [
   { name: 'main_photo', maxCount: 1 },
@@ -15,7 +16,7 @@ export default PhotosConfig;
 
 export type PostAttr = {
     urgent: boolean;
-    posted_by: string;
+    posted_by: User;
     renewal_count?: number;
     latest_status_update?: Date;
     type: TypePost;
@@ -41,7 +42,7 @@ export class Post implements EntityMarker {
         return { 
             ...this.postProps,
             id: this.id,
-            posted_by: this.posted_by,
+            posted_by: this.posted_by.toJson(),
             contact: this.contact.toJson(),
             animal: this.postProps.animal.toJson(),
         };
@@ -63,8 +64,8 @@ export class Post implements EntityMarker {
         return this.postProps.urgent;  
     }
 
-    get posted_by(): string {
-        return this.postProps.posted_by.id; 
+    get posted_by(): User {
+        return this.postProps.posted_by; 
     }
 
     get renewal_count(): number {

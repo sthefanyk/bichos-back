@@ -60,5 +60,24 @@ export class GalleryTypeormRepository implements IGalleryRepository {
       type: +model.type
     });
   }
+
+  async removeImage(id: string): Promise<boolean> {
+    const name = id + '.png';
+  
+    const { error } = await supabase.storage.from("profile").remove([name]);
+
+    const image = await this.findImageById(id);
+
+    await this.repo.remove({
+      id: image.id,
+      type: image.type
+    });
+  
+    if (error) {
+      return false;
+    }
+
+    return true;
+  }
   
 }

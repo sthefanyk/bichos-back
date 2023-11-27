@@ -1,14 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { DiseaseAllergyTypes } from 'src/@core/shared/domain/enums/disease-allergy.enum';
-import { HealthModel, AnimalModel } from '.';
+import { HealthModel } from '.';
 
 @Entity('disease_allergy')
 export class DiseaseAllergyModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
-  @OneToOne(() => AnimalModel, (animal) => animal.id)
-  @JoinColumn({name: 'id_animal'})
-  id_animal: string;
+  id: string;
 
   @Column({ type: 'varchar' })
   name: string;

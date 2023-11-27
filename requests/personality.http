@@ -26,15 +26,15 @@ POST http://localhost:3000/personality
 Content-Type: application/json
 
 {
-    "name": "calmo"
+    "name": "comilão"
 }
 
 ###
-PUT http://localhost:3000/personality/ee09e9e0-204c-4f9e-bbe8-5fc7968929ed
+PUT http://localhost:3000/personality/e2d98014-37d9-4383-8dce-681e3ef7cf43
 Content-Type: application/json
 
 {
-    "name": "bricalhão"
+    "name": "brincalhão"
 }
 
 ###

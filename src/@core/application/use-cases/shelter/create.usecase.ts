@@ -32,8 +32,8 @@ export namespace ShelterCreate {
             password: input.password,
             city: city,
             description: input.description,
-            profile_picture: input.profile_picture,
-            header_picture: input.header_picture,
+            profile_picture: { id: input.profile_picture },
+            header_picture: { id: input.header_picture },
           }
         }
       );
@@ -67,8 +67,8 @@ export namespace ShelterCreate {
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       
       const cpfExists = await this.repo.findByCpf(new CPF(input.responsible_cpf));
-      const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
-      const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+      const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
+      const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
       const nameShelterExists = await this.repo.findByNameShelter(input.name_shelter.toLowerCase());
       
       if (emailExists) throw new AlreadyExistsError('Email already exists');

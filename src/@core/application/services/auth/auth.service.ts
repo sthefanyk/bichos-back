@@ -96,7 +96,7 @@ export class AuthService implements IAuth {
     return this.createToken(user, '7days');
   }
 
-  async findUserById(id: string): Promise<User> {
+  async findUserById(id: string) {
     const user = await this.repo.findUserById(id);
 
     if (!user) {

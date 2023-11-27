@@ -46,11 +46,14 @@ export namespace PublishAdoptPost {
       
       const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
       if (!city) throw new NotFoundError('City not found');
+
+      const user = await this.repoUser.findUserById(input.posted_by);
+      if (!user) throw new NotFoundError('User not found');
       
       const post = new Post({
-        urgent: input.urgent == 'true',
+        urgent: input.urgent,
         urgency_justification: input.urgency_justification,
-        posted_by: input.posted_by,
+        posted_by: user,
         type: TypePost.ADOPTION,
         animal: new AnimalAdopt(
           {
@@ -67,10 +70,10 @@ export namespace PublishAdoptPost {
             history: input.history,
             characteristic: input.characteristic,
             personalities,
-            main_image: input.main_image,
-            second_image: input.second_image,
-            third_image: input.third_image,
-            fourth_image: input.fourth_image,
+            main_image: {id: input.main_image},
+            second_image: {id: input.second_image},
+            third_image: {id: input.third_image},
+            fourth_image: {id: input.fourth_image},
           },
           ),
           contact: new Contact({
@@ -84,18 +87,18 @@ export namespace PublishAdoptPost {
     }
 
     async validate(input: Input) {
-      if (!input.urgent) throw new RequiredError('urgent');
-      if (input.urgent == 'true' && !input.urgency_justification)
+      if (typeof input.urgent === 'undefined') throw new RequiredError('urgent');
+      if (input.urgent == true && !input.urgency_justification)
         throw new RequiredError('urgency_justification');
       if (!input.posted_by) throw new RequiredError('posted_by');
 
-      if (!input.size_current) throw new RequiredError('size');
-      if (!input.size_estimated) throw new RequiredError('size');
+      if (typeof input.size_current === 'undefined') throw new RequiredError('size');
+      if (typeof input.size_estimated === 'undefined') throw new RequiredError('size');
       if (!input.breed) throw new RequiredError('breed');
       if (!input.name) throw new RequiredError('name');
-      if (!input.sex) throw new RequiredError('sex');
+      if (typeof input.sex === 'undefined') throw new RequiredError('sex');
       if (!input.date_birth) throw new RequiredError('date_birth');
-      if (!input.specie) throw new RequiredError('species');
+      if (typeof input.specie === 'undefined') throw new RequiredError('species');
       if (!input.main_image) throw new RequiredError('main_image');
       if (!input.second_image) throw new RequiredError('second_image');
       if (!input.third_image) throw new RequiredError('third_image');
@@ -133,7 +136,8 @@ export namespace PublishAdoptPost {
     validateHealth(input: Input) {
       if (!input.health) throw new RequiredError('health');
 
-      if (!input.health.neutered) throw new RequiredError('neutered in health');
+      if (typeof input.health.neutered === 'undefined') 
+        throw new RequiredError('neutered in health');
       if (typeof input.health.neutered !== 'boolean')
         throw new EntityValidationError('The neutered is not a boolean');
 
@@ -151,12 +155,12 @@ export namespace PublishAdoptPost {
 
       input.health.disease_allergy.forEach((item) => {
         if (!item.name) throw new RequiredError('name in disease_allergy');
-        if (!item.type) throw new RequiredError('type in disease_allergy');
+        if (item.type !== 0 && item.type !== 1) throw new RequiredError('type in disease_allergy');
       });
 
       input.health.vaccines_medicines.forEach((item) => {
         if (!item.name) throw new RequiredError('name in vaccines_medicines');
-        if (!item.type) throw new RequiredError('type in vaccines_medicines');
+        if (item.type !== 0 && item.type !== 1) throw new RequiredError('type in vaccines_medicines');
         if (!item.total_dose)
           throw new RequiredError('total_dose in vaccines_medicines');
         if (!item.doses) throw new RequiredError('doses in vaccines_medicines');
@@ -214,15 +218,15 @@ export namespace PublishAdoptPost {
   }
 
   export type Input = {
-    urgent: string;
+    urgent: boolean;
     urgency_justification?: string;
     posted_by: string;
 
-    size_current: string;
-    size_estimated: string;
+    size_current: number;
+    size_estimated: number;
     breed: string;
     name: string;
-    sex: string;
+    sex: number;
     date_birth: string;
     specie: string;
     characteristic: string;

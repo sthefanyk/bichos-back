@@ -1,1 +1,4 @@
-GET http://localhost:3000/gallery/image/url/8cd05280-bc3e-42b4-bd9f-50c53fa3a110
+GET http://localhost:3000/gallery/image/url/9f3e98a0-cfe3-49ec-b3ed-d7f5b4c37bc7
+
+###
+DELETE http://localhost:3000/gallery/image/c42f8047-ae5f-4b9d-9d72-73ee4e39565d

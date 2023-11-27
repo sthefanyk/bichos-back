@@ -3,6 +3,11 @@ import { Species } from "src/@core/shared/domain/enums/species.enum";
 import { AnimalProps } from "./animal-props";
 import { Personality } from "../personality";
 
+export type ImageAttr = {
+    id: string;
+    url?: string;
+}
+
 export type AnimalAttr = {
     name: string;
     sex: SexAnimal;
@@ -12,10 +17,10 @@ export type AnimalAttr = {
     characteristic?: string;
     personalities: Personality[];
 
-    main_image: string;
-    second_image: string;
-    third_image: string;
-    fourth_image: string;
+    main_image: ImageAttr;
+    second_image: ImageAttr;
+    third_image: ImageAttr;
+    fourth_image: ImageAttr;
 
     id?: string,
     created_at?: Date,
@@ -70,20 +75,32 @@ export abstract class Animal {
         return this.props.personalities;
     }
 
-    get main_image(): string {
-        return this.props.main_image.id;
+    get main_image(): ImageAttr {
+        return {
+            id: this.props.main_image.id,
+            url: this.props.main_image.url
+        };
     }
 
-    get second_image(): string {
-        return this.props.second_image.id;
+    get second_image(): ImageAttr {
+        return {
+            id: this.props.second_image.id,
+            url: this.props.second_image.url
+        };
     }
 
-    get third_image(): string {
-        return this.props.third_image.id;
+    get third_image(): ImageAttr {
+        return {
+            id: this.props.third_image.id,
+            url: this.props.third_image.url
+        };
     }
 
-    get fourth_image(): string {
-        return this.props.fourth_image.id;
+    get fourth_image(): ImageAttr {
+        return {
+            id: this.props.fourth_image.id,
+            url: this.props.fourth_image.url
+        };
     }
 
     get id(): string {

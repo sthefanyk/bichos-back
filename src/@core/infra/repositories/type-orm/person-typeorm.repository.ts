@@ -5,18 +5,19 @@ import { PersonModel, UserModel } from '../../../domain/models';
 import { PersonCreate, PersonFindById, PersonUpdate, PersonFindByCpf } from 'src/@core/application/use-cases/person';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { UserFindByEmail, UserFindByUsername } from 'src/@core/application/use-cases/user';
-import { UserTypeormRepository } from './user-typeorm.repository';
 import { State } from 'src/@core/domain/entities/localization/state';
 import { City } from 'src/@core/domain/entities/localization/city';
+import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
-export class PersonTypeormRepository extends UserTypeormRepository implements IPersonRepository {
+export class PersonTypeormRepository implements IPersonRepository {
   private personRepo: Repository<PersonModel>;
   private userRepo: Repository<UserModel>;
+  private repoGallery: GalleryTypeormRepository;
 
   constructor(private dataSource: DataSource) {
-    super(dataSource);
     this.personRepo = this.dataSource.getRepository(PersonModel);
     this.userRepo = this.dataSource.getRepository(UserModel);
+    this.repoGallery = new GalleryTypeormRepository(dataSource);
   }
   
   async findByEmail(email: string): UserFindByEmail.Output {
@@ -40,7 +41,12 @@ export class PersonTypeormRepository extends UserTypeormRepository implements IP
   }
 
   async insert(entity: Person): PersonCreate.Output {
-    const user = await this.userRepo.save(entity.user);
+    const user = await this.userRepo.save({
+      ...entity.user,
+      header_picture: entity.user.header_picture.id,
+      profile_picture: entity.user.profile_picture.id
+    });
+
     const person = await this.personRepo.save({...entity.toJson(), user});
 
     if (!user || !person) return null;
@@ -72,7 +78,11 @@ export class PersonTypeormRepository extends UserTypeormRepository implements IP
 
   async update(entity: Person): PersonUpdate.Output {
     const userUpdateResult = await this.userRepo.update(
-      entity.id, entity.user
+      entity.id, {
+        ...entity.user,
+        header_picture: entity.user.header_picture.id,
+        profile_picture: entity.user.profile_picture.id
+      }
     );
 
     const personUpdateResult = await this.personRepo.update(
@@ -80,7 +90,11 @@ export class PersonTypeormRepository extends UserTypeormRepository implements IP
         id: entity.id,
         cpf: entity.cpf,
         date_birth: entity.date_birth,
-        user: entity.user,
+        user: {
+          ...entity.user,
+          header_picture: entity.user.header_picture.id,
+          profile_picture: entity.user.profile_picture.id
+        },
       }
     );
 
@@ -120,10 +134,15 @@ export class PersonTypeormRepository extends UserTypeormRepository implements IP
 
     if (!person) return null;
 
+    const profile_picture = await this.repoGallery.getImageUrl(person.user.profile_picture);
+    const header_picture = await this.repoGallery.getImageUrl(person.user.header_picture);
+
     return new Person({
       ...person,
       userAttr: {
         ...person.user,
+        profile_picture: { id: person.user.profile_picture, url: profile_picture.url },
+        header_picture: { id: person.user.header_picture, url: header_picture.url },
         city: new City({ 
           ...person.user.city, 
           state: new State({ ...person.user.city.state })
@@ -135,12 +154,17 @@ export class PersonTypeormRepository extends UserTypeormRepository implements IP
   async _convertAll(models: PersonModel[]) {
     const persons: Person[] = [];
 
-    models.forEach(person => {
+    for (const person of models) {
+      const profile_picture = await this.repoGallery.getImageUrl(person.user.profile_picture);
+      const header_picture = await this.repoGallery.getImageUrl(person.user.header_picture);
+
       persons.push(
         new Person({
           ...person,
           userAttr: {
             ...person.user,
+            profile_picture: { id: person.user.profile_picture, url: profile_picture.url },
+            header_picture: { id: person.user.header_picture, url: header_picture.url },
             city: new City({ 
               ...person.user.city, 
               state: new State({ ...person.user.city.state })
@@ -148,7 +172,7 @@ export class PersonTypeormRepository extends UserTypeormRepository implements IP
           }
         })
       )
-    })
+    }
 
     return persons;
   }

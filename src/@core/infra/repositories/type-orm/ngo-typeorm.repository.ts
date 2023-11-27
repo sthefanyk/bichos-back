@@ -4,20 +4,21 @@ import { DataSource, Repository } from 'typeorm';
 import { NGOModel, UserModel } from '../../../domain/models';
 import { NGOCreate, NGOFindByCnpj, NGOFindById, NGOUpdate } from 'src/@core/application/use-cases/ngo';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
-import { UserTypeormRepository } from './user-typeorm.repository';
 import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
 import { State } from 'src/@core/domain/entities/localization/state';
 import { City } from 'src/@core/domain/entities/localization/city';
+import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
-export class NGOTypeormRepository extends UserTypeormRepository implements INGORepository {
+export class NGOTypeormRepository implements INGORepository {
   private ngoRepo: Repository<NGOModel>;
   private userRepo: Repository<UserModel>;
+  private repoGallery: GalleryTypeormRepository;
 
   constructor(private dataSource: DataSource) {
-    super(dataSource);
     this.ngoRepo = this.dataSource.getRepository(NGOModel);
     this.userRepo = this.dataSource.getRepository(UserModel);
+    this.repoGallery = new GalleryTypeormRepository(dataSource);
   }
   
   async findByEmail(email: string): UserFindByEmail.Output {
@@ -41,7 +42,12 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
   }
 
   async insert(entity: NGO): NGOCreate.Output {
-    const user = await this.userRepo.save(entity.user);
+    const user = await this.userRepo.save({
+      ...entity.user,
+      header_picture: entity.user.header_picture.id,
+      profile_picture: entity.user.profile_picture.id
+    });
+
     const ngo = await this.ngoRepo.save({...entity.toJson(), user});
 
     if (!user || !ngo) return null;
@@ -73,8 +79,11 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
 
   async update(entity: NGO): NGOUpdate.Output {
     const userUpdateResult = await this.userRepo.update(
-      entity.id, entity.user
-    );
+      entity.id, {
+      ...entity.user,
+      header_picture: entity.user.header_picture.id,
+      profile_picture: entity.user.profile_picture.id
+    });
 
     const ngoUpdateResult = await this.ngoRepo.update(
       entity.id, {
@@ -121,10 +130,15 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
 
     if (!ngo) return null;
 
+    const profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
+    const header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
+
     return new NGO({
       ...ngo,
       userAttr: {
         ...ngo.user,
+        profile_picture: { id: ngo.user.profile_picture, url: profile_picture.url },
+        header_picture: { id: ngo.user.header_picture, url: header_picture.url },
         city: new City({ 
           ...ngo.user.city, 
           state: new State({ ...ngo.user.city.state })
@@ -136,12 +150,17 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
   async _convertAll(models: NGOModel[]) {
     const ngos: NGO[] = [];
 
-    models.forEach(ngo => {
+    for (const ngo of models) {
+      const profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
+      const header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
+      
       ngos.push(
         new NGO({
           ...ngo,
           userAttr: {
             ...ngo.user,
+            profile_picture: { id: ngo.user.profile_picture, url: profile_picture.url },
+            header_picture: { id: ngo.user.header_picture, url: header_picture.url },
             city: new City({ 
               ...ngo.user.city, 
               state: new State({ ...ngo.user.city.state })
@@ -149,7 +168,7 @@ export class NGOTypeormRepository extends UserTypeormRepository implements INGOR
           }
         })
       )
-    })
+    }
 
     return ngos;
   }

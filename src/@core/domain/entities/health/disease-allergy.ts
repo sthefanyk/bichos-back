@@ -2,6 +2,7 @@ import { DiseaseAllergyTypes } from "src/@core/shared/domain/enums/disease-aller
 import { DiseaseAllergyProps } from "./disease-allergy-props";
 
 export type DiseaseAllergyAttr = {
+    id?: string;
     name: string;
     description: string;
     type: DiseaseAllergyTypes;
@@ -15,7 +16,11 @@ export class DiseaseAllergy {
     }
 
     toJson() {
-        return { ...this.props };
+        return { id: this.id, ...this.props };
+    }
+
+    get id(): string {
+        return this.props.id.id;
     }
 
     get name(): string {

@@ -33,8 +33,8 @@ export namespace PersonCreate {
             password: input.password,
             city: city,
             description: input.description,
-            profile_picture: input.profile_picture,
-            header_picture: input.header_picture,
+            profile_picture: { id: input.profile_picture },
+            header_picture: { id: input.header_picture },
           }
         },
       );
@@ -65,8 +65,8 @@ export namespace PersonCreate {
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
-      const emailExists = await this.repo.findUserByEmail(input.email.toLowerCase());
-      const usernameExists = await this.repo.findUserByUsername(input.username.toLowerCase());
+      const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
+      const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
             
       if (emailExists) throw new AlreadyExistsError('Email already exists');
       if (usernameExists) throw new AlreadyExistsError('Username already exists');

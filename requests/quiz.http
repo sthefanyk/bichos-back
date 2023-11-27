@@ -1,15 +1,15 @@
 GET http://localhost:3000/quiz
 
 ###
-GET http://localhost:3000/quiz/1eef8c38-785a-402d-9fdf-97c7cea2096a
+GET http://localhost:3000/quiz/c72f90bd-ab44-4825-9e7a-b30e33e65f84
 
 ###
 POST http://localhost:3000/quiz
 Content-Type: application/json
 
 {
-    "title": "titulo",
-    "description": "description quiz"
+    "title": "Adotar um bicho",
+    "description": "Conte-nos sobre o bicho"
 }
 
 ###
@@ -17,17 +17,38 @@ POST http://localhost:3000/quiz/add/question
 Content-Type: application/json
 
 {
-    "id_quiz": "1eef8c38-785a-402d-9fdf-97c7cea2096a",
+    "id_quiz": "c72f90bd-ab44-4825-9e7a-b30e33e65f84",
     "question": {
         "question": "Por que bla bla bla?",
         "type": 1,
-        "others": false,
+        "others": true,
         "alternatives": [
             "bla1",
-            "bla2"
+            "bla2",
+            "bla3",
+            "bla4",
+            "bla5"
         ]
     }
 }
 
 ###
+POST http://localhost:3000/quiz/add/question
+Content-Type: application/json
+
+{
+    "id_quiz": "c72f90bd-ab44-4825-9e7a-b30e33e65f84",
+    "question": {
+        "question": "Por que bla bla bla?",
+        "type": 0,
+        "others": false,
+        "alternatives": []
+    }
+}
+
+###
 DELETE http://localhost:3000/quiz/question/495fcfd1-6a47-4c20-9a07-29a0c90b5a3a
+
+
+
+# Este formulário é para a adoção de dois ou mais animais

@@ -28,7 +28,7 @@ GET http://localhost:3000/person?page=3&per_page=3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
-GET http://localhost:3000/person/2bd90caa-f13b-4780-ab03-997dfef1bae1
+GET http://localhost:3000/person/2bcd6cb3-07bc-462c-98be-a79b8d9a9a94
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 ###
@@ -38,15 +38,15 @@ Content-Type: application/json
 {
     "cpf": "00000000001",
     "date_birth": "2002-02-11",
-    "full_name": "Sthe1",
-    "username": "Sthe1",
-    "name": "Sthe1",
-    "email": "sthe1@sthe.com",
+    "full_name": "Sthe",
+    "username": "SthefanyK",
+    "name": "Sthe :)",
+    "email": "sthe@sthe.com",
     "password": "Sthe1234",
     "city": "Paranaguá",
-    "description": "",
-    "profile_picture": "71b9256a-648b-4fb9-a014-2a8351e4081f",
-    "header_picture": "71b9256a-648b-4fb9-a014-2a8351e4081f"
+    "description": "Descrição do perfil",
+    "profile_picture": "fcdeb3ac-11bc-4147-a73e-67c4259a7154",
+    "header_picture": "fcdeb3ac-11bc-4147-a73e-67c4259a7154"
 }
 
 

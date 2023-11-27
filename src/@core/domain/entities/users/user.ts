@@ -3,7 +3,11 @@ import * as bcrypt from 'bcrypt';
 import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
 import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+
+export type ImageAttr = {
+  id: string;
+  url?: string;
+}
 
 export type UserAttr = {
   full_name: string,
@@ -14,8 +18,8 @@ export type UserAttr = {
   city: City,
   role?: Role,
   description?: string,
-  profile_picture: string,
-  header_picture: string,
+  profile_picture: ImageAttr,
+  header_picture: ImageAttr,
   id?: string,
   created_at?: Date,
   updated_at?: Date,
@@ -69,8 +73,8 @@ export default abstract class User implements EntityMarker {
     this.props.email = data.email.toLowerCase();
     this.props.city = data.city;
     this.props.description = data.description ?? this.props.description;
-    this.props.profile_picture = new UUID(data.profile_picture);
-    this.props.header_picture = new UUID(data.header_picture);
+    this.props.profile_picture = { id: data.profile_picture };
+    this.props.header_picture = { id: data.header_picture };
 
     this.props.updated_at = new Date();
     
@@ -141,12 +145,18 @@ export default abstract class User implements EntityMarker {
     return this.props.description;
   }
 
-  get profile_picture(): string {
-    return this.props.profile_picture.id;
+  get profile_picture(): ImageAttr {
+    return {
+        id: this.props.profile_picture.id,
+        url: this.props.profile_picture.url
+    };
   }
 
-  get header_picture(): string {
-    return this.props.header_picture.id;
+  get header_picture(): ImageAttr {
+    return {
+        id: this.props.header_picture.id,
+        url: this.props.header_picture.url
+    };
   }
 
   get id(): string {

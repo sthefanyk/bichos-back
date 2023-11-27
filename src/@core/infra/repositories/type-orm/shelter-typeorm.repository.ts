@@ -12,22 +12,28 @@ import Shelter from 'src/@core/domain/entities/users/shelter';
 import { ShelterModel, UserModel } from 'src/@core/domain/models';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { DataSource, Repository } from 'typeorm';
-import { UserTypeormRepository } from './user-typeorm.repository';
 import { City } from 'src/@core/domain/entities/localization/city';
 import { State } from 'src/@core/domain/entities/localization/state';
+import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
-export class ShelterTypeormRepository extends UserTypeormRepository implements IShelterRepository  {
+export class ShelterTypeormRepository implements IShelterRepository  {
   private shelterRepo: Repository<ShelterModel>;
   private userRepo: Repository<UserModel>;
+  private repoGallery: GalleryTypeormRepository;
 
   constructor(private dataSource: DataSource) {
-    super(dataSource);
     this.shelterRepo = this.dataSource.getRepository(ShelterModel);
     this.userRepo = this.dataSource.getRepository(UserModel);
+    this.repoGallery = new GalleryTypeormRepository(dataSource);
   }
 
   async insert(entity: Shelter): ShelterCreate.Output {    
-    const user = await this.userRepo.save(entity.user);
+    const user = await this.userRepo.save({
+      ...entity.user,
+      header_picture: entity.user.header_picture.id,
+      profile_picture: entity.user.profile_picture.id
+    });
+
     const shelter = await this.shelterRepo.save({...entity.toJson(), user});
 
     if (!user || !shelter) return null;
@@ -51,7 +57,11 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
 
   async update(entity: Shelter): ShelterUpdate.Output {
     const userUpdateResult = await this.userRepo.update(
-      entity.id, entity.user
+      entity.id, {
+        ...entity.user,
+        header_picture: entity.user.header_picture.id,
+        profile_picture: entity.user.profile_picture.id
+      }
     );
 
     const shelterUpdateResult = await this.shelterRepo.update(
@@ -61,7 +71,11 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
         responsible_cpf: entity.responsible_cpf,
         responsible_date_birth: entity.responsible_date_birth,
         star_date_shelter: entity.star_date_shelter,
-        user: entity.user
+        user: {
+          ...entity.user,
+          header_picture: entity.user.header_picture.id,
+          profile_picture: entity.user.profile_picture.id
+        }
       }
     );
 
@@ -141,10 +155,15 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
 
     if (!shelter) return null;
 
+    const profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
+    const header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+
     return new Shelter({
       ...shelter,
       userAttr: {
         ...shelter.user,
+        profile_picture: { id: shelter.user.profile_picture, url: profile_picture.url },
+        header_picture: { id: shelter.user.header_picture, url: header_picture.url },
         city: new City({ 
           ...shelter.user.city, 
           state: new State({ ...shelter.user.city.state })
@@ -156,12 +175,17 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
   async _convertAll(models: ShelterModel[]) {
     const shelters: Shelter[] = [];
 
-    models.forEach(shelter => {
+    for (const shelter of models) {
+      const profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
+      const header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+
       shelters.push(
         new Shelter({
           ...shelter,
           userAttr: {
             ...shelter.user,
+            profile_picture: { id: shelter.user.profile_picture, url: profile_picture.url },
+            header_picture: { id: shelter.user.header_picture, url: header_picture.url },
             city: new City({ 
               ...shelter.user.city, 
               state: new State({ ...shelter.user.city.state })
@@ -169,7 +193,7 @@ export class ShelterTypeormRepository extends UserTypeormRepository implements I
           }
         })
       )
-    })
+    }
 
     return shelters;
   }
