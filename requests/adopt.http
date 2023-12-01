@@ -40,3 +40,10 @@ Content-Type: application/json
     ]
 }
 
+###
+PATCH http://localhost:3000/adopt/choose/adopter/6bb369b7-ae70-4e0e-b75d-13f8ba70dc6a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0aGVmYW55ayIsImVtYWlsIjoic3RoZUBzdGhlLmNvbSIsImlhdCI6MTcwMTExNzE4OCwiZXhwIjoxNzAxNzIxOTg4LCJhdWQiOiJ1c2VycyIsImlzcyI6IkFQSSBCaWNob3MiLCJzdWIiOiI1NDM3ZjhmMS1mY2ZhLTQ1YzktOThkZC1mODcyODkyOTJiZjYifQ.K-CNNDmyQFkEdgZbvGUG4U0Gr7pvh84aQSH3LD9rvCE
+
+###
+GET http://localhost:3000/adopt/adopter/409ed03f-4244-4789-948b-46df1563c697
+

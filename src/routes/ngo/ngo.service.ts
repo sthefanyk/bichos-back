@@ -10,6 +10,7 @@ import {
 } from 'src/@core/application/use-cases/ngo';
 import { NGOCollectionPresenter } from './ngo.presenter';
 import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
+import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
 
 @Injectable()
 export class NGOService {
@@ -37,8 +38,15 @@ export class NGOService {
   @Inject(NGOActivate.Usecase)
   private activateUseCase: NGOActivate.Usecase;
 
+  @Inject(Service)
+  private service: Service;
+
   async create(data: NGOCreate.Input) {
-    return this.createUseCase.execute(data);
+    const {id} = await this.createUseCase.execute(data);
+
+    if (id) return this.service.singIn(data.email, data.password);
+    
+    return null;
   }
 
   async search(searchParams: NGOSearch.Input) {

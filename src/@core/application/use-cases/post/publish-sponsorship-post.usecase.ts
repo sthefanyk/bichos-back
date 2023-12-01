@@ -43,13 +43,13 @@ export namespace PublishSponsorshipPost {
       if (!user) throw new NotFoundError('User not found');
 
       const post = new Post({
-          urgent: input.urgent == "true",
+          urgent: input.urgent,
           urgency_justification: input.urgency_justification,
           posted_by: user,
           type: TypePost.SPONSORSHIP,
           animal: new AnimalSponsorship(
             {
-              accompany: input.accompany == "true",
+              accompany: input.accompany,
               reason_request: input.reason_request,
               needs
             },
@@ -78,11 +78,12 @@ export namespace PublishSponsorshipPost {
     }
 
     async validate(input: Input) {
-      if(!input.urgent) throw new RequiredError('urgent');
-      if (input.urgent === "true" && !input.urgency_justification) throw new RequiredError('urgency_justification');
+      if (typeof input.urgent === 'undefined') throw new RequiredError('urgent');
+      if (input.urgent == true && !input.urgency_justification)
+        throw new RequiredError('urgency_justification');
       if(!input.posted_by) throw new RequiredError('posted_by');
 
-      if(!(input.accompany === "true" || input.accompany === "false")) throw new RequiredError('accompany');
+      if (typeof input.accompany === 'undefined') throw new RequiredError('urgent');
       if(!input.reason_request) throw new RequiredError('reason_request');
       if(!input.name) throw new RequiredError('name');
       if(!input.sex) throw new RequiredError('sex');
@@ -123,11 +124,11 @@ export namespace PublishSponsorshipPost {
   }
 
   export type Input = {
-    urgent: string;
+    urgent: boolean;
     urgency_justification?: string;
     posted_by: string;
 
-    accompany: string;
+    accompany: boolean;
     reason_request: string;
     needs: string[];
     name: string;

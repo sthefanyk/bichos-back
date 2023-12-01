@@ -321,6 +321,8 @@ export class PostTypeormRepository implements IPostRepository {
       relations: ['contact_city', 'contact_city.state', 'animal', 'posted_by'],
     });
 
+    console.log(posts)
+
     return await Promise.all(
       posts.map(async (post) => await this._getPost(post)),
     );

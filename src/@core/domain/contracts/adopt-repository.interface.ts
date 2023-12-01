@@ -1,4 +1,4 @@
-import { AdoptFindById, AdoptSearch, AdoptUsecase } from "src/@core/application/use-cases/adopt";
+import { AdoptFindById, AdoptSearch, AdoptUsecase, ChooseAdopter, GetAdopterByAdoptPostId } from "src/@core/application/use-cases/adopt";
 import { Adopt } from "../entities/adopt/adopt";
 import { EvaluateResponses } from "src/@core/application/use-cases/adopt/evaluate-responses.usecase";
 
@@ -7,4 +7,6 @@ export interface IAdoptRepository {
     evaluateResponses(entity: Adopt): EvaluateResponses.Output;
     findById(id: string): AdoptFindById.Output;
     findAll(): AdoptSearch.Output;
+    updateStatus(entity: Adopt): ChooseAdopter.Output;
+    getAdopterByAdoptPostId(id_post: string): GetAdopterByAdoptPostId.Output;
 }

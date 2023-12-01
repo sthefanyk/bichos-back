@@ -11,6 +11,7 @@ import {
 } from 'src/@core/application/use-cases/person';
 import { PersonCollectionPresenter } from './person.presenter';
 import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
+import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
 
 @Injectable()
 export class PersonService {
@@ -41,8 +42,16 @@ export class PersonService {
   @Inject(PersonActivate.Usecase)
   private activateUseCase: PersonActivate.Usecase;
 
+  @Inject(Service)
+  private service: Service;
+
   async create(data: PersonCreate.Input) {
-    return this.createUseCase.execute(data);
+    const {id} = await this.createUseCase.execute(data);
+
+    if (id) return this.service.singIn(data.email, data.password);
+    
+    return null;
+
   }
 
   async search(searchParams: PersonSearch.Input) {

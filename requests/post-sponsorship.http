@@ -36,53 +36,27 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
 
 {
-    "urgent": "false",
-    "urgency_justification": "",
-    "posted_by": "fc2914c6-3cb7-4dd5-a4b9-fa17919659e7",
-    "accompany": "true",
+    "urgent": false,
+    "urgency_justification": "motivo",
+    "posted_by": "4775ce41-ed3e-4114-9c29-fc39cae9aa3d",
+    "accompany": true,
     "reason_request": "motivo",
-    "name": "theo",
+    "name": "call",
     "sex": "0",
     "date_birth": "2020/11/20",
     "species": "0",
-    "characteristic": "",
-    "history": "",
+    "characteristic": "caracteristica...",
+    "history": "história...",
     "personalities": [
         "calmo"
     ],
-    "main_image": "71b9256a-648b-4fb9-a014-2a8351e4081f",
-    "second_image": "71b9256a-648b-4fb9-a014-2a8351e4081f",
-    "third_image": "71b9256a-648b-4fb9-a014-2a8351e4081f",
-    "fourth_image": "71b9256a-648b-4fb9-a014-2a8351e4081f",
+    "main_image": "80589992-d1c7-45a6-949e-01eb0aa4d4a8",
+    "second_image": "80589992-d1c7-45a6-949e-01eb0aa4d4a8",
+    "third_image": "80589992-d1c7-45a6-949e-01eb0aa4d4a8",
+    "fourth_image": "80589992-d1c7-45a6-949e-01eb0aa4d4a8",
     "needs": [
         "dinheiro"
     ],
-    "contact": {
-        "name": "sthefany",
-        "email": "sthefany@sthe.com",
-        "phone": "1111-1111",
-        "city": "Paranaguá"
-    }
-}
-
-
-###
-PUT   http://localhost:3000/post/8126f7de-fccf-4fa1-978f-115967e4a2cc/sponsorship
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2OTU3NzA0NTgsImV4cCI6MTY5NjM3NTI1OCwiYXVkIjoidXNlcnMiLCJpc3MiOiJBUEkgQmljaG9zIiwic3ViIjoiOWMwYmU1ZDQtYTQ3Yy00MjdjLTgyMzQtNTRjNDVlNDgyNDQ4In0.GwekEjEZdsuOPV30LZVFTvZx0Rx4JJDgjwgy54T7-OA
-
-{
-    "urgent": "false",
-    "urgency_justification": "",
-    "posted_by": "03f45683-cdb8-4b70-875b-76f4e546f13d",
-    "accompany": "true",
-    "reason_request": "motivo",
-    "name": "spock",
-    "sex": "0",
-    "date_birth": "2020/11/20",
-    "species": "0",
-    "characteristic": "",
-    "history": "",
     "contact": {
         "name": "sthefany",
         "email": "sthefany@sthe.com",

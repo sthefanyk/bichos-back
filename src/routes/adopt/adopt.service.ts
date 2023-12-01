@@ -3,7 +3,9 @@ import {
   AdoptFindById,
   AdoptSearch,
   AdoptUsecase,
+  ChooseAdopter,
   EvaluateResponses,
+  GetAdopterByAdoptPostId,
 } from 'src/@core/application/use-cases/adopt';
 import { AdoptCollectionPresenter } from './adopt.presenter';
 
@@ -21,6 +23,12 @@ export class AdoptService {
   @Inject(EvaluateResponses.Usecase)
   private evaluateResponsesUseCase: EvaluateResponses.Usecase;
 
+  @Inject(ChooseAdopter.Usecase)
+  private chooseAdopterUseCase: ChooseAdopter.Usecase;
+
+  @Inject(GetAdopterByAdoptPostId.Usecase)
+  private getAdopterByAdoptPostIdUseCase: GetAdopterByAdoptPostId.Usecase;
+
   async adopt(data: AdoptUsecase.Input) {
     return await this.adoptUseCase.execute(data);
   }
@@ -37,5 +45,16 @@ export class AdoptService {
 
   async evaluateResponses(data: EvaluateResponses.Input) {
     return await this.evaluateResponsesUseCase.execute(data);
+  }
+
+  async chooseAdopter(data: ChooseAdopter.Input) {
+    return await this.chooseAdopterUseCase.execute(data);
+  }
+
+  async getAdopterByAdoptPostId(data: GetAdopterByAdoptPostId.Input) {
+    const user = await this.getAdopterByAdoptPostIdUseCase.execute(data);
+
+    if (!user) return null;
+    return user.toJson();
   }
 }

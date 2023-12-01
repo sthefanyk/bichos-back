@@ -9,7 +9,6 @@ export class GalleryController {
   @UseInterceptors(FileInterceptor('photo'))
   @Post('image')
   insertImage(@Body() data, @UploadedFile() photo: Express.Multer.File) {
-    console.log('aaaaaaaaaaaa')
     return this.galleryService.insertImage({
       type: data.type,
       photo

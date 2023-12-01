@@ -29,7 +29,7 @@ POST http://localhost:3000/breed
 Content-Type: application/json
 
 {
-    "name": "york shire",
+    "name": "siames",
     "specie": "0"
 }
 

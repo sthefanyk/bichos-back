@@ -11,6 +11,7 @@ import {
   ShelterActivate
 } from 'src/@core/application/use-cases/shelter';
 import { ShelterCollectionPresenter } from './shelter.presenter';
+import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
 
 @Injectable()
 export class ShelterService {
@@ -41,8 +42,15 @@ export class ShelterService {
   @Inject(ShelterActivate.Usecase)
   private activateUseCase: ShelterActivate.Usecase;
 
+  @Inject(Service)
+  private service: Service;
+
   async create(data: ShelterCreate.Input) {
-    return this.createUseCase.execute(data);
+    const {id} = await this.createUseCase.execute(data);
+
+    if (id) return this.service.singIn(data.email, data.password);
+    
+    return null;
   }
 
   async search(searchParams: ShelterSearch.Input) {

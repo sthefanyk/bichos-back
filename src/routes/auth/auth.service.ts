@@ -30,7 +30,6 @@ export class AuthService {
         username: result.username
       }
     });
-    return result
   }
 
   async reset({ token, password }: ResetAuthDto) {

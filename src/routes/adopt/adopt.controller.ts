@@ -6,6 +6,8 @@ import { AdoptSearch, AdoptUsecase, EvaluateResponses } from 'src/@core/applicat
 // import { Role } from 'src/@core/shared/domain/enums/role.enum';
 // import { AuthGuard } from 'src/guards/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { User } from 'src/decorators/user.decorator';
 
 @ApiTags('adopt')
 // @UseGuards(AuthGuard, RoleGuard)
@@ -32,6 +34,17 @@ export class AdoptController {
   @Post('evaluate/responses/:id_adopt')
   evaluateResponses(@Param('id_adopt') id_adopt: string, @Body() data: EvaluateResponses.Input){
     return this.adoptService.evaluateResponses({id_adopt,  ...data});
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('choose/adopter/:id_adopt')
+  chooseAdopter(@User() user, @Param('id_adopt') id_adopt: string) {
+    return this.adoptService.chooseAdopter({id: user.id, id_adopt });
+  }
+
+  @Get('adopter/:id_post')
+  getAdopterByAdoptPostId(@Param('id_post') id_post: string) {
+    return this.adoptService.getAdopterByAdoptPostId({id_post});
   }
 }
 

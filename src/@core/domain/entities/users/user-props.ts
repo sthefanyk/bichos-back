@@ -12,6 +12,7 @@ import {
 } from 'class-validator';
 import { ImageAttr, UserAttr } from './user';
 import { City } from '../localization/city';
+import { Image } from '../gallery/image';
 
 export default class UserProps extends EntityProps {
   @IsNotEmpty()
@@ -70,8 +71,8 @@ export default class UserProps extends EntityProps {
     this.password = props.password;
     this.role = props.role;
     this.description = props.description;
-    this.profile_picture = props.profile_picture;
-    this.header_picture = props.header_picture;
+    this.profile_picture = props.profile_picture.id ? props.profile_picture : {id: '', url: ''};
+    this.header_picture = props.header_picture.id ? props.profile_picture : {id: '', url: ''};
   }
 }
 

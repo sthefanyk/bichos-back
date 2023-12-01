@@ -6,6 +6,7 @@ import { IGalleryRepository, ILocalization } from "src/@core/domain/contracts";
 import CPF from "src/@core/shared/domain/value-objects/cpf.vo";
 import { RequiredError } from "src/@core/shared/domain/errors/required.error";
 import { UpdateError } from "src/@core/shared/domain/errors/update.error";
+import { UnauthorizedError } from "src/@core/shared/domain/errors/unauthorized.error";
 
 export namespace PersonUpdate {
     export class Usecase implements UseCase<Input, Output>{
@@ -54,6 +55,7 @@ export namespace PersonUpdate {
             const person = await this.repo.findById(input.id);
 
             if (!person) throw new NotFoundError("User not found");
+            if(person.id !== input.id) throw new UnauthorizedError("User not authorized");
 
             if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
             if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');

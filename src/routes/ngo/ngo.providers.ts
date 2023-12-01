@@ -14,6 +14,8 @@ import {
 import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
 import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
+import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+import { AuthService } from 'src/@core/application/services/auth/auth.service';
 
 export namespace NGOProvider {
   export namespace Repositories {
@@ -37,6 +39,14 @@ export namespace NGOProvider {
       provide: 'GalleryTypeormRepository',
       useFactory: (dataSource: DataSource) => {
         return new GalleryTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
+    export const USER_TYPEORM_REPO = {
+      provide: 'UserTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new UserTypeormRepository(dataSource);
       },
       inject: [getDataSourceToken()],
     };
@@ -134,5 +144,15 @@ export namespace NGOProvider {
       },
       inject: [Repositories.REPO.provide],
     };
+  }
+
+  export namespace Services {
+    export const SERVICE = {
+      provide: AuthService,
+      useFactory: (authRepo: UserTypeormRepository) => {
+        return new AuthService(authRepo)
+      },
+      inject: [Repositories.USER_TYPEORM_REPO.provide],
+    }
   }
 }

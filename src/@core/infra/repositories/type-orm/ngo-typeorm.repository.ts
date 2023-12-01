@@ -130,8 +130,11 @@ export class NGOTypeormRepository implements INGORepository {
 
     if (!ngo) return null;
 
-    const profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
-    const header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
+    let header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
+
+    if (!profile_picture) profile_picture = { url: '' }
+    if (!header_picture) header_picture = { url: '' }
 
     return new NGO({
       ...ngo,
@@ -151,9 +154,12 @@ export class NGOTypeormRepository implements INGORepository {
     const ngos: NGO[] = [];
 
     for (const ngo of models) {
-      const profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
-      const header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
+      let profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
+      let header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
       
+      if (!profile_picture) profile_picture = { url: '' }
+      if (!header_picture) header_picture = { url: '' }
+
       ngos.push(
         new NGO({
           ...ngo,

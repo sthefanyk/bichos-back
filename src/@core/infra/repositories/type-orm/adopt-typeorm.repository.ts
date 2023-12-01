@@ -1,10 +1,11 @@
-import { AdoptFindById, AdoptSearch, AdoptUsecase } from 'src/@core/application/use-cases/adopt';
+import { AdoptFindById, AdoptSearch, AdoptUsecase, ChooseAdopter, GetAdopterByAdoptPostId } from 'src/@core/application/use-cases/adopt';
 import { EvaluateResponses } from 'src/@core/application/use-cases/adopt/evaluate-responses.usecase';
 import { IAdoptRepository } from 'src/@core/domain/contracts';
 import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
 import { Response } from 'src/@core/domain/entities/adopt/response';
 import { AdoptModel, PostModel, QuestionModel, QuizModel, ResponseModel, UserModel } from 'src/@core/domain/models';
 import { DataSource, Repository } from 'typeorm';
+import { UserTypeormRepository } from './user-typeorm.repository';
 
 export class AdoptTypeormRepository implements IAdoptRepository {
   private repoAdopt: Repository<AdoptModel>;
@@ -13,6 +14,7 @@ export class AdoptTypeormRepository implements IAdoptRepository {
   private repoPost: Repository<PostModel>;
   private repoResponse: Repository<ResponseModel>;
   private repoQuestion: Repository<QuestionModel>;
+  private userRepo: UserTypeormRepository;
 
   constructor(private dataSource: DataSource) {
     this.repoAdopt = this.dataSource.getRepository(AdoptModel);
@@ -21,6 +23,25 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     this.repoPost = this.dataSource.getRepository(PostModel);
     this.repoResponse = this.dataSource.getRepository(ResponseModel);
     this.repoQuestion = this.dataSource.getRepository(QuestionModel);
+    this.userRepo = new UserTypeormRepository(dataSource);
+  }
+
+  async getAdopterByAdoptPostId(id_post: string): GetAdopterByAdoptPostId.Output {
+    const adopt = await this.repoAdopt.findOne({ 
+      where: { post: { id: id_post }, status: 5 },
+      relations: ['adopter', 'quiz', 'post']
+    });
+
+    if (!adopt) return null;
+
+    const user = await this.userRepo.findUserById(adopt.adopter.id);
+    return user
+  }
+
+  async updateStatus(entity: Adopt): ChooseAdopter.Output {
+    await this.repoAdopt.update(entity.id, {
+      status: entity.status
+    });    
   }
 
   async evaluateResponses(entity: Adopt): EvaluateResponses.Output {
@@ -37,7 +58,7 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     });
 
     const responses = await this.repoResponse.find({ 
-      where: { adopt }, relations: ['question', 'adopt']
+      where: { adopt: { id: adopt.id } }, relations: ['question', 'adopt']
     });
 
     return new Adopt({
@@ -63,7 +84,7 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     
     for (const adopt of result) {
       const responses = await this.repoResponse.find({ 
-        where: { adopt }, relations: ['question', 'adopt']
+        where: { adopt: { id: adopt.id } }, relations: ['question', 'adopt']
       });
       
       adopts.push(new Adopt({

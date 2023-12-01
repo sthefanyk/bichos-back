@@ -1,6 +1,6 @@
 import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import Person from '../../../domain/entities/users/person';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, IsNull, Not, Repository } from 'typeorm';
 import { PersonModel, UserModel } from '../../../domain/models';
 import { PersonCreate, PersonFindById, PersonUpdate, PersonFindByCpf } from 'src/@core/application/use-cases/person';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
@@ -116,12 +116,17 @@ export class PersonTypeormRepository implements IPersonRepository {
   }
 
   async getInactiveRecords(): Promise<Person[]> {
-    const models = await this.personRepo.createQueryBuilder('person')
-      .leftJoinAndSelect('person.user', 'user')
-      .leftJoinAndSelect('user.city', 'city')
-      .leftJoinAndSelect('city.state', 'state')
-      .where('user.deleted_at NOT NULL')
-      .getMany();
+    // const models = await this.personRepo.createQueryBuilder('person')
+    //   .leftJoinAndSelect('person.user', 'user')
+    //   .leftJoinAndSelect('user.city', 'city')
+    //   .leftJoinAndSelect('city.state', 'state')
+    //   .where('user.deleted_at NOT NULL')
+    //   .getMany();
+
+    const models = await this.personRepo.find({
+      where: { user: { deleted_at: Not(IsNull()) }},
+      relations: ['user', 'user.city', 'user.city.state']}
+    )
 
     return this._convertAll(models);
   }
@@ -134,8 +139,12 @@ export class PersonTypeormRepository implements IPersonRepository {
 
     if (!person) return null;
 
-    const profile_picture = await this.repoGallery.getImageUrl(person.user.profile_picture);
-    const header_picture = await this.repoGallery.getImageUrl(person.user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(person.user.profile_picture);
+    let header_picture = await this.repoGallery.getImageUrl(person.user.header_picture);
+
+    if (!profile_picture) profile_picture = { url: '' }
+    if (!header_picture) header_picture = { url: '' }
+
 
     return new Person({
       ...person,
@@ -155,8 +164,11 @@ export class PersonTypeormRepository implements IPersonRepository {
     const persons: Person[] = [];
 
     for (const person of models) {
-      const profile_picture = await this.repoGallery.getImageUrl(person.user.profile_picture);
-      const header_picture = await this.repoGallery.getImageUrl(person.user.header_picture);
+      let profile_picture = await this.repoGallery.getImageUrl(person.user.profile_picture);
+      let header_picture = await this.repoGallery.getImageUrl(person.user.header_picture);
+      
+      if (!profile_picture) profile_picture = { url: '' }
+      if (!header_picture) header_picture = { url: '' }
 
       persons.push(
         new Person({

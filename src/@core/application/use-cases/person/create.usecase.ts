@@ -56,11 +56,14 @@ export namespace PersonCreate {
       if(!input.email) throw new RequiredError('email');
       if(!input.password) throw new RequiredError('password');
       if(!input.city) throw new RequiredError('city');
-      if(!input.profile_picture) throw new RequiredError('profile_picture');
-      if(!input.header_picture) throw new RequiredError('header_picture');
-
+      // if(!input.profile_picture) throw new RequiredError('profile_picture');
+      // if(!input.header_picture) throw new RequiredError('header_picture');
+      
       if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
+      
+      if(input.profile_picture)
       if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
+      if(input.header_picture)
       if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());

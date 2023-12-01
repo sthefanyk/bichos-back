@@ -155,7 +155,7 @@ export namespace PublishAdoptPost {
 
       input.health.disease_allergy.forEach((item) => {
         if (!item.name) throw new RequiredError('name in disease_allergy');
-        if (item.type !== 0 && item.type !== 1) throw new RequiredError('type in disease_allergy');
+        if (+item.type !== 0 && +item.type !== 1) throw new RequiredError('type in disease_allergy');
       });
 
       input.health.vaccines_medicines.forEach((item) => {
@@ -192,7 +192,7 @@ export namespace PublishAdoptPost {
             new DiseaseAllergy({
               name: item.name,
               description: item.description,
-              type: item.type,
+              type: +item.type,
             }),
         ),
         vaccines_medicines: input.health.vaccines_medicines.map(
@@ -253,7 +253,7 @@ export namespace PublishAdoptPost {
       disease_allergy: {
         name: string;
         description: string;
-        type: number;
+        type: string;
       }[];
       additional: string;
     };

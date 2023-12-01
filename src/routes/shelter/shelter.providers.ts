@@ -14,6 +14,8 @@ import {
   ShelterActivate
 } from 'src/@core/application/use-cases/shelter';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
+import { AuthService } from 'src/@core/application/services/auth/auth.service';
+import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace ShelterProvider {
   export namespace Repositories {
@@ -37,6 +39,14 @@ export namespace ShelterProvider {
       provide: 'GalleryTypeormRepository',
       useFactory: (dataSource: DataSource) => {
         return new GalleryTypeormRepository(dataSource);
+      },
+      inject: [getDataSourceToken()],
+    };
+
+    export const USER_TYPEORM_REPO = {
+      provide: 'UserTypeormRepository',
+      useFactory: (dataSource: DataSource) => {
+        return new UserTypeormRepository(dataSource);
       },
       inject: [getDataSourceToken()],
     };
@@ -136,5 +146,15 @@ export namespace ShelterProvider {
       },
       inject: [Repositories.REPO.provide],
     };
+  }
+
+  export namespace Services {
+    export const SERVICE = {
+      provide: AuthService,
+      useFactory: (authRepo: UserTypeormRepository) => {
+        return new AuthService(authRepo)
+      },
+      inject: [Repositories.USER_TYPEORM_REPO.provide],
+    }
   }
 }

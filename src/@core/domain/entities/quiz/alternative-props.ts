@@ -6,7 +6,7 @@ import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 export default class QuizProps extends EntityPropsValidation {
   id: UUID;
 
-  @Length(2, 45)
+  @Length(2, 255)
   @IsString()
   @IsNotEmpty()
   alternative: string;

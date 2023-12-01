@@ -50,8 +50,11 @@ export class UserTypeormRepository implements IUserRepository {
         relations: ['state']
       });
 
-      const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
-      const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+      let profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+      let header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+      if (!profile_picture) profile_picture = { url: '' }
+      if (!header_picture) header_picture = { url: '' }
 
       if(user.role === Role.PERSON){
         const aux = await this.RepoPerson.findById(user.id);
@@ -90,8 +93,11 @@ export class UserTypeormRepository implements IUserRepository {
       relations: ['state']
     });
 
-    const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
-    const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+    let header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+    if (!profile_picture) profile_picture = { url: '' }
+    if (!header_picture) header_picture = { url: '' }
 
     if(user.role === Role.PERSON)
       return this.RepoPerson.findById(user.id);
@@ -124,8 +130,11 @@ export class UserTypeormRepository implements IUserRepository {
       relations: ['state']
     });
 
-    const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
-    const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+    let header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+    if (!profile_picture) profile_picture = { url: '' }
+    if (!header_picture) header_picture = { url: '' }
 
     if(user.role === Role.PERSON)
       return this.RepoPerson.findById(user.id);
@@ -158,8 +167,11 @@ export class UserTypeormRepository implements IUserRepository {
       relations: ['state']
     });
 
-    const profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
-    const header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(user.profile_picture);
+    let header_picture = await this.repoGallery.getImageUrl(user.header_picture);
+
+    if (!profile_picture) profile_picture = { url: '' }
+    if (!header_picture) header_picture = { url: '' }
 
     if(user.role === Role.PERSON)
       return this.RepoPerson.findById(user.id);

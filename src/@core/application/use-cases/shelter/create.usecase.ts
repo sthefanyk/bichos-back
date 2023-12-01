@@ -32,8 +32,8 @@ export namespace ShelterCreate {
             password: input.password,
             city: city,
             description: input.description,
-            profile_picture: { id: input.profile_picture },
-            header_picture: { id: input.header_picture },
+            // profile_picture: { id: input.profile_picture },
+            // header_picture: { id: input.header_picture },
           }
         }
       );
@@ -57,12 +57,12 @@ export namespace ShelterCreate {
       if(!input.email) throw new RequiredError('email');
       if(!input.password) throw new RequiredError('password');
       if(!input.city) throw new RequiredError('city');
-      if(!input.profile_picture) throw new RequiredError('profile_picture');
-      if(!input.header_picture) throw new RequiredError('header_picture');
+      // if(!input.profile_picture) throw new RequiredError('profile_picture');
+      // if(!input.header_picture) throw new RequiredError('header_picture');
 
       if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
-      if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
-      if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
+      // if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
+      // if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
       
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       
@@ -90,8 +90,8 @@ export namespace ShelterCreate {
     password: string;
     city: string;
     description?: string;
-    profile_picture?: string;
-    header_picture?: string;
+    // profile_picture?: string;
+    // header_picture?: string;
   };
 
   export type Output = Promise<{ id: string }>;

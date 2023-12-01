@@ -1,7 +1,7 @@
 GET http://localhost:3000/quiz
 
 ###
-GET http://localhost:3000/quiz/c72f90bd-ab44-4825-9e7a-b30e33e65f84
+GET http://localhost:3000/quiz/5e8f5f7b-fa3c-42b2-9304-5a243030613c
 
 ###
 POST http://localhost:3000/quiz
@@ -17,18 +17,12 @@ POST http://localhost:3000/quiz/add/question
 Content-Type: application/json
 
 {
-    "id_quiz": "c72f90bd-ab44-4825-9e7a-b30e33e65f84",
+    "id_quiz": "aafd3249-37f8-400d-ac80-d725506e51d6",
     "question": {
-        "question": "Por que bla bla bla?",
-        "type": 1,
-        "others": true,
-        "alternatives": [
-            "bla1",
-            "bla2",
-            "bla3",
-            "bla4",
-            "bla5"
-        ]
+        "question": "Você está familiarizado com as necessidades específicas do tipo de animal que deseja adotar? Já pesquisou sobre seu comportamento, cuidados e necessidades?",
+        "type": 0,
+        "others": false,
+        "alternatives": []
     }
 }
 
@@ -37,7 +31,7 @@ POST http://localhost:3000/quiz/add/question
 Content-Type: application/json
 
 {
-    "id_quiz": "c72f90bd-ab44-4825-9e7a-b30e33e65f84",
+    "id_quiz": "5e8f5f7b-fa3c-42b2-9304-5a243030613c",
     "question": {
         "question": "Por que bla bla bla?",
         "type": 0,

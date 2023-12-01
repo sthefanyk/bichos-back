@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { AdoptFindById, AdoptSearch, AdoptUsecase, EvaluateResponses } from 'src/@core/application/use-cases/adopt';
+import { AdoptFindById, AdoptSearch, AdoptUsecase, ChooseAdopter, EvaluateResponses, GetAdopterByAdoptPostId } from 'src/@core/application/use-cases/adopt';
 import { AdoptTypeormRepository } from 'src/@core/infra/repositories/type-orm/adopt-typeorm.repository';
 import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
@@ -89,6 +89,28 @@ export namespace AdoptProvider {
       provide: EvaluateResponses.Usecase,
       useFactory: (repo: AdoptTypeormRepository) => {
         return new EvaluateResponses.Usecase(repo);
+      },
+      inject: [Repositories.REPO.provide],
+    };
+
+    export const CHOOSE_ADOPTER = {
+      provide: ChooseAdopter.Usecase,
+      useFactory: (
+        repo: AdoptTypeormRepository,
+        repoPost: PostTypeormRepository
+      ) => {
+        return new ChooseAdopter.Usecase(repo, repoPost);
+      },
+      inject: [
+        Repositories.REPO.provide,
+        Repositories.POST_TYPEORM_REPO.provide      
+      ],
+    };
+
+    export const GET_ADOPTER_BY_ADOPT_POST_ID = {
+      provide: GetAdopterByAdoptPostId.Usecase,
+      useFactory: (repo: AdoptTypeormRepository) => {
+        return new GetAdopterByAdoptPostId.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };

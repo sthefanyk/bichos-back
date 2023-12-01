@@ -155,8 +155,11 @@ export class ShelterTypeormRepository implements IShelterRepository  {
 
     if (!shelter) return null;
 
-    const profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
-    const header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
+    let header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+
+    if (!profile_picture) profile_picture = { url: '' }
+    if (!header_picture) header_picture = { url: '' }
 
     return new Shelter({
       ...shelter,
@@ -176,8 +179,11 @@ export class ShelterTypeormRepository implements IShelterRepository  {
     const shelters: Shelter[] = [];
 
     for (const shelter of models) {
-      const profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
-      const header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+      let profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
+      let header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+
+      if (!profile_picture) profile_picture = { url: '' }
+      if (!header_picture) header_picture = { url: '' }
 
       shelters.push(
         new Shelter({
