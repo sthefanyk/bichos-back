@@ -6,6 +6,7 @@ import { AuthService as Service } from 'src/@core/application/services/auth/auth
 
 @Module({
   // imports: [forwardRef(() =>UsersModule), Service],
+  imports: [Service],
   controllers: [AuthController],
   providers: [
     AuthService,
