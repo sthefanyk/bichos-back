@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 
 import { ForgetAuthDto } from './dto/forget-auth.dto';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 import { ResetAuthDto } from './dto/reset-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { MailerService } from '@nestjs-modules/mailer';

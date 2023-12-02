@@ -15,7 +15,7 @@ import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type
 import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 export namespace PersonProvider {
   export namespace Repositories {

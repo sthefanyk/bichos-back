@@ -3,7 +3,7 @@ import { ShelterService } from './shelter.service';
 import { ShelterController } from './shelter.controller';
 import { ShelterProvider } from './shelter.providers';
 import { AuthModule } from '../auth/auth.module';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Module({
   imports: [AuthModule],

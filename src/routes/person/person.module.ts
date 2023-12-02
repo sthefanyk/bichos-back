@@ -3,7 +3,7 @@ import { PersonService } from './person.service';
 import { PersonController } from './person.controller';
 import { PersonProvider } from './person.providers';
 import { AuthModule } from '../auth/auth.module';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Module({
   imports: [AuthModule],

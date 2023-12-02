@@ -10,7 +10,7 @@ import {
 } from 'src/@core/application/use-cases/ngo';
 import { NGOCollectionPresenter } from './ngo.presenter';
 import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Injectable()
 export class NGOService {

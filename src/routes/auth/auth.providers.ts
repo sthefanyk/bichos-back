@@ -1,7 +1,7 @@
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 

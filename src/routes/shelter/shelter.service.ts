@@ -11,7 +11,7 @@ import {
   ShelterActivate,
 } from 'src/@core/application/use-cases/shelter';
 import { ShelterCollectionPresenter } from './shelter.presenter';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Injectable()
 export class ShelterService {

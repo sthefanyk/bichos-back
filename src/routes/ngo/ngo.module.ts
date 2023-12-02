@@ -3,7 +3,7 @@ import { NGOService } from './ngo.service';
 import { NGOController } from './ngo.controller';
 import { NGOProvider } from './ngo.providers';
 import { AuthModule } from '../auth/auth.module';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Module({
   imports: [AuthModule],

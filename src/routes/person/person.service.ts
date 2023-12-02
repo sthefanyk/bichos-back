@@ -11,7 +11,7 @@ import {
 } from 'src/@core/application/use-cases/person';
 import { PersonCollectionPresenter } from './person.presenter';
 import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Injectable()
 export class PersonService {

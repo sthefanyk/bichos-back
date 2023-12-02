@@ -14,7 +14,7 @@ import {
   ShelterActivate,
 } from 'src/@core/application/use-cases/shelter';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
-import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace ShelterProvider {
