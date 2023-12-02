@@ -27,6 +27,6 @@
     }
   },
   "include": [
-    "./src", "./test"
-, "ormconfig.ts"  ],
+    "./src", "./test", "ormconfig.ts"  
+  ],
 }

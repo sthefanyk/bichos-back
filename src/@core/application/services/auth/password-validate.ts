@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsStrongPassword, Length } from 'class-validator';
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 
 export default class PasswordValidate extends EntityProps {
   @IsNotEmpty()

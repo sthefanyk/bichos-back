@@ -2,14 +2,14 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { IAuth } from './auth.interface';
-import { IUserRepository } from 'src/@core/domain/contracts/user-repository.interface';
+import { IUserRepository } from '../../../domain/contracts/user-repository.interface';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-import { UserModel } from 'src/@core/domain/models';
+import { UserModel } from '../../../domain/models';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
-import User from 'src/@core/domain/entities/users/user';
-import { UpdateError } from 'src/@core/shared/domain/errors/update.error';
+import { SingInError } from '../../../shared/domain/errors/singin.error';
+import User from '../../../domain/entities/users/user';
+import { UpdateError } from '../../../shared/domain/errors/update.error';
 
 export class ServiceAuth implements IAuth {
   constructor(private repo: IUserRepository) {}
