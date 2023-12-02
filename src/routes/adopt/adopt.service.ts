@@ -8,7 +8,7 @@ import {
   GetAdopterByAdoptPostId,
 } from '../../@core/application/use-cases/adopt';
 import { AdoptCollectionPresenter } from './adopt.presenter';
-import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
 @Injectable()
@@ -31,7 +31,8 @@ export class AdoptService {
   @Inject(GetAdopterByAdoptPostId.Usecase)
   private getAdopterByAdoptPostIdUseCase: GetAdopterByAdoptPostId.Usecase;
 
-  @WebSocketServer() server: Server;
+  @WebSocketServer() 
+  server: Server;
 
   async adopt(data: AdoptUsecase.Input) {
     return await this.adoptUseCase.execute(data);
