@@ -36,6 +36,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.12",
     "@nestjs/typeorm": "^10.0.0",
+    "@nestjs/websockets": "^10.2.10",
     "@prisma/client": "^5.2.0",
     "@supabase/supabase-js": "^2.38.5",
     "bcrypt": "^5.1.1",
@@ -53,7 +54,8 @@
     "sqlite3": "^5.1.6",
     "typeorm": "^0.3.17",
     "typeorm-extension": "^3.0.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "websockets": "^0.2.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

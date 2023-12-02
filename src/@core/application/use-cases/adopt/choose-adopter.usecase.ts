@@ -18,7 +18,7 @@ export namespace ChooseAdopter {
 
       adopt.toAccept();
 
-      await this.repo.updateStatus(adopt);
+      return await this.repo.updateStatus(adopt);
     }
 
     async validate(input: Input) {
@@ -40,5 +40,5 @@ export namespace ChooseAdopter {
     id_adopt: string;
   };
 
-  export type Output = Promise<void>;
+  export type Output = Promise<{id: string}>;
 }

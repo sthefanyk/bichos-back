@@ -57,6 +57,8 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     await this.repoAdopt.update(entity.id, {
       status: entity.status,
     });
+
+    return { id: entity.id_adopter };
   }
 
   async evaluateResponses(entity: Adopt): EvaluateResponses.Output {
