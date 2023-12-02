@@ -15,7 +15,7 @@ import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type
 import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
-import { AuthService } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
 
 export namespace NGOProvider {
   export namespace Repositories {
@@ -148,9 +148,9 @@ export namespace NGOProvider {
 
   export namespace Services {
     export const SERVICE = {
-      provide: AuthService,
+      provide: ServiceAuth,
       useFactory: (authRepo: UserTypeormRepository) => {
-        return new AuthService(authRepo);
+        return new ServiceAuth(authRepo);
       },
       inject: [Repositories.USER_TYPEORM_REPO.provide],
     };

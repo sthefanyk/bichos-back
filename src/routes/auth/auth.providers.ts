@@ -1,7 +1,7 @@
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-import { AuthService } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
 
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
 
@@ -23,9 +23,9 @@ export namespace AuthProvider {
 
   export namespace Services {
     export const SERVICE = {
-      provide: AuthService,
+      provide: ServiceAuth,
       useFactory: (authRepo: UserTypeormRepository) => {
-        return new AuthService(authRepo);
+        return new ServiceAuth(authRepo);
       },
       inject: [Repositories.REPO.provide],
     };

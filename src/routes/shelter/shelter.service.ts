@@ -11,7 +11,7 @@ import {
   ShelterActivate,
 } from 'src/@core/application/use-cases/shelter';
 import { ShelterCollectionPresenter } from './shelter.presenter';
-import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
+import { ServiceAuth } from 'src/@core/application/services/auth/auth.service';
 
 @Injectable()
 export class ShelterService {
@@ -42,8 +42,8 @@ export class ShelterService {
   @Inject(ShelterActivate.Usecase)
   private activateUseCase: ShelterActivate.Usecase;
 
-  @Inject(Service)
-  private service: Service;
+  @Inject(ServiceAuth)
+  private service: ServiceAuth;
 
   async create(data: ShelterCreate.Input) {
     const { id } = await this.createUseCase.execute(data);

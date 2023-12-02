@@ -11,7 +11,7 @@ import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
 import User from 'src/@core/domain/entities/users/user';
 import { UpdateError } from 'src/@core/shared/domain/errors/update.error';
 
-export class AuthService implements IAuth {
+export class ServiceAuth implements IAuth {
   constructor(private repo: IUserRepository) {}
 
   createToken(user: User, time: string) {
