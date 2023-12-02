@@ -6,7 +6,7 @@ import { IUserRepository } from 'src/@core/domain/contracts/user-repository.inte
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { UserModel } from 'src/@core/domain/models';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import { SingInError } from 'src/@core/shared/domain/errors/singin.error';
 import User from 'src/@core/domain/entities/users/user';
 import { UpdateError } from 'src/@core/shared/domain/errors/update.error';
