@@ -18,11 +18,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "#seedwork/*": [
-        "./src/core/@seedwork/*"
-      ],
-      "#personality/*": [
-        "./src/core/personality/*"
+      "src*": [
+        "./src/*"
       ]
     }
   },
