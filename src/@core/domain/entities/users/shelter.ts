@@ -35,7 +35,7 @@ export default class Shelter extends User implements EntityMarker {
     return {
       ...user,
       responsible_cpf: this.responsible_cpf,
-    }
+    };
   }
 
   public update(data: {
@@ -52,10 +52,11 @@ export default class Shelter extends User implements EntityMarker {
     profile_picture?: string;
     header_picture?: string;
   }) {
-    this.shelterProps.responsible_cpf =
-      (data.responsible_cpf instanceof CPF
+    this.shelterProps.responsible_cpf = (
+      data.responsible_cpf instanceof CPF
         ? data.responsible_cpf
-        : new CPF(data.responsible_cpf)).cpf;
+        : new CPF(data.responsible_cpf)
+    ).cpf;
     this.shelterProps.responsible_date_birth = data.responsible_date_birth;
     this.shelterProps.name_shelter = data.name_shelter;
     this.shelterProps.star_date_shelter = data.star_date_shelter;
@@ -67,7 +68,7 @@ export default class Shelter extends User implements EntityMarker {
       city: data.city,
       description: data.description,
       profile_picture: data.profile_picture,
-      header_picture: data.header_picture
+      header_picture: data.header_picture,
     });
 
     this.shelterProps.validate(this.shelterProps);

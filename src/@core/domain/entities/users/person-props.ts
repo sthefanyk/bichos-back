@@ -4,7 +4,6 @@ import UserProps from './user-props';
 import { IsDate, IsNotEmpty, Length } from 'class-validator';
 
 export default class PersonProps extends UserProps {
-
   @Length(11, 11)
   @IsNotEmpty()
   cpf: string;

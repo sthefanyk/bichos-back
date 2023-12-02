@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {INGORepository} from '../../../domain/contracts/ngo-repository.interface';
+import { INGORepository } from '../../../domain/contracts/ngo-repository.interface';
 import NGO, { NGOAttr } from '../../../domain/entities/users/ngo';
 
 export namespace NGOGetInactiveRecords {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: INGORepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const ngos = await this.repo.getInactiveRecords();
       const service = new ServiceConfig(ngos, ['full_name', 'created_at']);
 
@@ -28,7 +28,7 @@ export namespace NGOGetInactiveRecords {
       return this.toOutput(searchResult);
     }
 
-    private toOutput(searchResult: SearchResult) : SearchOutput | any {
+    private toOutput(searchResult: SearchResult): SearchOutput | any {
       return {
         items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<NGO>(searchResult),

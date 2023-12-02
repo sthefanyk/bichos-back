@@ -5,9 +5,7 @@ import CitySeeder from './city.seeder';
 import StateSeeder from './state.seeder';
 
 export default class MainSeeder implements Seeder {
-  public async run(
-    dataSource: DataSource
-  ): Promise<any> {
+  public async run(dataSource: DataSource): Promise<any> {
     await runSeeder(dataSource, StateSeeder);
     await runSeeder(dataSource, CitySeeder);
     await runSeeder(dataSource, UserSeeder);

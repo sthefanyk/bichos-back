@@ -1,9 +1,8 @@
 import { v4 as uuid, validate as uuidValidate } from 'uuid';
 import { InvalidUuidError } from '../errors/invalid-uuid.error';
 
-export default class UUID{
+export default class UUID {
   constructor(private value?: string) {
-
     if (!this.value) {
       this.value = uuid();
     }
@@ -11,7 +10,7 @@ export default class UUID{
     this.validate();
   }
 
-  public get id() : string {
+  public get id(): string {
     return this.value;
   }
 

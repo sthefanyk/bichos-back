@@ -7,7 +7,6 @@ import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/use
 
 export namespace AuthProvider {
   export namespace Repositories {
-
     export const USER_TYPEORM_REPO = {
       provide: 'UserTypeormRepository',
       useFactory: (dataSource: DataSource) => {
@@ -26,9 +25,9 @@ export namespace AuthProvider {
     export const SERVICE = {
       provide: AuthService,
       useFactory: (authRepo: UserTypeormRepository) => {
-        return new AuthService(authRepo)
+        return new AuthService(authRepo);
       },
       inject: [Repositories.REPO.provide],
-    }
+    };
   }
 }

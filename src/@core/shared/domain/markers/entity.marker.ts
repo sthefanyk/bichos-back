@@ -1,3 +1,3 @@
 export interface EntityMarker {
-    toJson();
+  toJson();
 }

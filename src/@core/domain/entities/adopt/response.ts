@@ -14,20 +14,21 @@ export class Response implements EntityMarker {
   private props: ResponseProps;
 
   constructor(responseAttr: ResponseAttr) {
-    responseAttr.evaluation = responseAttr.evaluation ?? EvaluationResponse.NOT_EVALUATED;
+    responseAttr.evaluation =
+      responseAttr.evaluation ?? EvaluationResponse.NOT_EVALUATED;
     this.props = new ResponseProps(responseAttr);
   }
 
   toJson() {
-    return { 
-        ...this.props, 
-        id: this.id,
-        id_question: this.id_question,
-        id_adopt: this.id_adopt,
+    return {
+      ...this.props,
+      id: this.id,
+      id_question: this.id_question,
+      id_adopt: this.id_adopt,
     };
   }
 
-  evaluate(evaluation: EvaluationResponse){
+  evaluate(evaluation: EvaluationResponse) {
     this.props.evaluation = evaluation;
 
     this.props.validate(this.props);

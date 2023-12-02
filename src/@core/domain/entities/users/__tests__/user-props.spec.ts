@@ -4,8 +4,11 @@ import { City } from '../../localization/city';
 import { State } from '../../localization/state';
 
 describe('Test UserProps', () => {
-  test('Create userProps without params', () => {  
-    const city = new City({ name: 'city', state: new State({ name: 'state', abbreviation: 'ST'})});
+  test('Create userProps without params', () => {
+    const city = new City({
+      name: 'city',
+      state: new State({ name: 'state', abbreviation: 'ST' }),
+    });
 
     const props = new UserProps({
       fullName: 'name user',
@@ -33,8 +36,10 @@ describe('Test UserProps', () => {
     const created_at = new Date();
     const updated_at = new Date('2023-09-14');
     const deleted_at = new Date('2023-09-16');
-    const city = new City({ name: 'city', state: new State({ name: 'state', abbreviation: 'ST'})});
-
+    const city = new City({
+      name: 'city',
+      state: new State({ name: 'state', abbreviation: 'ST' }),
+    });
 
     const props = new UserProps({
       fullName: 'name user',
@@ -47,7 +52,7 @@ describe('Test UserProps', () => {
       deleted_at,
       city,
       username: 'username',
-      description: 'description', 
+      description: 'description',
     });
 
     expect(props.name).toBe('name user');

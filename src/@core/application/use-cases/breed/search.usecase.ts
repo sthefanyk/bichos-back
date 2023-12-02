@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IBreedRepository} from '../../../domain/contracts/breed-repository.interface';
+import { IBreedRepository } from '../../../domain/contracts/breed-repository.interface';
 import { Breed, BreedAttr } from 'src/@core/domain/entities/breed';
 
 export namespace BreedSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IBreedRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const breeds = await this.repo.findAll();
       const service = new ServiceConfig(breeds, ['name', 'created_at']);
 

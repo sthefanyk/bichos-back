@@ -3,14 +3,14 @@ import QuizProps from './quiz-props';
 import { Question } from './question';
 
 export type QuizAttr = {
-    title: string;
-    description: string;
-    questions?: Question[];
+  title: string;
+  description: string;
+  questions?: Question[];
 
-    id?: string;
-    created_at?: Date;
-    updated_at?: Date;
-    deleted_at?: Date;
+  id?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 };
 
 export class Quiz implements EntityMarker {
@@ -22,10 +22,10 @@ export class Quiz implements EntityMarker {
   }
 
   toJson() {
-    return { 
-      ...this.props, 
+    return {
+      ...this.props,
       id: this.props.id.id,
-      questions: this.questions.map(q => q.toJson())
+      questions: this.questions.map((q) => q.toJson()),
     };
   }
 

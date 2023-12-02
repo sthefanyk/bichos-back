@@ -7,9 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [NeedController],
-  providers: [NeedService,
+  providers: [
+    NeedService,
     NeedProvider.Repositories.NEED_TYPEORM_REPO,
-    ...Object.values(NeedProvider.UseCases)
+    ...Object.values(NeedProvider.UseCases),
   ],
 })
 export class NeedModule {}

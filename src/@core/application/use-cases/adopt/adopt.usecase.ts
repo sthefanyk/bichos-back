@@ -4,7 +4,7 @@ import {
   IAdoptRepository,
   IQuizRepository,
   IPostRepository,
-  IUserRepository
+  IUserRepository,
 } from 'src/@core/domain/contracts';
 import { Adopt as AdoptEntity } from 'src/@core/domain/entities/adopt/adopt';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
@@ -32,13 +32,14 @@ export namespace AdoptUsecase {
         id_adopter: input.id_adopter,
         id_post: input.id_post,
         id_quiz: input.id_quiz,
-        responses: input.responses.map(r =>
-          new Response({
-            id_question: r.id_question,
-            response: r.response,
-            id_adopt
-          })
-        )
+        responses: input.responses.map(
+          (r) =>
+            new Response({
+              id_question: r.id_question,
+              response: r.response,
+              id_adopt,
+            }),
+        ),
       });
 
       return await this.repo.adopt(adopt);
@@ -48,7 +49,7 @@ export namespace AdoptUsecase {
       if (!input.id_adopter) throw new RequiredError('id_adopter');
       if (!input.id_post) throw new RequiredError('id_post');
       if (!input.id_quiz) throw new RequiredError('id_quiz');
-      
+
       if (!(await this.repoPost.findByIdAdoptPost(input.id_post)))
         throw new NotFoundError('No post found');
 

@@ -7,9 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [BreedController],
-  providers: [BreedService,
+  providers: [
+    BreedService,
     BreedProvider.Repositories.BREED_TYPEORM_REPO,
-    ...Object.values(BreedProvider.UseCases)
+    ...Object.values(BreedProvider.UseCases),
   ],
 })
 export class BreedModule {}

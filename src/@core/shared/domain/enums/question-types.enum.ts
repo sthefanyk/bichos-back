@@ -1,4 +1,4 @@
 export enum QuestionTypes {
-    DESCRIPTIVE = 0,
-    ALTERNATIVE = 1,
+  DESCRIPTIVE = 0,
+  ALTERNATIVE = 1,
 }

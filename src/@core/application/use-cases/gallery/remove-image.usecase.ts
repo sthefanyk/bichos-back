@@ -11,7 +11,7 @@ export namespace GalleryRemoveImageUseCase {
   }
 
   export type Input = {
-    id: string 
+    id: string;
   };
 
   export type Output = Promise<boolean>;

@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IPersonRepository} from '../../../domain/contracts/person-repository.interface';
+import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import Person, { PersonAttr } from '../../../domain/entities/users/person';
 
 export namespace PersonSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IPersonRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const persons = await this.repo.findAll();
       const service = new ServiceConfig(persons, ['full_name', 'created_at']);
 

@@ -1,6 +1,20 @@
-import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Query,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { BreedService } from './breed.service';
-import { BreedCreate, BreedSearch, BreedUpdate } from 'src/@core/application/use-cases/breed';
+import {
+  BreedCreate,
+  BreedSearch,
+  BreedUpdate,
+} from 'src/@core/application/use-cases/breed';
 // import { RoleGuard } from 'src/guards/role.guard';
 // import { Roles } from 'src/decorators/roles.decorator';
 // import { Role } from 'src/@core/shared/domain/enums/role.enum';
@@ -40,7 +54,10 @@ export class BreedController {
   }
 
   @Get('specie/:specie')
-  findBySpecie(@Param('specie') specie: string, @Query() searchParams: BreedSearch.Input) {
+  findBySpecie(
+    @Param('specie') specie: string,
+    @Query() searchParams: BreedSearch.Input,
+  ) {
     return this.breedService.findBySpecie(searchParams, specie);
   }
 
@@ -59,4 +76,3 @@ export class BreedController {
     return this.breedService.activate(id);
   }
 }
-

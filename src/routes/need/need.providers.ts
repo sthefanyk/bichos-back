@@ -1,14 +1,14 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import {
-  NeedCreate, 
-  NeedFindById, 
-  NeedSearch, 
+  NeedCreate,
+  NeedFindById,
+  NeedSearch,
   NeedUpdate,
   NeedActivate,
   NeedInactivate,
   NeedGetActiveRecords,
-  NeedGetInactiveRecords
+  NeedGetInactiveRecords,
 } from 'src/@core/application/use-cases/need';
 import { NeedTypeormRepository } from 'src/@core/infra/repositories/type-orm/need-typeorm.repository';
 

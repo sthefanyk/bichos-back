@@ -1,5 +1,12 @@
 import EntityProps from 'src/@core/shared/domain/entities/entity-props';
-import { IsNotEmpty, IsString, IsEnum, MaxLength, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  MaxLength,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 import { AdoptAttr } from './adopt';
 import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';

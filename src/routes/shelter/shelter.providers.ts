@@ -11,7 +11,7 @@ import {
   ShelterGetInactiveRecords,
   ShelterSearch,
   ShelterUpdate,
-  ShelterActivate
+  ShelterActivate,
 } from 'src/@core/application/use-cases/shelter';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
 import { AuthService } from 'src/@core/application/services/auth/auth.service';
@@ -63,12 +63,11 @@ export namespace ShelterProvider {
         shelterRepo: ShelterTypeormRepository,
         localRepo: LocalizationTypeormRepository,
         galleryRepo: GalleryTypeormRepository,
-
       ) => {
         return new ShelterCreate.Usecase(shelterRepo, localRepo, galleryRepo);
       },
       inject: [
-        Repositories.REPO.provide, 
+        Repositories.REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
         Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
@@ -120,12 +119,11 @@ export namespace ShelterProvider {
         shelterRepo: ShelterTypeormRepository,
         localRepo: LocalizationTypeormRepository,
         galleryRepo: GalleryTypeormRepository,
-
       ) => {
         return new ShelterUpdate.Usecase(shelterRepo, localRepo, galleryRepo);
       },
       inject: [
-        Repositories.REPO.provide, 
+        Repositories.REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
         Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
@@ -152,9 +150,9 @@ export namespace ShelterProvider {
     export const SERVICE = {
       provide: AuthService,
       useFactory: (authRepo: UserTypeormRepository) => {
-        return new AuthService(authRepo)
+        return new AuthService(authRepo);
       },
       inject: [Repositories.USER_TYPEORM_REPO.provide],
-    }
+    };
   }
 }

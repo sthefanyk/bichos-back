@@ -8,7 +8,8 @@ export namespace CityDelete {
 
     async execute(input: Input): Output {
       input.name = input.name.toUpperCase();
-      if (!await this.repo.getCity(input.name)) throw new NotFoundError('City not found');
+      if (!(await this.repo.getCity(input.name)))
+        throw new NotFoundError('City not found');
       return await this.repo.deleteCity(input.name);
     }
   }
@@ -18,6 +19,6 @@ export namespace CityDelete {
   };
 
   export type Output = Promise<{
-    name: string
+    name: string;
   }>;
 }

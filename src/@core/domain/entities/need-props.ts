@@ -3,7 +3,6 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { NeedAttr } from './need';
 
 export class NeedProps extends EntityProps {
-  
   @IsNotEmpty()
   @Length(2, 45)
   @IsString()

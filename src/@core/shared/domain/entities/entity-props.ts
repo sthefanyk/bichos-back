@@ -31,13 +31,13 @@ export default abstract class EntityProps {
     }
   }
 
-  formatErrors(errors: ValidationError[]){
+  formatErrors(errors: ValidationError[]) {
     const errorObject = {};
 
-    errors.forEach(error => {
+    errors.forEach((error) => {
       const propertyName = error.property;
       const errorMessages = Object.values(error.constraints);
-    
+
       if (!errorObject[propertyName]) {
         errorObject[propertyName] = [];
       }

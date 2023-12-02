@@ -8,7 +8,7 @@ import {
   ShelterGetInactiveRecords,
   ShelterSearch,
   ShelterUpdate,
-  ShelterActivate
+  ShelterActivate,
 } from 'src/@core/application/use-cases/shelter';
 import { ShelterCollectionPresenter } from './shelter.presenter';
 import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
@@ -46,10 +46,10 @@ export class ShelterService {
   private service: Service;
 
   async create(data: ShelterCreate.Input) {
-    const {id} = await this.createUseCase.execute(data);
+    const { id } = await this.createUseCase.execute(data);
 
     if (id) return this.service.singIn(data.email, data.password);
-    
+
     return null;
   }
 

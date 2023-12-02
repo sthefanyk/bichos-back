@@ -64,7 +64,8 @@ export class PostService {
   }
 
   async searchSponsorshipPost(searchParams: SearchSponsorshipPost.Input) {
-    const output = await this.searchSponsorshipPostUseCase.execute(searchParams);
+    const output =
+      await this.searchSponsorshipPostUseCase.execute(searchParams);
     return new SponsorshipPostCollectionPresenter(output);
   }
 
@@ -79,6 +80,6 @@ export class PostService {
   }
 
   async inactivatePost(id: string, data: PostInactivate.Input) {
-    return await this.postInactivateUseCase.execute({id, ...data});
+    return await this.postInactivateUseCase.execute({ id, ...data });
   }
 }

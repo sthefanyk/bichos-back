@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IShelterRepository} from '../../../domain/contracts/shelter-repository.interface';
+import { IShelterRepository } from '../../../domain/contracts/shelter-repository.interface';
 import Shelter, { ShelterAttr } from '../../../domain/entities/users/shelter';
 
 export namespace ShelterSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IShelterRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const shelters = await this.repo.findAll();
       const service = new ServiceConfig(shelters, ['full_name', 'created_at']);
 

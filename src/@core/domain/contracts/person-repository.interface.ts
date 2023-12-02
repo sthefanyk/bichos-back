@@ -9,7 +9,10 @@ import {
 import Person from '../entities/users/person';
 import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
 import { PersonFindByCpf } from 'src/@core/application/use-cases/person/find-by-cpf.usecase';
-import { UserFindByEmail, UserFindByUsername } from 'src/@core/application/use-cases/user';
+import {
+  UserFindByEmail,
+  UserFindByUsername,
+} from 'src/@core/application/use-cases/user';
 
 export interface IPersonRepository {
   insert(entity: Person): PersonCreate.Output;

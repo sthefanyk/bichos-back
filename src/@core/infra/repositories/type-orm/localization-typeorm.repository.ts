@@ -77,7 +77,7 @@ export class LocalizationTypeormRepository implements ILocalization {
 
     if (!city) return null;
 
-    return new City({ ...city, state: new State({ ...city.state })});
+    return new City({ ...city, state: new State({ ...city.state }) });
   }
 
   async insertState(state: State): Promise<StateInsert.Output> {
@@ -107,7 +107,7 @@ export class LocalizationTypeormRepository implements ILocalization {
     const response = [];
 
     cities.forEach((city) => {
-        response.push(city.name);
+      response.push(city.name);
     });
 
     await this.cityRepo.remove(cities);
@@ -115,7 +115,7 @@ export class LocalizationTypeormRepository implements ILocalization {
 
     return {
       name: state.name,
-      cities: response
+      cities: response,
     };
   }
 

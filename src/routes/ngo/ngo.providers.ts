@@ -67,7 +67,7 @@ export namespace NGOProvider {
         return new NGOCreate.Usecase(ngoRepo, localRepo, galleryRepo);
       },
       inject: [
-        Repositories.REPO.provide, 
+        Repositories.REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
         Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
@@ -123,7 +123,7 @@ export namespace NGOProvider {
         return new NGOUpdate.Usecase(ngoRepo, localRepo, galleryRepo);
       },
       inject: [
-        Repositories.REPO.provide, 
+        Repositories.REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
         Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
@@ -150,9 +150,9 @@ export namespace NGOProvider {
     export const SERVICE = {
       provide: AuthService,
       useFactory: (authRepo: UserTypeormRepository) => {
-        return new AuthService(authRepo)
+        return new AuthService(authRepo);
       },
       inject: [Repositories.USER_TYPEORM_REPO.provide],
-    }
+    };
   }
 }

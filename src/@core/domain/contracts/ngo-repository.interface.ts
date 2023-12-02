@@ -9,7 +9,10 @@ import {
   NGOGetInactiveRecords,
   NGOUpdate,
 } from 'src/@core/application/use-cases/ngo';
-import { UserFindByEmail, UserFindByUsername } from 'src/@core/application/use-cases/user';
+import {
+  UserFindByEmail,
+  UserFindByUsername,
+} from 'src/@core/application/use-cases/user';
 
 export interface INGORepository {
   insert(entity: NGO): NGOCreate.Output;

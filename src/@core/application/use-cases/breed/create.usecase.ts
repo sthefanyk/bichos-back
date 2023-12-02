@@ -13,15 +13,15 @@ export namespace BreedCreate {
 
       const breed = new Breed({
         name: input.name,
-        specie: +input.specie
+        specie: +input.specie,
       });
-      
+
       return await this.repo.insert(breed);
     }
 
     async validate(input: Input) {
-      if(!input.name) throw new RequiredError('name');
-      if(!input.specie) throw new RequiredError('specie');
+      if (!input.name) throw new RequiredError('name');
+      if (!input.specie) throw new RequiredError('specie');
 
       const breedExists = await this.repo.findByName(input.name);
       if (breedExists && breedExists.specie === +input.specie)

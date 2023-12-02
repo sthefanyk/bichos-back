@@ -20,7 +20,7 @@ export default class UserSeeder implements Seeder {
       email: 'admin@admin.com',
       password: await bcrypt.hash('Admin12345', 10),
       role: Role.ADMIN,
-      created_at: new Date()
+      created_at: new Date(),
     };
 
     const user = await userRepo.findOneBy({ username: dataUser.username });

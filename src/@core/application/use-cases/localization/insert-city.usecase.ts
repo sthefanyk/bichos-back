@@ -12,18 +12,19 @@ export namespace CityInsert {
     async execute(input: Input): Output {
       input.name = input.name.toUpperCase();
       input.state = input.state.toUpperCase();
-      
+
       if (await this.repo.getCity(input.name)) {
         throw new AlreadyExistsError('City already exists');
       }
 
-      if (!await this.repo.getState(input.state)) throw new NotFoundError('State not found');
+      if (!(await this.repo.getState(input.state)))
+        throw new NotFoundError('State not found');
 
       const stateModel = await this.repo.getStateByName(input.state);
 
       const state = new State({
         name: stateModel.name,
-        abbreviation: stateModel.abbreviation
+        abbreviation: stateModel.abbreviation,
       });
 
       const city = new City({

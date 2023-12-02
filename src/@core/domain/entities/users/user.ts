@@ -7,28 +7,27 @@ import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 export type ImageAttr = {
   id: string;
   url?: string;
-}
+};
 
 export type UserAttr = {
-  full_name: string,
-  username: string,
-  name: string,
-  email: string,
-  password: string,
-  city: City,
-  role?: Role,
-  description?: string,
-  profile_picture?: ImageAttr,
-  header_picture?: ImageAttr,
-  id?: string,
-  created_at?: Date,
-  updated_at?: Date,
-  deleted_at?: Date,
-}
+  full_name: string;
+  username: string;
+  name: string;
+  email: string;
+  password: string;
+  city: City;
+  role?: Role;
+  description?: string;
+  profile_picture?: ImageAttr;
+  header_picture?: ImageAttr;
+  id?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+};
 
 export default abstract class User implements EntityMarker {
-
-  constructor(private props: UserProps){
+  constructor(private props: UserProps) {
     props.validate(props);
   }
 
@@ -44,15 +43,15 @@ export default abstract class User implements EntityMarker {
         state: {
           name: city.state.name,
           abbreviation: city.state.abbreviation,
-        }
+        },
       },
-    }
+    };
   }
 
   public async resetPassword(password: string) {
     this.props.password = password;
     this.props.updated_at = new Date();
-    
+
     this.props.validate(this.props);
     await this.generatePasswordHash();
   }
@@ -77,7 +76,7 @@ export default abstract class User implements EntityMarker {
     this.props.header_picture = { id: data.header_picture };
 
     this.props.updated_at = new Date();
-    
+
     this.props.validate(this.props);
   }
 
@@ -91,7 +90,7 @@ export default abstract class User implements EntityMarker {
 
   public async generatePasswordHash() {
     const salt = await bcrypt.genSalt();
-    this.props.password =  await bcrypt.hash(this.props.password, salt);
+    this.props.password = await bcrypt.hash(this.props.password, salt);
   }
 
   get user(): UserAttr {
@@ -147,15 +146,15 @@ export default abstract class User implements EntityMarker {
 
   get profile_picture(): ImageAttr {
     return {
-        id: this.props.profile_picture.id,
-        url: this.props.profile_picture.url
+      id: this.props.profile_picture.id,
+      url: this.props.profile_picture.url,
     };
   }
 
   get header_picture(): ImageAttr {
     return {
-        id: this.props.header_picture.id,
-        url: this.props.header_picture.url
+      id: this.props.header_picture.id,
+      url: this.props.header_picture.url,
     };
   }
 

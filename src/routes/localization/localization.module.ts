@@ -5,9 +5,10 @@ import { LocalizationProvider } from './localization.providers';
 
 @Module({
   controllers: [LocalizationController],
-  providers: [LocalizationService,
+  providers: [
+    LocalizationService,
     LocalizationProvider.Repositories.LOCAL_TYPEORM_REPO,
-    ...Object.values(LocalizationProvider.UseCases)
+    ...Object.values(LocalizationProvider.UseCases),
   ],
 })
 export class LocalizationModule {}

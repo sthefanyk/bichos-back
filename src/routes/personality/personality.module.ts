@@ -7,9 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [PersonalityController],
-  providers: [PersonalityService,
+  providers: [
+    PersonalityService,
     PersonalityProvider.Repositories.PERSONALITY_TYPEORM_REPO,
-    ...Object.values(PersonalityProvider.UseCases)
+    ...Object.values(PersonalityProvider.UseCases),
   ],
 })
 export class PersonalityModule {}

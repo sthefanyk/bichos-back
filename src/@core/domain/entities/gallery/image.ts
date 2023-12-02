@@ -3,8 +3,8 @@ import { ImageType } from 'src/@core/shared/domain/enums/image-type.enum';
 import ImageProps from './image-props';
 
 export type ImageAttr = {
-    id?: string;
-    type: ImageType;
+  id?: string;
+  type: ImageType;
 };
 
 export class Image implements EntityMarker {
@@ -16,7 +16,7 @@ export class Image implements EntityMarker {
   }
 
   toJson() {
-    return {  
+    return {
       id: this.id,
       type: this.type,
     };

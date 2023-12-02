@@ -23,7 +23,7 @@ POST http://localhost:3000/localization/city
 Content-Type: application/json
 
 {
-    "name": "paranaguá",
+    "name": "Curitiba",
     "state": "Paraná"
 }
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 DELETE  http://localhost:3000/localization/city/Paranaguá
 
 ###
-DELETE  http://localhost:3000/localization/state/Paraná
+DELETE  http://localhost:3000/localization/state/Curitiba
 
 ###
 GET http://localhost:3000/localization/encode/Paraná

@@ -3,7 +3,6 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { PersonalityAttr } from './personality';
 
 export class PersonalityProps extends EntityProps {
-  
   @IsNotEmpty()
   @Length(2, 45)
   @IsString()

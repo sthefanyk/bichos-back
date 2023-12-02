@@ -10,7 +10,11 @@ export class QuestionModel implements ModelMarker {
   @Column({ type: 'varchar' })
   question: string;
 
-  @Column({ type: 'enum', enum: QuestionTypes, default: QuestionTypes.ALTERNATIVE })
+  @Column({
+    type: 'enum',
+    enum: QuestionTypes,
+    default: QuestionTypes.ALTERNATIVE,
+  })
   type: QuestionTypes;
 
   @Column({ type: 'boolean' })

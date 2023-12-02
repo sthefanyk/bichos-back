@@ -18,26 +18,26 @@ export class Contact implements EntityMarker {
   }
 
   toJson() {
-    return { 
-			...this.props,
-			phone: this.phone,
-      city: this.city.toJson().name
-		};
+    return {
+      ...this.props,
+      phone: this.phone,
+      city: this.city.toJson().name,
+    };
   }
- 
+
   get name(): string {
     return this.props.name;
   }
 
   get email(): string {
-		return this.props.email;
-	}
+    return this.props.email;
+  }
 
-	get phone(): string {
-		return this.props.phone.phone;
-	}
+  get phone(): string {
+    return this.props.phone.phone;
+  }
 
-	get city(): City {
-		return this.props.city;
-	}  
+  get city(): City {
+    return this.props.city;
+  }
 }

@@ -11,13 +11,13 @@ export namespace GalleryFindImageByIdUseCase {
       const img = await this.repo.findImageById(input.id);
 
       if (!img) throw new NotFoundError('Image not found');
-      
+
       return img;
     }
   }
 
   export type Input = {
-    id: string
+    id: string;
   };
 
   export type Output = Promise<Image>;

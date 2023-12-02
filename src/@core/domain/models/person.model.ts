@@ -6,7 +6,7 @@ import { UserModel } from './user.model';
 export class PersonModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => UserModel, (user) => user.id)
-  @JoinColumn({name: 'user_id'})
+  @JoinColumn({ name: 'user_id' })
   id: string;
 
   @Column({ type: 'varchar', length: 11, unique: true })
@@ -16,6 +16,6 @@ export class PersonModel implements ModelMarker {
   date_birth: Date;
 
   @OneToOne(() => UserModel, (user) => user.id)
-  @JoinColumn({name: 'user'})
+  @JoinColumn({ name: 'user' })
   user: UserModel;
 }

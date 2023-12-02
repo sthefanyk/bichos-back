@@ -5,7 +5,6 @@ import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props
 import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
 
 export default class ContactProps extends EntityPropsValidation {
-
   @IsNotEmpty()
   @Length(2, 45)
   @IsString()

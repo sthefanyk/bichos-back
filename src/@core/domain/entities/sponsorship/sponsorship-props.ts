@@ -1,11 +1,16 @@
 import EntityProps from 'src/@core/shared/domain/entities/entity-props';
-import { IsNotEmpty, IsString, IsEnum, MaxLength, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  MaxLength,
+  IsOptional,
+} from 'class-validator';
 import { SponsorshipAttr } from './sponsorship';
 import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
 import { StatusSponsorship } from 'src/@core/shared/domain/enums/status_sponsorship.enum';
 
 export default class SponsorshipProps extends EntityProps {
-
   @IsNotEmpty()
   id_godfather: UUID;
 

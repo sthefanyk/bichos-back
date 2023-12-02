@@ -24,7 +24,8 @@
     "migration:revert": "npm run typeorm -- migration:revert",
     "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d dist/database/data-source.js",
     "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create",
-    "db:init": "npm run migration:run && npm run seed:run"
+    "db:init": "npm run migration:run && npm run seed:run",
+    "prod": "npm run build"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.9.1",

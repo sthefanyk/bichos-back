@@ -8,7 +8,8 @@ export namespace StateDelete {
 
     async execute(input: Input): Output {
       input.name = input.name.toUpperCase();
-      if (!await this.repo.getState(input.name)) throw new NotFoundError('State not found');
+      if (!(await this.repo.getState(input.name)))
+        throw new NotFoundError('State not found');
       return await this.repo.deleteState(input.name);
     }
   }
@@ -18,7 +19,7 @@ export namespace StateDelete {
   };
 
   export type Output = Promise<{
-    name: string
-    cities: string[]
+    name: string;
+    cities: string[];
   }>;
 }

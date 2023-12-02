@@ -1,6 +1,20 @@
-import { Controller, Get, Post, Body, Param, Patch, Query, UseGuards, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Query,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { PersonalityService } from './personality.service';
-import { PersonalityCreate, PersonalitySearch, PersonalityUpdate } from 'src/@core/application/use-cases/personality';
+import {
+  PersonalityCreate,
+  PersonalitySearch,
+  PersonalityUpdate,
+} from 'src/@core/application/use-cases/personality';
 // import { RoleGuard } from 'src/guards/role.guard';
 // import { Roles } from 'src/decorators/roles.decorator';
 // import { Role } from 'src/@core/shared/domain/enums/role.enum';

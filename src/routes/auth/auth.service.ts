@@ -8,15 +8,12 @@ import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
-
   @Inject(Service)
   private service: Service;
 
-  constructor(
-    private readonly mailer: MailerService
-  ){}
+  constructor(private readonly mailer: MailerService) {}
 
-  async login({email, password}: LoginAuthDto) {
+  async login({ email, password }: LoginAuthDto) {
     return this.service.singIn(email, password);
   }
 
@@ -27,8 +24,8 @@ export class AuthService {
       to: 'sthe@email.com',
       template: './forget.handlebars',
       context: {
-        username: result.username
-      }
+        username: result.username,
+      },
     });
   }
 

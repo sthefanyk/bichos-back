@@ -10,7 +10,7 @@ import {
   IGalleryRepository,
   ILocalization,
   IPersonalityRepository,
-  IUserRepository
+  IUserRepository,
 } from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Health } from 'src/@core/domain/entities/health/health';
@@ -34,7 +34,6 @@ export namespace PublishAdoptPost {
     async execute(input: Input): Output {
       await this.validate(input);
 
-      
       const personalities: Personality[] = [];
 
       for (const personality of input.personalities) {
@@ -43,13 +42,15 @@ export namespace PublishAdoptPost {
         );
         personalities.push(foundPersonality);
       }
-      
-      const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
+
+      const city = await this.repoLocalization.getCityByName(
+        input.contact.city.toUpperCase(),
+      );
       if (!city) throw new NotFoundError('City not found');
 
       const user = await this.repoUser.findUserById(input.posted_by);
       if (!user) throw new NotFoundError('User not found');
-      
+
       const post = new Post({
         urgent: input.urgent,
         urgency_justification: input.urgency_justification,
@@ -60,7 +61,7 @@ export namespace PublishAdoptPost {
             size_current: +input.size_current,
             size_estimated: +input.size_estimated,
             breed: input.breed,
-            health: this.createHealth(input)
+            health: this.createHealth(input),
           },
           {
             name: input.name,
@@ -70,44 +71,52 @@ export namespace PublishAdoptPost {
             history: input.history,
             characteristic: input.characteristic,
             personalities,
-            main_image: {id: input.main_image},
-            second_image: {id: input.second_image},
-            third_image: {id: input.third_image},
-            fourth_image: {id: input.fourth_image},
+            main_image: { id: input.main_image },
+            second_image: { id: input.second_image },
+            third_image: { id: input.third_image },
+            fourth_image: { id: input.fourth_image },
           },
-          ),
-          contact: new Contact({
-            ...input.contact,
-            phone: input.contact.phone,
-            city
-          }),
-        });
-        
-        return await this.repo.publishAdoptPost(post);
+        ),
+        contact: new Contact({
+          ...input.contact,
+          phone: input.contact.phone,
+          city,
+        }),
+      });
+
+      return await this.repo.publishAdoptPost(post);
     }
 
     async validate(input: Input) {
-      if (typeof input.urgent === 'undefined') throw new RequiredError('urgent');
+      if (typeof input.urgent === 'undefined')
+        throw new RequiredError('urgent');
       if (input.urgent == true && !input.urgency_justification)
         throw new RequiredError('urgency_justification');
       if (!input.posted_by) throw new RequiredError('posted_by');
 
-      if (typeof input.size_current === 'undefined') throw new RequiredError('size');
-      if (typeof input.size_estimated === 'undefined') throw new RequiredError('size');
+      if (typeof input.size_current === 'undefined')
+        throw new RequiredError('size');
+      if (typeof input.size_estimated === 'undefined')
+        throw new RequiredError('size');
       if (!input.breed) throw new RequiredError('breed');
       if (!input.name) throw new RequiredError('name');
       if (typeof input.sex === 'undefined') throw new RequiredError('sex');
       if (!input.date_birth) throw new RequiredError('date_birth');
-      if (typeof input.specie === 'undefined') throw new RequiredError('species');
+      if (typeof input.specie === 'undefined')
+        throw new RequiredError('species');
       if (!input.main_image) throw new RequiredError('main_image');
       if (!input.second_image) throw new RequiredError('second_image');
       if (!input.third_image) throw new RequiredError('third_image');
       if (!input.fourth_image) throw new RequiredError('fourth_image');
 
-      if (!await this.repoGallery.findImageById(input.main_image)) throw new NotFoundError('Image main not found');
-      if (!await this.repoGallery.findImageById(input.second_image)) throw new NotFoundError('Image second not found');
-      if (!await this.repoGallery.findImageById(input.third_image)) throw new NotFoundError('Image third not found');
-      if (!await this.repoGallery.findImageById(input.fourth_image)) throw new NotFoundError('Image fourth not found');
+      if (!(await this.repoGallery.findImageById(input.main_image)))
+        throw new NotFoundError('Image main not found');
+      if (!(await this.repoGallery.findImageById(input.second_image)))
+        throw new NotFoundError('Image second not found');
+      if (!(await this.repoGallery.findImageById(input.third_image)))
+        throw new NotFoundError('Image third not found');
+      if (!(await this.repoGallery.findImageById(input.fourth_image)))
+        throw new NotFoundError('Image fourth not found');
 
       if (!input.personalities || input.personalities.length === 0)
         throw new RequiredError('personalities');
@@ -136,7 +145,7 @@ export namespace PublishAdoptPost {
     validateHealth(input: Input) {
       if (!input.health) throw new RequiredError('health');
 
-      if (typeof input.health.neutered === 'undefined') 
+      if (typeof input.health.neutered === 'undefined')
         throw new RequiredError('neutered in health');
       if (typeof input.health.neutered !== 'boolean')
         throw new EntityValidationError('The neutered is not a boolean');
@@ -155,12 +164,14 @@ export namespace PublishAdoptPost {
 
       input.health.disease_allergy.forEach((item) => {
         if (!item.name) throw new RequiredError('name in disease_allergy');
-        if (+item.type !== 0 && +item.type !== 1) throw new RequiredError('type in disease_allergy');
+        if (+item.type !== 0 && +item.type !== 1)
+          throw new RequiredError('type in disease_allergy');
       });
 
       input.health.vaccines_medicines.forEach((item) => {
         if (!item.name) throw new RequiredError('name in vaccines_medicines');
-        if (item.type !== 0 && item.type !== 1) throw new RequiredError('type in vaccines_medicines');
+        if (item.type !== 0 && item.type !== 1)
+          throw new RequiredError('type in vaccines_medicines');
         if (!item.total_dose)
           throw new RequiredError('total_dose in vaccines_medicines');
         if (!item.doses) throw new RequiredError('doses in vaccines_medicines');
@@ -232,7 +243,7 @@ export namespace PublishAdoptPost {
     characteristic: string;
     history: string;
     personalities: string[];
-    
+
     main_image: string;
     second_image: string;
     third_image: string;

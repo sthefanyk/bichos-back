@@ -71,9 +71,11 @@ export default class UserProps extends EntityProps {
     this.password = props.password;
     this.role = props.role;
     this.description = props.description;
-    this.profile_picture = props.profile_picture.id ? props.profile_picture : {id: '', url: ''};
-    this.header_picture = props.header_picture.id ? props.profile_picture : {id: '', url: ''};
+    this.profile_picture = props.profile_picture.id
+      ? props.profile_picture
+      : { id: '', url: '' };
+    this.header_picture = props.header_picture.id
+      ? props.profile_picture
+      : { id: '', url: '' };
   }
 }
-
-

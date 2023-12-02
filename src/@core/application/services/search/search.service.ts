@@ -5,7 +5,7 @@ import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 export abstract class SearchService<E extends EntityMarker> {
   constructor(
     private items: E[],
-    private sortableFields: string[]
+    private sortableFields: string[],
   ) {}
 
   async search(props: SearchParams): Promise<SearchResult<E>> {
@@ -36,7 +36,7 @@ export abstract class SearchService<E extends EntityMarker> {
     items: E[],
     filter: string | null,
   ): Promise<E[]>;
-  
+
   protected async applySort(
     items: E[],
     sort: string | null,

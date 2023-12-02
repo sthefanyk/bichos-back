@@ -8,7 +8,7 @@ import {
   BreedInactivate,
   BreedGetActiveRecords,
   BreedGetInactiveRecords,
-  BreedFindBySpecie
+  BreedFindBySpecie,
 } from 'src/@core/application/use-cases/breed';
 import { BreedCollectionPresenter } from './breed.presenter';
 
@@ -67,9 +67,10 @@ export class BreedService {
 
   async findBySpecie(searchParams: BreedSearch.Input, specie: string) {
     const output = await this.findBySpecieUseCase.execute({
-      search: searchParams, specie
+      search: searchParams,
+      specie,
     });
-    
+
     return new BreedCollectionPresenter(output);
   }
 

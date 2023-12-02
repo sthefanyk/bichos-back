@@ -24,18 +24,14 @@ export class Question implements EntityMarker {
   }
 
   toJson() {
-    return { 
-      ...this.props, 
+    return {
+      ...this.props,
       id: this.id,
-      alternatives: this.alternatives.map(a => a.toJson())
+      alternatives: this.alternatives.map((a) => a.toJson()),
     };
   }
 
-  public update(
-    question: string,
-    type: QuestionTypes,
-    others: boolean
-  ) {
+  public update(question: string, type: QuestionTypes, others: boolean) {
     this.props.question = question;
     this.props.type = type;
     this.props.others = others;

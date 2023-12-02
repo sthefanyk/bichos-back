@@ -96,12 +96,12 @@ export namespace PostProvider {
         galleryRepo: GalleryTypeormRepository,
       ) => {
         return new PublishAdoptPost.Usecase(
-          postRepo, 
-          userRepo, 
+          postRepo,
+          userRepo,
           personalityRepo,
           breedRepo,
           localizationRepo,
-          galleryRepo
+          galleryRepo,
         );
       },
       inject: [
@@ -125,12 +125,12 @@ export namespace PostProvider {
         galleryRepo: GalleryTypeormRepository,
       ) => {
         return new PublishSponsorshipPost.Usecase(
-          postRepo, 
-          userRepo, 
+          postRepo,
+          userRepo,
           personalityRepo,
           needRepo,
           localizationRepo,
-          galleryRepo
+          galleryRepo,
         );
       },
       inject: [

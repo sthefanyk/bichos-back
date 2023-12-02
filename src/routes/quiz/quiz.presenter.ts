@@ -8,6 +8,6 @@ export class QuizCollectionPresenter extends CollectionPresenter {
   constructor(output: SearchQuiz.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
-    this.data = items
+    this.data = items;
   }
 }

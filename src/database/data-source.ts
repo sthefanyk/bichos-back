@@ -10,7 +10,7 @@ import MainSeeder from './seeds/main.seeder';
 // SQLITE
 
 // export const dataSourceOptions: DataSourceOptions & SeederOptions = {
-//   type: 'sqlite',  
+//   type: 'sqlite',
 //   database: 'src/database/db.sqlite',
 //   logging: false,
 //   synchronize: true,
@@ -31,8 +31,7 @@ export const dataSourceOptions: DataSourceOptions & SeederOptions = {
   entities: [`${__dirname}/../**/models/**/*.{ts,js}`],
   migrations: [`${__dirname}/migrations/**/*{.ts,.js}`],
   seeds: [MainSeeder],
-  // synchronize: process.env.ENV === "development",
-  // synchronize: true,
+  synchronize: process.env.ENV === "dev",
   logging: false,
 };
 

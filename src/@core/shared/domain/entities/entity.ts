@@ -12,8 +12,8 @@ export default abstract class Entity<T extends EntityProps> {
   }
 
   toJson() {
-    return { ...this.props, id: this.props.id.toString() }
-  }  
+    return { ...this.props, id: this.props.id.toString() };
+  }
 
   toJsonString(): string {
     const propsWithId = { ...this.props, id: this.props.id.toString() };

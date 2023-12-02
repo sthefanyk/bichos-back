@@ -8,6 +8,6 @@ export class UserCollectionPresenter extends CollectionPresenter {
   constructor(output: UserSearch.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
-    this.data = items
+    this.data = items;
   }
 }

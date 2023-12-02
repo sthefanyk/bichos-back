@@ -47,7 +47,7 @@ export class PersonalityTypeormRepository implements IPersonalityRepository {
   }
 
   async findById(id: string): PersonalityFindById.Output {
-    const personality = await this.repo.findOne({ where: {id}});
+    const personality = await this.repo.findOne({ where: { id } });
 
     if (!personality) {
       return null;
@@ -57,7 +57,7 @@ export class PersonalityTypeormRepository implements IPersonalityRepository {
   }
 
   async findByName(name: string): PersonalityFindByName.Output {
-    const personality = await this.repo.findOne({ where: {name}});
+    const personality = await this.repo.findOne({ where: { name } });
 
     if (!personality) {
       return null;
@@ -91,7 +91,7 @@ export class PersonalityTypeormRepository implements IPersonalityRepository {
 
     const personalities: Personality[] = [];
 
-    result.forEach(personality => {
+    result.forEach((personality) => {
       personalities.push(new Personality(personality));
     });
 
@@ -99,11 +99,11 @@ export class PersonalityTypeormRepository implements IPersonalityRepository {
   }
 
   async getActiveRecords(): PersonalityGetActiveRecords.Output {
-    const result = await this.repo.find({where: {deleted_at: IsNull()} });
+    const result = await this.repo.find({ where: { deleted_at: IsNull() } });
 
     const personalities: Personality[] = [];
 
-    result.forEach(personality => {
+    result.forEach((personality) => {
       personalities.push(new Personality(personality));
     });
 
@@ -111,11 +111,13 @@ export class PersonalityTypeormRepository implements IPersonalityRepository {
   }
 
   async getInactiveRecords(): PersonalityGetInactiveRecords.Output {
-    const result = await this.repo.find({where: {deleted_at: Not(IsNull())} });
+    const result = await this.repo.find({
+      where: { deleted_at: Not(IsNull()) },
+    });
 
     const personalities: Personality[] = [];
 
-    result.forEach(personality => {
+    result.forEach((personality) => {
       personalities.push(new Personality(personality));
     });
 

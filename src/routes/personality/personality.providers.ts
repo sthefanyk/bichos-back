@@ -1,14 +1,14 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import {
-  PersonalityCreate, 
-  PersonalityFindById, 
-  PersonalitySearch, 
+  PersonalityCreate,
+  PersonalityFindById,
+  PersonalitySearch,
   PersonalityUpdate,
   PersonalityActivate,
   PersonalityInactivate,
   PersonalityGetActiveRecords,
-  PersonalityGetInactiveRecords
+  PersonalityGetInactiveRecords,
 } from 'src/@core/application/use-cases/personality';
 import { PersonalityTypeormRepository } from 'src/@core/infra/repositories/type-orm/personality-typeorm.repository';
 

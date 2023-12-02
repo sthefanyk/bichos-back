@@ -7,9 +7,9 @@ describe('Test Value Object State', () => {
     const stateName = 'Paraná';
     const stateAbbr = 'PR';
 
-    const state = new State({ name: stateName, abbr: stateAbbr});
+    const state = new State({ name: stateName, abbr: stateAbbr });
     const vo = new City({ name: cityName, state });
-    
+
     expect(vo.value.name).toBe(cityName);
     expect(vo.value.state.value.name).toBe(stateName);
     expect(vo.value.state.value.abbr).toBe(stateAbbr);

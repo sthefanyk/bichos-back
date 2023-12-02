@@ -8,15 +8,19 @@ export class SponsorshipModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne(() => UserModel, user => user.id)
-  @JoinColumn({name: 'id_godfather'})
+  @ManyToOne(() => UserModel, (user) => user.id)
+  @JoinColumn({ name: 'id_godfather' })
   godfather: UserModel;
 
-  @ManyToOne(() => PostModel, post => post.id)
-  @JoinColumn({name: 'id_post'})
+  @ManyToOne(() => PostModel, (post) => post.id)
+  @JoinColumn({ name: 'id_post' })
   post: PostModel;
 
-  @Column({ type: 'enum', enum: StatusSponsorship, default: StatusSponsorship.IN_PROCESS })
+  @Column({
+    type: 'enum',
+    enum: StatusSponsorship,
+    default: StatusSponsorship.IN_PROCESS,
+  })
   status: StatusSponsorship;
 
   @Column({ type: 'varchar' })

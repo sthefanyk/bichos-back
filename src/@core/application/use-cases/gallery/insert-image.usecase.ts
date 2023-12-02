@@ -8,11 +8,11 @@ export namespace GalleryInsertImageUseCase {
     constructor(private repo: IGalleryRepository) {}
 
     async execute(input: Input): Output {
-        const img = new Image({
-          type: +input.type
-        });
+      const img = new Image({
+        type: +input.type,
+      });
 
-        return await this.repo.insertImage(img, input.photo);
+      return await this.repo.insertImage(img, input.photo);
     }
   }
 
@@ -22,7 +22,7 @@ export namespace GalleryInsertImageUseCase {
   };
 
   export type Output = Promise<{
-    id: string,
-    url: string
+    id: string;
+    url: string;
   }>;
 }

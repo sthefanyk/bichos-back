@@ -7,7 +7,7 @@ import { StatusPostSponsorship } from 'src/@core/shared/domain/enums/status_post
 export class AnimalSponsorshipModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => AnimalModel, (animal) => animal.id)
-  @JoinColumn({name: 'animal_id'})
+  @JoinColumn({ name: 'animal_id' })
   id: string;
 
   @Column({ type: 'boolean' })
@@ -17,9 +17,13 @@ export class AnimalSponsorshipModel implements ModelMarker {
   reason_request: string;
 
   @OneToOne(() => AnimalModel)
-  @JoinColumn({name: 'animal'})
+  @JoinColumn({ name: 'animal' })
   animal: AnimalModel;
 
-  @Column({ type: 'enum', enum: StatusPostSponsorship, default: StatusPostSponsorship.WAITING_GODFATHER })
+  @Column({
+    type: 'enum',
+    enum: StatusPostSponsorship,
+    default: StatusPostSponsorship.WAITING_GODFATHER,
+  })
   status: StatusPostSponsorship;
 }

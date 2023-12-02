@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {INeedRepository} from '../../../domain/contracts/need-repository.interface';
+import { INeedRepository } from '../../../domain/contracts/need-repository.interface';
 import { Need, NeedAttr } from 'src/@core/domain/entities/need';
 
 export namespace NeedSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: INeedRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const needs = await this.repo.findAll();
       const service = new ServiceConfig(needs, ['name', 'created_at']);
 

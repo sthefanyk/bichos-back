@@ -7,9 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [UserController],
-  providers: [UserService,
+  providers: [
+    UserService,
     UserProvider.Repositories.USER_TYPEORM_REPO,
-    ...Object.values(UserProvider.UseCases)
+    ...Object.values(UserProvider.UseCases),
   ],
 })
 export class UserModule {}

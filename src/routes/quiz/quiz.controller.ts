@@ -1,6 +1,18 @@
-import { Controller, Get, Post, Body, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { QuizService } from './quiz.service';
-import { AddQuestionToQuiz, QuizCreate, RemoveQuestionToQuiz } from 'src/@core/application/use-cases/quiz';
+import {
+  AddQuestionToQuiz,
+  QuizCreate,
+  RemoveQuestionToQuiz,
+} from 'src/@core/application/use-cases/quiz';
 import { ApiTags } from '@nestjs/swagger';
 import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
 
@@ -23,7 +35,7 @@ export class QuizController {
 
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.quizService.findById({id});
+    return this.quizService.findById({ id });
   }
 
   @Post('add/question')
@@ -32,8 +44,9 @@ export class QuizController {
   }
 
   @Delete('question/:id_question')
-  removeQuestion(@Param('id_question') id_question: RemoveQuestionToQuiz.Input) {
+  removeQuestion(
+    @Param('id_question') id_question: RemoveQuestionToQuiz.Input,
+  ) {
     return this.quizService.removeQuestion(id_question);
   }
 }
-

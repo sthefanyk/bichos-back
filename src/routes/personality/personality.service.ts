@@ -7,7 +7,7 @@ import {
   PersonalityActivate,
   PersonalityInactivate,
   PersonalityGetActiveRecords,
-  PersonalityGetInactiveRecords
+  PersonalityGetInactiveRecords,
 } from 'src/@core/application/use-cases/personality';
 import { PersonalityCollectionPresenter } from './personality.presenter';
 

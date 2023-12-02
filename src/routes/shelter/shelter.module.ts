@@ -3,18 +3,20 @@ import { ShelterService } from './shelter.service';
 import { ShelterController } from './shelter.controller';
 import { ShelterProvider } from './shelter.providers';
 import { AuthModule } from '../auth/auth.module';
-import { AuthService as Service} from 'src/@core/application/services/auth/auth.service';
+import { AuthService as Service } from 'src/@core/application/services/auth/auth.service';
 
 @Module({
   imports: [AuthModule],
   controllers: [ShelterController],
-  providers: [ShelterService, Service,
+  providers: [
+    ShelterService,
+    Service,
     ShelterProvider.Repositories.SHELTER_TYPEORM_REPO,
     ShelterProvider.Repositories.LOCAL_TYPEORM_REPO,
     ShelterProvider.Repositories.GALLERY_TYPEORM_REPO,
     ShelterProvider.Repositories.USER_TYPEORM_REPO,
     ...Object.values(ShelterProvider.UseCases),
-    ...Object.values(ShelterProvider.Services)
+    ...Object.values(ShelterProvider.Services),
   ],
 })
 export class ShelterModule {}

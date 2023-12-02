@@ -2,7 +2,12 @@ import { INGORepository } from '../../../domain/contracts/ngo-repository.interfa
 import NGO from '../../../domain/entities/users/ngo';
 import { DataSource, Repository } from 'typeorm';
 import { NGOModel, UserModel } from '../../../domain/models';
-import { NGOCreate, NGOFindByCnpj, NGOFindById, NGOUpdate } from 'src/@core/application/use-cases/ngo';
+import {
+  NGOCreate,
+  NGOFindByCnpj,
+  NGOFindById,
+  NGOUpdate,
+} from 'src/@core/application/use-cases/ngo';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
 import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
 import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
@@ -20,10 +25,10 @@ export class NGOTypeormRepository implements INGORepository {
     this.userRepo = this.dataSource.getRepository(UserModel);
     this.repoGallery = new GalleryTypeormRepository(dataSource);
   }
-  
+
   async findByEmail(email: string): UserFindByEmail.Output {
     const model = await this.userRepo.findOne({
-      where: { email }
+      where: { email },
     });
 
     if (!model) return null;
@@ -33,7 +38,7 @@ export class NGOTypeormRepository implements INGORepository {
 
   async findByUsername(username: string): UserFindByUsername.Output {
     const model = await this.userRepo.findOne({
-      where: { username }
+      where: { username },
     });
 
     if (!model) return null;
@@ -45,23 +50,23 @@ export class NGOTypeormRepository implements INGORepository {
     const user = await this.userRepo.save({
       ...entity.user,
       header_picture: entity.user.header_picture.id,
-      profile_picture: entity.user.profile_picture.id
+      profile_picture: entity.user.profile_picture.id,
     });
 
-    const ngo = await this.ngoRepo.save({...entity.toJson(), user});
+    const ngo = await this.ngoRepo.save({ ...entity.toJson(), user });
 
     if (!user || !ngo) return null;
 
     return { id: user.id };
   }
 
-  async findById(id: string): NGOFindById.Output { 
+  async findById(id: string): NGOFindById.Output {
     return this._get(id);
   }
 
   async findByCnpj(cnpj: CNPJ): NGOFindByCnpj.Output {
     const model = await this.ngoRepo.findOne({
-      where: { cnpj: cnpj.cnpj }
+      where: { cnpj: cnpj.cnpj },
     });
 
     if (!model) return null;
@@ -71,37 +76,35 @@ export class NGOTypeormRepository implements INGORepository {
 
   async findAll(): Promise<NGO[]> {
     const models = await this.ngoRepo.find({
-      relations: ['user', 'user.city', 'user.city.state']}
-    )
+      relations: ['user', 'user.city', 'user.city.state'],
+    });
 
     return this._convertAll(models);
   }
 
   async update(entity: NGO): NGOUpdate.Output {
-    const userUpdateResult = await this.userRepo.update(
-      entity.id, {
+    const userUpdateResult = await this.userRepo.update(entity.id, {
       ...entity.user,
       header_picture: entity.user.header_picture.id,
-      profile_picture: entity.user.profile_picture.id
+      profile_picture: entity.user.profile_picture.id,
     });
 
-    const ngoUpdateResult = await this.ngoRepo.update(
-      entity.id, {
-        id: entity.id,
-        cnpj: entity.cnpj,
-        date_register: entity.date_register,
-        name_ngo: entity.name_ngo
-      }
-    );
+    const ngoUpdateResult = await this.ngoRepo.update(entity.id, {
+      id: entity.id,
+      cnpj: entity.cnpj,
+      date_register: entity.date_register,
+      name_ngo: entity.name_ngo,
+    });
 
     if (ngoUpdateResult.affected === 0 || userUpdateResult.affected === 0)
       return null;
-    
-    return { id: entity.id }
+
+    return { id: entity.id };
   }
 
   async getActiveRecords(): Promise<NGO[]> {
-    const models = await this.ngoRepo.createQueryBuilder('ngo')
+    const models = await this.ngoRepo
+      .createQueryBuilder('ngo')
       .leftJoinAndSelect('ngo.user', 'user')
       .leftJoinAndSelect('user.city', 'city')
       .leftJoinAndSelect('city.state', 'state')
@@ -112,7 +115,8 @@ export class NGOTypeormRepository implements INGORepository {
   }
 
   async getInactiveRecords(): Promise<NGO[]> {
-    const models = await this.ngoRepo.createQueryBuilder('ngo')
+    const models = await this.ngoRepo
+      .createQueryBuilder('ngo')
       .leftJoinAndSelect('ngo.user', 'user')
       .leftJoinAndSelect('user.city', 'city')
       .leftJoinAndSelect('city.state', 'state')
@@ -123,30 +127,40 @@ export class NGOTypeormRepository implements INGORepository {
   }
 
   async _get(id: string) {
-    const ngo = await this.ngoRepo.findOne({ 
-      where: { id }, 
-      relations: ['user', 'user.city', 'user.city.state']}
-    )
+    const ngo = await this.ngoRepo.findOne({
+      where: { id },
+      relations: ['user', 'user.city', 'user.city.state'],
+    });
 
     if (!ngo) return null;
 
-    let profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
-    let header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(
+      ngo.user.profile_picture,
+    );
+    let header_picture = await this.repoGallery.getImageUrl(
+      ngo.user.header_picture,
+    );
 
-    if (!profile_picture) profile_picture = { url: '' }
-    if (!header_picture) header_picture = { url: '' }
+    if (!profile_picture) profile_picture = { url: '' };
+    if (!header_picture) header_picture = { url: '' };
 
     return new NGO({
       ...ngo,
       userAttr: {
         ...ngo.user,
-        profile_picture: { id: ngo.user.profile_picture, url: profile_picture.url },
-        header_picture: { id: ngo.user.header_picture, url: header_picture.url },
-        city: new City({ 
-          ...ngo.user.city, 
-          state: new State({ ...ngo.user.city.state })
-        })
-      }
+        profile_picture: {
+          id: ngo.user.profile_picture,
+          url: profile_picture.url,
+        },
+        header_picture: {
+          id: ngo.user.header_picture,
+          url: header_picture.url,
+        },
+        city: new City({
+          ...ngo.user.city,
+          state: new State({ ...ngo.user.city.state }),
+        }),
+      },
     });
   }
 
@@ -154,26 +168,36 @@ export class NGOTypeormRepository implements INGORepository {
     const ngos: NGO[] = [];
 
     for (const ngo of models) {
-      let profile_picture = await this.repoGallery.getImageUrl(ngo.user.profile_picture);
-      let header_picture = await this.repoGallery.getImageUrl(ngo.user.header_picture);
-      
-      if (!profile_picture) profile_picture = { url: '' }
-      if (!header_picture) header_picture = { url: '' }
+      let profile_picture = await this.repoGallery.getImageUrl(
+        ngo.user.profile_picture,
+      );
+      let header_picture = await this.repoGallery.getImageUrl(
+        ngo.user.header_picture,
+      );
+
+      if (!profile_picture) profile_picture = { url: '' };
+      if (!header_picture) header_picture = { url: '' };
 
       ngos.push(
         new NGO({
           ...ngo,
           userAttr: {
             ...ngo.user,
-            profile_picture: { id: ngo.user.profile_picture, url: profile_picture.url },
-            header_picture: { id: ngo.user.header_picture, url: header_picture.url },
-            city: new City({ 
-              ...ngo.user.city, 
-              state: new State({ ...ngo.user.city.state })
-            })
-          }
-        })
-      )
+            profile_picture: {
+              id: ngo.user.profile_picture,
+              url: profile_picture.url,
+            },
+            header_picture: {
+              id: ngo.user.header_picture,
+              url: header_picture.url,
+            },
+            city: new City({
+              ...ngo.user.city,
+              state: new State({ ...ngo.user.city.state }),
+            }),
+          },
+        }),
+      );
     }
 
     return ngos;

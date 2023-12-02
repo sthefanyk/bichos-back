@@ -6,7 +6,7 @@ import { UserModel } from './user.model';
 export class ShelterModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => UserModel, (user) => user.id)
-  @JoinColumn({name: 'user_id'})
+  @JoinColumn({ name: 'user_id' })
   id: string;
 
   @Column({ type: 'varchar', length: 11, unique: true })
@@ -22,6 +22,6 @@ export class ShelterModel implements ModelMarker {
   star_date_shelter: Date;
 
   @OneToOne(() => UserModel, (user) => user.id)
-  @JoinColumn({name: 'user'})
+  @JoinColumn({ name: 'user' })
   user: UserModel;
 }

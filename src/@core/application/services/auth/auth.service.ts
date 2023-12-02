@@ -58,7 +58,10 @@ export class AuthService implements IAuth {
     }
   }
 
-  async singIn( email: string, password: string ): Promise<{ accessToken: string }> {
+  async singIn(
+    email: string,
+    password: string,
+  ): Promise<{ accessToken: string }> {
     const user = await this.repo.findUserByEmail(email);
 
     if (!user || !(await this.verifyPassword(password, user.password))) {
@@ -74,14 +77,17 @@ export class AuthService implements IAuth {
     return user as any;
   }
 
-  async reset( token: string, password: string ): Promise<{ accessToken: string }> {
+  async reset(
+    token: string,
+    password: string,
+  ): Promise<{ accessToken: string }> {
     const { sub } = this.checkTokenUser(token);
 
     const user = await this.repo.findUserById(sub.toString());
     if (!user) throw new NotFoundError('User not found');
 
     await user.resetPassword(password);
-    
+
     const result = await this.repo.resetPassword(user);
     if (!result) throw new UpdateError(`Could not update user`);
 

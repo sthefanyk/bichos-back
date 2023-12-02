@@ -7,11 +7,12 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [SponsorshipController],
-  providers: [SponsorshipService,
+  providers: [
+    SponsorshipService,
     SponsorshipProvider.Repositories.ADOPT_TYPEORM_REPO,
     SponsorshipProvider.Repositories.POST_TYPEORM_REPO,
     SponsorshipProvider.Repositories.USER_TYPEORM_REPO,
-    ...Object.values(SponsorshipProvider.UseCases)
+    ...Object.values(SponsorshipProvider.UseCases),
   ],
 })
 export class SponsorshipModule {}

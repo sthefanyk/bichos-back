@@ -68,7 +68,7 @@ export namespace PersonProvider {
         return new PersonCreate.Usecase(personRepo, localRepo, galleryRepo);
       },
       inject: [
-        Repositories.REPO.provide, 
+        Repositories.REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
         Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
@@ -124,7 +124,7 @@ export namespace PersonProvider {
         return new PersonUpdate.Usecase(personRepo, localRepo, galleryRepo);
       },
       inject: [
-        Repositories.REPO.provide, 
+        Repositories.REPO.provide,
         Repositories.LOCAL_TYPEORM_REPO.provide,
         Repositories.GALLERY_TYPEORM_REPO.provide,
       ],
@@ -151,9 +151,9 @@ export namespace PersonProvider {
     export const SERVICE = {
       provide: AuthService,
       useFactory: (authRepo: UserTypeormRepository) => {
-        return new AuthService(authRepo)
+        return new AuthService(authRepo);
       },
       inject: [Repositories.USER_TYPEORM_REPO.provide],
-    }
+    };
   }
 }

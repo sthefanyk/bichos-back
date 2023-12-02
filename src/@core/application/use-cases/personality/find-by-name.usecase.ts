@@ -1,26 +1,26 @@
-import UseCase from "../usecase";
-import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
-import { IPersonalityRepository } from "src/@core/domain/contracts";
-import { Personality } from "src/@core/domain/entities/personality";
+import UseCase from '../usecase';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { IPersonalityRepository } from 'src/@core/domain/contracts';
+import { Personality } from 'src/@core/domain/entities/personality';
 
 export namespace PersonalityFindByName {
-    export class Usecase implements UseCase<Input, Output> {
-        constructor(private repo: IPersonalityRepository){}
-    
-        async execute(input: Input): Output {
-            const personality = await this.repo.findByName(input.name);
+  export class Usecase implements UseCase<Input, Output> {
+    constructor(private repo: IPersonalityRepository) {}
 
-            if (!personality) {
-                throw new NotFoundError("Personality not found");
-            }
+    async execute(input: Input): Output {
+      const personality = await this.repo.findByName(input.name);
 
-            return personality;
-        }
+      if (!personality) {
+        throw new NotFoundError('Personality not found');
+      }
+
+      return personality;
     }
-    
-    export type Input = {
-        name: string
-    }
-    
-    export type Output = Promise<Personality>
+  }
+
+  export type Input = {
+    name: string;
+  };
+
+  export type Output = Promise<Personality>;
 }

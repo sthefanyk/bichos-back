@@ -18,7 +18,7 @@ export class UserModel implements ModelMarker {
   name: string;
 
   @ManyToOne(() => CityModel, (city) => city.name)
-  @JoinColumn({name: 'city_name'})
+  @JoinColumn({ name: 'city_name' })
   city: CityModel;
 
   @Column({ type: 'varchar', default: '' })

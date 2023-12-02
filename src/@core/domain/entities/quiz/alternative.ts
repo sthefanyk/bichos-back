@@ -2,8 +2,8 @@ import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
 import AlternativeProps from './alternative-props';
 
 export type AlternativeAttr = {
-    id?: string;
-    alternative: string;
+  id?: string;
+  alternative: string;
 };
 
 export class Alternative implements EntityMarker {
@@ -19,7 +19,7 @@ export class Alternative implements EntityMarker {
 
   get id(): string {
     return this.props.id.id;
-}
+  }
 
   get alternative(): string {
     return this.props.alternative;

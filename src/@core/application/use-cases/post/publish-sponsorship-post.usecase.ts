@@ -5,7 +5,13 @@ import { Post } from 'src/@core/domain/entities/posts/post';
 import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
 import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { IGalleryRepository, ILocalization, INeedRepository, IPersonalityRepository, IUserRepository } from 'src/@core/domain/contracts';
+import {
+  IGalleryRepository,
+  ILocalization,
+  INeedRepository,
+  IPersonalityRepository,
+  IUserRepository,
+} from 'src/@core/domain/contracts';
 import { Personality } from 'src/@core/domain/entities/personality';
 import { Need } from 'src/@core/domain/entities/need';
 import { Contact } from 'src/@core/domain/entities/contact';
@@ -26,7 +32,9 @@ export namespace PublishSponsorshipPost {
 
       const personalities: Personality[] = [];
       for (const personality of input.personalities) {
-        const foundPersonality = await this.repoPersonality.findByName(personality.toLowerCase());
+        const foundPersonality = await this.repoPersonality.findByName(
+          personality.toLowerCase(),
+        );
         personalities.push(foundPersonality);
       }
 
@@ -36,79 +44,90 @@ export namespace PublishSponsorshipPost {
         needs.push(foundNeed);
       }
 
-      const city = await this.repoLocalization.getCityByName(input.contact.city.toUpperCase());
+      const city = await this.repoLocalization.getCityByName(
+        input.contact.city.toUpperCase(),
+      );
       if (!city) throw new NotFoundError('City not found');
 
       const user = await this.repoUser.findUserById(input.posted_by);
       if (!user) throw new NotFoundError('User not found');
 
       const post = new Post({
-          urgent: input.urgent,
-          urgency_justification: input.urgency_justification,
-          posted_by: user,
-          type: TypePost.SPONSORSHIP,
-          animal: new AnimalSponsorship(
-            {
-              accompany: input.accompany,
-              reason_request: input.reason_request,
-              needs
-            },
-            {
-              name: input.name,
-              sex: +input.sex,
-              date_birth: new Date(input.date_birth),
-              species: +input.species,
-              history: input.history,
-              characteristic: input.characteristic,
-              personalities,
-              main_image: {id: input.main_image},
-              second_image: {id: input.second_image},
-              third_image: {id: input.third_image},
-              fourth_image: {id: input.fourth_image},
-            }
-          ),
-          contact: new Contact({
-            ...input.contact,
-            phone: input.contact.phone,
-            city
-          })
+        urgent: input.urgent,
+        urgency_justification: input.urgency_justification,
+        posted_by: user,
+        type: TypePost.SPONSORSHIP,
+        animal: new AnimalSponsorship(
+          {
+            accompany: input.accompany,
+            reason_request: input.reason_request,
+            needs,
+          },
+          {
+            name: input.name,
+            sex: +input.sex,
+            date_birth: new Date(input.date_birth),
+            species: +input.species,
+            history: input.history,
+            characteristic: input.characteristic,
+            personalities,
+            main_image: { id: input.main_image },
+            second_image: { id: input.second_image },
+            third_image: { id: input.third_image },
+            fourth_image: { id: input.fourth_image },
+          },
+        ),
+        contact: new Contact({
+          ...input.contact,
+          phone: input.contact.phone,
+          city,
+        }),
       });
 
       return await this.repo.publishSponsorshipPost(post);
     }
 
     async validate(input: Input) {
-      if (typeof input.urgent === 'undefined') throw new RequiredError('urgent');
+      if (typeof input.urgent === 'undefined')
+        throw new RequiredError('urgent');
       if (input.urgent == true && !input.urgency_justification)
         throw new RequiredError('urgency_justification');
-      if(!input.posted_by) throw new RequiredError('posted_by');
+      if (!input.posted_by) throw new RequiredError('posted_by');
 
-      if (typeof input.accompany === 'undefined') throw new RequiredError('urgent');
-      if(!input.reason_request) throw new RequiredError('reason_request');
-      if(!input.name) throw new RequiredError('name');
-      if(!input.sex) throw new RequiredError('sex');
-      if(!input.date_birth) throw new RequiredError('date_birth');
-      if(!input.species) throw new RequiredError('species');
+      if (typeof input.accompany === 'undefined')
+        throw new RequiredError('urgent');
+      if (!input.reason_request) throw new RequiredError('reason_request');
+      if (!input.name) throw new RequiredError('name');
+      if (!input.sex) throw new RequiredError('sex');
+      if (!input.date_birth) throw new RequiredError('date_birth');
+      if (!input.species) throw new RequiredError('species');
 
+      if (!(await this.repoGallery.findImageById(input.main_image)))
+        throw new NotFoundError('Image main not found');
+      if (!(await this.repoGallery.findImageById(input.second_image)))
+        throw new NotFoundError('Image second not found');
+      if (!(await this.repoGallery.findImageById(input.third_image)))
+        throw new NotFoundError('Image third not found');
+      if (!(await this.repoGallery.findImageById(input.fourth_image)))
+        throw new NotFoundError('Image fourth not found');
 
-      if (!await this.repoGallery.findImageById(input.main_image)) throw new NotFoundError('Image main not found');
-      if (!await this.repoGallery.findImageById(input.second_image)) throw new NotFoundError('Image second not found');
-      if (!await this.repoGallery.findImageById(input.third_image)) throw new NotFoundError('Image third not found');
-      if (!await this.repoGallery.findImageById(input.fourth_image)) throw new NotFoundError('Image fourth not found');
+      if (!input.personalities || input.personalities.length === 0)
+        throw new RequiredError('personalities');
+      if (!input.needs || input.needs.length === 0)
+        throw new RequiredError('needs');
 
-      if(!input.personalities || input.personalities.length === 0) throw new RequiredError('personalities');
-      if(!input.needs || input.needs.length === 0) throw new RequiredError('needs');
+      if (!(await this.repoUser.findUserById(input.posted_by)))
+        throw new NotFoundError('User not found');
 
-      if (!await this.repoUser.findUserById(input.posted_by)) 
-        throw new NotFoundError('User not found');      
-      
       await this.validatePersonalities(input.personalities);
       await this.validateNeeds(input.needs);
     }
 
     async validatePersonalities(personalities: string[]) {
       for (const personality of personalities) {
-        if (!(await this.repoPersonality.findByName(personality.toLowerCase()))) {
+        if (
+          !(await this.repoPersonality.findByName(personality.toLowerCase()))
+        ) {
           throw new NotFoundError(`Personality '${personality}' not found`);
         }
       }
@@ -149,7 +168,7 @@ export namespace PublishSponsorshipPost {
       email: string;
       phone: string;
       city: string;
-    }
+    };
   };
 
   export type Output = Promise<{

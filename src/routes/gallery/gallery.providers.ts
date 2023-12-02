@@ -1,7 +1,11 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
 import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
-import { GalleryGetImageUrlUseCase, GalleryInsertImageUseCase, GalleryRemoveImageUseCase } from 'src/@core/application/use-cases/gallery';
+import {
+  GalleryGetImageUrlUseCase,
+  GalleryInsertImageUseCase,
+  GalleryRemoveImageUseCase,
+} from 'src/@core/application/use-cases/gallery';
 
 export namespace GalleryProvider {
   export namespace Repositories {
@@ -22,17 +26,14 @@ export namespace GalleryProvider {
     export const INSERT_IMAGE = {
       provide: GalleryInsertImageUseCase.Usecase,
       useFactory: (repo: GalleryTypeormRepository) => {
-        return new GalleryInsertImageUseCase.Usecase(
-          repo);
+        return new GalleryInsertImageUseCase.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };
 
     export const GET_IMAGE_URL = {
       provide: GalleryGetImageUrlUseCase.Usecase,
-      useFactory: (
-        repo: GalleryTypeormRepository
-      ) => {
+      useFactory: (repo: GalleryTypeormRepository) => {
         return new GalleryGetImageUrlUseCase.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
@@ -41,8 +42,7 @@ export namespace GalleryProvider {
     export const REMOVE_IMAGE = {
       provide: GalleryRemoveImageUseCase.Usecase,
       useFactory: (repo: GalleryTypeormRepository) => {
-        return new GalleryRemoveImageUseCase.Usecase(
-          repo);
+        return new GalleryRemoveImageUseCase.Usecase(repo);
       },
       inject: [Repositories.REPO.provide],
     };

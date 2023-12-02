@@ -38,12 +38,12 @@ import { GalleryModule } from './routes/gallery/gallery.module';
     TypeOrmModule.forRoot(dataSourceOptions),
     MailerModule.forRoot({
       transport: {
-        host: "sandbox.smtp.mailtrap.io",
+        host: 'sandbox.smtp.mailtrap.io',
         port: 2525,
         auth: {
           user: process.env.MAILER_USER,
-          pass: process.env.MAILER_PASS
-        }
+          pass: process.env.MAILER_PASS,
+        },
       },
       defaults: {
         from: '"API Bichos" <modules@nestjs.com>',
@@ -62,6 +62,3 @@ import { GalleryModule } from './routes/gallery/gallery.module';
   providers: [AppService],
 })
 export class AppModule {}
-
-
-

@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
 import { UserModel, AnimalModel, CityModel } from '.';
@@ -12,7 +19,7 @@ export class PostModel implements ModelMarker {
   urgent: boolean;
 
   @ManyToOne(() => UserModel, (user) => user.id)
-  @JoinColumn({name: 'user_id'})
+  @JoinColumn({ name: 'user_id' })
   posted_by: UserModel;
 
   @Column({ type: 'integer' })
@@ -34,11 +41,11 @@ export class PostModel implements ModelMarker {
   contact_phone: string;
 
   @ManyToOne(() => CityModel, (city) => city.name)
-  @JoinColumn({name: 'city_name'})
+  @JoinColumn({ name: 'city_name' })
   contact_city: CityModel;
 
   @OneToOne(() => AnimalModel, (animal) => animal.id)
-  @JoinColumn({name: 'animal'})
+  @JoinColumn({ name: 'animal' })
   animal: AnimalModel;
 
   @Column({ type: 'datetime' })
@@ -53,4 +60,3 @@ export class PostModel implements ModelMarker {
   @Column({ type: 'datetime', default: null })
   deleted_at: Date;
 }
-

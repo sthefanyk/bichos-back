@@ -9,14 +9,18 @@ export class ResponseModel implements ModelMarker {
   id: string;
 
   @ManyToOne(() => QuestionModel)
-  @JoinColumn({name: 'id_question'})
+  @JoinColumn({ name: 'id_question' })
   question: QuestionModel;
 
   @ManyToOne(() => AdoptModel)
-  @JoinColumn({name: 'id_adopt'})
+  @JoinColumn({ name: 'id_adopt' })
   adopt: AdoptModel;
 
-  @Column({ type: 'enum', enum: EvaluationResponse, default: EvaluationResponse.NOT_EVALUATED })
+  @Column({
+    type: 'enum',
+    enum: EvaluationResponse,
+    default: EvaluationResponse.NOT_EVALUATED,
+  })
   evaluation: EvaluationResponse;
 
   @Column({ type: 'varchar' })

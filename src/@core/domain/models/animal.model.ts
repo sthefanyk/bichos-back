@@ -47,4 +47,3 @@ export class AnimalModel implements ModelMarker {
   @Column({ type: 'datetime', default: null })
   deleted_at: Date;
 }
-

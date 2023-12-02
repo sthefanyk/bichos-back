@@ -1,9 +1,22 @@
-import { AdoptFindById, AdoptSearch, AdoptUsecase, ChooseAdopter, GetAdopterByAdoptPostId } from 'src/@core/application/use-cases/adopt';
+import {
+  AdoptFindById,
+  AdoptSearch,
+  AdoptUsecase,
+  ChooseAdopter,
+  GetAdopterByAdoptPostId,
+} from 'src/@core/application/use-cases/adopt';
 import { EvaluateResponses } from 'src/@core/application/use-cases/adopt/evaluate-responses.usecase';
 import { IAdoptRepository } from 'src/@core/domain/contracts';
 import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
 import { Response } from 'src/@core/domain/entities/adopt/response';
-import { AdoptModel, PostModel, QuestionModel, QuizModel, ResponseModel, UserModel } from 'src/@core/domain/models';
+import {
+  AdoptModel,
+  PostModel,
+  QuestionModel,
+  QuizModel,
+  ResponseModel,
+  UserModel,
+} from 'src/@core/domain/models';
 import { DataSource, Repository } from 'typeorm';
 import { UserTypeormRepository } from './user-typeorm.repository';
 
@@ -26,39 +39,43 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     this.userRepo = new UserTypeormRepository(dataSource);
   }
 
-  async getAdopterByAdoptPostId(id_post: string): GetAdopterByAdoptPostId.Output {
-    const adopt = await this.repoAdopt.findOne({ 
+  async getAdopterByAdoptPostId(
+    id_post: string,
+  ): GetAdopterByAdoptPostId.Output {
+    const adopt = await this.repoAdopt.findOne({
       where: { post: { id: id_post }, status: 5 },
-      relations: ['adopter', 'quiz', 'post']
+      relations: ['adopter', 'quiz', 'post'],
     });
 
     if (!adopt) return null;
 
     const user = await this.userRepo.findUserById(adopt.adopter.id);
-    return user
+    return user;
   }
 
   async updateStatus(entity: Adopt): ChooseAdopter.Output {
     await this.repoAdopt.update(entity.id, {
-      status: entity.status
-    });    
+      status: entity.status,
+    });
   }
 
   async evaluateResponses(entity: Adopt): EvaluateResponses.Output {
     for (const response of entity.responses) {
       await this.repoResponse.update(response.id, {
-        evaluation: response.evaluation
+        evaluation: response.evaluation,
       });
     }
   }
 
   async findById(id: string): AdoptFindById.Output {
-    const adopt = await this.repoAdopt.findOne({ 
-      where: { id }, relations: ['adopter', 'quiz', 'post']
+    const adopt = await this.repoAdopt.findOne({
+      where: { id },
+      relations: ['adopter', 'quiz', 'post'],
     });
 
-    const responses = await this.repoResponse.find({ 
-      where: { adopt: { id: adopt.id } }, relations: ['question', 'adopt']
+    const responses = await this.repoResponse.find({
+      where: { adopt: { id: adopt.id } },
+      relations: ['question', 'adopt'],
     });
 
     return new Adopt({
@@ -67,40 +84,51 @@ export class AdoptTypeormRepository implements IAdoptRepository {
       id_adopter: adopt.adopter.id,
       id_post: adopt.post.id,
       id_quiz: adopt.quiz.id,
-      responses: responses.map(r => new Response({
-        id: r.id,
-        id_adopt: r.adopt.id,
-        id_question: r.question.id,
-        response: r.response,
-        evaluation: +r.evaluation,
-      }))
+      responses: responses.map(
+        (r) =>
+          new Response({
+            id: r.id,
+            id_adopt: r.adopt.id,
+            id_question: r.question.id,
+            response: r.response,
+            evaluation: +r.evaluation,
+          }),
+      ),
     });
   }
 
   async findAll(): AdoptSearch.Output {
-    const result = await this.repoAdopt.find({relations: ['adopter', 'post', 'quiz'] });
-    
+    const result = await this.repoAdopt.find({
+      relations: ['adopter', 'post', 'quiz'],
+    });
+
     const adopts: Adopt[] = [];
-    
+
     for (const adopt of result) {
-      const responses = await this.repoResponse.find({ 
-        where: { adopt: { id: adopt.id } }, relations: ['question', 'adopt']
+      const responses = await this.repoResponse.find({
+        where: { adopt: { id: adopt.id } },
+        relations: ['question', 'adopt'],
       });
-      
-      adopts.push(new Adopt({
-        ...adopt,
-        status: +adopt.status,
-        id_adopter: adopt.adopter.id,
-        id_post: adopt.post.id,
-        id_quiz: adopt.quiz.id,
-        responses: responses.map(r => new Response({
-          id: r.id,
-          id_adopt: r.adopt.id,
-          id_question: r.question.id,
-          response: r.response,
-          evaluation: +r.evaluation,
-        }))
-      }));
+
+      adopts.push(
+        new Adopt({
+          ...adopt,
+          status: +adopt.status,
+          id_adopter: adopt.adopter.id,
+          id_post: adopt.post.id,
+          id_quiz: adopt.quiz.id,
+          responses: responses.map(
+            (r) =>
+              new Response({
+                id: r.id,
+                id_adopt: r.adopt.id,
+                id_question: r.question.id,
+                response: r.response,
+                evaluation: +r.evaluation,
+              }),
+          ),
+        }),
+      );
     }
 
     return adopts;
@@ -111,7 +139,7 @@ export class AdoptTypeormRepository implements IAdoptRepository {
       this.repoUser.findOne({ where: { id: entity.id_adopter } }),
       this.repoQuiz.findOne({ where: { id: entity.id_quiz } }),
       this.repoPost.findOne({ where: { id: entity.id_post } }),
-    ]);    
+    ]);
 
     const adopt = await this.repoAdopt.save({
       ...entity.toJson(),
@@ -121,18 +149,20 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     });
 
     for (const response of entity.responses) {
-      const question = await this.repoQuestion.findOne({where: { id: response.id_question }})
+      const question = await this.repoQuestion.findOne({
+        where: { id: response.id_question },
+      });
       await this.repoResponse.save({
         id: response.id,
         adopt,
         evaluation: response.evaluation,
         question,
-        response: response.response
+        response: response.response,
       });
     }
 
     return {
-      id: adopt.id
-    }
+      id: adopt.id,
+    };
   }
 }

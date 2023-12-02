@@ -10,14 +10,17 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IPersonalityRepository} from '../../../domain/contracts/personality-repository.interface';
-import { Personality, PersonalityAttr } from 'src/@core/domain/entities/personality';
+import { IPersonalityRepository } from '../../../domain/contracts/personality-repository.interface';
+import {
+  Personality,
+  PersonalityAttr,
+} from 'src/@core/domain/entities/personality';
 
 export namespace PersonalitySearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IPersonalityRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const personalities = await this.repo.findAll();
       const service = new ServiceConfig(personalities, ['name', 'created_at']);
 

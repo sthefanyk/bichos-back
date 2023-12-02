@@ -1,5 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { GalleryGetImageUrlUseCase, GalleryInsertImageUseCase, GalleryRemoveImageUseCase } from 'src/@core/application/use-cases/gallery';
+import {
+  GalleryGetImageUrlUseCase,
+  GalleryInsertImageUseCase,
+  GalleryRemoveImageUseCase,
+} from 'src/@core/application/use-cases/gallery';
 
 @Injectable()
 export class GalleryService {

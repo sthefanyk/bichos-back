@@ -8,6 +8,6 @@ export class SponsorshipPostCollectionPresenter extends CollectionPresenter {
   constructor(output: SearchSponsorshipPost.SearchOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
-    this.data = items
+    this.data = items;
   }
 }

@@ -7,9 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [GalleryController],
-  providers: [GalleryService,
+  providers: [
+    GalleryService,
     GalleryProvider.Repositories.GALLERY_TYPEORM_REPO,
-    ...Object.values(GalleryProvider.UseCases)
+    ...Object.values(GalleryProvider.UseCases),
   ],
 })
 export class GalleryModule {}

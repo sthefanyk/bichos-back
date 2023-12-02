@@ -1,6 +1,16 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { BreedActivate, BreedCreate, BreedFindById, BreedFindBySpecie, BreedGetActiveRecords, BreedGetInactiveRecords, BreedInactivate, BreedSearch, BreedUpdate } from 'src/@core/application/use-cases/breed';
+import {
+  BreedActivate,
+  BreedCreate,
+  BreedFindById,
+  BreedFindBySpecie,
+  BreedGetActiveRecords,
+  BreedGetInactiveRecords,
+  BreedInactivate,
+  BreedSearch,
+  BreedUpdate,
+} from 'src/@core/application/use-cases/breed';
 import { BreedTypeormRepository } from 'src/@core/infra/repositories/type-orm/breed-typeorm.repository';
 
 export namespace BreedProvider {

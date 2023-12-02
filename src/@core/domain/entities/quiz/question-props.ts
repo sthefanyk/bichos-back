@@ -36,12 +36,22 @@ export default class QuestionProps extends EntityProps {
 
     this.validate(this);
 
-    if (this.type === QuestionTypes.ALTERNATIVE && this.alternatives.length < 2) {
-      throw new EntityValidationError('Alternative questions must have at least 2 alternatives');
+    if (
+      this.type === QuestionTypes.ALTERNATIVE &&
+      this.alternatives.length < 2
+    ) {
+      throw new EntityValidationError(
+        'Alternative questions must have at least 2 alternatives',
+      );
     }
 
-    if (this.type === QuestionTypes.DESCRIPTIVE && this.alternatives.length !== 0) {
-      throw new EntityValidationError('Descriptive questions cannot have alternatives');
+    if (
+      this.type === QuestionTypes.DESCRIPTIVE &&
+      this.alternatives.length !== 0
+    ) {
+      throw new EntityValidationError(
+        'Descriptive questions cannot have alternatives',
+      );
     }
   }
 }

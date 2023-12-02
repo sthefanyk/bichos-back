@@ -19,25 +19,25 @@ export namespace PersonCreate {
 
     async execute(input: Input): Output {
       await this.validate(input);
-      
-      const city = await this.repoLocalization.getCityByName(input.city.toUpperCase());
-      const user = new Person(
-        {
-          cpf: new CPF(input.cpf),
-          date_birth: new Date(input.date_birth),
-          userAttr: {
-            full_name: input.full_name,
-            username: input.username,
-            name: input.name,
-            email: input.email,
-            password: input.password,
-            city: city,
-            description: input.description,
-            profile_picture: { id: input.profile_picture },
-            header_picture: { id: input.header_picture },
-          }
-        },
+
+      const city = await this.repoLocalization.getCityByName(
+        input.city.toUpperCase(),
       );
+      const user = new Person({
+        cpf: new CPF(input.cpf),
+        date_birth: new Date(input.date_birth),
+        userAttr: {
+          full_name: input.full_name,
+          username: input.username,
+          name: input.name,
+          email: input.email,
+          password: input.password,
+          city: city,
+          description: input.description,
+          profile_picture: { id: input.profile_picture },
+          header_picture: { id: input.header_picture },
+        },
+      });
 
       await user.generatePasswordHash();
 
@@ -48,31 +48,39 @@ export namespace PersonCreate {
     }
 
     async validate(input: Input) {
-      if(!input.cpf) throw new RequiredError('cpf');
-      if(!input.date_birth) throw new RequiredError('date_birth');
-      if(!input.full_name) throw new RequiredError('full_name');
-      if(!input.username) throw new RequiredError('username');
-      if(!input.name) throw new RequiredError('name');
-      if(!input.email) throw new RequiredError('email');
-      if(!input.password) throw new RequiredError('password');
-      if(!input.city) throw new RequiredError('city');
+      if (!input.cpf) throw new RequiredError('cpf');
+      if (!input.date_birth) throw new RequiredError('date_birth');
+      if (!input.full_name) throw new RequiredError('full_name');
+      if (!input.username) throw new RequiredError('username');
+      if (!input.name) throw new RequiredError('name');
+      if (!input.email) throw new RequiredError('email');
+      if (!input.password) throw new RequiredError('password');
+      if (!input.city) throw new RequiredError('city');
       // if(!input.profile_picture) throw new RequiredError('profile_picture');
       // if(!input.header_picture) throw new RequiredError('header_picture');
-      
-      if (!await this.repoLocalization.getCity(input.city.toUpperCase())) throw new NotFoundError('City not found');
-      
-      if(input.profile_picture)
-      if (!await this.repoGallery.findImageById(input.profile_picture)) throw new NotFoundError('Image profile not found');
-      if(input.header_picture)
-      if (!await this.repoGallery.findImageById(input.header_picture)) throw new NotFoundError('Image header not found');
-      
+
+      if (!(await this.repoLocalization.getCity(input.city.toUpperCase())))
+        throw new NotFoundError('City not found');
+
+      if (input.profile_picture)
+        if (!(await this.repoGallery.findImageById(input.profile_picture)))
+          throw new NotFoundError('Image profile not found');
+      if (input.header_picture)
+        if (!(await this.repoGallery.findImageById(input.header_picture)))
+          throw new NotFoundError('Image header not found');
+
       await this.repoLocalization.getCityByName(input.city.toUpperCase());
       const cpfExists = await this.repo.findByCpf(new CPF(input.cpf));
-      const emailExists = await this.repo.findByEmail(input.email.toLowerCase());
-      const usernameExists = await this.repo.findByUsername(input.username.toLowerCase());
-            
+      const emailExists = await this.repo.findByEmail(
+        input.email.toLowerCase(),
+      );
+      const usernameExists = await this.repo.findByUsername(
+        input.username.toLowerCase(),
+      );
+
       if (emailExists) throw new AlreadyExistsError('Email already exists');
-      if (usernameExists) throw new AlreadyExistsError('Username already exists');
+      if (usernameExists)
+        throw new AlreadyExistsError('Username already exists');
       if (cpfExists) throw new AlreadyExistsError('CPF already exists');
     }
   }

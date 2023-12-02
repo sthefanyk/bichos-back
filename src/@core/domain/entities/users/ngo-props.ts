@@ -4,7 +4,6 @@ import { IsDate, IsNotEmpty, IsString, Length } from 'class-validator';
 import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
 
 export default class NGOProps extends UserProps {
-
   @Length(13, 13)
   @IsNotEmpty()
   cnpj: string;

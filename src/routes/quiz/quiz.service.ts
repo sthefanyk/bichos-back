@@ -30,7 +30,7 @@ export class QuizService {
   }
 
   async findById(data: QuizFindById.Input) {
-    const quiz =  await this.findByTitleUseCase.execute(data);
+    const quiz = await this.findByTitleUseCase.execute(data);
     return quiz.toJson();
   }
 

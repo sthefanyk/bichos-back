@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {INGORepository} from '../../../domain/contracts/ngo-repository.interface';
+import { INGORepository } from '../../../domain/contracts/ngo-repository.interface';
 import NGO, { NGOAttr } from '../../../domain/entities/users/ngo';
 
 export namespace NGOSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: INGORepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const ngos = await this.repo.findAll();
       const service = new ServiceConfig(ngos, ['full_name', 'created_at']);
 

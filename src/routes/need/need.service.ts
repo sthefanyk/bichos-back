@@ -7,7 +7,7 @@ import {
   NeedActivate,
   NeedInactivate,
   NeedGetActiveRecords,
-  NeedGetInactiveRecords
+  NeedGetInactiveRecords,
 } from 'src/@core/application/use-cases/need';
 import { NeedCollectionPresenter } from './need.presenter';
 

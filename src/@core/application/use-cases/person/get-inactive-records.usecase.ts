@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IPersonRepository} from '../../../domain/contracts/person-repository.interface';
+import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import Person, { PersonAttr } from '../../../domain/entities/users/person';
 
 export namespace PersonGetInactiveRecords {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IPersonRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const persons = await this.repo.getInactiveRecords();
       const service = new ServiceConfig(persons, ['full_name', 'created_at']);
 
@@ -28,7 +28,7 @@ export namespace PersonGetInactiveRecords {
       return this.toOutput(searchResult);
     }
 
-    private toOutput(searchResult: SearchResult) : SearchOutput | any {
+    private toOutput(searchResult: SearchResult): SearchOutput | any {
       return {
         items: searchResult.items.map((i) => i.toJson()),
         ...SearchOutputMapper.toOutput<Person>(searchResult),
@@ -41,7 +41,6 @@ export namespace PersonGetInactiveRecords {
   export type Output = Promise<Person[]>;
 
   export type SearchOutput = SearchOutputDto<PersonAttr>;
-
 
   export type Filter = string;
   export class SearchParams extends SP<Filter> {}

@@ -14,7 +14,7 @@ export namespace QuizCreate {
 
       const quiz = new Quiz({
         title: input.title,
-        description: input.description
+        description: input.description,
       });
 
       const result = await this.repo.createQuiz(quiz);
@@ -24,11 +24,10 @@ export namespace QuizCreate {
     }
 
     async validate(input: Input) {
-      if(!input.title) throw new RequiredError('title');
+      if (!input.title) throw new RequiredError('title');
 
-      if (await this.repo.findQuizByTitle(input.title.toLowerCase())) 
+      if (await this.repo.findQuizByTitle(input.title.toLowerCase()))
         throw new AlreadyExistsError('Title already exists');
-
     }
   }
 

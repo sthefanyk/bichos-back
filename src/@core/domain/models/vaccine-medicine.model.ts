@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { VaccineMedicineTypes } from 'src/@core/shared/domain/enums/vaccine-medicine.enum';
 import { DoseModel, HealthModel } from '.';
@@ -6,22 +13,26 @@ import { DoseModel, HealthModel } from '.';
 @Entity('vaccine_medicine')
 export class VaccineMedicineModel implements ModelMarker {
   @PrimaryColumn({ unique: true })
-  id: string; 
+  id: string;
 
   @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'enum', enum: VaccineMedicineTypes, default: VaccineMedicineTypes.MEDICINES })
+  @Column({
+    type: 'enum',
+    enum: VaccineMedicineTypes,
+    default: VaccineMedicineTypes.MEDICINES,
+  })
   type: VaccineMedicineTypes;
 
   @Column({ type: 'integer' })
   total_dose: number;
 
   @OneToMany(() => DoseModel, (i) => i.vaccine_medicine)
-  @JoinColumn({name: 'dose'})
+  @JoinColumn({ name: 'dose' })
   doses: DoseModel[];
 
   @ManyToOne(() => HealthModel, (i) => i.vaccines_medicines)
-  @JoinColumn({name: 'health'})
+  @JoinColumn({ name: 'health' })
   health: HealthModel;
 }

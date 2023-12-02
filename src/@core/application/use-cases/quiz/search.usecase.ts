@@ -17,7 +17,7 @@ export namespace SearchQuiz {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IQuizRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const quiz = await this.repo.findAllQuiz();
       const service = new ServiceConfig(quiz, ['title', 'created_at']);
 

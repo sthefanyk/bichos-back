@@ -6,7 +6,9 @@ import { PostCronService } from './post-cron.service';
 
 @Module({
   controllers: [PostController],
-  providers: [PostService, PostCronService,
+  providers: [
+    PostService,
+    PostCronService,
     PostProvider.Repositories.POST_TYPEORM_REPO,
     PostProvider.Repositories.USER_TYPEORM_REPO,
     PostProvider.Repositories.PERSONALITY_TYPEORM_REPO,
@@ -14,7 +16,7 @@ import { PostCronService } from './post-cron.service';
     PostProvider.Repositories.NEED_TYPEORM_REPO,
     PostProvider.Repositories.LOCAL_TYPEORM_REPO,
     PostProvider.Repositories.GALLERY_TYPEORM_REPO,
-    ...Object.values(PostProvider.UseCases)
+    ...Object.values(PostProvider.UseCases),
   ],
 })
 export class PostModule {}

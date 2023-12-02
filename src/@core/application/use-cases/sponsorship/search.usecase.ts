@@ -10,14 +10,17 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {ISponsorshipRepository} from '../../../domain/contracts/sponsorship-repository.interface';
-import { Sponsorship, SponsorshipAttr } from 'src/@core/domain/entities/sponsorship/sponsorship';
+import { ISponsorshipRepository } from '../../../domain/contracts/sponsorship-repository.interface';
+import {
+  Sponsorship,
+  SponsorshipAttr,
+} from 'src/@core/domain/entities/sponsorship/sponsorship';
 
 export namespace SponsorshipSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: ISponsorshipRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const sponsorships = await this.repo.findAll();
       const service = new ServiceConfig(sponsorships, ['created_at']);
 
@@ -49,9 +52,7 @@ export namespace SponsorshipSearch {
   export class SearchResult extends SR<Sponsorship, Filter> {}
 
   class ServiceConfig extends SearchService<Sponsorship> {
-    protected async applyFilter(
-      items: Sponsorship[],
-    ): Promise<Sponsorship[]> {
+    protected async applyFilter(items: Sponsorship[]): Promise<Sponsorship[]> {
       return items;
     }
 

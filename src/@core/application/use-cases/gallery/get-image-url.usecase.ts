@@ -10,16 +10,16 @@ export namespace GalleryGetImageUrlUseCase {
       const url = await this.repo.getImageUrl(input.id);
 
       if (!url) throw new NotFoundError('Image not found');
-      
+
       return url;
     }
   }
 
   export type Input = {
-    id: string
+    id: string;
   };
 
   export type Output = Promise<{
-    url: string
+    url: string;
   }>;
 }

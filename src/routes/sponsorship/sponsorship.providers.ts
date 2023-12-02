@@ -1,6 +1,10 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { SponsorshipFindById, SponsorshipSearch, SponsorshipUsecase } from 'src/@core/application/use-cases/sponsorship';
+import {
+  SponsorshipFindById,
+  SponsorshipSearch,
+  SponsorshipUsecase,
+} from 'src/@core/application/use-cases/sponsorship';
 import { SponsorshipTypeormRepository } from 'src/@core/infra/repositories/type-orm/sponsorship-typeorm.repository';
 import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
 import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
@@ -44,11 +48,7 @@ export namespace SponsorshipProvider {
         repoPost: PostTypeormRepository,
         repoUser: UserTypeormRepository,
       ) => {
-        return new SponsorshipUsecase.Usecase(
-          repo,
-          repoPost,
-          repoUser
-        );
+        return new SponsorshipUsecase.Usecase(repo, repoPost, repoUser);
       },
       inject: [
         Repositories.REPO.provide,

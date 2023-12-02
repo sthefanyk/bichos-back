@@ -8,19 +8,23 @@ export class AdoptModel implements ModelMarker {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne(() => UserModel, user => user.id)
-  @JoinColumn({name: 'id_adopter'})
+  @ManyToOne(() => UserModel, (user) => user.id)
+  @JoinColumn({ name: 'id_adopter' })
   adopter: UserModel;
 
-  @ManyToOne(() => PostModel, post => post.id)
-  @JoinColumn({name: 'id_post'})
+  @ManyToOne(() => PostModel, (post) => post.id)
+  @JoinColumn({ name: 'id_post' })
   post: PostModel;
 
-  @ManyToOne(() => QuizModel, quiz => quiz.id)
-  @JoinColumn({name: 'id_quiz'})
+  @ManyToOne(() => QuizModel, (quiz) => quiz.id)
+  @JoinColumn({ name: 'id_quiz' })
   quiz: QuizModel;
 
-  @Column({ type: 'enum', enum: StatusAdopt, default: StatusAdopt.WAITING_QUIZ_CLOSE })
+  @Column({
+    type: 'enum',
+    enum: StatusAdopt,
+    default: StatusAdopt.WAITING_QUIZ_CLOSE,
+  })
   status: StatusAdopt;
 
   @Column({ type: 'double', default: 0 })

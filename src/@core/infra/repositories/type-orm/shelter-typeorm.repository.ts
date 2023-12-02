@@ -16,7 +16,7 @@ import { City } from 'src/@core/domain/entities/localization/city';
 import { State } from 'src/@core/domain/entities/localization/state';
 import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
-export class ShelterTypeormRepository implements IShelterRepository  {
+export class ShelterTypeormRepository implements IShelterRepository {
   private shelterRepo: Repository<ShelterModel>;
   private userRepo: Repository<UserModel>;
   private repoGallery: GalleryTypeormRepository;
@@ -27,14 +27,14 @@ export class ShelterTypeormRepository implements IShelterRepository  {
     this.repoGallery = new GalleryTypeormRepository(dataSource);
   }
 
-  async insert(entity: Shelter): ShelterCreate.Output {    
+  async insert(entity: Shelter): ShelterCreate.Output {
     const user = await this.userRepo.save({
       ...entity.user,
       header_picture: entity.user.header_picture.id,
-      profile_picture: entity.user.profile_picture.id
+      profile_picture: entity.user.profile_picture.id,
     });
 
-    const shelter = await this.shelterRepo.save({...entity.toJson(), user});
+    const shelter = await this.shelterRepo.save({ ...entity.toJson(), user });
 
     if (!user || !shelter) return null;
 
@@ -46,7 +46,8 @@ export class ShelterTypeormRepository implements IShelterRepository  {
   }
 
   async findAll(): Promise<Shelter[]> {
-    const models = await this.shelterRepo.createQueryBuilder('shelter')
+    const models = await this.shelterRepo
+      .createQueryBuilder('shelter')
       .leftJoinAndSelect('shelter.user', 'user')
       .leftJoinAndSelect('user.city', 'city')
       .leftJoinAndSelect('city.state', 'state')
@@ -56,28 +57,24 @@ export class ShelterTypeormRepository implements IShelterRepository  {
   }
 
   async update(entity: Shelter): ShelterUpdate.Output {
-    const userUpdateResult = await this.userRepo.update(
-      entity.id, {
+    const userUpdateResult = await this.userRepo.update(entity.id, {
+      ...entity.user,
+      header_picture: entity.user.header_picture.id,
+      profile_picture: entity.user.profile_picture.id,
+    });
+
+    const shelterUpdateResult = await this.shelterRepo.update(entity.id, {
+      id: entity.id,
+      name_shelter: entity.name_shelter,
+      responsible_cpf: entity.responsible_cpf,
+      responsible_date_birth: entity.responsible_date_birth,
+      star_date_shelter: entity.star_date_shelter,
+      user: {
         ...entity.user,
         header_picture: entity.user.header_picture.id,
-        profile_picture: entity.user.profile_picture.id
-      }
-    );
-
-    const shelterUpdateResult = await this.shelterRepo.update(
-      entity.id, {
-        id: entity.id,
-        name_shelter: entity.name_shelter,
-        responsible_cpf: entity.responsible_cpf,
-        responsible_date_birth: entity.responsible_date_birth,
-        star_date_shelter: entity.star_date_shelter,
-        user: {
-          ...entity.user,
-          header_picture: entity.user.header_picture.id,
-          profile_picture: entity.user.profile_picture.id
-        }
-      }
-    );
+        profile_picture: entity.user.profile_picture.id,
+      },
+    });
 
     if (shelterUpdateResult.affected === 0 || userUpdateResult.affected === 0)
       return null;
@@ -86,7 +83,8 @@ export class ShelterTypeormRepository implements IShelterRepository  {
   }
 
   async getActiveRecords(): Promise<Shelter[]> {
-    const models = await this.shelterRepo.createQueryBuilder('shelter')
+    const models = await this.shelterRepo
+      .createQueryBuilder('shelter')
       .leftJoinAndSelect('shelter.user', 'user')
       .leftJoinAndSelect('user.city', 'city')
       .leftJoinAndSelect('city.state', 'state')
@@ -97,7 +95,8 @@ export class ShelterTypeormRepository implements IShelterRepository  {
   }
 
   async getInactiveRecords(): Promise<Shelter[]> {
-    const models = await this.shelterRepo.createQueryBuilder('shelter')
+    const models = await this.shelterRepo
+      .createQueryBuilder('shelter')
       .leftJoinAndSelect('shelter.user', 'user')
       .leftJoinAndSelect('user.city', 'city')
       .leftJoinAndSelect('city.state', 'state')
@@ -109,7 +108,7 @@ export class ShelterTypeormRepository implements IShelterRepository  {
 
   async findByNameShelter(name: string): ShelterFindByNameShelter.Output {
     const model = await this.shelterRepo.findOne({
-      where: { name_shelter: name }
+      where: { name_shelter: name },
     });
 
     if (!model) return null;
@@ -119,7 +118,7 @@ export class ShelterTypeormRepository implements IShelterRepository  {
 
   async findByCpf(cpf: CPF): ShelterFindByCpf.Output {
     const model = await this.shelterRepo.findOne({
-      where: { responsible_cpf: cpf.cpf }
+      where: { responsible_cpf: cpf.cpf },
     });
 
     if (!model) return null;
@@ -129,7 +128,7 @@ export class ShelterTypeormRepository implements IShelterRepository  {
 
   async findByEmail(email: string): UserFindByEmail.Output {
     const model = await this.userRepo.findOne({
-        where: { email }
+      where: { email },
     });
 
     if (!model) return null;
@@ -139,7 +138,7 @@ export class ShelterTypeormRepository implements IShelterRepository  {
 
   async findByUsername(username: string): UserFindByUsername.Output {
     const model = await this.userRepo.findOne({
-      where: { username }
+      where: { username },
     });
 
     if (!model) return null;
@@ -148,57 +147,77 @@ export class ShelterTypeormRepository implements IShelterRepository  {
   }
 
   async _get(id: string) {
-    const shelter = await this.shelterRepo.findOne({ 
-      where: { id }, 
-      relations: ['user', 'user.city', 'user.city.state']}
-    )
+    const shelter = await this.shelterRepo.findOne({
+      where: { id },
+      relations: ['user', 'user.city', 'user.city.state'],
+    });
 
     if (!shelter) return null;
 
-    let profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
-    let header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+    let profile_picture = await this.repoGallery.getImageUrl(
+      shelter.user.profile_picture,
+    );
+    let header_picture = await this.repoGallery.getImageUrl(
+      shelter.user.header_picture,
+    );
 
-    if (!profile_picture) profile_picture = { url: '' }
-    if (!header_picture) header_picture = { url: '' }
+    if (!profile_picture) profile_picture = { url: '' };
+    if (!header_picture) header_picture = { url: '' };
 
     return new Shelter({
       ...shelter,
       userAttr: {
         ...shelter.user,
-        profile_picture: { id: shelter.user.profile_picture, url: profile_picture.url },
-        header_picture: { id: shelter.user.header_picture, url: header_picture.url },
-        city: new City({ 
-          ...shelter.user.city, 
-          state: new State({ ...shelter.user.city.state })
-        })
-      }
-    })
+        profile_picture: {
+          id: shelter.user.profile_picture,
+          url: profile_picture.url,
+        },
+        header_picture: {
+          id: shelter.user.header_picture,
+          url: header_picture.url,
+        },
+        city: new City({
+          ...shelter.user.city,
+          state: new State({ ...shelter.user.city.state }),
+        }),
+      },
+    });
   }
 
   async _convertAll(models: ShelterModel[]) {
     const shelters: Shelter[] = [];
 
     for (const shelter of models) {
-      let profile_picture = await this.repoGallery.getImageUrl(shelter.user.profile_picture);
-      let header_picture = await this.repoGallery.getImageUrl(shelter.user.header_picture);
+      let profile_picture = await this.repoGallery.getImageUrl(
+        shelter.user.profile_picture,
+      );
+      let header_picture = await this.repoGallery.getImageUrl(
+        shelter.user.header_picture,
+      );
 
-      if (!profile_picture) profile_picture = { url: '' }
-      if (!header_picture) header_picture = { url: '' }
+      if (!profile_picture) profile_picture = { url: '' };
+      if (!header_picture) header_picture = { url: '' };
 
       shelters.push(
         new Shelter({
           ...shelter,
           userAttr: {
             ...shelter.user,
-            profile_picture: { id: shelter.user.profile_picture, url: profile_picture.url },
-            header_picture: { id: shelter.user.header_picture, url: header_picture.url },
-            city: new City({ 
-              ...shelter.user.city, 
-              state: new State({ ...shelter.user.city.state })
-            })
-          }
-        })
-      )
+            profile_picture: {
+              id: shelter.user.profile_picture,
+              url: profile_picture.url,
+            },
+            header_picture: {
+              id: shelter.user.header_picture,
+              url: header_picture.url,
+            },
+            city: new City({
+              ...shelter.user.city,
+              state: new State({ ...shelter.user.city.state }),
+            }),
+          },
+        }),
+      );
     }
 
     return shelters;

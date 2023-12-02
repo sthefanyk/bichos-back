@@ -13,21 +13,18 @@ export type NGOAttr = {
 };
 
 export default class NGO extends User implements EntityMarker {
-  
   private NGOProps: NGOProps;
 
   constructor(ngoAttr: NGOAttr) {
     ngoAttr.userAttr.role = Role.NGO;
     ngoAttr.cnpj =
-      ngoAttr.cnpj instanceof CNPJ
-        ? ngoAttr.cnpj
-        : new CNPJ(ngoAttr.cnpj);
+      ngoAttr.cnpj instanceof CNPJ ? ngoAttr.cnpj : new CNPJ(ngoAttr.cnpj);
     const props = new NGOProps(ngoAttr);
     super(props);
     this.NGOProps = props;
     this.NGOProps.validate(this.NGOProps);
   }
-  
+
   public update(data: {
     cnpj: CNPJ | string;
     name_ngo: string;
@@ -41,10 +38,11 @@ export default class NGO extends User implements EntityMarker {
     profile_picture?: string;
     header_picture?: string;
   }) {
-    this.NGOProps.cnpj =
-      (data.cnpj instanceof CNPJ ? data.cnpj : new CNPJ(data.cnpj)).cnpj;
-      this.NGOProps.name_ngo = data.name_ngo.toLowerCase();
-    this.NGOProps.date_register = data.date_register
+    this.NGOProps.cnpj = (
+      data.cnpj instanceof CNPJ ? data.cnpj : new CNPJ(data.cnpj)
+    ).cnpj;
+    this.NGOProps.name_ngo = data.name_ngo.toLowerCase();
+    this.NGOProps.date_register = data.date_register;
     this.updateUser({
       full_name: data.full_name,
       username: data.username,
@@ -53,7 +51,7 @@ export default class NGO extends User implements EntityMarker {
       city: data.city,
       description: data.description,
       profile_picture: data.profile_picture,
-      header_picture: data.header_picture
+      header_picture: data.header_picture,
     });
 
     this.NGOProps.validate(this.NGOProps);

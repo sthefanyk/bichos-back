@@ -11,15 +11,16 @@ export namespace PersonalityCreate {
     async execute(input: Input): Output {
       await this.validate(input);
 
-      const personality = new Personality({name: input.name});
+      const personality = new Personality({ name: input.name });
       return await this.repo.insert(personality);
     }
 
     async validate(input: Input) {
-      if(!input.name) throw new RequiredError('name');
+      if (!input.name) throw new RequiredError('name');
 
       const personalityExists = await this.repo.findByName(input.name);
-      if (personalityExists) throw new AlreadyExistsError('Name already exists');
+      if (personalityExists)
+        throw new AlreadyExistsError('Name already exists');
     }
   }
 

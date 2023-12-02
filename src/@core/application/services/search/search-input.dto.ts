@@ -1,4 +1,4 @@
-import { SortDirection } from "./search-params";
+import { SortDirection } from './search-params';
 
 export type SearchInputDto<Filter = string> = {
   page?: number;

@@ -17,7 +17,7 @@ export namespace SearchSponsorshipPost {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IPostRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const posts = await this.repo.findAllSponsorshipPost();
       const service = new ServiceConfig(posts, ['name', 'created_at']);
 

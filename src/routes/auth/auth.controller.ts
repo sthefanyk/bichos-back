@@ -11,8 +11,7 @@ import { TokenGuard } from 'src/guards/token.guard';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
   login(@Body() body: LoginAuthDto) {
@@ -26,8 +25,8 @@ export class AuthController {
 
   @UseGuards(TokenGuard)
   @Post('reset')
-  reset(@Body() body: {password: string}, @Token() token) {
-    return this.authService.reset({password: body.password, token});
+  reset(@Body() body: { password: string }, @Token() token) {
+    return this.authService.reset({ password: body.password, token });
   }
 
   @UseGuards(AuthGuard)

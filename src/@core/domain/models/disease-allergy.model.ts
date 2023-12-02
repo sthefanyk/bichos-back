@@ -14,10 +14,14 @@ export class DiseaseAllergyModel implements ModelMarker {
   @Column({ type: 'varchar' })
   description: string;
 
-  @Column({ type: 'enum', enum: DiseaseAllergyTypes, default: DiseaseAllergyTypes.DISEASE })
+  @Column({
+    type: 'enum',
+    enum: DiseaseAllergyTypes,
+    default: DiseaseAllergyTypes.DISEASE,
+  })
   type: DiseaseAllergyTypes;
 
   @ManyToOne(() => HealthModel, (i) => i.disease_allergy)
-  @JoinColumn({name: 'health'})
+  @JoinColumn({ name: 'health' })
   health: HealthModel;
 }

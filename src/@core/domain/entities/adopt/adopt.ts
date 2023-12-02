@@ -26,20 +26,20 @@ export class Adopt implements EntityMarker {
   }
 
   toJson() {
-    return { 
-        ...this.props, 
-        id: this.id,
-        id_adopter: this.id_adopter,
-        id_post: this.id_post,
-        id_quiz: this.id_quiz,
-        responses: this.responses.map(r => r.toJson())
+    return {
+      ...this.props,
+      id: this.id,
+      id_adopter: this.id_adopter,
+      id_post: this.id_post,
+      id_quiz: this.id_quiz,
+      responses: this.responses.map((r) => r.toJson()),
     };
   }
 
   toAccept() {
     this.props.status = StatusAdopt.ACCEPTED;
   }
-  
+
   get status(): StatusAdopt {
     return this.props.status;
   }

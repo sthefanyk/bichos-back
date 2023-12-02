@@ -7,9 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [AuthModule],
   controllers: [QuizController],
-  providers: [QuizService,
+  providers: [
+    QuizService,
     QuizProvider.Repositories.QUIZ_TYPEORM_REPO,
-    ...Object.values(QuizProvider.UseCases)
+    ...Object.values(QuizProvider.UseCases),
   ],
 })
 export class QuizModule {}

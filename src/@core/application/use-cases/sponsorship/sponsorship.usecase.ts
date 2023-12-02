@@ -3,7 +3,7 @@ import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
 import {
   ISponsorshipRepository,
   IPostRepository,
-  IUserRepository
+  IUserRepository,
 } from 'src/@core/domain/contracts';
 import { Sponsorship as SponsorshipEntity } from 'src/@core/domain/entities/sponsorship/sponsorship';
 import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';

@@ -5,20 +5,25 @@ import Person from '../person';
 
 describe('Test Entity Person', () => {
   test('create entity user', async () => {
-
-    const city = new City({ name: 'city', state: new State({ name: 'state', abbreviation: 'ST'})});
-
-    const entity = new Person({
-      cpf: "00000000000",
-      date_birth: new Date('2002-02-27'),
-    }, {
-      fullName: 'name user',
-      username: 'username',
-      email: 'email@example.com',
-      password: 'Password1',
-      role: 0,
-      city,
+    const city = new City({
+      name: 'city',
+      state: new State({ name: 'state', abbreviation: 'ST' }),
     });
+
+    const entity = new Person(
+      {
+        cpf: '00000000000',
+        date_birth: new Date('2002-02-27'),
+      },
+      {
+        fullName: 'name user',
+        username: 'username',
+        email: 'email@example.com',
+        password: 'Password1',
+        role: 0,
+        city,
+      },
+    );
 
     console.log(entity);
     expect(entity.cpf).toBe('00000000000');

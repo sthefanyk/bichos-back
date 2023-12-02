@@ -88,11 +88,11 @@ export class PostTypeormRepository implements IPostRepository {
     for (const entity of entities) {
       const animal: AnimalAdopt = entity.animal as any;
       await this.animalAdoptRepo.update(animal.id, {
-        status: animal.status
+        status: animal.status,
       });
 
       await this.postRepo.update(entity.id, {
-        latest_status_update: entity.latest_status_update
+        latest_status_update: entity.latest_status_update,
       });
     }
   }
@@ -104,12 +104,12 @@ export class PostTypeormRepository implements IPostRepository {
       const animal: AnimalSponsorship = entity.animal as any;
 
       await this.animalSponsorshipRepo.update(animal.id, {
-        status: animal.status
+        status: animal.status,
       });
 
       await this.postRepo.update(entity.id, {
         latest_status_update: entity.latest_status_update,
-        deleted_at: entity.deleted_at
+        deleted_at: entity.deleted_at,
       });
     }
   }
@@ -278,7 +278,7 @@ export class PostTypeormRepository implements IPostRepository {
     };
   }
 
-  async findAllAdoptPost(): FindAllAdoptPost.Output {    
+  async findAllAdoptPost(): FindAllAdoptPost.Output {
     return await this._getAll('0');
   }
 
@@ -321,7 +321,7 @@ export class PostTypeormRepository implements IPostRepository {
       relations: ['contact_city', 'contact_city.state', 'animal', 'posted_by'],
     });
 
-    console.log(posts)
+    console.log(posts);
 
     return await Promise.all(
       posts.map(async (post) => await this._getPost(post)),
@@ -333,10 +333,18 @@ export class PostTypeormRepository implements IPostRepository {
 
     let animal;
 
-    const main_image = await this.repoGallery.getImageUrl(post.animal.main_image);
-    const second_image = await this.repoGallery.getImageUrl(post.animal.second_image);
-    const third_image = await this.repoGallery.getImageUrl(post.animal.third_image);
-    const fourth_image = await this.repoGallery.getImageUrl(post.animal.fourth_image);
+    const main_image = await this.repoGallery.getImageUrl(
+      post.animal.main_image,
+    );
+    const second_image = await this.repoGallery.getImageUrl(
+      post.animal.second_image,
+    );
+    const third_image = await this.repoGallery.getImageUrl(
+      post.animal.third_image,
+    );
+    const fourth_image = await this.repoGallery.getImageUrl(
+      post.animal.fourth_image,
+    );
 
     if (+post.type === 0) {
       const animal_adopt = await this.animalAdoptRepo.findOne({

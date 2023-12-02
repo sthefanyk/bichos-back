@@ -10,14 +10,14 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import {IAdoptRepository} from '../../../domain/contracts/adopt-repository.interface';
+import { IAdoptRepository } from '../../../domain/contracts/adopt-repository.interface';
 import { Adopt, AdoptAttr } from 'src/@core/domain/entities/adopt/adopt';
 
 export namespace AdoptSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {
     constructor(private repo: IAdoptRepository) {}
 
-    async execute(input: Input) : Promise<SearchOutput> {
+    async execute(input: Input): Promise<SearchOutput> {
       const adopts = await this.repo.findAll();
       const service = new ServiceConfig(adopts, ['created_at']);
 
@@ -49,9 +49,7 @@ export namespace AdoptSearch {
   export class SearchResult extends SR<Adopt, Filter> {}
 
   class ServiceConfig extends SearchService<Adopt> {
-    protected async applyFilter(
-      items: Adopt[],
-    ): Promise<Adopt[]> {
+    protected async applyFilter(items: Adopt[]): Promise<Adopt[]> {
       return items;
     }
 

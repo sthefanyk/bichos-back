@@ -8,7 +8,7 @@ import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt
 export class AnimalAdoptModel implements ModelMarker {
   @PrimaryColumn()
   @OneToOne(() => AnimalModel, (animal) => animal.id)
-  @JoinColumn({name: 'animal_id'})
+  @JoinColumn({ name: 'animal_id' })
   id: string;
 
   @Column({ type: 'enum', enum: SizeAnimal })
@@ -21,14 +21,17 @@ export class AnimalAdoptModel implements ModelMarker {
   breed: string;
 
   @OneToOne(() => AnimalModel)
-  @JoinColumn({name: 'animal'})
+  @JoinColumn({ name: 'animal' })
   animal: AnimalModel;
 
-  @Column({ type: 'enum', enum: StatusPostAdopt, default: StatusPostAdopt.WAITING_QUESTIONNAIRES })
+  @Column({
+    type: 'enum',
+    enum: StatusPostAdopt,
+    default: StatusPostAdopt.WAITING_QUESTIONNAIRES,
+  })
   status: StatusPostAdopt;
 
   @OneToOne(() => HealthModel, (i) => i)
-  @JoinColumn({name: 'health'})
+  @JoinColumn({ name: 'health' })
   health: HealthModel;
 }
-

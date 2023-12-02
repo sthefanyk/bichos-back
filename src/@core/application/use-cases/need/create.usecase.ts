@@ -11,12 +11,12 @@ export namespace NeedCreate {
     async execute(input: Input): Output {
       await this.validate(input);
 
-      const need = new Need({name: input.name});
+      const need = new Need({ name: input.name });
       return await this.repo.insert(need);
     }
 
     async validate(input: Input) {
-      if(!input.name) throw new RequiredError('name');
+      if (!input.name) throw new RequiredError('name');
 
       const needExists = await this.repo.findByName(input.name);
       if (needExists) throw new AlreadyExistsError('Name already exists');

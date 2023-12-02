@@ -46,12 +46,11 @@ export class PersonService {
   private service: Service;
 
   async create(data: PersonCreate.Input) {
-    const {id} = await this.createUseCase.execute(data);
+    const { id } = await this.createUseCase.execute(data);
 
     if (id) return this.service.singIn(data.email, data.password);
-    
-    return null;
 
+    return null;
   }
 
   async search(searchParams: PersonSearch.Input) {

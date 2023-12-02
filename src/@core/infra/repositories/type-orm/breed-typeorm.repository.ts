@@ -36,11 +36,11 @@ export class BreedTypeormRepository implements IBreedRepository {
       throw new Error(`Could not update breed`);
     }
 
-    return { id: entity.id, name: entity.name, specie: entity.specie+'' };
+    return { id: entity.id, name: entity.name, specie: entity.specie + '' };
   }
 
   async findById(id: string): BreedFindById.Output {
-    const breed = await this.repo.findOne({ where: {id}});
+    const breed = await this.repo.findOne({ where: { id } });
 
     if (!breed) {
       return null;
@@ -50,7 +50,7 @@ export class BreedTypeormRepository implements IBreedRepository {
   }
 
   async findByName(name: string): BreedFindByName.Output {
-    const breed = await this.repo.findOne({ where: {name}});
+    const breed = await this.repo.findOne({ where: { name } });
 
     if (!breed) {
       return null;
@@ -60,11 +60,13 @@ export class BreedTypeormRepository implements IBreedRepository {
   }
 
   async findBySpecie(specie: Species): BreedFindBySpecie.Output {
-    const result = await this.repo.find({ where: {specie, deleted_at: IsNull()}});
+    const result = await this.repo.find({
+      where: { specie, deleted_at: IsNull() },
+    });
 
     const breeds: Breed[] = [];
 
-    result.forEach(breed => {
+    result.forEach((breed) => {
       breeds.push(new Breed(breed));
     });
 
@@ -96,7 +98,7 @@ export class BreedTypeormRepository implements IBreedRepository {
 
     const breeds: Breed[] = [];
 
-    result.forEach(breed => {
+    result.forEach((breed) => {
       breeds.push(new Breed(breed));
     });
 
@@ -104,11 +106,11 @@ export class BreedTypeormRepository implements IBreedRepository {
   }
 
   async getActiveRecords() {
-    const result = await this.repo.find({where: {deleted_at: IsNull()} });
+    const result = await this.repo.find({ where: { deleted_at: IsNull() } });
 
     const breeds: Breed[] = [];
 
-    result.forEach(breed => {
+    result.forEach((breed) => {
       breeds.push(new Breed(breed));
     });
 
@@ -116,11 +118,13 @@ export class BreedTypeormRepository implements IBreedRepository {
   }
 
   async getInactiveRecords() {
-    const result = await this.repo.find({where: {deleted_at: Not(IsNull())} });
+    const result = await this.repo.find({
+      where: { deleted_at: Not(IsNull()) },
+    });
 
     const breeds: Breed[] = [];
 
-    result.forEach(breed => {
+    result.forEach((breed) => {
       breeds.push(new Breed(breed));
     });
 

@@ -1,4 +1,4 @@
 export enum DiseaseAllergyTypes {
-    DISEASE = 0,
-    ALLERGY = 1,
+  DISEASE = 0,
+  ALLERGY = 1,
 }

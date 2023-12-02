@@ -10,7 +10,10 @@ import {
 } from 'src/@core/application/use-cases/shelter';
 import { ShelterFindByCpf } from 'src/@core/application/use-cases/shelter/find-by-cpf.usecase';
 import { ShelterFindByNameShelter } from 'src/@core/application/use-cases/shelter/find-by-name-shelter.usecase';
-import { UserFindByEmail, UserFindByUsername } from 'src/@core/application/use-cases/user';
+import {
+  UserFindByEmail,
+  UserFindByUsername,
+} from 'src/@core/application/use-cases/user';
 
 export interface IShelterRepository {
   insert(entity: Shelter): ShelterCreate.Output;

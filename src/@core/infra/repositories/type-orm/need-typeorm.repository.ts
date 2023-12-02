@@ -47,7 +47,7 @@ export class NeedTypeormRepository implements INeedRepository {
   }
 
   async findById(id: string): NeedFindById.Output {
-    const need = await this.repo.findOne({ where: {id}});
+    const need = await this.repo.findOne({ where: { id } });
 
     if (!need) {
       return null;
@@ -57,7 +57,7 @@ export class NeedTypeormRepository implements INeedRepository {
   }
 
   async findByName(name: string): NeedFindByName.Output {
-    const need = await this.repo.findOne({ where: {name}});
+    const need = await this.repo.findOne({ where: { name } });
 
     if (!need) {
       return null;
@@ -91,7 +91,7 @@ export class NeedTypeormRepository implements INeedRepository {
 
     const needs: Need[] = [];
 
-    result.forEach(need => {
+    result.forEach((need) => {
       needs.push(new Need(need));
     });
 
@@ -99,11 +99,11 @@ export class NeedTypeormRepository implements INeedRepository {
   }
 
   async getActiveRecords(): NeedGetActiveRecords.Output {
-    const result = await this.repo.find({where: {deleted_at: IsNull()} });
+    const result = await this.repo.find({ where: { deleted_at: IsNull() } });
 
     const needs: Need[] = [];
 
-    result.forEach(need => {
+    result.forEach((need) => {
       needs.push(new Need(need));
     });
 
@@ -111,11 +111,13 @@ export class NeedTypeormRepository implements INeedRepository {
   }
 
   async getInactiveRecords(): NeedGetInactiveRecords.Output {
-    const result = await this.repo.find({where: {deleted_at: Not(IsNull())} });
+    const result = await this.repo.find({
+      where: { deleted_at: Not(IsNull()) },
+    });
 
     const needs: Need[] = [];
 
-    result.forEach(need => {
+    result.forEach((need) => {
       needs.push(new Need(need));
     });
 

@@ -22,11 +22,11 @@ export class Sponsorship implements EntityMarker {
   }
 
   toJson() {
-    return { 
-        ...this.props, 
-        id: this.id,
-        id_godfather: this.id_godfather,
-        id_post: this.id_post,
+    return {
+      ...this.props,
+      id: this.id,
+      id_godfather: this.id_godfather,
+      id_post: this.id_post,
     };
   }
 
