@@ -8,7 +8,7 @@ import {
   PersonalityInactivate,
   PersonalityGetActiveRecords,
   PersonalityGetInactiveRecords,
-} from 'src/@core/application/use-cases/personality';
+} from '../../@core/application/use-cases/personality';
 import { PersonalityCollectionPresenter } from './personality.presenter';
 
 @Injectable()

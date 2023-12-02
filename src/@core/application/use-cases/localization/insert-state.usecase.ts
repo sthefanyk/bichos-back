@@ -1,7 +1,7 @@
-import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
+import { ILocalization } from '../../../domain/contracts/localization-repository.interface';
 import { State } from '../../../domain/entities/localization/state';
 import UseCase from '../usecase';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
 
 export namespace StateInsert {
   export class Usecase implements UseCase<Input, Output> {

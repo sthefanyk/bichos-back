@@ -1,8 +1,8 @@
 import UseCase from '../usecase';
-import { IAdoptRepository } from 'src/@core/domain/contracts';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
+import { IAdoptRepository } from '../../../domain/contracts';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { EntityValidationError } from '../../../shared/domain/errors/validation.error';
 
 export namespace EvaluateResponses {
   export class Usecase implements UseCase<Input, Output> {

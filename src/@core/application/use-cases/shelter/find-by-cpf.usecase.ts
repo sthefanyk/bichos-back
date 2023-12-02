@@ -1,8 +1,8 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IShelterRepository } from 'src/@core/domain/contracts/shelter-repository.interface';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
-import User from 'src/@core/domain/entities/users/user';
+import { IShelterRepository } from '../../../domain/contracts/shelter-repository.interface';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
+import User from '../../../domain/entities/users/user';
 
 export namespace ShelterFindByCpf {
   export class Usecase implements UseCase<Input, Output> {

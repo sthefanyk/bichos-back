@@ -1,5 +1,5 @@
-import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { SexAnimal } from '../../../shared/domain/enums/sex-animal';
+import { Species } from '../../../shared/domain/enums/species.enum';
 import { AnimalProps } from './animal-props';
 import { Personality } from '../personality';
 

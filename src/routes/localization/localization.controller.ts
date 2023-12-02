@@ -3,7 +3,7 @@ import { LocalizationService } from './localization.service';
 import {
   CityInsert,
   StateInsert,
-} from 'src/@core/application/use-cases/localization';
+} from '../../@core/application/use-cases/localization';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('localization')

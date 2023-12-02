@@ -14,7 +14,7 @@ import { ISponsorshipRepository } from '../../../domain/contracts/sponsorship-re
 import {
   Sponsorship,
   SponsorshipAttr,
-} from 'src/@core/domain/entities/sponsorship/sponsorship';
+} from '../../../domain/entities/sponsorship/sponsorship';
 
 export namespace SponsorshipSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {

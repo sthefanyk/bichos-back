@@ -3,7 +3,7 @@ import {
   GalleryGetImageUrlUseCase,
   GalleryInsertImageUseCase,
   GalleryRemoveImageUseCase,
-} from 'src/@core/application/use-cases/gallery';
+} from '../../application/use-cases/gallery';
 import { Image } from '../entities/gallery/image';
 
 export interface IGalleryRepository {

@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import { IShelterRepository } from '../../../domain/contracts/shelter-repository.interface';
-import User from 'src/@core/domain/entities/users/user';
+import User from '../../../domain/entities/users/user';
 
 export namespace ShelterFindByNameShelter {
   export class Usecase implements UseCase<Input, Output> {

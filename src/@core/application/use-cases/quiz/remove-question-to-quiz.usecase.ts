@@ -1,6 +1,6 @@
 import UseCase from '../usecase';
-import { IQuizRepository } from 'src/@core/domain/contracts';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { IQuizRepository } from '../../../domain/contracts';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 
 export namespace RemoveQuestionToQuiz {
   export class Usecase implements UseCase<Input, Output> {

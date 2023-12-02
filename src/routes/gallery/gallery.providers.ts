@@ -1,11 +1,11 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
+import { GalleryTypeormRepository } from '../../@core/infra/repositories/type-orm/gallery-typeorm.repository';
 import {
   GalleryGetImageUrlUseCase,
   GalleryInsertImageUseCase,
   GalleryRemoveImageUseCase,
-} from 'src/@core/application/use-cases/gallery';
+} from '../../@core/application/use-cases/gallery';
 
 export namespace GalleryProvider {
   export namespace Repositories {

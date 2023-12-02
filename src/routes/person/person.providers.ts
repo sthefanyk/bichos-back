@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { PersonTypeormRepository } from 'src/@core/infra/repositories/type-orm/person-typeorm.repository';
+import { PersonTypeormRepository } from '../../@core/infra/repositories/type-orm/person-typeorm.repository';
 import {
   PersonCreate,
   PersonInactivate,
@@ -10,11 +10,11 @@ import {
   PersonGetInactiveRecords,
   PersonSearch,
   PersonUpdate,
-} from 'src/@core/application/use-cases/person';
-import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
-import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
-import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+} from '../../@core/application/use-cases/person';
+import { LocalizationTypeormRepository } from '../../@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { PersonActivate } from '../../@core/application/use-cases/person/activate.usecase';
+import { GalleryTypeormRepository } from '../../@core/infra/repositories/type-orm/gallery-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 export namespace PersonProvider {

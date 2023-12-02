@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { LocalizationTypeormRepository } from '../../@core/infra/repositories/type-orm/localization-typeorm.repository';
 import {
   CityDelete,
   CityGetByName,
@@ -11,7 +11,7 @@ import {
   StateDelete,
   StateGetByName,
   StateInsert,
-} from 'src/@core/application/use-cases/localization';
+} from '../../@core/application/use-cases/localization';
 
 export namespace LocalizationProvider {
   export namespace Repositories {

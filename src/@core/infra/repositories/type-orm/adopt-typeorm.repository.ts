@@ -4,11 +4,11 @@ import {
   AdoptUsecase,
   ChooseAdopter,
   GetAdopterByAdoptPostId,
-} from 'src/@core/application/use-cases/adopt';
-import { EvaluateResponses } from 'src/@core/application/use-cases/adopt/evaluate-responses.usecase';
-import { IAdoptRepository } from 'src/@core/domain/contracts';
-import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
-import { Response } from 'src/@core/domain/entities/adopt/response';
+} from '../../../application/use-cases/adopt';
+import { EvaluateResponses } from '../../../application/use-cases/adopt/evaluate-responses.usecase';
+import { IAdoptRepository } from '../../../domain/contracts';
+import { Adopt } from '../../../domain/entities/adopt/adopt';
+import { Response } from '../../../domain/entities/adopt/response';
 import {
   AdoptModel,
   PostModel,
@@ -16,7 +16,7 @@ import {
   QuizModel,
   ResponseModel,
   UserModel,
-} from 'src/@core/domain/models';
+} from '../../../domain/models';
 import { DataSource, Repository } from 'typeorm';
 import { UserTypeormRepository } from './user-typeorm.repository';
 

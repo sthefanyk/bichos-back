@@ -1,4 +1,4 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 import {
   IsNotEmpty,
   IsString,
@@ -7,8 +7,8 @@ import {
   IsOptional,
 } from 'class-validator';
 import { SponsorshipAttr } from './sponsorship';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
-import { StatusSponsorship } from 'src/@core/shared/domain/enums/status_sponsorship.enum';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
+import { StatusSponsorship } from '../../../shared/domain/enums/status_sponsorship.enum';
 
 export default class SponsorshipProps extends EntityProps {
   @IsNotEmpty()

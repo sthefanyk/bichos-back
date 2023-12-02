@@ -7,12 +7,12 @@ import {
   NGOFindByCnpj,
   NGOFindById,
   NGOUpdate,
-} from 'src/@core/application/use-cases/ngo';
-import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
-import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
-import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
-import { State } from 'src/@core/domain/entities/localization/state';
-import { City } from 'src/@core/domain/entities/localization/city';
+} from '../../../application/use-cases/ngo';
+import CNPJ from '../../../shared/domain/value-objects/cnpj.vo';
+import { UserFindByEmail } from '../../../application/use-cases/user/find-by-email.usecase';
+import { UserFindByUsername } from '../../../application/use-cases/user/find-by-username.usecase';
+import { State } from '../../../domain/entities/localization/state';
+import { City } from '../../../domain/entities/localization/city';
 import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
 export class NGOTypeormRepository implements INGORepository {

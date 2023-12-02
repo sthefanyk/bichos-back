@@ -1,5 +1,5 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
-import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
+import { StatusAdopt } from '../../../shared/domain/enums/status_adopt.enum';
 import AdoptProps from './adopt-props';
 import { Response } from './response';
 

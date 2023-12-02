@@ -1,12 +1,12 @@
 import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
-import { IGalleryRepository, ILocalization } from 'src/@core/domain/contracts';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { UpdateError } from 'src/@core/shared/domain/errors/update.error';
-import { UnauthorizedError } from 'src/@core/shared/domain/errors/unauthorized.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
+import { IGalleryRepository, ILocalization } from '../../../domain/contracts';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { UpdateError } from '../../../shared/domain/errors/update.error';
+import { UnauthorizedError } from '../../../shared/domain/errors/unauthorized.error';
 
 export namespace PersonUpdate {
   export class Usecase implements UseCase<Input, Output> {

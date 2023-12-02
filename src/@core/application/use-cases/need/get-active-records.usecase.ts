@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { INeedRepository } from '../../../domain/contracts/need-repository.interface';
-import { Need, NeedAttr } from 'src/@core/domain/entities/need';
+import { Need, NeedAttr } from '../../../domain/entities/need';
 
 export namespace NeedGetActiveRecords {
   export class Usecase implements UseCase<Input, SearchOutput> {

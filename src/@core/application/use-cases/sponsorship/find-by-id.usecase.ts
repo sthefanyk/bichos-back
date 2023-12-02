@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { ISponsorshipRepository } from 'src/@core/domain/contracts';
-import { Sponsorship } from 'src/@core/domain/entities/sponsorship/sponsorship';
+import { ISponsorshipRepository } from '../../../domain/contracts';
+import { Sponsorship } from '../../../domain/entities/sponsorship/sponsorship';
 
 export namespace SponsorshipFindById {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,6 +1,6 @@
 import { CollectionPresenter } from '../@share/presenters/collection.presenter';
-import { UserSearch } from 'src/@core/application/use-cases/user';
-import { UserAttr } from 'src/@core/domain/entities';
+import { UserSearch } from '../../@core/application/use-cases/user';
+import { UserAttr } from '../../@core/domain/entities';
 
 export class UserCollectionPresenter extends CollectionPresenter {
   data: UserAttr[];

@@ -1,14 +1,14 @@
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
 import {
   IGalleryRepository,
   ILocalization,
   INGORepository,
-} from 'src/@core/domain/contracts';
-import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { UpdateError } from 'src/@core/shared/domain/errors/update.error';
+} from '../../../domain/contracts';
+import CNPJ from '../../../shared/domain/value-objects/cnpj.vo';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { UpdateError } from '../../../shared/domain/errors/update.error';
 
 export namespace NGOUpdate {
   export class Usecase implements UseCase<Input, Output> {

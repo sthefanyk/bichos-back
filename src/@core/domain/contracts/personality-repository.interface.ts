@@ -8,7 +8,7 @@ import {
   PersonalityGetActiveRecords,
   PersonalityGetInactiveRecords,
   PersonalityFindByName,
-} from 'src/@core/application/use-cases/personality';
+} from '../../application/use-cases/personality';
 import { Personality } from '../entities/personality';
 
 export interface IPersonalityRepository {

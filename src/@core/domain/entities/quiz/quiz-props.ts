@@ -1,4 +1,4 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { QuizAttr } from './quiz';
 import { Question } from './question';

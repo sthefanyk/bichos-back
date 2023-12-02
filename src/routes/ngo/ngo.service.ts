@@ -7,9 +7,9 @@ import {
   NGOGetInactiveRecords,
   NGOSearch,
   NGOUpdate,
-} from 'src/@core/application/use-cases/ngo';
+} from '../../@core/application/use-cases/ngo';
 import { NGOCollectionPresenter } from './ngo.presenter';
-import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
+import { NGOActivate } from '../../@core/application/use-cases/ngo/activate.usecase';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Injectable()

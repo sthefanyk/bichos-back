@@ -7,10 +7,10 @@ import {
   PersonalityInactivate,
   PersonalitySearch,
   PersonalityUpdate,
-} from 'src/@core/application/use-cases/personality';
-import { IPersonalityRepository } from 'src/@core/domain/contracts';
-import { Personality } from 'src/@core/domain/entities/personality';
-import { PersonalityModel } from 'src/@core/domain/models/personality.model';
+} from '../../../application/use-cases/personality';
+import { IPersonalityRepository } from '../../../domain/contracts';
+import { Personality } from '../../../domain/entities/personality';
+import { PersonalityModel } from '../../../domain/models/personality.model';
 import { DataSource, IsNull, Not, Repository } from 'typeorm';
 
 export class PersonalityTypeormRepository implements IPersonalityRepository {

@@ -4,8 +4,8 @@ import {
   QuizCreate,
   QuizFindById,
   RemoveQuestionToQuiz,
-} from 'src/@core/application/use-cases/quiz';
-import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
+} from '../../@core/application/use-cases/quiz';
+import { SearchQuiz } from '../../@core/application/use-cases/quiz/search.usecase';
 import { QuizCollectionPresenter } from './quiz.presenter';
 
 @Injectable()

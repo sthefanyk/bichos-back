@@ -9,7 +9,7 @@ import { AnimalAttr } from './animal';
 import { AnimalProps } from './animal-props';
 import { AnimalSponsorshipAttr } from './animal-sponsorship';
 import { Need } from '../need';
-import { StatusPostSponsorship } from 'src/@core/shared/domain/enums/status_post_sponsorship.enum';
+import { StatusPostSponsorship } from '../../../shared/domain/enums/status_post_sponsorship.enum';
 
 export class AnimalSponsorshipProps extends AnimalProps {
   @IsBoolean()

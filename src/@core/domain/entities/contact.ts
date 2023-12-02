@@ -1,4 +1,4 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../shared/domain/markers/entity.marker';
 import { City } from './localization/city';
 import ContactProps from './contact-props';
 

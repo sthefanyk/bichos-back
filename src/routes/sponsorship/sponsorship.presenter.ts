@@ -1,6 +1,6 @@
 import { CollectionPresenter } from '../@share/presenters/collection.presenter';
-import { SponsorshipSearch } from 'src/@core/application/use-cases/sponsorship/search.usecase';
-import { SponsorshipAttr } from 'src/@core/domain/entities/sponsorship/sponsorship';
+import { SponsorshipSearch } from '../../@core/application/use-cases/sponsorship/search.usecase';
+import { SponsorshipAttr } from '../../@core/domain/entities/sponsorship/sponsorship';
 
 export class SponsorshipCollectionPresenter extends CollectionPresenter {
   data: SponsorshipAttr[];

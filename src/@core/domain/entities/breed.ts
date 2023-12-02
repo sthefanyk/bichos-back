@@ -1,6 +1,6 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../shared/domain/markers/entity.marker';
 import BreedProps from './breed-props';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { Species } from '../../shared/domain/enums/species.enum';
 
 export type BreedAttr = {
   name: string;

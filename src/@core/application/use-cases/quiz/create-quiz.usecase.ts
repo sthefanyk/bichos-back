@@ -1,9 +1,9 @@
 import UseCase from '../usecase';
-import { IQuizRepository } from 'src/@core/domain/contracts';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
-import { Quiz } from 'src/@core/domain/entities/quiz/quiz';
-import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
+import { IQuizRepository } from '../../../domain/contracts';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
+import { Quiz } from '../../../domain/entities/quiz/quiz';
+import { InsertError } from '../../../shared/domain/errors/insert.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
 
 export namespace QuizCreate {
   export class Usecase implements UseCase<Input, Output> {

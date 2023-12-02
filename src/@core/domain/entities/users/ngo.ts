@@ -3,7 +3,7 @@ import NGOProps from './ngo-props';
 import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { City } from '../localization/city';
 import { Role } from '../../../shared/domain/enums/role.enum';
-import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
+import CNPJ from '../../../shared/domain/value-objects/cnpj.vo';
 
 export type NGOAttr = {
   cnpj: CNPJ | string;

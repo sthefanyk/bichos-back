@@ -1,7 +1,7 @@
 import EntityProps from '../../shared/domain/entities/entity-props';
 import { IsNotEmpty, IsString, Length, IsEnum } from 'class-validator';
 import { BreedAttr } from './breed';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { Species } from '../../shared/domain/enums/species.enum';
 
 export default class BreedProps extends EntityProps {
   @IsNotEmpty()

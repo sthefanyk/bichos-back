@@ -10,8 +10,8 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import { Post, PostAttr } from 'src/@core/domain/entities/posts/post';
-import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
+import { Post, PostAttr } from '../../../domain/entities/posts/post';
+import { IPostRepository } from '../../../domain/contracts/post-repository.interface';
 
 export namespace SearchAdoptPost {
   export class Usecase implements UseCase<Input, SearchOutput> {

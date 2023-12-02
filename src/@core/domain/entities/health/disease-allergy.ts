@@ -1,4 +1,4 @@
-import { DiseaseAllergyTypes } from 'src/@core/shared/domain/enums/disease-allergy.enum';
+import { DiseaseAllergyTypes } from '../../../shared/domain/enums/disease-allergy.enum';
 import { DiseaseAllergyProps } from './disease-allergy-props';
 
 export type DiseaseAllergyAttr = {

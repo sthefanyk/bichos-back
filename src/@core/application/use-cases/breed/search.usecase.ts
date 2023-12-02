@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { IBreedRepository } from '../../../domain/contracts/breed-repository.interface';
-import { Breed, BreedAttr } from 'src/@core/domain/entities/breed';
+import { Breed, BreedAttr } from '../../../domain/entities/breed';
 
 export namespace BreedSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {

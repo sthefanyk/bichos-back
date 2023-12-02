@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsEnum } from 'class-validator';
 import { ImageAttr } from './image';
-import { ImageType } from 'src/@core/shared/domain/enums/image-type.enum';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+import { ImageType } from '../../../shared/domain/enums/image-type.enum';
+import EntityPropsValidation from '../../../shared/domain/entities/entity-props-validation';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
 
 export default class ImageProps extends EntityPropsValidation {
   id: UUID;

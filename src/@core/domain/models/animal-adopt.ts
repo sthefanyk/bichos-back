@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
+import { SizeAnimal } from '../../shared/domain/enums/size-animal';
 import { AnimalModel, HealthModel } from '.';
-import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
+import { StatusPostAdopt } from '../../shared/domain/enums/status_post_adopt.enum';
 
 @Entity('animal_adopt')
 export class AnimalAdoptModel implements ModelMarker {

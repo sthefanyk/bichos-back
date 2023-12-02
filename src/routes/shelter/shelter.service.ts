@@ -9,7 +9,7 @@ import {
   ShelterSearch,
   ShelterUpdate,
   ShelterActivate,
-} from 'src/@core/application/use-cases/shelter';
+} from '../../@core/application/use-cases/shelter';
 import { ShelterCollectionPresenter } from './shelter.presenter';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 

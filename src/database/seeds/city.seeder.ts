@@ -1,5 +1,5 @@
-import { CityModel } from 'src/@core/domain/models/city.model';
-import { StateModel } from 'src/@core/domain/models/state.model';
+import { CityModel } from '../../@core/domain/models/city.model';
+import { StateModel } from '../../@core/domain/models/state.model';
 import { DataSource } from 'typeorm';
 import { Seeder } from 'typeorm-extension';
 

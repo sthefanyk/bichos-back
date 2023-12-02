@@ -4,10 +4,10 @@ import {
   SponsorshipFindById,
   SponsorshipSearch,
   SponsorshipUsecase,
-} from 'src/@core/application/use-cases/sponsorship';
-import { SponsorshipTypeormRepository } from 'src/@core/infra/repositories/type-orm/sponsorship-typeorm.repository';
-import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+} from '../../@core/application/use-cases/sponsorship';
+import { SponsorshipTypeormRepository } from '../../@core/infra/repositories/type-orm/sponsorship-typeorm.repository';
+import { PostTypeormRepository } from '../../@core/infra/repositories/type-orm/post-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace SponsorshipProvider {
   export namespace Repositories {

@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { INeedRepository } from 'src/@core/domain/contracts';
-import { Need } from 'src/@core/domain/entities/need';
+import { INeedRepository } from '../../../domain/contracts';
+import { Need } from '../../../domain/entities/need';
 
 export namespace NeedFindByName {
   export class Usecase implements UseCase<Input, Output> {

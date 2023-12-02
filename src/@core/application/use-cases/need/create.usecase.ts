@@ -1,8 +1,8 @@
 import UseCase from '../usecase';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { Need } from 'src/@core/domain/entities/need';
-import { INeedRepository } from 'src/@core/domain/contracts';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { Need } from '../../../domain/entities/need';
+import { INeedRepository } from '../../../domain/contracts';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
 
 export namespace NeedCreate {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,4 +1,4 @@
-import { VaccineMedicineTypes } from 'src/@core/shared/domain/enums/vaccine-medicine.enum';
+import { VaccineMedicineTypes } from '../../../shared/domain/enums/vaccine-medicine.enum';
 import { VaccineMedicineProps } from './vaccine-medicine-props';
 import { Dose } from './dose';
 

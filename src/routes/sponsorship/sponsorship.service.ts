@@ -3,7 +3,7 @@ import {
   SponsorshipFindById,
   SponsorshipSearch,
   SponsorshipUsecase,
-} from 'src/@core/application/use-cases/sponsorship';
+} from '../../@core/application/use-cases/sponsorship';
 import { SponsorshipCollectionPresenter } from './sponsorship.presenter';
 
 @Injectable()

@@ -9,8 +9,8 @@ import {
   NeedInactivate,
   NeedGetActiveRecords,
   NeedGetInactiveRecords,
-} from 'src/@core/application/use-cases/need';
-import { NeedTypeormRepository } from 'src/@core/infra/repositories/type-orm/need-typeorm.repository';
+} from '../../@core/application/use-cases/need';
+import { NeedTypeormRepository } from '../../@core/infra/repositories/type-orm/need-typeorm.repository';
 
 export namespace NeedProvider {
   export namespace Repositories {

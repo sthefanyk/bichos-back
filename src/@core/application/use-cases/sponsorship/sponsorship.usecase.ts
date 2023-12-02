@@ -1,12 +1,12 @@
 import UseCase from '../usecase';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
 import {
   ISponsorshipRepository,
   IPostRepository,
   IUserRepository,
-} from 'src/@core/domain/contracts';
-import { Sponsorship as SponsorshipEntity } from 'src/@core/domain/entities/sponsorship/sponsorship';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+} from '../../../domain/contracts';
+import { Sponsorship as SponsorshipEntity } from '../../../domain/entities/sponsorship/sponsorship';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 
 export namespace SponsorshipUsecase {
   export class Usecase implements UseCase<Input, Output> {

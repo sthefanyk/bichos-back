@@ -12,9 +12,9 @@ import {
   AddQuestionToQuiz,
   QuizCreate,
   RemoveQuestionToQuiz,
-} from 'src/@core/application/use-cases/quiz';
+} from '../../@core/application/use-cases/quiz';
 import { ApiTags } from '@nestjs/swagger';
-import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
+import { SearchQuiz } from '../../@core/application/use-cases/quiz/search.usecase';
 
 @ApiTags('quiz')
 // @UseGuards(AuthGuard, RoleGuard)

@@ -8,7 +8,7 @@ import {
   StateDelete,
   StateGetByName,
   StateInsert,
-} from 'src/@core/application/use-cases/localization';
+} from '../../@core/application/use-cases/localization';
 
 @Injectable()
 export class LocalizationService {

@@ -1,4 +1,4 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { HealthProps } from './health-props';
 import { VaccineMedicine } from './vaccine-medicine';
 import { DiseaseAllergy } from './disease-allergy';

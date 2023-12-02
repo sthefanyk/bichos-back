@@ -3,17 +3,17 @@ import {
   ShelterFindById,
   ShelterUpdate,
   ShelterFindByCpf,
-} from 'src/@core/application/use-cases/shelter';
-import { ShelterFindByNameShelter } from 'src/@core/application/use-cases/shelter/find-by-name-shelter.usecase';
-import { UserFindByEmail } from 'src/@core/application/use-cases/user/find-by-email.usecase';
-import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
-import { IShelterRepository } from 'src/@core/domain/contracts/shelter-repository.interface';
-import Shelter from 'src/@core/domain/entities/users/shelter';
-import { ShelterModel, UserModel } from 'src/@core/domain/models';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
+} from '../../../application/use-cases/shelter';
+import { ShelterFindByNameShelter } from '../../../application/use-cases/shelter/find-by-name-shelter.usecase';
+import { UserFindByEmail } from '../../../application/use-cases/user/find-by-email.usecase';
+import { UserFindByUsername } from '../../../application/use-cases/user/find-by-username.usecase';
+import { IShelterRepository } from '../../../domain/contracts/shelter-repository.interface';
+import Shelter from '../../../domain/entities/users/shelter';
+import { ShelterModel, UserModel } from '../../../domain/models';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
 import { DataSource, Repository } from 'typeorm';
-import { City } from 'src/@core/domain/entities/localization/city';
-import { State } from 'src/@core/domain/entities/localization/state';
+import { City } from '../../../domain/entities/localization/city';
+import { State } from '../../../domain/entities/localization/state';
 import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
 export class ShelterTypeormRepository implements IShelterRepository {

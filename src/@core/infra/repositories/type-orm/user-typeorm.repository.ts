@@ -1,22 +1,22 @@
 import {
   UserFindByEmail,
   UserFindById,
-} from 'src/@core/application/use-cases/user';
-import { UserFindByUsername } from 'src/@core/application/use-cases/user/find-by-username.usecase';
-import { UserSearch } from 'src/@core/application/use-cases/user/search.usecase';
-import { IUserRepository } from 'src/@core/domain/contracts/user-repository.interface';
-import { City } from 'src/@core/domain/entities/localization/city';
-import { State } from 'src/@core/domain/entities/localization/state';
-import User, { UserAttr } from 'src/@core/domain/entities/users/user';
-import UserProps from 'src/@core/domain/entities/users/user-props';
-import { UserModel, CityModel } from 'src/@core/domain/models';
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+} from '../../../application/use-cases/user';
+import { UserFindByUsername } from '../../../application/use-cases/user/find-by-username.usecase';
+import { UserSearch } from '../../../application/use-cases/user/search.usecase';
+import { IUserRepository } from '../../../domain/contracts/user-repository.interface';
+import { City } from '../../../domain/entities/localization/city';
+import { State } from '../../../domain/entities/localization/state';
+import User, { UserAttr } from '../../../domain/entities/users/user';
+import UserProps from '../../../domain/entities/users/user-props';
+import { UserModel, CityModel } from '../../../domain/models';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { DataSource, Repository } from 'typeorm';
 import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 import { PersonTypeormRepository } from './person-typeorm.repository';
 import { ShelterTypeormRepository } from './shelter-typeorm.repository';
 import { NGOTypeormRepository } from './ngo-typeorm.repository';
-import { Role } from 'src/@core/shared/domain/enums/role.enum';
+import { Role } from '../../../shared/domain/enums/role.enum';
 
 export class UserImpl extends User implements EntityMarker {
   constructor(user: UserAttr) {

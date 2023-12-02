@@ -1,7 +1,7 @@
-import { IBreedRepository } from 'src/@core/domain/contracts';
+import { IBreedRepository } from '../../../domain/contracts';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
-import { Breed } from 'src/@core/domain/entities/breed';
+import { Breed } from '../../../domain/entities/breed';
 
 export namespace BreedInactivate {
   export class Usecase implements UseCase<Input, Output> {

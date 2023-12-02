@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { IAdoptRepository } from '../../../domain/contracts/adopt-repository.interface';
-import { Adopt, AdoptAttr } from 'src/@core/domain/entities/adopt/adopt';
+import { Adopt, AdoptAttr } from '../../../domain/entities/adopt/adopt';
 
 export namespace AdoptSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {

@@ -1,15 +1,15 @@
 import UseCase from '../usecase';
 import NGO from '../../../domain/entities/users/ngo';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
-import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import CNPJ from '../../../shared/domain/value-objects/cnpj.vo';
+import { InsertError } from '../../../shared/domain/errors/insert.error';
 import {
   IGalleryRepository,
   ILocalization,
   INGORepository,
-} from 'src/@core/domain/contracts';
+} from '../../../domain/contracts';
 
 export namespace NGOCreate {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,17 +1,17 @@
 import UseCase from '../usecase';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
 import {
   IAdoptRepository,
   IQuizRepository,
   IPostRepository,
   IUserRepository,
-} from 'src/@core/domain/contracts';
-import { Adopt as AdoptEntity } from 'src/@core/domain/entities/adopt/adopt';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
-import { Response } from 'src/@core/domain/entities/adopt/response';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+} from '../../../domain/contracts';
+import { Adopt as AdoptEntity } from '../../../domain/entities/adopt/adopt';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { EntityValidationError } from '../../../shared/domain/errors/validation.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
+import { Response } from '../../../domain/entities/adopt/response';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
 
 export namespace AdoptUsecase {
   export class Usecase implements UseCase<Input, Output> {

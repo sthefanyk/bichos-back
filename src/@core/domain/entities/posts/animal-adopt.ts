@@ -1,8 +1,8 @@
-import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
+import { SizeAnimal } from '../../../shared/domain/enums/size-animal';
 import { Animal, AnimalAttr } from './animal';
 import { AnimalAdoptProps } from './animal-adopt-props';
 import { Health } from '../health/health';
-import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
+import { StatusPostAdopt } from '../../../shared/domain/enums/status_post_adopt.enum';
 
 export type AnimalAdoptAttr = {
   size_current: SizeAnimal;

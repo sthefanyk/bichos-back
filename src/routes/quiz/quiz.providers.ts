@@ -1,13 +1,13 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { QuizTypeormRepository } from 'src/@core/infra/repositories/type-orm/quiz-typeorm.repository';
+import { QuizTypeormRepository } from '../../@core/infra/repositories/type-orm/quiz-typeorm.repository';
 import {
   AddQuestionToQuiz,
   QuizCreate,
   QuizFindById,
   RemoveQuestionToQuiz,
-} from 'src/@core/application/use-cases/quiz';
-import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
+} from '../../@core/application/use-cases/quiz';
+import { SearchQuiz } from '../../@core/application/use-cases/quiz/search.usecase';
 
 export namespace QuizProvider {
   export namespace Repositories {

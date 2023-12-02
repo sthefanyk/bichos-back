@@ -1,6 +1,6 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import QuestionProps from './question-props';
-import { QuestionTypes } from 'src/@core/shared/domain/enums/question-types.enum';
+import { QuestionTypes } from '../../../shared/domain/enums/question-types.enum';
 import { Alternative } from './alternative';
 
 export type QuestionAttr = {

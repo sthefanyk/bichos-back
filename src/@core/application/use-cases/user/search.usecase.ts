@@ -11,7 +11,7 @@ import {
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
 import { IUserRepository } from '../../../domain/contracts/user-repository.interface';
-import User, { UserAttr } from 'src/@core/domain/entities/users/user';
+import User, { UserAttr } from '../../../domain/entities/users/user';
 
 export namespace UserSearch {
   export class Usecase implements UseCase<Input, SearchOutput> {

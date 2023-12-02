@@ -1,7 +1,7 @@
 import { IsBoolean, IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 import { DoseAttr } from './dose';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+import EntityPropsValidation from '../../../shared/domain/entities/entity-props-validation';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
 
 export class DoseProps extends EntityPropsValidation {
   id: UUID;

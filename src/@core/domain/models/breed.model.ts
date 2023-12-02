@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { Species } from '../../shared/domain/enums/species.enum';
 
 @Entity('breed')
 export class BreedModel implements ModelMarker {

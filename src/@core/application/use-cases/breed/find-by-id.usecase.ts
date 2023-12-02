@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IBreedRepository } from 'src/@core/domain/contracts';
-import { Breed } from 'src/@core/domain/entities/breed';
+import { IBreedRepository } from '../../../domain/contracts';
+import { Breed } from '../../../domain/entities/breed';
 
 export namespace BreedFindById {
   export class Usecase implements UseCase<Input, Output> {

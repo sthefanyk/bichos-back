@@ -5,13 +5,13 @@ import {
   PublishAdoptPost,
   PublishSponsorshipPost,
   SearchAdoptPost,
-} from 'src/@core/application/use-cases/post';
+} from '../../@core/application/use-cases/post';
 import { AdoptPostCollectionPresenter } from './adopt-post.presenter';
 import { SponsorshipPostCollectionPresenter } from './sponsorship-post.presenter';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
-import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
-import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
-import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
+import { SearchSponsorshipPost } from '../../@core/application/use-cases/post/search-sponsorship-post.usecase';
+import { FindByIdAdoptPost } from '../../@core/application/use-cases/post/find-by-id-adopt-post.usecase';
+import { FindByIdSponsorshipPost } from '../../@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
+import { PostInactivate } from '../../@core/application/use-cases/post/inactivate-adopt-post.usecase';
 
 @Injectable()
 export class PostService {

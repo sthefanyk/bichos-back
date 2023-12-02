@@ -3,7 +3,7 @@ import {
   GalleryGetImageUrlUseCase,
   GalleryInsertImageUseCase,
   GalleryRemoveImageUseCase,
-} from 'src/@core/application/use-cases/gallery';
+} from '../../@core/application/use-cases/gallery';
 
 @Injectable()
 export class GalleryService {

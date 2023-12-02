@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace AuthProvider {
   export namespace Repositories {

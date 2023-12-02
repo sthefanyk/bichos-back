@@ -1,6 +1,6 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 import { PostAttr } from './post';
-import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import { TypePost } from '../../../shared/domain/enums/type_post.enum';
 import {
   IsBoolean,
   IsEnum,

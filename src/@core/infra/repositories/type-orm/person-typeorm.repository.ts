@@ -7,14 +7,14 @@ import {
   PersonFindById,
   PersonUpdate,
   PersonFindByCpf,
-} from 'src/@core/application/use-cases/person';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
+} from '../../../application/use-cases/person';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
 import {
   UserFindByEmail,
   UserFindByUsername,
-} from 'src/@core/application/use-cases/user';
-import { State } from 'src/@core/domain/entities/localization/state';
-import { City } from 'src/@core/domain/entities/localization/city';
+} from '../../../application/use-cases/user';
+import { State } from '../../../domain/entities/localization/state';
+import { City } from '../../../domain/entities/localization/city';
 import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 
 export class PersonTypeormRepository implements IPersonRepository {

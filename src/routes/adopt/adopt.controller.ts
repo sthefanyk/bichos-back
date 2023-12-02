@@ -13,14 +13,10 @@ import {
   AdoptSearch,
   AdoptUsecase,
   EvaluateResponses,
-} from 'src/@core/application/use-cases/adopt';
-// import { RoleGuard } from 'src/guards/role.guard';
-// import { Roles } from 'src/decorators/roles.decorator';
-// import { Role } from 'src/@core/shared/domain/enums/role.enum';
-// import { AuthGuard } from 'src/guards/auth.guard';
+} from '../../@core/application/use-cases/adopt';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { User } from 'src/decorators/user.decorator';
+import { AuthGuard } from '../../guards/auth.guard';
+import { User } from '../../decorators/user.decorator';
 
 @ApiTags('adopt')
 // @UseGuards(AuthGuard, RoleGuard)

@@ -6,9 +6,9 @@ import {
   BreedInactivate,
   BreedFindByName,
   BreedFindBySpecie,
-} from 'src/@core/application/use-cases/breed';
+} from '../../application/use-cases/breed';
 import { Breed } from '../entities/breed';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { Species } from '../../shared/domain/enums/species.enum';
 
 export interface IBreedRepository {
   insert(entity: Breed): BreedCreate.Output;

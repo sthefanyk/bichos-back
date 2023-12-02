@@ -1,28 +1,28 @@
 import { DataSource, IsNull, Repository } from 'typeorm';
-import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
-import { PublishAdoptPost } from 'src/@core/application/use-cases/post/publish-adopt-post.usecase';
-import { Post } from 'src/@core/domain/entities/posts/post';
+import { IPostRepository } from '../../../domain/contracts/post-repository.interface';
+import { PublishAdoptPost } from '../../../application/use-cases/post/publish-adopt-post.usecase';
+import { Post } from '../../../domain/entities/posts/post';
 import {
   CheckAndUpdateStatusAdoptPost,
   CheckAndUpdateStatusSponsorshipPost,
   FindAllAdoptPost,
   FindAllSponsorshipPost,
   PublishSponsorshipPost,
-} from 'src/@core/application/use-cases/post';
-import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
-import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
-import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
-import { Personality } from 'src/@core/domain/entities/personality';
-import { Need } from 'src/@core/domain/entities/need';
-import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
-import { AnimalSponsorship } from 'src/@core/domain/entities/posts/animal-sponsorship';
-import { City } from 'src/@core/domain/entities/localization/city';
-import { State } from 'src/@core/domain/entities/localization/state';
-import { Health } from 'src/@core/domain/entities/health/health';
-import { DiseaseAllergy } from 'src/@core/domain/entities/health/disease-allergy';
-import { VaccineMedicine } from 'src/@core/domain/entities/health/vaccine-medicine';
-import { Dose } from 'src/@core/domain/entities/health/dose';
-import { Contact } from 'src/@core/domain/entities/contact';
+} from '../../../application/use-cases/post';
+import { FindByIdAdoptPost } from '../../../application/use-cases/post/find-by-id-adopt-post.usecase';
+import { FindByIdSponsorshipPost } from '../../../application/use-cases/post/find-by-id-sponsorship-post.usecase';
+import { PostInactivate } from '../../../application/use-cases/post/inactivate-adopt-post.usecase';
+import { Personality } from '../../../domain/entities/personality';
+import { Need } from '../../../domain/entities/need';
+import { AnimalAdopt } from '../../../domain/entities/posts/animal-adopt';
+import { AnimalSponsorship } from '../../../domain/entities/posts/animal-sponsorship';
+import { City } from '../../../domain/entities/localization/city';
+import { State } from '../../../domain/entities/localization/state';
+import { Health } from '../../../domain/entities/health/health';
+import { DiseaseAllergy } from '../../../domain/entities/health/disease-allergy';
+import { VaccineMedicine } from '../../../domain/entities/health/vaccine-medicine';
+import { Dose } from '../../../domain/entities/health/dose';
+import { Contact } from '../../../domain/entities/contact';
 import {
   AnimalAdoptModel,
   AnimalHasNeedModel,
@@ -37,7 +37,7 @@ import {
   PostModel,
   UserModel,
   VaccineMedicineModel,
-} from 'src/@core/domain/models';
+} from '../../../domain/models';
 import { UserTypeormRepository } from './user-typeorm.repository';
 import { GalleryTypeormRepository } from './gallery-typeorm.repository';
 

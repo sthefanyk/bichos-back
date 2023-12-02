@@ -1,15 +1,15 @@
 import UseCase from '../usecase';
 import Shelter from '../../../domain/entities/users/shelter';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { InsertError } from '../../../shared/domain/errors/insert.error';
 import {
   IGalleryRepository,
   ILocalization,
   IShelterRepository,
-} from 'src/@core/domain/contracts';
+} from '../../../domain/contracts';
 
 export namespace ShelterCreate {
   export class Usecase implements UseCase<Input, Output> {

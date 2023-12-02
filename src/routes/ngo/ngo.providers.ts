@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { NGOTypeormRepository } from 'src/@core/infra/repositories/type-orm/ngo-typeorm.repository';
+import { NGOTypeormRepository } from '../../@core/infra/repositories/type-orm/ngo-typeorm.repository';
 import {
   NGOCreate,
   NGOInactivate,
@@ -10,11 +10,11 @@ import {
   NGOGetInactiveRecords,
   NGOSearch,
   NGOUpdate,
-} from 'src/@core/application/use-cases/ngo';
-import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
-import { NGOActivate } from 'src/@core/application/use-cases/ngo/activate.usecase';
-import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+} from '../../@core/application/use-cases/ngo';
+import { LocalizationTypeormRepository } from '../../@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { NGOActivate } from '../../@core/application/use-cases/ngo/activate.usecase';
+import { GalleryTypeormRepository } from '../../@core/infra/repositories/type-orm/gallery-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 export namespace NGOProvider {

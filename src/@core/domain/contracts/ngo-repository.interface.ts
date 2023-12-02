@@ -1,5 +1,5 @@
 import NGO from '../entities/users/ngo';
-import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
+import CNPJ from '../../shared/domain/value-objects/cnpj.vo';
 import {
   NGOCreate,
   NGOFindAll,
@@ -8,11 +8,11 @@ import {
   NGOGetActiveRecords,
   NGOGetInactiveRecords,
   NGOUpdate,
-} from 'src/@core/application/use-cases/ngo';
+} from '../../application/use-cases/ngo';
 import {
   UserFindByEmail,
   UserFindByUsername,
-} from 'src/@core/application/use-cases/user';
+} from '../../application/use-cases/user';
 
 export interface INGORepository {
   insert(entity: NGO): NGOCreate.Output;

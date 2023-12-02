@@ -13,11 +13,11 @@ import {
   PublishAdoptPost,
   PublishSponsorshipPost,
   SearchAdoptPost,
-} from 'src/@core/application/use-cases/post';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
-import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
+} from '../../@core/application/use-cases/post';
+import { SearchSponsorshipPost } from '../../@core/application/use-cases/post/search-sponsorship-post.usecase';
+import { PostInactivate } from '../../@core/application/use-cases/post/inactivate-adopt-post.usecase';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import PhotosConfig from 'src/@core/domain/entities/posts/post';
+import PhotosConfig from '../../@core/domain/entities/posts/post';
 
 @Controller('post')
 export class PostController {

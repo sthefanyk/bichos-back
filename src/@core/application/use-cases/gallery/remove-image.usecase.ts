@@ -1,4 +1,4 @@
-import { IGalleryRepository } from 'src/@core/domain/contracts';
+import { IGalleryRepository } from '../../../domain/contracts';
 import UseCase from '../usecase';
 
 export namespace GalleryRemoveImageUseCase {

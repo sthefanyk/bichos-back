@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { ShelterTypeormRepository } from 'src/@core/infra/repositories/type-orm/shelter-typeorm.repository';
-import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { ShelterTypeormRepository } from '../../@core/infra/repositories/type-orm/shelter-typeorm.repository';
+import { LocalizationTypeormRepository } from '../../@core/infra/repositories/type-orm/localization-typeorm.repository';
 import {
   ShelterCreate,
   ShelterInactivate,
@@ -12,10 +12,10 @@ import {
   ShelterSearch,
   ShelterUpdate,
   ShelterActivate,
-} from 'src/@core/application/use-cases/shelter';
-import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
+} from '../../@core/application/use-cases/shelter';
+import { GalleryTypeormRepository } from '../../@core/infra/repositories/type-orm/gallery-typeorm.repository';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace ShelterProvider {
   export namespace Repositories {

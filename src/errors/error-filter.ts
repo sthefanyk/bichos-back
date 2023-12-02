@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 import { Response } from 'express';
-import { CustomError } from 'src/@core/shared/domain/errors/error.interface';
+import { CustomError } from '../@core/shared/domain/errors/error.interface';
 
 @Catch()
 export class CustomErrorFilter<T extends CustomError>

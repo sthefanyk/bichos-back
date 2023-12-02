@@ -9,7 +9,7 @@ import {
   BreedGetActiveRecords,
   BreedGetInactiveRecords,
   BreedFindBySpecie,
-} from 'src/@core/application/use-cases/breed';
+} from '../../@core/application/use-cases/breed';
 import { BreedCollectionPresenter } from './breed.presenter';
 
 @Injectable()

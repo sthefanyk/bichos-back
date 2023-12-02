@@ -14,11 +14,7 @@ import {
   PersonalityCreate,
   PersonalitySearch,
   PersonalityUpdate,
-} from 'src/@core/application/use-cases/personality';
-// import { RoleGuard } from 'src/guards/role.guard';
-// import { Roles } from 'src/decorators/roles.decorator';
-// import { Role } from 'src/@core/shared/domain/enums/role.enum';
-// import { AuthGuard } from 'src/guards/auth.guard';
+} from '../../@core/application/use-cases/personality';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('personality')

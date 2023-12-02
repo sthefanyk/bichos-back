@@ -1,4 +1,4 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 import {
   IsBoolean,
   IsEnum,
@@ -7,9 +7,9 @@ import {
   Length,
 } from 'class-validator';
 import { QuestionAttr } from './question';
-import { QuestionTypes } from 'src/@core/shared/domain/enums/question-types.enum';
+import { QuestionTypes } from '../../../shared/domain/enums/question-types.enum';
 import { Alternative } from './alternative';
-import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
+import { EntityValidationError } from '../../../shared/domain/errors/validation.error';
 
 export default class QuestionProps extends EntityProps {
   @Length(2, 255)

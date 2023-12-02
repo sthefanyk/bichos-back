@@ -1,8 +1,8 @@
-import { IPersonalityRepository } from 'src/@core/domain/contracts';
+import { IPersonalityRepository } from '../../../domain/contracts';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
 
 export namespace PersonalityUpdate {
   export class Usecase implements UseCase<Input, Output> {

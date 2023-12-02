@@ -2,15 +2,15 @@ import {
   SponsorshipFindById,
   SponsorshipSearch,
   SponsorshipUsecase,
-} from 'src/@core/application/use-cases/sponsorship';
-import { ISponsorshipRepository } from 'src/@core/domain/contracts';
-import { Sponsorship } from 'src/@core/domain/entities/sponsorship/sponsorship';
+} from '../../../application/use-cases/sponsorship';
+import { ISponsorshipRepository } from '../../../domain/contracts';
+import { Sponsorship } from '../../../domain/entities/sponsorship/sponsorship';
 import {
   SponsorshipModel,
   PostModel,
   UserModel,
   NeedModel,
-} from 'src/@core/domain/models';
+} from '../../../domain/models';
 import { DataSource, Repository } from 'typeorm';
 
 export class SponsorshipTypeormRepository implements ISponsorshipRepository {

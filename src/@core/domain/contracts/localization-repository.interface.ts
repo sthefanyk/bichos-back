@@ -11,7 +11,7 @@ import {
   StateDelete,
   StateGetByName,
   StateInsert,
-} from 'src/@core/application/use-cases/localization';
+} from '../../application/use-cases/localization';
 import { CityModel } from '../models/city.model';
 import { StateModel } from '../models/state.model';
 

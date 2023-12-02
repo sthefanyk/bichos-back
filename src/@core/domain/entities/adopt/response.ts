@@ -1,5 +1,5 @@
-import { EvaluationResponse } from 'src/@core/shared/domain/enums/evaluation-response.enum';
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EvaluationResponse } from '../../../shared/domain/enums/evaluation-response.enum';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { ResponseProps } from './response-props';
 
 export type ResponseAttr = {

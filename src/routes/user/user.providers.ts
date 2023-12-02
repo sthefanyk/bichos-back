@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { UserFindById, UserSearch } from 'src/@core/application/use-cases/user';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
+import { UserFindById, UserSearch } from '../../@core/application/use-cases/user';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
 
 export namespace UserProvider {
   export namespace Repositories {

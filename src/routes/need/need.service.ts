@@ -8,7 +8,7 @@ import {
   NeedInactivate,
   NeedGetActiveRecords,
   NeedGetInactiveRecords,
-} from 'src/@core/application/use-cases/need';
+} from '../../@core/application/use-cases/need';
 import { NeedCollectionPresenter } from './need.presenter';
 
 @Injectable()

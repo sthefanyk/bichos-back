@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { NotFoundError } from '../@core/shared/domain/errors/not-found.error';
 
 export const ROLES_KEY = 'roles';
 export const User = createParamDecorator(

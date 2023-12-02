@@ -1,4 +1,4 @@
-import { StatusPostSponsorship } from 'src/@core/shared/domain/enums/status_post_sponsorship.enum';
+import { StatusPostSponsorship } from '../../../shared/domain/enums/status_post_sponsorship.enum';
 import { Need } from '../need';
 import { Animal, AnimalAttr } from './animal';
 import { AnimalSponsorshipProps } from './animal-sponsorship-props';

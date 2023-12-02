@@ -4,9 +4,9 @@ import {
   AdoptUsecase,
   ChooseAdopter,
   GetAdopterByAdoptPostId,
-} from 'src/@core/application/use-cases/adopt';
+} from '../../application/use-cases/adopt';
 import { Adopt } from '../entities/adopt/adopt';
-import { EvaluateResponses } from 'src/@core/application/use-cases/adopt/evaluate-responses.usecase';
+import { EvaluateResponses } from '../../application/use-cases/adopt/evaluate-responses.usecase';
 
 export interface IAdoptRepository {
   adopt(entity: Adopt): AdoptUsecase.Output;

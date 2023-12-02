@@ -6,10 +6,10 @@ import {
   Length,
 } from 'class-validator';
 import { VaccineMedicineAttr } from './vaccine-medicine';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
-import { VaccineMedicineTypes } from 'src/@core/shared/domain/enums/vaccine-medicine.enum';
+import EntityPropsValidation from '../../../shared/domain/entities/entity-props-validation';
+import { VaccineMedicineTypes } from '../../../shared/domain/enums/vaccine-medicine.enum';
 import { Dose } from './dose';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
 
 export class VaccineMedicineProps extends EntityPropsValidation {
   id: UUID;

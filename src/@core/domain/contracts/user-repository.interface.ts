@@ -1,9 +1,9 @@
-import { UserSearch } from 'src/@core/application/use-cases/user/search.usecase';
+import { UserSearch } from '../../application/use-cases/user/search.usecase';
 import {
   UserFindById,
   UserFindByEmail,
   UserFindByUsername,
-} from 'src/@core/application/use-cases/user';
+} from '../../application/use-cases/user';
 import User from '../entities/users/user';
 
 export interface IUserRepository {

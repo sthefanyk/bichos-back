@@ -10,8 +10,8 @@ import {
   SearchService,
 } from '../../services/search';
 import { SearchResult as SR } from '../../services/search/search-result';
-import { IQuizRepository } from 'src/@core/domain/contracts/quiz-repository.interface';
-import { Quiz, QuizAttr } from 'src/@core/domain/entities/quiz/quiz';
+import { IQuizRepository } from '../../../domain/contracts/quiz-repository.interface';
+import { Quiz, QuizAttr } from '../../../domain/entities/quiz/quiz';
 
 export namespace SearchQuiz {
   export class Usecase implements UseCase<Input, SearchOutput> {

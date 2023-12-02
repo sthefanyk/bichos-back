@@ -1,7 +1,7 @@
-import { IPersonalityRepository } from 'src/@core/domain/contracts';
+import { IPersonalityRepository } from '../../../domain/contracts';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
-import { Personality } from 'src/@core/domain/entities/personality';
+import { Personality } from '../../../domain/entities/personality';
 
 export namespace PersonalityActivate {
   export class Usecase implements UseCase<Input, Output> {

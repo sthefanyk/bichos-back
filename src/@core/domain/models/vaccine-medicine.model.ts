@@ -7,7 +7,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { VaccineMedicineTypes } from 'src/@core/shared/domain/enums/vaccine-medicine.enum';
+import { VaccineMedicineTypes } from '../../shared/domain/enums/vaccine-medicine.enum';
 import { DoseModel, HealthModel } from '.';
 
 @Entity('vaccine_medicine')

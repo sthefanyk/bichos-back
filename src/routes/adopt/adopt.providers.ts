@@ -7,11 +7,11 @@ import {
   ChooseAdopter,
   EvaluateResponses,
   GetAdopterByAdoptPostId,
-} from 'src/@core/application/use-cases/adopt';
-import { AdoptTypeormRepository } from 'src/@core/infra/repositories/type-orm/adopt-typeorm.repository';
-import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
-import { QuizTypeormRepository } from 'src/@core/infra/repositories/type-orm/quiz-typeorm.repository';
+} from '../../@core/application/use-cases/adopt';
+import { AdoptTypeormRepository } from '../../@core/infra/repositories/type-orm/adopt-typeorm.repository';
+import { PostTypeormRepository } from '../../@core/infra/repositories/type-orm/post-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
+import { QuizTypeormRepository } from '../../@core/infra/repositories/type-orm/quiz-typeorm.repository';
 
 export namespace AdoptProvider {
   export namespace Repositories {

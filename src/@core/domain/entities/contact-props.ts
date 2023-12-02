@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { ContactAttr } from './contact';
 import { City } from './localization/city';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
-import Phone from 'src/@core/shared/domain/value-objects/phone.vo';
+import EntityPropsValidation from '../../shared/domain/entities/entity-props-validation';
+import Phone from '../../shared/domain/value-objects/phone.vo';
 
 export default class ContactProps extends EntityPropsValidation {
   @IsNotEmpty()

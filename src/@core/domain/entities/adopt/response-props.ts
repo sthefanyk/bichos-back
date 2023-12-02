@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsString, IsEnum, MaxLength } from 'class-validator';
 import { ResponseAttr } from './response';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
-import { EvaluationResponse } from 'src/@core/shared/domain/enums/evaluation-response.enum';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
+import EntityPropsValidation from '../../../shared/domain/entities/entity-props-validation';
+import { EvaluationResponse } from '../../../shared/domain/enums/evaluation-response.enum';
 
 export class ResponseProps extends EntityPropsValidation {
   @IsNotEmpty()

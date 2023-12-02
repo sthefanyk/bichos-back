@@ -1,7 +1,7 @@
-import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
+import { ILocalization } from '../../../domain/contracts/localization-repository.interface';
 import UseCase from '../usecase';
-import { City } from 'src/@core/domain/entities/localization/city';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { City } from '../../../domain/entities/localization/city';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 
 export namespace CityGetByName {
   export class Usecase implements UseCase<Input, Output> {

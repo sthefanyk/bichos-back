@@ -9,8 +9,8 @@ import {
   PersonalityInactivate,
   PersonalityGetActiveRecords,
   PersonalityGetInactiveRecords,
-} from 'src/@core/application/use-cases/personality';
-import { PersonalityTypeormRepository } from 'src/@core/infra/repositories/type-orm/personality-typeorm.repository';
+} from '../../@core/application/use-cases/personality';
+import { PersonalityTypeormRepository } from '../../@core/infra/repositories/type-orm/personality-typeorm.repository';
 
 export namespace PersonalityProvider {
   export namespace Repositories {

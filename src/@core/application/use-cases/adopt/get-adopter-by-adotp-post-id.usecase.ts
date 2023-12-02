@@ -1,6 +1,6 @@
-import User from 'src/@core/domain/entities/users/user';
+import User from '../../../domain/entities/users/user';
 import UseCase from '../usecase';
-import { IAdoptRepository } from 'src/@core/domain/contracts';
+import { IAdoptRepository } from '../../../domain/contracts';
 
 export namespace GetAdopterByAdoptPostId {
   export class Usecase implements UseCase<Input, Output> {

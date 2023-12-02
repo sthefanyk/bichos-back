@@ -14,7 +14,7 @@ import {
   StateDelete,
   StateGetByName,
   StateInsert,
-} from 'src/@core/application/use-cases/localization';
+} from '../../../application/use-cases/localization';
 
 export class LocalizationTypeormRepository implements ILocalization {
   private stateRepo: Repository<StateModel>;

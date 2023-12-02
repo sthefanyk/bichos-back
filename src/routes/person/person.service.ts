@@ -8,9 +8,9 @@ import {
   PersonGetInactiveRecords,
   PersonSearch,
   PersonUpdate,
-} from 'src/@core/application/use-cases/person';
+} from '../../@core/application/use-cases/person';
 import { PersonCollectionPresenter } from './person.presenter';
-import { PersonActivate } from 'src/@core/application/use-cases/person/activate.usecase';
+import { PersonActivate } from '../../@core/application/use-cases/person/activate.usecase';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
 
 @Injectable()

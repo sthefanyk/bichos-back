@@ -2,9 +2,9 @@ import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { AnimalAttr } from './animal';
 import { AnimalProps } from './animal-props';
 import { AnimalAdoptAttr } from './animal-adopt';
-import { SizeAnimal } from 'src/@core/shared/domain/enums/size-animal';
+import { SizeAnimal } from '../../../shared/domain/enums/size-animal';
 import { Health } from '../health/health';
-import { StatusPostAdopt } from 'src/@core/shared/domain/enums/status_post_adopt.enum';
+import { StatusPostAdopt } from '../../../shared/domain/enums/status_post_adopt.enum';
 
 export class AnimalAdoptProps extends AnimalProps {
   @IsEnum(SizeAnimal)

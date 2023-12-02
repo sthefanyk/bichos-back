@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
 import { getDataSourceToken } from '@nestjs/typeorm';
-import { UserTypeormRepository } from 'src/@core/infra/repositories/type-orm/user-typeorm.repository';
-import { PostTypeormRepository } from 'src/@core/infra/repositories/type-orm/post-typeorm.repository';
-import { PersonalityTypeormRepository } from 'src/@core/infra/repositories/type-orm/personality-typeorm.repository';
-import { BreedTypeormRepository } from 'src/@core/infra/repositories/type-orm/breed-typeorm.repository';
+import { UserTypeormRepository } from '../../@core/infra/repositories/type-orm/user-typeorm.repository';
+import { PostTypeormRepository } from '../../@core/infra/repositories/type-orm/post-typeorm.repository';
+import { PersonalityTypeormRepository } from '../../@core/infra/repositories/type-orm/personality-typeorm.repository';
+import { BreedTypeormRepository } from '../../@core/infra/repositories/type-orm/breed-typeorm.repository';
 import {
   CheckAndUpdateStatusSponsorshipPost,
   FindAllAdoptPost,
@@ -11,15 +11,15 @@ import {
   PublishAdoptPost,
   PublishSponsorshipPost,
   SearchAdoptPost,
-} from 'src/@core/application/use-cases/post';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
-import { FindByIdAdoptPost } from 'src/@core/application/use-cases/post/find-by-id-adopt-post.usecase';
-import { FindByIdSponsorshipPost } from 'src/@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
-import { PostInactivate } from 'src/@core/application/use-cases/post/inactivate-adopt-post.usecase';
-import { NeedTypeormRepository } from 'src/@core/infra/repositories/type-orm/need-typeorm.repository';
-import { LocalizationTypeormRepository } from 'src/@core/infra/repositories/type-orm/localization-typeorm.repository';
-import { CheckAndUpdateStatusAdoptPost } from 'src/@core/application/use-cases/post/check-and-update-status-adopt-post.usecase';
-import { GalleryTypeormRepository } from 'src/@core/infra/repositories/type-orm/gallery-typeorm.repository';
+} from '../../@core/application/use-cases/post';
+import { SearchSponsorshipPost } from '../../@core/application/use-cases/post/search-sponsorship-post.usecase';
+import { FindByIdAdoptPost } from '../../@core/application/use-cases/post/find-by-id-adopt-post.usecase';
+import { FindByIdSponsorshipPost } from '../../@core/application/use-cases/post/find-by-id-sponsorship-post.usecase';
+import { PostInactivate } from '../../@core/application/use-cases/post/inactivate-adopt-post.usecase';
+import { NeedTypeormRepository } from '../../@core/infra/repositories/type-orm/need-typeorm.repository';
+import { LocalizationTypeormRepository } from '../../@core/infra/repositories/type-orm/localization-typeorm.repository';
+import { CheckAndUpdateStatusAdoptPost } from '../../@core/application/use-cases/post/check-and-update-status-adopt-post.usecase';
+import { GalleryTypeormRepository } from '../../@core/infra/repositories/type-orm/gallery-typeorm.repository';
 
 export namespace PostProvider {
   export namespace Repositories {

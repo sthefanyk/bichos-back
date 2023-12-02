@@ -3,10 +3,10 @@ import {
   QuizCreate,
   QuizFindById,
   RemoveQuestionToQuiz,
-} from 'src/@core/application/use-cases/quiz';
+} from '../../application/use-cases/quiz';
 import { Quiz } from '../entities/quiz/quiz';
 import { Question } from '../entities/quiz/question';
-import { SearchQuiz } from 'src/@core/application/use-cases/quiz/search.usecase';
+import { SearchQuiz } from '../../application/use-cases/quiz/search.usecase';
 
 export interface IQuizRepository {
   createQuiz(entity: Quiz): QuizCreate.Output;

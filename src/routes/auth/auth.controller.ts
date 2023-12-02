@@ -2,11 +2,11 @@ import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { ForgetAuthDto } from './dto/forget-auth.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { User } from 'src/decorators/user.decorator';
+import { AuthGuard } from '../../guards/auth.guard';
+import { User } from '../../decorators/user.decorator';
 import { ApiTags } from '@nestjs/swagger';
-import { Token } from 'src/decorators/token.decorator';
-import { TokenGuard } from 'src/guards/token.guard';
+import { Token } from '../../decorators/token.decorator';
+import { TokenGuard } from '../../guards/token.guard';
 
 @ApiTags('auth')
 @Controller('auth')

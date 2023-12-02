@@ -17,11 +17,7 @@ import {
   PersonCreate,
   PersonSearch,
   PersonUpdate,
-} from 'src/@core/application/use-cases/person';
-import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/@core/shared/domain/enums/role.enum';
-import { AuthGuard } from 'src/guards/auth.guard';
+} from '../../@core/application/use-cases/person';
 import { ApiTags } from '@nestjs/swagger';
 import {
   FileInterceptor,
@@ -30,7 +26,7 @@ import {
 } from '@nestjs/platform-express';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
-import supabase from 'src/database/supabase/config';
+import supabase from '../../database/supabase/config';
 
 @ApiTags('person')
 // @UseGuards(AuthGuard, RoleGuard)

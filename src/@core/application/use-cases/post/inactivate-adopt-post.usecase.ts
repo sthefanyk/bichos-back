@@ -1,10 +1,10 @@
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
 import { IPostRepository } from '../../../domain/contracts/post-repository.interface';
-import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
-import { InvalidStatusError } from 'src/@core/shared/domain/errors/invalid-status';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { Post } from 'src/@core/domain/entities/posts/post';
+import { TypePost } from '../../../shared/domain/enums/type_post.enum';
+import { InvalidStatusError } from '../../../shared/domain/errors/invalid-status';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { Post } from '../../../domain/entities/posts/post';
 
 export namespace PostInactivate {
   export class Usecase implements UseCase<Input, Output> {

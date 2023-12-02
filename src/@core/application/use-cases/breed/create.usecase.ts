@@ -1,8 +1,8 @@
 import UseCase from '../usecase';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { Breed } from 'src/@core/domain/entities/breed';
-import { IBreedRepository } from 'src/@core/domain/contracts';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { Breed } from '../../../domain/entities/breed';
+import { IBreedRepository } from '../../../domain/contracts';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
 
 export namespace BreedCreate {
   export class Usecase implements UseCase<Input, Output> {

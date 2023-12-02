@@ -1,13 +1,13 @@
 import { IPersonRepository } from '../../../domain/contracts/person-repository.interface';
 import UseCase from '../usecase';
 import Person from '../../../domain/entities/users/person';
-import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { InsertError } from 'src/@core/shared/domain/errors/insert.error';
-import { IGalleryRepository } from 'src/@core/domain/contracts';
+import { ILocalization } from '../../../domain/contracts/localization-repository.interface';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { InsertError } from '../../../shared/domain/errors/insert.error';
+import { IGalleryRepository } from '../../../domain/contracts';
 
 export namespace PersonCreate {
   export class Usecase implements UseCase<Input, Output> {

@@ -7,7 +7,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import { TypePost } from '../../shared/domain/enums/type_post.enum';
 import { UserModel, AnimalModel, CityModel } from '.';
 
 @Entity('post')

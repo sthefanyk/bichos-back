@@ -1,6 +1,6 @@
 import { State } from './state';
 import { CityProps } from './city-props';
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 
 export type CityAttr = {
   name: string;

@@ -1,4 +1,4 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 import {
   IsNotEmpty,
   IsString,
@@ -8,8 +8,8 @@ import {
   IsOptional,
 } from 'class-validator';
 import { AdoptAttr } from './adopt';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
-import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
+import { StatusAdopt } from '../../../shared/domain/enums/status_adopt.enum';
 import { Response } from './response';
 
 export default class AdoptProps extends EntityProps {

@@ -5,11 +5,11 @@ import {
   BreedFindBySpecie,
   BreedInactivate,
   BreedUpdate,
-} from 'src/@core/application/use-cases/breed';
-import { IBreedRepository } from 'src/@core/domain/contracts';
-import { Breed } from 'src/@core/domain/entities/breed';
-import { BreedModel } from 'src/@core/domain/models/breed.model';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+} from '../../../application/use-cases/breed';
+import { IBreedRepository } from '../../../domain/contracts';
+import { Breed } from '../../../domain/entities/breed';
+import { BreedModel } from '../../../domain/models/breed.model';
+import { Species } from '../../../shared/domain/enums/species.enum';
 import { DataSource, IsNull, Not, Repository } from 'typeorm';
 
 export class BreedTypeormRepository implements IBreedRepository {

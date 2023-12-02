@@ -1,5 +1,5 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
-import { StatusSponsorship } from 'src/@core/shared/domain/enums/status_sponsorship.enum';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
+import { StatusSponsorship } from '../../../shared/domain/enums/status_sponsorship.enum';
 import SponsorshipProps from './sponsorship-props';
 
 export type SponsorshipAttr = {

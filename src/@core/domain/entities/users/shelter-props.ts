@@ -1,4 +1,4 @@
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
 import UserProps from './user-props';
 import { IsDate, IsNotEmpty, IsString, Length } from 'class-validator';
 import { ShelterAttr } from './shelter';

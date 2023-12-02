@@ -1,6 +1,6 @@
-import { ILocalization } from 'src/@core/domain/contracts/localization-repository.interface';
+import { ILocalization } from '../../../domain/contracts/localization-repository.interface';
 import UseCase from '../usecase';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 
 export namespace StateGetByName {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { INGORepository } from 'src/@core/domain/contracts/ngo-repository.interface';
-import CNPJ from 'src/@core/shared/domain/value-objects/cnpj.vo';
+import { INGORepository } from '../../../domain/contracts/ngo-repository.interface';
+import CNPJ from '../../../shared/domain/value-objects/cnpj.vo';
 
 export namespace NGOFindByCnpj {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IAdoptRepository } from 'src/@core/domain/contracts';
-import { Adopt } from 'src/@core/domain/entities/adopt/adopt';
+import { IAdoptRepository } from '../../../domain/contracts';
+import { Adopt } from '../../../domain/entities/adopt/adopt';
 
 export namespace AdoptFindById {
   export class Usecase implements UseCase<Input, Output> {

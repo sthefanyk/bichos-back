@@ -1,6 +1,6 @@
 import { CollectionPresenter } from '../@share/presenters/collection.presenter';
-import { AdoptSearch } from 'src/@core/application/use-cases/adopt/search.usecase';
-import { AdoptAttr } from 'src/@core/domain/entities/adopt/adopt';
+import { AdoptSearch } from '../../@core/application/use-cases/adopt/search.usecase';
+import { AdoptAttr } from '../../@core/domain/entities/adopt/adopt';
 
 export class AdoptCollectionPresenter extends CollectionPresenter {
   data: AdoptAttr[];

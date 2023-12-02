@@ -10,8 +10,8 @@ import {
   BreedInactivate,
   BreedSearch,
   BreedUpdate,
-} from 'src/@core/application/use-cases/breed';
-import { BreedTypeormRepository } from 'src/@core/infra/repositories/type-orm/breed-typeorm.repository';
+} from '../../@core/application/use-cases/breed';
+import { BreedTypeormRepository } from '../../@core/infra/repositories/type-orm/breed-typeorm.repository';
 
 export namespace BreedProvider {
   export namespace Repositories {

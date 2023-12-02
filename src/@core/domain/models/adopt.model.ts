@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { StatusAdopt } from 'src/@core/shared/domain/enums/status_adopt.enum';
+import { StatusAdopt } from '../../shared/domain/enums/status_adopt.enum';
 import { UserModel, PostModel, QuizModel } from '.';
 
 @Entity('adopt')

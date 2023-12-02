@@ -1,24 +1,24 @@
 import UseCase from '../usecase';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { Post } from 'src/@core/domain/entities/posts/post';
-import { IPostRepository } from 'src/@core/domain/contracts/post-repository.interface';
-import { AnimalAdopt } from 'src/@core/domain/entities/posts/animal-adopt';
-import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { Post } from '../../../domain/entities/posts/post';
+import { IPostRepository } from '../../../domain/contracts/post-repository.interface';
+import { AnimalAdopt } from '../../../domain/entities/posts/animal-adopt';
+import { TypePost } from '../../../shared/domain/enums/type_post.enum';
 import {
   IBreedRepository,
   IGalleryRepository,
   ILocalization,
   IPersonalityRepository,
   IUserRepository,
-} from 'src/@core/domain/contracts';
-import { Personality } from 'src/@core/domain/entities/personality';
-import { Health } from 'src/@core/domain/entities/health/health';
-import { DiseaseAllergy } from 'src/@core/domain/entities/health/disease-allergy';
-import { VaccineMedicine } from 'src/@core/domain/entities/health/vaccine-medicine';
-import { Dose } from 'src/@core/domain/entities/health/dose';
-import { EntityValidationError } from 'src/@core/shared/domain/errors/validation.error';
-import { Contact } from 'src/@core/domain/entities/contact';
+} from '../../../domain/contracts';
+import { Personality } from '../../../domain/entities/personality';
+import { Health } from '../../../domain/entities/health/health';
+import { DiseaseAllergy } from '../../../domain/entities/health/disease-allergy';
+import { VaccineMedicine } from '../../../domain/entities/health/vaccine-medicine';
+import { Dose } from '../../../domain/entities/health/dose';
+import { EntityValidationError } from '../../../shared/domain/errors/validation.error';
+import { Contact } from '../../../domain/entities/contact';
 
 export namespace PublishAdoptPost {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,5 +1,5 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
-import { ImageType } from 'src/@core/shared/domain/enums/image-type.enum';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
+import { ImageType } from '../../../shared/domain/enums/image-type.enum';
 import ImageProps from './image-props';
 
 export type ImageAttr = {

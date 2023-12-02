@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { UserSearch } from 'src/@core/application/use-cases/user';
-import { UserFindById } from 'src/@core/application/use-cases/user/find-by-id.usecase';
+import { UserSearch } from '../../@core/application/use-cases/user';
+import { UserFindById } from '../../@core/application/use-cases/user/find-by-id.usecase';
 import { UserCollectionPresenter } from './user.presenter';
 
 @Injectable()

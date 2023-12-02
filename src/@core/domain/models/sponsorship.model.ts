@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
 import { UserModel, PostModel } from '.';
-import { StatusSponsorship } from 'src/@core/shared/domain/enums/status_sponsorship.enum';
+import { StatusSponsorship } from '../../shared/domain/enums/status_sponsorship.enum';
 
 @Entity('sponsorship')
 export class SponsorshipModel implements ModelMarker {

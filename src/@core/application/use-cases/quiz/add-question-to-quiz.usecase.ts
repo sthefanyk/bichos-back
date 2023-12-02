@@ -1,9 +1,9 @@
 import UseCase from '../usecase';
-import { IQuizRepository } from 'src/@core/domain/contracts';
-import { Question } from 'src/@core/domain/entities/quiz/question';
-import { Alternative } from 'src/@core/domain/entities/quiz/alternative';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
+import { IQuizRepository } from '../../../domain/contracts';
+import { Question } from '../../../domain/entities/quiz/question';
+import { Alternative } from '../../../domain/entities/quiz/alternative';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 
 export namespace AddQuestionToQuiz {
   export class Usecase implements UseCase<Input, Output> {

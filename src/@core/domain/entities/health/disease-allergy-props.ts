@@ -1,8 +1,8 @@
 import { IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
 import { DiseaseAllergyAttr } from './disease-allergy';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
-import { DiseaseAllergyTypes } from 'src/@core/shared/domain/enums/disease-allergy.enum';
-import UUID from 'src/@core/shared/domain/value-objects/uuid.vo';
+import EntityPropsValidation from '../../../shared/domain/entities/entity-props-validation';
+import { DiseaseAllergyTypes } from '../../../shared/domain/enums/disease-allergy.enum';
+import UUID from '../../../shared/domain/value-objects/uuid.vo';
 
 export class DiseaseAllergyProps extends EntityPropsValidation {
   id: UUID;

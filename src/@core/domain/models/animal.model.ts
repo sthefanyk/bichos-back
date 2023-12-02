@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { SexAnimal } from '../../shared/domain/enums/sex-animal';
+import { Species } from '../../shared/domain/enums/species.enum';
 
 @Entity('animal')
 export class AnimalModel implements ModelMarker {

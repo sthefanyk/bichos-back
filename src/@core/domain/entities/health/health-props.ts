@@ -1,6 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { HealthAttr } from './health';
-import EntityPropsValidation from 'src/@core/shared/domain/entities/entity-props-validation';
+import EntityPropsValidation from '../../../shared/domain/entities/entity-props-validation';
 import { VaccineMedicine } from './vaccine-medicine';
 import { DiseaseAllergy } from './disease-allergy';
 

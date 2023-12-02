@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { QuestionTypes } from 'src/@core/shared/domain/enums/question-types.enum';
+import { QuestionTypes } from '../../shared/domain/enums/question-types.enum';
 
 @Entity('question')
 export class QuestionModel implements ModelMarker {

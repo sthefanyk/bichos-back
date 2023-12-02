@@ -1,4 +1,4 @@
-import EntityProps from 'src/@core/shared/domain/entities/entity-props';
+import EntityProps from '../../../shared/domain/entities/entity-props';
 import {
   IsDate,
   IsEnum,
@@ -8,9 +8,9 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
-import { SexAnimal } from 'src/@core/shared/domain/enums/sex-animal';
+import { SexAnimal } from '../../../shared/domain/enums/sex-animal';
 import { AnimalAttr, ImageAttr } from './animal';
-import { Species } from 'src/@core/shared/domain/enums/species.enum';
+import { Species } from '../../../shared/domain/enums/species.enum';
 import { Personality } from '../personality';
 
 export class AnimalProps extends EntityProps {

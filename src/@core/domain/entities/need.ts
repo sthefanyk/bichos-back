@@ -1,4 +1,4 @@
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../shared/domain/markers/entity.marker';
 import { NeedProps } from './need-props';
 
 export type NeedAttr = {

@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IQuizRepository } from 'src/@core/domain/contracts';
-import { Quiz } from 'src/@core/domain/entities/quiz/quiz';
+import { IQuizRepository } from '../../../domain/contracts';
+import { Quiz } from '../../../domain/entities/quiz/quiz';
 
 export namespace QuizFindById {
   export class Usecase implements UseCase<Input, Output> {

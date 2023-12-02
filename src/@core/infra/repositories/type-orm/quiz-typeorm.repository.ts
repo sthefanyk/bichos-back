@@ -2,17 +2,17 @@ import {
   QuizCreate,
   AddQuestionToQuiz,
   RemoveQuestionToQuiz,
-} from 'src/@core/application/use-cases/quiz';
-import { IQuizRepository } from 'src/@core/domain/contracts';
-import { Alternative } from 'src/@core/domain/entities/quiz/alternative';
-import { Question } from 'src/@core/domain/entities/quiz/question';
-import { Quiz } from 'src/@core/domain/entities/quiz/quiz';
+} from '../../../application/use-cases/quiz';
+import { IQuizRepository } from '../../../domain/contracts';
+import { Alternative } from '../../../domain/entities/quiz/alternative';
+import { Question } from '../../../domain/entities/quiz/question';
+import { Quiz } from '../../../domain/entities/quiz/quiz';
 import {
   AlternativeModel,
   QuestionModel,
   QuizHasQuestionModel,
   QuizModel,
-} from 'src/@core/domain/models';
+} from '../../../domain/models';
 import { DataSource, Repository } from 'typeorm';
 
 export class QuizTypeormRepository implements IQuizRepository {

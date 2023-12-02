@@ -3,7 +3,7 @@ import * as cron from 'node-cron';
 import {
   CheckAndUpdateStatusSponsorshipPost,
   CheckAndUpdateStatusAdoptPost,
-} from 'src/@core/application/use-cases/post';
+} from '../../@core/application/use-cases/post';
 
 @Injectable()
 export class PostCronService implements OnModuleInit {

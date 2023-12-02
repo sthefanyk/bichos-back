@@ -6,7 +6,7 @@ import {
   ChooseAdopter,
   EvaluateResponses,
   GetAdopterByAdoptPostId,
-} from 'src/@core/application/use-cases/adopt';
+} from '../../@core/application/use-cases/adopt';
 import { AdoptCollectionPresenter } from './adopt.presenter';
 
 @Injectable()

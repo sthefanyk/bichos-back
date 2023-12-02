@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import { CityModel } from 'src/@core/domain/models/city.model';
-import { UserModel } from 'src/@core/domain/models';
-import { Role } from 'src/@core/shared/domain/enums/role.enum';
+import { CityModel } from '../../@core/domain/models/city.model';
+import { UserModel } from '../../@core/domain/models';
+import { Role } from '../../@core/shared/domain/enums/role.enum';
 import { DataSource } from 'typeorm';
 import { Seeder } from 'typeorm-extension';
 

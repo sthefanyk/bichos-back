@@ -2,11 +2,11 @@ import {
   GalleryFindImageByIdUseCase,
   GalleryGetImageUrlUseCase,
   GalleryInsertImageUseCase,
-} from 'src/@core/application/use-cases/gallery';
-import { IGalleryRepository } from 'src/@core/domain/contracts';
-import { Image } from 'src/@core/domain/entities/gallery/image';
-import { GalleryModel } from 'src/@core/domain/models';
-import supabase from 'src/database/supabase/config';
+} from '../../../application/use-cases/gallery';
+import { IGalleryRepository } from '../../../domain/contracts';
+import { Image } from '../../../domain/entities/gallery/image';
+import { GalleryModel } from '../../../domain/models';
+import supabase from '../../../../database/supabase/config';
 import { DataSource, Repository } from 'typeorm';
 
 export class GalleryTypeormRepository implements IGalleryRepository {

@@ -8,7 +8,7 @@ import {
   NeedGetActiveRecords,
   NeedGetInactiveRecords,
   NeedFindByName,
-} from 'src/@core/application/use-cases/need';
+} from '../../application/use-cases/need';
 import { Need } from '../entities/need';
 
 export interface INeedRepository {

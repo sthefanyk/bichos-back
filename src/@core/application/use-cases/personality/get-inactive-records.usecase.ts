@@ -14,7 +14,7 @@ import { IPersonalityRepository } from '../../../domain/contracts/personality-re
 import {
   Personality,
   PersonalityAttr,
-} from 'src/@core/domain/entities/personality';
+} from '../../../domain/entities/personality';
 
 export namespace PersonalityGetInactiveRecords {
   export class Usecase implements UseCase<Input, SearchOutput> {

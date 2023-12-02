@@ -1,6 +1,6 @@
 import { SearchParams, SortDirection } from './search-params';
 import { SearchResult } from './search-result';
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 
 export abstract class SearchService<E extends EntityMarker> {
   constructor(

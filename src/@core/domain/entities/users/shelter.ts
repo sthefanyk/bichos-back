@@ -2,7 +2,7 @@ import User, { UserAttr } from './user';
 import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { City } from '../localization/city';
 import { Role } from '../../../shared/domain/enums/role.enum';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
+import CPF from '../../../shared/domain/value-objects/cpf.vo';
 import ShelterProps from './shelter-props';
 
 export type ShelterAttr = {

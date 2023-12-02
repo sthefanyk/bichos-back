@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IUserRepository } from 'src/@core/domain/contracts/user-repository.interface';
-import User from 'src/@core/domain/entities/users/user';
+import { IUserRepository } from '../../../domain/contracts/user-repository.interface';
+import User from '../../../domain/entities/users/user';
 
 export namespace UserFindById {
   export class Usecase implements UseCase<Input, Output> {

@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModelMarker } from '../../shared/domain/markers/model.marker';
-import { DiseaseAllergyTypes } from 'src/@core/shared/domain/enums/disease-allergy.enum';
+import { DiseaseAllergyTypes } from '../../shared/domain/enums/disease-allergy.enum';
 import { HealthModel } from '.';
 
 @Entity('disease_allergy')

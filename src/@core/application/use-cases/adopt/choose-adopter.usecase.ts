@@ -1,7 +1,7 @@
 import UseCase from '../usecase';
-import { IAdoptRepository, IPostRepository } from 'src/@core/domain/contracts';
-import { NotFoundError } from 'src/@core/shared/domain/errors/not-found.error';
-import { UnauthorizedError } from 'src/@core/shared/domain/errors/unauthorized.error';
+import { IAdoptRepository, IPostRepository } from '../../../domain/contracts';
+import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
+import { UnauthorizedError } from '../../../shared/domain/errors/unauthorized.error';
 
 export namespace ChooseAdopter {
   export class Usecase implements UseCase<Input, Output> {

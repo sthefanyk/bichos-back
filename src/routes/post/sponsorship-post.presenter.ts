@@ -1,6 +1,6 @@
 import { CollectionPresenter } from '../@share/presenters/collection.presenter';
-import { SearchSponsorshipPost } from 'src/@core/application/use-cases/post/search-sponsorship-post.usecase';
-import { PostAttr } from 'src/@core/domain/entities/posts/post';
+import { SearchSponsorshipPost } from '../../@core/application/use-cases/post/search-sponsorship-post.usecase';
+import { PostAttr } from '../../@core/domain/entities/posts/post';
 
 export class SponsorshipPostCollectionPresenter extends CollectionPresenter {
   data: PostAttr[];

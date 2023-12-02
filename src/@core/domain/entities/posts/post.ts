@@ -1,6 +1,6 @@
-import { TypePost } from 'src/@core/shared/domain/enums/type_post.enum';
+import { TypePost } from '../../../shared/domain/enums/type_post.enum';
 import { Animal } from './animal';
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 import { PostProps } from './post-props';
 import { Contact } from '../contact';
 import User from '../users/user';

@@ -1,5 +1,5 @@
 import Shelter from '../entities/users/shelter';
-import CPF from 'src/@core/shared/domain/value-objects/cpf.vo';
+import CPF from '../../shared/domain/value-objects/cpf.vo';
 import {
   ShelterCreate,
   ShelterFindAll,
@@ -7,13 +7,13 @@ import {
   ShelterGetActiveRecords,
   ShelterGetInactiveRecords,
   ShelterUpdate,
-} from 'src/@core/application/use-cases/shelter';
-import { ShelterFindByCpf } from 'src/@core/application/use-cases/shelter/find-by-cpf.usecase';
-import { ShelterFindByNameShelter } from 'src/@core/application/use-cases/shelter/find-by-name-shelter.usecase';
+} from '../../application/use-cases/shelter';
+import { ShelterFindByCpf } from '../../application/use-cases/shelter/find-by-cpf.usecase';
+import { ShelterFindByNameShelter } from '../../application/use-cases/shelter/find-by-name-shelter.usecase';
 import {
   UserFindByEmail,
   UserFindByUsername,
-} from 'src/@core/application/use-cases/user';
+} from '../../application/use-cases/user';
 
 export interface IShelterRepository {
   insert(entity: Shelter): ShelterCreate.Output;

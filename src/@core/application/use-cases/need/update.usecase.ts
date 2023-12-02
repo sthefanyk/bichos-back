@@ -1,8 +1,8 @@
-import { INeedRepository } from 'src/@core/domain/contracts';
+import { INeedRepository } from '../../../domain/contracts';
 import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import UseCase from '../usecase';
-import { RequiredError } from 'src/@core/shared/domain/errors/required.error';
-import { AlreadyExistsError } from 'src/@core/shared/domain/errors/already-exists.error';
+import { RequiredError } from '../../../shared/domain/errors/required.error';
+import { AlreadyExistsError } from '../../../shared/domain/errors/already-exists.error';
 
 export namespace NeedUpdate {
   export class Usecase implements UseCase<Input, Output> {

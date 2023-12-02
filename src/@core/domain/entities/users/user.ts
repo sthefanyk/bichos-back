@@ -2,7 +2,7 @@ import UserProps from './user-props';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../../shared/domain/enums/role.enum';
 import { City } from '../localization/city';
-import { EntityMarker } from 'src/@core/shared/domain/markers/entity.marker';
+import { EntityMarker } from '../../../shared/domain/markers/entity.marker';
 
 export type ImageAttr = {
   id: string;
