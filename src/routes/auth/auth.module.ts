@@ -15,3 +15,4 @@ import { ServiceAuth } from '../../@core/application/services/auth/auth.service'
   exports: [AuthService, ServiceAuth],
 })
 export class AuthModule {}
+

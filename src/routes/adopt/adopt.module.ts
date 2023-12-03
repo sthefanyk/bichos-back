@@ -3,12 +3,13 @@ import { AdoptService } from './adopt.service';
 import { AdoptController } from './adopt.controller';
 import { AdoptProvider } from './adopt.providers';
 import { AuthModule } from '../auth/auth.module';
+import { SocketService } from '../../socket/socket.service';
 
 @Module({
   imports: [AuthModule],
   controllers: [AdoptController],
   providers: [
-    AdoptService,
+    AdoptService, SocketService,
     AdoptProvider.Repositories.ADOPT_TYPEORM_REPO,
     AdoptProvider.Repositories.POST_TYPEORM_REPO,
     AdoptProvider.Repositories.QUIZ_TYPEORM_REPO,

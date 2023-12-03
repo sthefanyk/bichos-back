@@ -8,8 +8,7 @@ import {
   GetAdopterByAdoptPostId,
 } from '../../@core/application/use-cases/adopt';
 import { AdoptCollectionPresenter } from './adopt.presenter';
-import { WebSocketServer } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { SocketService } from '../../socket/socket.service';
 
 @Injectable()
 export class AdoptService {
@@ -31,8 +30,8 @@ export class AdoptService {
   @Inject(GetAdopterByAdoptPostId.Usecase)
   private getAdopterByAdoptPostIdUseCase: GetAdopterByAdoptPostId.Usecase;
 
-  @WebSocketServer() 
-  server: Server;
+  @Inject(SocketService)
+  private readonly socketService: SocketService;
 
   async adopt(data: AdoptUsecase.Input) {
     return await this.adoptUseCase.execute(data);
@@ -56,7 +55,7 @@ export class AdoptService {
     const id_adopter = await this.chooseAdopterUseCase.execute(data);
 
     if (id_adopter) {
-      this.server.emit(`notification_${id_adopter}`, 'You have been chosen as an adopter!');
+      this.socketService.notifyApprovedAdopter(id_adopter.id);
     }
 
     return { adopter: id_adopter };

@@ -19,6 +19,8 @@ import { AdoptModule } from './routes/adopt/adopt.module';
 import { SponsorshipModule } from './routes/sponsorship/sponsorship.module';
 import { UserModule } from './routes/user/user.module';
 import { GalleryModule } from './routes/gallery/gallery.module';
+import { AppGateway } from './app.gateway';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
@@ -57,8 +59,9 @@ import { GalleryModule } from './routes/gallery/gallery.module';
       },
     }),
     PostModule,
+    SocketModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppGateway],
 })
 export class AppModule {}
