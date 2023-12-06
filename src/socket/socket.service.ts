@@ -19,8 +19,17 @@ export class SocketService {
 
   notifyApprovedAdopter(user_id: string) {
     const userSocket = this.getUserSocket(user_id);
+
     if (userSocket) {
-      userSocket.emit('approvedAdopter', { user_id, message: 'Você foi aprovado como adotante!' });
+      userSocket.emit(`approvedAdopter_${user_id}`, { user_id, message: 'Você foi aprovado como adotante!' });
+    }
+  }
+
+  notifyPosterAdoptResponse(user_id: string) {
+    const userSocket = this.getUserSocket(user_id);
+    
+    if (userSocket) {
+      userSocket.emit(`posterAdoptResponse_${user_id}`, { user_id, message: 'Você recebeu um pedido de adoção!' });
     }
   }
 }

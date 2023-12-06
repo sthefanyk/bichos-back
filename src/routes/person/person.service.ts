@@ -12,8 +12,6 @@ import {
 import { PersonCollectionPresenter } from './person.presenter';
 import { PersonActivate } from '../../@core/application/use-cases/person/activate.usecase';
 import { ServiceAuth } from '../../@core/application/services/auth/auth.service';
-import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { Server } from 'socket.io';
 
 @Injectable()
 export class PersonService {
@@ -47,13 +45,10 @@ export class PersonService {
   @Inject(ServiceAuth)
   private service: ServiceAuth;
 
-  @WebSocketServer() server: Server;
-
   async create(data: PersonCreate.Input) {
     const { id } = await this.createUseCase.execute(data);
 
     if (id) {
-      this.server.emit(`notification_${id}`, 'Welcome to Bichos!');
       return this.service.singIn(data.email, data.password);
     }
 

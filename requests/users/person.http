@@ -44,7 +44,8 @@ Content-Type: application/json
     "email": "sthe@sthe.com",
     "password": "Sthe1234",
     "city": "Paranaguá",
-    "description": "Descrição do perfil"
+    "description": "Descrição do perfil",
+    "profile_picture": "45c43add-a624-4746-8ae5-eb0b166cd1e6"
 }
 
 
@@ -62,7 +63,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
     "email": "gi2@amora.com",
     "description": "aaaaaaaa",
     "city": "Paranaguá",
-    "profile_picture": "aaaaaa",
+    "profile_picture": "45c43add-a624-4746-8ae5-eb0b166cd1e6",
     "header_picture": "aaaaaaaa"
 }
 

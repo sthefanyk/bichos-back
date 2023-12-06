@@ -109,5 +109,6 @@ export namespace AdoptUsecase {
 
   export type Output = Promise<{
     id: string;
+    id_poster: string;
   }>;
 }

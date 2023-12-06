@@ -140,7 +140,7 @@ export class AdoptTypeormRepository implements IAdoptRepository {
     const [adopter, quiz, post] = await Promise.all([
       this.repoUser.findOne({ where: { id: entity.id_adopter } }),
       this.repoQuiz.findOne({ where: { id: entity.id_quiz } }),
-      this.repoPost.findOne({ where: { id: entity.id_post } }),
+      this.repoPost.findOne({ where: { id: entity.id_post }, relations: [ 'posted_by' ] }),
     ]);
 
     const adopt = await this.repoAdopt.save({
@@ -165,6 +165,7 @@ export class AdoptTypeormRepository implements IAdoptRepository {
 
     return {
       id: adopt.id,
+      id_poster: post.posted_by.id
     };
   }
 }

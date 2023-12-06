@@ -3,10 +3,11 @@ import { AdoptService } from './adopt.service';
 import { AdoptController } from './adopt.controller';
 import { AdoptProvider } from './adopt.providers';
 import { AuthModule } from '../auth/auth.module';
+import { SocketModule } from '../../socket/socket.module';
 import { SocketService } from '../../socket/socket.service';
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, SocketModule],
   controllers: [AdoptController],
   providers: [
     AdoptService, SocketService,

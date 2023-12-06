@@ -7,10 +7,12 @@ import { CustomError } from './@core/shared/domain/errors/error.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.enableCors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   });
+
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new CustomErrorFilter<CustomError>());
 
@@ -28,4 +30,32 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();
+
+
+
+
+
+
+
+
+
+
+  // app.enableCors({
+  //   origin: '*',
+  //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  //   allowedHeaders: ['Content-Type', 'Authorization'],
+  //   credentials: true,
+  // });
+
+  // app.enableCors({
+  //   origin: '*',
+  //   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  // });
+
+  // app.use('/socket.io', (req, res, next) => {
+  //   res.header('Access-Control-Allow-Origin', '*');
+  //   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  //   next();
+  // });

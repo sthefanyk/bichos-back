@@ -17,9 +17,9 @@ POST http://localhost:3000/quiz/add/question
 Content-Type: application/json
 
 {
-    "id_quiz": "aafd3249-37f8-400d-ac80-d725506e51d6",
+    "id_quiz": "c4500a51-2172-448a-baaa-c6f0c4efed96",
     "question": {
-        "question": "Você está familiarizado com as necessidades específicas do tipo de animal que deseja adotar? Já pesquisou sobre seu comportamento, cuidados e necessidades?",
+        "question": "Você está preparado para cuidar das necessidades do animal, incluindo alimentação, exercício, cuidados veterinários e treinamento, se necessário?",
         "type": 0,
         "others": false,
         "alternatives": []

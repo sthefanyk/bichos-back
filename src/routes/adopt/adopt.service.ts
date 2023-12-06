@@ -34,7 +34,9 @@ export class AdoptService {
   private readonly socketService: SocketService;
 
   async adopt(data: AdoptUsecase.Input) {
-    return await this.adoptUseCase.execute(data);
+    const { id, id_poster } = await this.adoptUseCase.execute(data);
+    // this.socketService.notifyPosterAdoptResponse("4ca0b600-3282-4264-8bfc-ef5479d1f386");
+    return { id };
   }
 
   async findOne(id: string) {
