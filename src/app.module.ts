@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, RequestMethod   } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './routes/auth/auth.module';
@@ -21,7 +21,7 @@ import { UserModule } from './routes/user/user.module';
 import { GalleryModule } from './routes/gallery/gallery.module';
 import { AppGateway } from './app.gateway';
 import { SocketModule } from './socket/socket.module';
-
+import * as cors from 'cors';
 
 @Module({
   imports: [
@@ -65,4 +65,10 @@ import { SocketModule } from './socket/socket.module';
   controllers: [AppController],
   providers: [AppService, AppGateway],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(cors())
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
